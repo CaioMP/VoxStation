@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="{% static 'resources/float-label-css/float-label.min.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'base.css' %}" type="text/css"/>
+	<link rel="stylesheet" href="{% static 'account/sidebar-style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/vox_style.css' %}">
+	<link rel="stylesheet" href="{% static 'resources/bootstrap/css/bootstrap.min.css' %}">
+	<script src="{% static 'resources/JQuery/jquery.min.js' %}"></script>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-expand-md navbar-light navbar-sm  bg-grey navegador mb-5">
+		<!--botão da sidebar-->
+		<a href="#menu-toggle" class="btn btn-link open btn-lg hideApple" id="menu-toggle"><i class="fas fa-align-justify"></i></a>
+		<!--container da navbar-->
+
+		<!--container da navbar-->
+		<div class="container-fluid ">
+
+			<!--logo-->
+			<a href="{% url 'home:index' %}" class="navbar-brand mr-5">VoxStation</a>
+			<!--fimlogo-->
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    			<i class="fas fa-search"></i>
+  			</button>
+			<!--navbar-collapse-->
+			<div class="collapse navbar-collapse" id="navbarSite">
+				<form class="form-inline ">
+					<input type="text" class="form" type="search" placeholder="Pesquisar">
+				<button class="btn btn-link mb-1" type="Submit"><img src="" alt="botão de pesquisa"></button>
+			</form>
+				<ul class="navbar-nav ml-auto mb-o t-6">
+					<li class="nav-item dropdown">
+						<a href="" class="nav-link" data-toggle="dropdown"><img src="" alt=""></a>
+						<div class="dropdown-menu">
+							<a href="#" class="dropdown-item">playlist1</a>
+							<a href="#" class="dropdown-item">playlist1</a>
+							<a href="#" class="dropdown-item">playlist1</a>
+							<div class="dropdown-divider"></div>
+							<a href="#" class="dropdown-item">+add</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a href="" class="nav-link" data-toggle="dropdown"><img src="" alt=""></a>
+						<div class="dropdown-menu">
+							<a href="#" class="dropdown-item">notificação</a>
+							<a href="#" class="dropdown-item">notificação</a>
+							<a href="#" class="dropdown-item">notificação</a>
+							<a href="#" class="dropdown-item">notificação</a>
+							<a href="#" class="dropdown-item">notificação</a>
+							<a href="#" class="dropdown-item">notificação</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link"><img src="" alt=""><p class="hider"> upload</p></a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link" id="account"><img src="" class="rounded-circle " id="ft-account" alt=""><p class="hider"> account</p></a>
+					</li>
+				</ul>
+			</div>
+			<!--fim da nav-collapse-->
+		</div>
+
+	</nav>
+    <div id="wrapper" class="toggled">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+				<li >
+					<a href="#" class="sideLink">ieeeee</a>
+				</li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            {% block body %}
+            {% endblock %}
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!--fim da sidebar-->
+    <script src="{% static 'resources/JQuery/popper.min.js' %}"></script>
+    <script src="{% static 'resources/bootstrap/js/bootstrap.bundle.min.js' %}" ></script>
+	<script src="{% static 'resources/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script>
+        $("#menu-toggle").click(function(e){
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+</body>
+</html>

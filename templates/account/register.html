@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+    <title>{% trans 'Crie sua conta no VoxStation' %}</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'account/style_register.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'account/mobile/style_register.css' %}" />
+    <script src="{% static 'account/js/register.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="registerBox" id="registerBox">
+        <h2>{% trans 'Crie sua conta no VoxStation' %}</h2>
+
+        <form method="POST">{% csrf_token %}
+            <!--Primeiro nome-->
+            <label class="has-float-label">
+                <input type="text" name="{{ account.first_name.name }}" id="{{ account.first_name.id_for_label }}"
+                       maxlength="50" placeholder="{% trans 'Primeiro nome' %}"
+                       {% if not first_name %} value="" {% else %} value="{{ first_name }}" {% endif %} required=""/>
+                <span id="first_name">{% trans 'Primeiro nome' %}</span>
+            </label>
+            {% if account.errors.first_name %}
+                <strong id="error-first_name" class="errors">{{ account.errors.first_name }}</strong>
+            {% endif %}
+
+            <!--Sobrenome-->
+            <label class="has-float-label">
+                <input type="text" name="{{ account.last_name.name }}" id="{{ account.last_name.id_for_label }}"
+                       maxlength="50" placeholder="{% trans 'Sobrenome' %}"
+                       {% if not last_name %} value="" {% else %} value="{{ last_name }}" {% endif %} required=""/>
+                <span id="last_name">{% trans 'Sobrenome' %}</span>
+            </label>
+            {% if account.errors.last_name %}
+                <strong id="error-last_name" class="errors">{{ account.errors.last_name }}</strong>
+            {% endif %}
+
+            <!--Endereço de Email-->
+            <label class="has-float-label">
+                <input type="email" name="{{ account.email.name }}" id="{{ account.email.id_for_label }}"
+                       maxlength="50" placeholder="{% trans 'Endereço de Email' %}"
+                       {% if not email %} value="" {% else %} value="{{ email }}" {% endif %} required=""/>
+                <span id="email">{% trans 'Endereço de Email' %}</span>
+            </label>
+            {% if account.errors.email %}
+                <strong id="error-email" class="errors">{{ account.errors.email }}</strong>
+            {% endif %}
+
+            <!--Nome de Usuário-->
+            <label class="has-float-label">
+                <input type="text" name="{{ account.username.name }}" id="{{ account.username.id_for_label }}"
+                       maxlength="50" placeholder="{% trans 'Nome de Usuário' %}"
+                       {% if not username %} value="" {% else %} value="{{ username }}" {% endif %} required=""/>
+                <span id="username">{% trans 'Nome de Usuário' %}</span>
+            </label>
+            {% if account.errors.username %}
+                <strong id="error-username" class="errors">{{ account.errors.username }}</strong>
+            {% endif %}
+
+            <!--Senha-->
+            <label class="has-float-label">
+            <input type="password" name="{{ account.password1.name }}" id="{{ account.password1.id_for_label }}"
+                   maxlength="32" placeholder="{% trans 'Senha' %}"
+                   {% if not password1 %} value="" {% else %} value="{{ password1 }}" {% endif %} required=""/>
+                <span id="password1">{% trans 'Senha' %}</span>
+            </label>
+            {% if account.errors.password1 %}
+                <strong id="error-password1" class="errors">{{ account.errors.password1 }}</strong>
+            {% endif %}
+
+            <!--Confirmação de Senha-->
+            <label class="has-float-label">
+            <input type="password" name="{{ account.password2.name }}" id="{{ account.password2.id_for_label }}"
+                   maxlength="32" placeholder="{% trans 'Confirmação de senha' %}"
+                   {% if not password2 %} value="" {% else %} value="{{ password2 }}" {% endif %} required=""/>
+                <span id="password2">{% trans 'Confirmação de senha' %}</span>
+            </label>
+            {% if account.errors.password2 %}
+                <strong id="error-password2" class="errors">{{ account.errors.password2 }}</strong>
+            {% endif %}
+
+            <!--Botão de finalizar cadastro-->
+            <center><button class="btn-cad" type="submit"><strong>{% trans 'Cadastrar-se' %}</strong></button></center>
+
+            <div class="termos">
+                <center>{% trans 'Ao se cadastrar, você concorda com nossos' %}
+                    <a href="#">{% trans ' Termos e ' %}{% trans 'Condições de Uso' %}</a>.</center>
+            </div>
+        </form>
+    </div>
+    <div class="login-callout">
+        <h5>{% trans 'Já possui uma conta?' %} <a href="{% url 'account:sign_in' %}">
+            {% trans 'Inicie sua sessão aqui!' %}</a></h5>
+    </div>
+{% endblock %}

@@ -1,0 +1,256 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-31 21:10-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\account\forms.py:15 .\account\forms.py:141
+msgid "Sobrenome"
+msgstr "Last Name"
+
+#: .\account\forms.py:16 .\account\forms.py:155
+msgid "Nome de Usuário"
+msgstr "Username"
+
+#: .\account\forms.py:16 .\account\forms.py:155
+msgid "Um usuário com esse nome já existe."
+msgstr "A user with this name already exists."
+
+#: .\account\forms.py:16 .\account\forms.py:155
+msgid "Um usuário com esse email já existe."
+msgstr "A user with this email already exists."
+
+#: .\account\forms.py:17 .\account\forms.py:124
+msgid "Endereço de Email"
+msgstr "Email Address"
+
+#: .\account\forms.py:17 .\account\forms.py:124
+msgid "Primeiro nome"
+msgstr "First name"
+
+#: .\account\forms.py:19
+msgid "Data de nascimento"
+msgstr "Date of birth"
+
+#: .\account\forms.py:20 .\account\forms.py:123
+msgid "Telefone"
+msgstr "Phone"
+
+#: .\account\forms.py:21 .\account\forms.py:97
+msgid "Senha"
+msgstr "Password"
+
+#: .\account\forms.py:22
+msgid "Confirmação de senha"
+msgstr "Confirm password"
+
+#: .\account\forms.py:54
+msgid "A senha deve conter no mínimo 8 caracteres."
+msgstr "The password must contain at least 8 characters."
+
+#: .\account\forms.py:60
+msgid "A senha deve conter no mínimo 1 número."
+msgstr "The password must contain at least 1 number."
+
+#: .\account\forms.py:66 .\account\forms.py:72
+msgid "A senha deve conter letras maiúsculas e minúsculas."
+msgstr "The password must be uppercase and lowercase."
+
+#: .\account\forms.py:83
+msgid "As senhas devem ser iguais."
+msgstr "Passwords must be the same."
+
+#: .\account\forms.py:96
+msgid "Nome de Usuário ou Email"
+msgstr "Username or Email"
+
+#: .\account\forms.py:107
+msgid "Nova senha"
+msgstr "New password"
+
+#: .\account\forms.py:108
+msgid "Digite-a novamente"
+msgstr "Type it again"
+
+#: .\account\forms.py:108
+msgid "Sua senha antiga não é essa."
+msgstr "Your old password is not this one."
+
+#: .\account\forms.py:118
+msgid "Masculino"
+msgstr "Male"
+
+#: .\account\forms.py:119
+msgid "Feminino"
+msgstr "Female"
+
+#: .\account\forms.py:120
+msgid "Outro"
+msgstr "Other"
+
+#: .\account\forms.py:123
+msgid "(Opcional)"
+msgstr "(Optional)"
+
+#: .\account\forms.py:125
+msgid "País"
+msgstr "Country"
+
+#: .\account\forms.py:126
+msgid "Gênero"
+msgstr "Gender"
+
+#: .\account\forms.py:142
+msgid "Imagem"
+msgstr "Picture"
+
+#: .\account\forms.py:156
+msgid "Sobre você"
+msgstr "About you"
+
+#: .\templates\account\edit_account.html:43
+msgid "Informações básicas"
+msgstr "Account Basics"
+
+#: .\templates\account\edit_account.html:56
+msgid "Perfil"
+msgstr "Profile"
+
+#: .\templates\account\edit_account.html:31
+msgid "Idioma"
+msgstr "Language"
+
+#: .\templates\account\edit_account.html:66
+msgid "Trocar imagem"
+msgstr "Change picture"
+
+#: .\templates\account\edit_account.html:53
+msgid "Alterar senha"
+msgstr "Change password"
+
+#: .\templates\account\edit_account.html:80
+msgid "Salvar"
+msgstr "Save"
+
+#: .\templates\account\edit_account.html:81
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: .\templates\account\edit_account.html:9
+msgid "Edite sua conta no VoxStation"
+msgstr "Edit your VoxStation account"
+
+#: .\templates\account\change_password.html:25
+msgid "Altere sua senha"
+msgstr "Change your password"
+
+#: .\templates\account\change_password.html:25
+msgid "Altere sua senha no VoxStation"
+msgstr "Change your password on VoxStation"
+
+#: .\templates\account\edit_account.html:77
+msgid "Suas alterações foram salvas"
+msgstr "Your changes have been saved"
+
+#: .\templates\account\edit_account.html:77
+msgid "Oops, algo está errado!"
+msgstr "Oops, something is wrong!"
+
+#: .\account\forms.py:40/170
+msgid "Informe um endereço de email válido."
+msgstr "Please enter a valid email address."
+
+#: .\account\forms.py:40/170
+msgid "Sua nova senha foi salva"
+msgstr "Your new password has been saved"
+
+#: .\templates\account\login.html:15
+msgid "Inicie sua sessão"
+msgstr "Log in"
+
+#: .\templates\account\login.html:27
+msgid "Esqueceu?"
+msgstr "Forgot?"
+
+#: .\templates\account\login.html:29
+msgid "Entrar"
+msgstr "Log in"
+
+#: .\templates\account\login.html:32
+msgid "Crie a sua aqui!"
+msgstr "Create yours here!"
+
+#: .\templates\account\login.html:32
+msgid "Não tem uma conta?"
+msgstr "Don't have an account?"
+
+#: .\templates\account\login.html:30
+msgid "Ou"
+msgstr "Or"
+
+#: .\templates\account\login.html:30
+msgid "Entrar com o Google"
+msgstr "Login with Google"
+
+#: .\account\forms.py:62/69
+msgid "Nome de usuário ou senha incorretos"
+msgstr "Incorrect username or password"
+
+#: .\account\forms.py:62/69
+msgid "Crie sua conta no VoxStation"
+msgstr "Create your VoxStation account"
+
+
+#: .\account\forms.py:62/69
+msgid "Cadastrar-se"
+msgstr "Sign up"
+
+#: .\account\forms.py:62/69
+msgid "Ao se cadastrar, você concorda com nossos"
+msgstr "When you sign up, you agree to our"
+
+#: .\account\forms.py:62/69
+msgid " Termos e "
+msgstr " Terms and "
+
+#: .\account\forms.py:62/69
+msgid "Condições de Uso"
+msgstr "Conditions of Use"
+
+#: .\account\forms.py:62/69
+msgid "Já possui uma conta?"
+msgstr "Already have an account?"
+
+#: .\account\forms.py:62/69
+msgid "Inicie sua sessão aqui!"
+msgstr "Sign in here!"
+
+#: .\account\forms.py:62/69
+msgid "Inicie sua sessão no VoxStation"
+msgstr "Sign in to VoxStation"
+
+#: .\account\forms.py:62/69
+msgid "O nome de usuário deve ser alfanumérico ou conter números."
+msgstr "Username must be alphanumeric or contain numbers."
+
+#: .\account\forms.py:62/69
+msgid "O primeiro nome deve ser alfanumérico ou conter números."
+msgstr "First name must be alphanumeric or contain numbers."
+
+#: .\account\forms.py:62/69
+msgid "O sobrenome deve ser alfanumérico ou conter números."
+msgstr "Last name must be alphanumeric or contain numbers."

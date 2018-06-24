@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+body {
+  overflow-x: hidden;
+}
+
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+  padding-left: 250px;
+}
+
+#sidebar-wrapper {
+  z-index: 10;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: white;
+  box-shadow: 0px 0px 2px #ced6e0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px;
+
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: relative;
+  padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+}
+
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+  position: absolute;
+  top: 4.70rem;
+  width: 250px;
+  margin: 0;
+  padding: 0px;
+  list-style: none;
+  padding-top: 0px;
+}
+
+.sidebar-nav li {
+  text-indent: 10px;
+  line-height: 40px;
+}
+
+.sidebar-nav li a.sideLink{
+  display: block;
+  text-shadow: 0px 0px 1px black;
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+  font-family: 'Raleway', sans-serif;
+
+}
+
+.sidebar-nav li a.sideLink:hover {
+  text-decoration: none;
+  background-color: #f5f6fa;
+}
+.sidebar-nav li a.sideSection{
+  display: block;
+  text-shadow: 0px 0px 1px black;
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+  font-family: 'Raleway', sans-serif;
+
+}
+.sidebar-nav li a.sideSection:hover{ 
+  color: #1e3799;
+
+}
+
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav>.sidebar-brand {
+  height: 65px;
+  font-size: 18px;
+  line-height: 60px;
+}
+
+.sidebar-nav>.sidebar-brand a {
+  color: #999999;
+}
+
+.sidebar-nav>.sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+
+@media(min-width:768px) {
+  #wrapper {
+    padding-left: 0;
+  }
+  #wrapper.toggled {
+    padding-left: 250px;
+  }
+  #sidebar-wrapper {
+    width: 0;
+  }
+  #wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+    overflow: initial;
+  }
+  #page-content-wrapper {
+    padding: 20px;
+    position: relative;
+  }
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+}

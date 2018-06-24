@@ -1,0 +1,47 @@
+form#form-up{
+	margin-top: 100px;
+	margin-left: 300px;
+}
+form#form-up input{
+	margin-bottom: 50px;
+}
+div.progress{
+	display: none;
+}
+input[type='file']{
+	display: none;
+}
+.btn-up{
+	background-color: #032854;
+	color: white;
+}
+div#capa_preview{
+	display: block;
+	width: 300px;
+	height: 300px;
+	
+}
+
+div#capa_preview:hover{
+	opacity: 0.5;
+	transition: 1s;
+}
+div#capa_preview  img#change-ico{
+	position: absolute;
+	margin-left: 5px;
+	margin-top: -115px;
+	display: none;
+}
+div#capa_preview:hover img#change-ico{
+	display: inline-block;
+	transition: 0.6s;
+}
+img#capa{
+	position: relative;
+	width:250px;
+	height: 250px;
+	top: 22px;
+	left: 22px;
+
+}
+

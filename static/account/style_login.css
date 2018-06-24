@@ -1,0 +1,196 @@
+body {
+    margin: -25px 0 0 0;
+    padding: 0;
+    background-color: #032854;
+    font-family: Raleway;
+}
+
+.loginBox {
+    position: relative;
+    left: 50%;
+    margin-top: 110px;
+    transform: translate(-50%,0);
+    width: 357px;
+    padding: 80px 40px 0px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid #d8dee2;
+    box-shadow: 3px 3px 10px #636e72;
+}
+
+.avatar
+{
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	overflow: hidden;
+	position: absolute;
+	top: calc(-100px/2);
+	left: calc(50% - 50px);
+    background-color: #032854;
+}
+
+h2 {
+    font-weight: bold;
+    margin: 0;
+    padding: 0 0 20px;
+    color: #032854;
+    text-align: center;
+}
+
+.account-callout {
+    margin: -520px auto 23px;
+    position: relative;
+    bottom: -540px;
+    padding: 7px;
+    min-width: 340px;
+    max-width: 357px;
+    text-align: center;
+    border: 1px solid #d8dee2;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 3px 3px 10px #636e72;
+}
+
+.forgot-pw {
+    font-size: 14px;
+    position: relative;
+    bottom: 55px;
+    text-align: right;
+}
+
+.loginBox input {
+	width: 100%;
+}
+
+.has-float-label input:placeholder-shown:not(:focus)+*, .has-float-label select:placeholder-shown:not(:focus)+*, .has-float-label textarea:placeholder-shown:not(:focus)+* {
+    font-size: 120%;
+    top: 0.7em;
+    margin-left: 5px;
+}
+
+.has-float-label {
+    height: 40px;
+    bottom: 35px;
+    margin: 30px 0 0 0;
+}
+
+.has-float-label>span {
+    top: -5px;
+    font-size: 85%;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+.loginBox input[type="text"]:focus, .loginBox input[type="password"]:focus {
+    border-bottom: 2px solid steelblue;
+}
+
+.loginBox input[type="text"], .loginBox input[type="password"] {
+    height: 44px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid darkgray;
+}
+
+.btn-log {
+    cursor: pointer;
+    font-size: 17px;
+    letter-spacing: 0.8;
+    margin-top: -3px;
+    border-radius: 6px;
+    color: white;
+    padding: 8px;
+    width: 100%;
+    background-color: #032854;
+    border: hidden;
+    transition: 0.2s;
+    box-shadow: 0px 1px 2px #636e72;
+}
+
+h5 {
+    margin-top: 4px;
+    font-size: 16px;
+}
+
+.btn-log:focus {
+    color: white;
+}
+
+.btn-log:hover {
+    color: #fff;
+    background-color: #032854;
+    box-shadow: 0px 1px 6px #636e72;
+    opacity: 0.8;
+}
+
+.form-google {
+    position: relative;
+    bottom: 4px;
+    margin-bottom: -7px;
+}
+
+.btn-google {
+    cursor: pointer;
+    height: 38px;
+    background-color: white;
+    font-size: 17px;
+    transition: 0.2s;
+    color: #353b48e0;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 6px;
+    border: hidden;
+    box-shadow: 0px 1px 2px #636e72;
+}
+
+.btn-google:hover {
+    box-shadow: 0px 1px 6px #636e72;
+}
+
+.btn-google:focus {
+    outline: none;
+}
+
+.logo-google {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    top: -32px;
+    left: 20px;
+}
+
+p {
+    margin: -7px 0px 10px;
+    text-align: center;
+}
+
+.alert {
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    padding: 11px 0;
+    border: hidden;
+    border-radius: 6px;
+    color: white;
+    min-width: 243px;
+    max-width: 275px;
+    margin-bottom: 0;
+}
+
+.alert-danger {
+    background-color: darkred;
+}
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+
+.fade.in {
+  opacity: 1;
+}

@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+
+{% block head %}
+    <title>{% trans 'Edite sua conta no VoxStation' %}</title>
+    <link rel="stylesheet" href="{% static 'account/style_edit_acc.css' %}" type="text/css"/>
+    <script src="{% static 'account/js/edit_account.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="editAccBox" id="editAccBox">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+            <!--Informações Básicas-->
+            <div class="basic-form" id="basic-form">
+                <h2>{% trans 'Informações básicas' %}</h2>
+
+                <br/><!--Endereço de Email-->
+                <label class="has-float-label">
+                    <input type="email" name="{{ basicform.email.name }}" id="{{ basicform.email.id_for_label }}" value="{{ user.email }}"
+                           maxlength="50" placeholder="{% trans 'Endereço de Email' %}" required=""/>
+                    <span id="email">{% trans 'Endereço de Email' %}</span>
+                </label>
+                {% if basicform.errors.email %}
+                    <strong id="error-email" class="errors">{{ basicform.errors.email }}</strong>
+                {% endif %}
+
+                <!--Telefone-->
+                <label class="has-float-label">
+                    <input type="tel" name="{{ basicform.phone.name }}" id="{{ basicform.phone.id_for_label }}" maxlength="14"
+                           value="{{ user.phone }}" placeholder="{% trans 'Telefone' %}"/>
+                    <span id="phone">{% trans 'Telefone' %}<span class="help-block">{% trans '(Opcional)' %}</span></span>
+                </label>
+
+                {% if basicform.errors.phone %}
+                    <strong id="error-phone" class="errors">{{ basicform.errors.phone }}</strong>
+                {% endif %}
+
+                <!--País-->
+                <br/><span class="myspan" id="pais">{% trans 'País' %}
+                {{ basicform.pais }}</span>
+
+                <!--Idioma-->
+                <div class="idioma">
+                    <span class="myspan" id="spanLang">{% trans 'Idioma' %}</span>
+                    <select name="language" id="lang" onchange="changeLang()">
+                        {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!--Gênero-->
+                <br/><br/><span class="myspan genero">{% trans 'Gênero' %}
+                {{ basicform.genero }}</span>
+
+                <!--Alterar Senha-->
+                <span class="myspan" id="spanSenha">{% trans 'Senha' %}
+                    {{ basicform.password1 }}
+                    <a class="btn btn-default btn-cg_pw" href="{% url 'account:change_password' %}"><strong>{% trans 'Alterar senha' %}</strong></a>
+                </span>
+            </div>
+
+            <!--Perfil-->
+            <div class="profile-form" id="profile-form">
+                <h2 id="perfil">{% trans 'Perfil' %}</h2>
+                <br/><!--Primeiro nome-->
+                <label class="has-float-label">
+                    <input type="text" name="{{ profileform.first_name.name }}" id="{{ profileform.first_name.id_for_label }}"
+                           value="{{ user.first_name }}" maxlength="50" placeholder="{% trans 'Primeiro nome' %}" required=""/>
+                    <span id="first_name">{% trans 'Primeiro nome' %}</span>
+                </label>
+                {% if profileform.errors.first_name %}
+                    <strong id="error-first_name" class="errors">{{ profileform.errors.first_name }}</strong>
+                {% endif %}
+
+                <!--Sobrenome-->
+                <label class="has-float-label" id="label-last_name">
+                    <input type="text" name="{{ profileform.last_name.name }}" id="{{ profileform.last_name.id_for_label }}"
+                           value="{{ user.last_name }}" maxlength="50" placeholder="{% trans 'Sobrenome' %}" required=""/>
+                    <span id="last_name">{% trans 'Sobrenome' %}</span>
+                </label>
+                {% if profileform.errors.last_name %}
+                    <strong id="error-last_name" class="errors">{{ profileform.errors.last_name }}</strong>
+                {% endif %}
+
+                <!--Imagem de perfil-->
+                <span class="myspan" id="spanAvatar">{% trans 'Imagem' %}
+                    <label for='troca-foto' class="btn-img"><strong>{% trans 'Trocar imagem' %}</strong></label>
+                    <input type="file" name="{{ profileform.img_perfil.name }}" id="{{ profileform.img_perfil.id_for_label }}" accept="image/*">
+                    {% if not user.img_perfil %}
+                        <br/><img class="avatar" src="/static/images/default-user.png" id="foto"/>
+                    {% else %}
+                        <br/><img class="avatar" src="{{ user.img_perfil.url }}" id="foto_perfil">
+                    {% endif %}
+                </span>
+
+                <!--Nome de usuário-->
+                <label class="has-float-label">
+                    <input type="text" name="{{ auxform.username.name }}" id="{{ auxform.username.id_for_label }}" maxlength="50"
+                           value="{{ user.username }}" placeholder="{% trans 'Nome de Usuário' %}" required=""/>
+                    <span id="username">{% trans 'Nome de Usuário' %}</span>
+                </label>
+                {% if auxform.errors.username %}
+                    <strong id="error-username" class="errors">{{ auxform.errors.username }}</strong>
+                {% endif %}
+
+                <!--Sobre-->
+                <label class="has-float-label">
+                    <textarea rows="5" name="{{ auxform.sobre.name }}" maxlength="300" placeholder="{% trans 'Sobre você' %}"
+                              id="{{ auxform.sobre.id_for_label }}">{% if user.sobre %} {{ user.sobre }} {% endif %}</textarea>
+                    <span>{% trans 'Sobre você' %}</span>
+                </label>
+            </div>
+
+            <input type="submit" style="display:none" id="save">
+        </form>
+
+        <!--Form Idioma-->
+        <form action="{% url 'set_language' %}" method="post" class="lang-form" id="formLang">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            <input type="hidden" name="language" id="toSubmit" />
+            <input type="submit" name="submit" value="submit" id="langSubmit" />
+        </form>
+    </div>
+
+    <div class="footer">
+        <!--Botão de Salvar e Cancelar-->
+        <button class="btn btn-save" type="submit" id="submitForm" name="submitForm" onclick="Submit()">
+            <strong class="save-strong">{% trans 'Salvar' %}</strong>
+        </button>
+
+        <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}">
+            <strong class="mystrong">{% trans 'Cancelar' %}</strong>
+        </a>
+
+        <!--Alert de salvar-->
+        {% if edited %}
+            <div id="alert-save" class="alert alert-success fade alert-dismissible" role="alert">
+                {% trans 'Suas alterações foram salvas' %}
+            </div>
+        {% endif %}
+
+        <!--Alert de salvar senha-->
+        {% if edited_password %}
+            <div id="alert-password" class="alert alert-success fade alert-dismissible" role="alert">
+                {% trans 'Sua nova senha foi salva' %}
+            </div>
+        {% endif %}
+
+        <!--Alert de erro-->
+        {% if has_error %}
+            <div id="alert-error" class="alert alert-danger fade alert-dismissible" role="alert">
+                {% trans 'Oops, algo está errado!' %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

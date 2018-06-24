@@ -1,0 +1,263 @@
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.nav-right {
+    width: auto;
+    display: -webkit-box;
+    margin-right: -47px;
+}
+
+.nav-left {
+    height: 40px;
+}
+
+li.nav-item.active {
+    margin-right: -15px;
+}
+
+ul.nav.navbar-nav.ml-auto {
+    display: contents;
+}
+
+.navbar {
+    background: white;
+    z-index: 2;
+    padding: 2px 10px;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin-left: 30px;
+    position: relative;
+    bottom: 6px;
+}
+
+.icon-right {
+    margin: 13px 4px;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    left: 30px;
+}
+
+.icon-left {
+    display: inline-block;
+    cursor: pointer;
+    width: 26px;
+    position: relative;
+    top: -2px;
+    margin: 0 30px 0 20px;
+}
+
+img.icon-left.playlist {
+    width: 22px;
+}
+
+.search-icon {
+    display: block;
+    margin: 0px 128px 0px -3px;
+}
+
+.notific.show {
+    margin-left: 60px;
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.navbar-expand-sm .navbar-nav .dropdown-menu {
+    position: absolute;
+    left: -155px;
+}
+
+.dropdown, .dropup {
+    position: relative;
+    margin-top: 5px;
+    width: 32px;
+    margin-right: 60px;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    perspective: 1500px;
+}
+
+a.nav-link {
+    width: 53px;
+    margin-right: 35px;
+    cursor: default;
+}
+
+#sidebar {
+    overflow: auto;
+    z-index: 1;
+    position: fixed;
+    height: 100%;
+    min-width: 250px;
+    max-width: 250px;
+    background: #f8f9fa;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+    transform-origin: bottom left;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+    transform: rotateY(100deg);
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    display: contents;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    color: black;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #032854;
+    background: #fff;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #032854;
+}
+
+.collapse.show {
+    right: 0;
+}
+
+.collapsing {
+    right: 0;
+    display: block;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+}
+
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+.fixed-top {
+    box-shadow: 0px 0px 5px #636e72;
+}
+
+.form-inline {
+    display: contents;
+}
+
+.img-perfil {
+    display: block;
+    width: 55px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+button#menu-toggle {
+    margin-right: 15px;
+}
+
+.btn-link:focus {
+    box-shadow: 0px 0px 1px #636e72;
+}
+
+button.btn.btn-link.mb-1 {
+    width: 45px;
+    height: 37px;
+    margin-top: 3px;
+}
+
+.form-inline .form-control {
+    width: 500px;
+}
+
+#sidebarCollapse {
+    width: 40px;
+    height: 44px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    bottom: 3px;
+}
+
+.list-unstyled {
+    display: contents;
+}
+
+#sidebarCollapse span {
+    background: black;
+    width: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: #555;
+    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+    transition-delay: 0.2s;
+}
+
+#sidebarCollapse span:first-of-type {
+    transform: rotate(45deg) translate(2px, 2px);
+    background: black;
+}
+
+#sidebarCollapse span:nth-of-type(2) {
+    opacity: 0;
+    background: black;
+}
+
+#sidebarCollapse span:last-of-type {
+    transform: rotate(-45deg) translate(1px, -1px);
+    background: black;
+}
+
+#sidebarCollapse.active span {
+    transform: none;
+    opacity: 1;
+    margin: 5px auto;
+}
+
+/*Mobile*/
+@media only screen and (max-width: 511px) {
+    #sidebar {
+        width: 100%;
+        max-width: 100%;
+    }
+}

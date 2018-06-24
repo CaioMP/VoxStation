@@ -1,0 +1,123 @@
+body {
+    background-color: #032854;
+    font-family: Raleway;
+}
+
+.registerBox {
+    margin-top: 20px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    min-width: 360px;
+    max-width: 475px;
+    padding: 30px 40px;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid #d8dee2;
+    box-shadow: 3px 3px 10px #636e72;
+}
+
+h2 {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0 0 25px;
+    color: #032854;
+    text-align: center;
+}
+
+.registerBox input
+{
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.has-float-label input:placeholder-shown:not(:focus)+*, .has-float-label select:placeholder-shown:not(:focus)+*, .has-float-label textarea:placeholder-shown:not(:focus)+* {
+    font-size: 120%;
+    top: 0.7em;
+    margin-left: 5px;
+}
+
+.has-float-label {
+    padding-bottom: 5px;
+    height: 63px;
+}
+
+.has-float-label>span {
+    top: -5px;
+    font-size: 85%;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+.registerBox input[type="text"]:focus, .registerBox input[type="password"]:focus, .registerBox input[type="email"]:focus {
+    border-bottom: 2px solid steelblue;
+}
+
+.registerBox input[type="text"], .registerBox input[type="password"], .registerBox input[type="email"] {
+    height: 44px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid darkgray;
+}
+
+.btn-cad {
+    cursor: pointer;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    color: white;
+    padding: 8px;
+    width: 100%;
+    background-color: #032854;
+    border: hidden;
+    box-shadow: 0px 1px 2px #636e72;
+    transition: 0.2s;
+}
+
+.btn-cad:focus {
+    color: white;
+}
+
+.btn-cad:hover {
+    color: #fff;
+    background-color: #032854;
+    box-shadow: 0px 1px 6px #636e72;
+    opacity: 0.8;
+}
+
+.login-callout {
+    margin: -23px auto 23px;
+    position: relative;
+    bottom: -40px;
+    padding: 7px;
+    min-width: 340px;
+    max-width: 475px;
+    text-align: center;
+    border: 1px solid #d8dee2;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 3px 3px 10px #636e72;
+}
+
+.termos {
+    margin: 15px 0 -20px;
+    padding: 0 32px;
+}
+
+.errors {
+    position: relative;
+    top: -25px;
+    color: darkred;
+}
+
+ul {
+    font-size: 14px;
+    list-style-type: none;
+    margin: -2px -40px -10px;
+}
+
+h5 {
+    margin-top: 4px;
+    font-size: 16px;
+}

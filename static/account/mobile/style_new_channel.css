@@ -1,0 +1,86 @@
+@media only screen and (max-width: 1037px) {
+    .content {
+        margin: 0px 15%;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .content {
+        margin: 0px 10%;
+    }
+}
+
+@media only screen and (max-width: 747px) {
+    .content {
+        margin: 0px 5%;
+        transform: translate(-5%);
+    }
+}
+
+@media only screen and (max-width: 666px) {
+    .content {
+        margin: 0px 0px;
+    }
+}
+
+@media only screen and (max-width: 582px) {
+    .content {
+        margin: 0px 0px;
+        transform: translate(-6%);
+    }
+
+
+    .foto {
+        max-width: 160px;
+        height: 160px;
+        position: relative;
+        top: 50px;
+        left: 70px;
+    }
+}
+
+@media only screen and (max-width: 510px) {
+    h2 {
+        font-size: 26px;
+        max-width: 74%;
+        position: relative;
+        left: -26%;
+        transform: translate(50%,0);
+    }
+
+    .content {
+        position: relative;
+        left: 19px;
+        margin: 0 0;
+        overflow: -webkit-paged-y;
+    }
+
+    .foto {
+        height: 130px;
+        max-width: 130px;
+        top: 0;
+        left: 0;
+        margin: 0 auto;
+    }
+
+    .buttons {
+        margin: 30px 0px 0px;
+    }
+
+    .icon {
+        padding: 7px;
+        top: -138px;
+    }
+
+    .camera {
+        width: 50px;
+        margin: 34px;
+    }
+
+    .campos {
+        width: 100%;
+        top: 20px;
+        padding: 0px 15px;
+        left: 0;
+    }
+}

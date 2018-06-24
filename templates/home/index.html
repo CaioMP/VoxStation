@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% load static %}
+
+{% block head %}
+    <title>VoxStation</title>
+    <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="col">
+            <div class="col-md-3 col-md-offset-4">
+                <!-- Aqui ficará o código html da tela inicial do site -->
+
+                {% if not logado %}
+                    <!--Link temporário para a página de cadastro-->
+                    <center><h5><strong><br/><a href="{% url 'account:sign_up' %}">Crie sua conta</a></strong></h5></center>
+
+                    <!--Link temporário para a página de login-->
+                    <center><h5><strong><br/><a href="{% url 'account:sign_in' %}">Iniciar Sessão</a></strong></h5></center>
+                {% endif %}
+
+                {% if logado %}
+                    <!--Link temporário para a página de editar perfil-->
+                    <center><h5><strong><br/><a href="{% url 'account:edit_profile' %}">Editar Perfil</a></strong></h5></center>
+
+                    <!--Link temporário para a página de criar canal-->
+                    <center><h5><strong><br/><a href="{% url 'account:new_channel' %}">Criar canal</a></strong></h5></center>
+
+                    <!--Link temporário para a página de uploads (vai estar em canal)-->
+                    <center><h5><strong><br/><a href="{% url 'channel:myuploads' %}">MyUploads</a></strong></h5></center>
+
+                    <!--Link temporário para o logout-->
+                    <center><h5><strong><br/><a href="{% url 'account:sign_out' %}">Sair</a></strong></h5></center>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
