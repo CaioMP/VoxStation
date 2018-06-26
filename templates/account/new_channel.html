@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base3.html' %}
 
 {% load crispy_forms_tags %}
 {% load static %}
@@ -9,196 +9,92 @@
     <link rel="stylesheet" href="{% static 'account/style_edit_acc.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'account/style_new_channel.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'account/mobile/style_new_channel.css' %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'resources/navbar.css' %}" type="text/css"/>
     <script src="{% static 'account/js/new_channel.js' %}"></script>
 {% endblock %}
 
 {% block body %}
-<nav class="navbar navbar-expand-sm navbar-light fixed-top">
-    <div class="container-fluid">
-        <div class="nav-left">
-            <button type="button" id="sidebarCollapse" class="navbar-btn active">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <a href="#"><img class="logo" src="/static/resources/icones/logo.png"></a>
-        </div>
+    <div class="newChannelBox">
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <div class="capa">
+                <div class="buttons-capa">
+                    <label for="fundo" class="btn btn-default btn-capa" id="btn-capa">
+                        <input type="file" name="{{ form.capa.name }}" id="{{ form.capa.id_for_label }}" accept="image/*">
+                        <strong>Editar fundo</strong></label>
 
-        <center>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPesquisa" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar">
-        </button>
-        <div class="navbar-collapse collapse" id="navbarPesquisa">
-            <form class="form-inline">
-                <input class="form-control" type="search" placeholder="Pesquisar">
-                <button class="btn btn-link mb-1" type="submit">
-                    <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar">
-                </button>
-            </form>
-        </div></center>
+                    <!--Adicionar uma breve explicação do áudio de fundo dps-->
+                    <label for="audio" class="btn btn-default btn-capa" id="btn-audio">
+                        <input type="file" name="{{ form.audio_fundo.name }}" id="{{ form.audio_fundo.id_for_label }}" accept="audio/*">
+                        <strong>Áudio de fundo</strong></label>
 
-        <div class="nav-right">
-            <ul class="nav navbar-nav ml-auto">
-                 <li class="nav-item active">
-                    <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/upload.ico"></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/disc.ico"></a>
-                </li>
-                <li class="dropdown">
-                    <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="icon-right" src="/static/resources/icones/notific.ico"></a>
-                    <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
-                        <a class="dropdown-item" href="#">Notific 1</a>
-                        <a class="dropdown-item" href="#">Notific 2</a>
-                        <a class="dropdown-item" href="#">Notific 3</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a id="dropdownMenuButton" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <img class="img-perfil" src="/static/images/default-user.png"/>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- Sidebar Holder -->
-        <nav id="sidebar" class="active">
-            <div class="sidebar-header">
-                <center><h3>x</h3></center>
-            </div>
-            <ul class="list-unstyled components">
-                <li>
-                    <a href="#"><img class="icon-left" src="/static/resources/icones/home.png">Início</a>
-                </li>
-                <li>
-                    <a href="#"><img class="icon-left" src="/static/resources/icones/favorites.png">Favoritos</a>
-                </li>
-                <li>
-                    <a href="#"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
-                    <a href="#pageSubmenu" aria-expanded="true">
-                        <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
-                    <ul class="list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 1</a>
-                        </li>
-                        <li>
-                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 2</a>
-                        </li>
-                        <li>
-                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li><br/>
-                    <a href="#pageSubchannel" aria-expanded="true">Canais</a>
-                    <ul class="list-unstyled" id="pageSubchannel">
-                        <li>
-                            <a href="#">Canal 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Canal 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Canal 3</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-<div class="wrapper">
-        <div id="content">
-                <div class="newChannelBox">
-            <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-                <div class="capa">
-                    <div class="buttons-capa">
-                        <label for="fundo" class="btn btn-default btn-capa" id="btn-capa">
-                            <input type="file" name="{{ form.capa.name }}" id="{{ form.capa.id_for_label }}" accept="image/*">
-                            <strong>Editar fundo</strong></label>
-
-                        <!--Adicionar uma breve explicação do áudio de fundo dps-->
-                        <label for="audio" class="btn btn-default btn-capa" id="btn-audio">
-                            <input type="file" name="{{ form.audio_fundo.name }}" id="{{ form.audio_fundo.id_for_label }}" accept="audio/*">
-                            <strong>Áudio de fundo</strong></label>
-
-                    </div>
-                    <img src="#" id="capa" class="fundo">
                 </div>
+                <img src="#" id="capa" class="fundo">
+            </div>
 
-                <br/>
-                <div class="content">
-                    <div class="newChannelBox header">
-                        <h2>{% trans 'Crie seu canal' %}</h2>
-                    </div>
-                    <div class="foto">
-                        <!--Botão para alterar foto do canal-->
-                        <label for='foto-canal' class="btn-img btn-foto-canal">
-                            <input type="file" name="{{ form.foto_canal.name }}" id="{{ form.foto_canal.id_for_label }}" accept="image/*">
-
-                            <!--Foto do canal-->
+            <br/>
+            <div class="content">
+                <div class="newChannelBox header">
+                    <h2>{% trans 'Crie seu canal' %}</h2>
+                </div>
+                <figure class="fig-foto">
+                    <label for="foto-canal">
+                        <figure class="fig-fade">
                             {% if not foto_canal %}
-                                <br/><img class="avatar" src="/static/images/default-user.png" onmouseover="mostrarIcone()" onmouseleave="esconderIcone()" id="foto"/>
+                                <br/><img class="foto" src="/static/images/default-user.png" id="foto"/>
                             {% else %}
-                                <br/><img class="avatar" src="{{ foto_canal.url }}" onmouseover="mostrarIcone()" onmouseleave="esconderIcone()" id="foto_perfil"/>
+                                <br/><img class="foto" src="{{ foto_canal.url }}" id="foto_perfil"/>
                             {% endif %}
+                            <figcaption class="icon" id="icon">
+                                <img class="camera" src="/static/images/camera.png" alt="">
+                            </figcaption>
+                        </figure>
+                    </label>
+                    <input type="file" name="{{ form.foto_canal.name }}" id="{{ form.foto_canal.id_for_label }}" accept="image/*">
+                </figure>
+                <!--
+                <div class="foto">
+                    <!--Botão para alterar foto do canal
 
-                        </label>
-                        <div class="icon" id="icon">
-                            <img class="camera" src="/static/images/camera.png"/>
-                        </div>
-                    </div>
+                    <label for='foto-canal' class="btn-img btn-foto-canal">
+                        <input type="file" name="{{ form.foto_canal.name }}" id="{{ form.foto_canal.id_for_label }}" accept="image/*">
 
-                    <div class="campos">
-                        <label class="has-float-label">
-                            <input type="text" name="{{ form.nome_canal.name }}" id="{{ form.nome_canal.id_for_label }}"  value="{{ nome_canal }}"
-                                   autocomplete="off" maxlength="30" placeholder="{% trans 'Nome' %}" required=""/>
-                            <span id="nome">{% trans 'Nome' %}</span>
-                        </label>
-                        {% if error_nome_canal != "" %}
-                            <strong id="error-name" class="errors">{{ error_nome_canal }}</strong>
+                        {% if not foto_canal %}
+                            <br/><img class="avatar" src="/static/images/default-user.png" onmouseover="mostrarIcone()" onmouseleave="esconderIcone()" id="foto"/>
+                        {% else %}
+                            <br/><img class="avatar" src="{{ foto_canal.url }}" onmouseover="mostrarIcone()" onmouseleave="esconderIcone()" id="foto_perfil"/>
                         {% endif %}
 
-                        <label class="has-float-label">
-                            <textarea rows="5" name="{{ form.descricao.name }}" maxlength="300" placeholder="{% trans 'Descreva seu canal' %}"
-                                          id="{{ form.descricao.id_for_label }}"></textarea>
-                                <span>{% trans 'Descreva seu canal' %}</span>
-                        </label>
-                        <div class="buttons">
-                            <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}">
-                                <strong class="mystrong">{% trans 'Cancelar' %}</strong>
-                            </a>
-                            <button class="btn btn-save" type="submit" id="submitChannel" name="submitChannel">
-                                <strong class="save-strong">{% trans 'Salvar' %}</strong>
-                            </button>
-                        </div>
+                    </label>
+                    <div class="icon" id="icon">
+                        <img class="camera" src="/static/images/camera.png"/>
+                    </div>-->
+
+
+                <div class="campos">
+                    <label class="has-float-label">
+                        <input type="text" name="{{ form.nome_canal.name }}" id="{{ form.nome_canal.id_for_label }}"  value="{{ nome_canal }}"
+                               autocomplete="off" maxlength="30" placeholder="{% trans 'Nome' %}" required=""/>
+                        <span id="nome">{% trans 'Nome' %}</span>
+                    </label>
+                    {% if error_nome_canal != "" %}
+                        <strong id="error-name" class="errors">{{ error_nome_canal }}</strong>
+                    {% endif %}
+
+                    <label class="has-float-label">
+                        <textarea rows="5" name="{{ form.descricao.name }}" maxlength="300" placeholder="{% trans 'Descreva seu canal' %}"
+                                      id="{{ form.descricao.id_for_label }}"></textarea>
+                            <span>{% trans 'Descreva seu canal' %}</span>
+                    </label>
+                    <div class="buttons">
+                        <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}">
+                            <strong class="mystrong">{% trans 'Cancelar' %}</strong>
+                        </a>
+                        <button class="btn btn-save" type="submit" id="submitChannel" name="submitChannel">
+                            <strong class="save-strong">{% trans 'Salvar' %}</strong>
+                        </button>
                     </div>
                 </div>
-            </form>
-        </div>
             </div>
-    </div>
+        </form>
 
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-                $(this).toggleClass('active');
-            });
-        });
-    </script>
+            </div>
 {% endblock %}

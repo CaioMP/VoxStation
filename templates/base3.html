@@ -1,0 +1,145 @@
+<html lang="pt-br">
+<head>
+    {% load static %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Font Raleway-->
+    <link rel="stylesheet" href="{% static 'base.css' %}" type="text/css"/>
+
+    <!--Floating Labels-->
+    <link rel="stylesheet" href="{% static 'resources/float-label-css/float-label.min.css' %}" type="text/css"/>
+
+    <!--Bootstrap Links-->
+    <link rel="stylesheet" href="{% static 'resources/bootstrap/css/bootstrap.min.css' %}" type="text/css"/>
+    <script src="{% static 'resources/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'resources/bootstrap/js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+
+    <!--JQuery-->
+    <script src="{% static 'resources/JQuery/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'resources/JQuery/popper.min.js' %}" type="text/javascript"></script>
+
+    <!--Navbar || Sidebar-->
+    <link rel="stylesheet" href="{% static 'resources/navbar/navbar.css' %}" type="text/css"/>
+    <script src="{% static 'resources/navbar/bootstrap-4.1.0.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light fixed-top">
+        <div class="container-fluid">
+            <div class="nav-left">
+                <button type="button" id="sidebarCollapse" class="navbar-btn active">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <a href="{% url 'home:index' %}"><img class="logo" src="/static/resources/icones/logo.png"></a>
+            </div>
+
+            <center>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPesquisa" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar">
+            </button>
+            <div class="navbar-collapse collapse" id="navbarPesquisa">
+                <form class="form-inline">
+                    <input class="form-control" type="search" placeholder="Pesquisar">
+                    <button class="btn btn-link mb-1" type="submit">
+                        <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar">
+                    </button>
+                </form>
+            </div></center>
+
+            <div class="nav-right">
+                <ul class="nav navbar-nav ml-auto">
+                     <li class="nav-item active">
+                        <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/upload.ico"></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/disc.ico"></a>
+                    </li>
+                    <li class="dropdown">
+                        <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="icon-right" src="/static/resources/icones/notific.ico"></a>
+                        <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
+                            <a class="dropdown-item" href="#">Notific 1</a>
+                            <a class="dropdown-item" href="#">Notific 2</a>
+                            <a class="dropdown-item" href="#">Notific 3</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a id="dropdownMenuButton" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <img class="img-perfil" src="/static/images/default-user.png"/>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+     <nav id="sidebar" class="active">
+            <div class="sidebar-header">
+                <center><h3>x</h3></center>
+            </div>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="{% url 'home:index' %}"><img class="icon-left" src="/static/resources/icones/home.png">Início</a>
+                </li>
+                <li>
+                    <a href="#"><img class="icon-left" src="/static/resources/icones/favorites.png">Favoritos</a>
+                </li>
+                <li>
+                    <a href="#"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
+                    <a href="#pageSubmenu" aria-expanded="true">
+                        <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
+                    <ul class="list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 1</a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 2</a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><br/>
+                    <a href="#pageSubchannel" aria-expanded="true"><img class="icon-left" src="/static/resources/icones/channel.png">Canais</a>
+                    <ul class="list-unstyled" id="pageSubchannel">
+                        <li>
+                            <a href="#"><img class="icon-left channel" src="/static/images/default-user.png">Canal 1</a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="icon-left channel" src="/static/images/default-user.png">Canal 2</a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="icon-left channel" src="/static/images/default-user.png">Canal 3</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+    <div class="wrapper">
+        <div id="content">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

@@ -26,7 +26,7 @@ class Audio(models.Model):
     reproducoes = models.IntegerField()
     descricao = models.TextField(max_length=500)
     categoria = models.CharField(max_length=15)
-    canal_proprietario = models.ManyToManyField(Canal)
+    canal_proprietario = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name="canal_proprietario", default=None, null=True)
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="proprietario", null=True)
     anuncios = models.ManyToManyField(Anuncio)
     tag = models.ManyToManyField(Tag)

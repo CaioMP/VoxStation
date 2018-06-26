@@ -29,13 +29,18 @@
         transform: translate(-6%);
     }
 
+    figure.fig-foto {
+        max-width: 160px;
+        height: 160px;
+    }
+
+    .camera {
+        margin: 51px;
+    }
 
     .foto {
         max-width: 160px;
         height: 160px;
-        position: relative;
-        top: 50px;
-        left: 70px;
     }
 }
 
@@ -48,6 +53,14 @@
         transform: translate(50%,0);
     }
 
+    figure.fig-foto {
+        top: 25px;
+        left: 50%;
+        width: 130px;
+        height: 130px;
+        transform: translate(-50%,0);
+    }
+
     .content {
         position: relative;
         left: 19px;
@@ -58,8 +71,9 @@
     .foto {
         height: 130px;
         max-width: 130px;
-        top: 0;
-        left: 0;
+        position: relative;
+        top: -24px;
+        left: 0px;
         margin: 0 auto;
     }
 

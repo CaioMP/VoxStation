@@ -14,5 +14,10 @@ class AudioForm(forms.ModelForm):
             'audio',
             'capa',
             'titulo',
-            'descricao'
+            'descricao',
+            'canal_proprietario'
         ]
+
+
+class TagForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea)
