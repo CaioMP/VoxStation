@@ -1,4 +1,4 @@
-{% extends 'base3.html' %}
+{% extends 'base2.html' %}
 
 {% load crispy_forms_tags %}
 {% load static %}
@@ -38,10 +38,10 @@
                 <figure class="fig-foto">
                     <label for="foto-canal">
                         <figure class="fig-fade">
-                            {% if not foto_canal %}
+                            {% if not user.img_perfil %}
                                 <br/><img class="foto" src="/static/images/default-user.png" id="foto"/>
                             {% else %}
-                                <br/><img class="foto" src="{{ foto_canal.url }}" id="foto_perfil"/>
+                                <br/><img class="foto" src="{{ user.img_perfil.url }}" id="foto_perfil"/>
                             {% endif %}
                             <figcaption class="icon" id="icon">
                                 <img class="camera" src="/static/images/camera.png" alt="">

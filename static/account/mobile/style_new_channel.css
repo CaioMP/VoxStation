@@ -32,6 +32,8 @@
     figure.fig-foto {
         max-width: 160px;
         height: 160px;
+        position: relative;
+        left: 69px;
     }
 
     .camera {
@@ -96,5 +98,17 @@
         top: 20px;
         padding: 0px 15px;
         left: 0;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .capa {
+        margin: 140px auto 10px;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .capa {
+        margin: 113px auto 10px;
     }
 }

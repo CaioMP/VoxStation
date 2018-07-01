@@ -7,15 +7,25 @@ a, a:hover, a:focus {
 .nav-right {
     width: auto;
     display: -webkit-box;
-    margin-right: -47px;
+    margin-right: -210px;
 }
 
 .nav-left {
     height: 40px;
+    display: flex;
+}
+
+a#logo {
+    cursor: default;
 }
 
 li.nav-item.active {
-    margin-right: -15px;
+    margin-right: 35px;
+    width: 35px;
+}
+
+li#dpAvatar {
+    left: -101px;
 }
 
 ul.nav.navbar-nav.ml-auto {
@@ -29,7 +39,23 @@ ul.nav.navbar-nav.ml-auto {
     border: none;
     border-radius: 0;
     margin-bottom: 40px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.nav-search {
+    width: 50%;
+    position: relative;
+    transform: translate(25%, 0);
+    margin-right: 16%;
+}
+
+form.form-inline {
+    width: 100%;
+    display: contents;
+}
+
+.form-inline .form-control {
+    width: 76%;
 }
 
 .logo {
@@ -38,6 +64,7 @@ ul.nav.navbar-nav.ml-auto {
     margin-left: 30px;
     position: relative;
     bottom: 6px;
+    cursor: pointer;
 }
 
 .icon-right {
@@ -45,7 +72,7 @@ ul.nav.navbar-nav.ml-auto {
     display: block;
     cursor: pointer;
     position: relative;
-    left: 30px;
+    left: -4px;
 }
 
 .icon-left {
@@ -82,15 +109,15 @@ img.icon-left.channel {
 
 .navbar-expand-sm .navbar-nav .dropdown-menu {
     position: absolute;
-    left: -155px;
+    left: -190px;
     background: #f8f9fa;
 }
 
 .dropdown, .dropup {
     position: relative;
-    margin-top: 5px;
-    width: 32px;
-    margin-right: 60px;
+    margin-top: 7px;
+    width: 36px;
+    margin-right: 120px;
 }
 
 .dropdown-item:focus, .dropdown-item:hover {
@@ -107,7 +134,7 @@ img.icon-left.channel {
 }
 
 a.nav-link {
-    width: 53px;
+    width: 39px;
     margin-right: 35px;
     cursor: default;
 }
@@ -176,6 +203,10 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
+div#dpAccount {
+    left: -120px;
+}
+
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
@@ -191,13 +222,10 @@ ul ul a {
     box-shadow: 0px 0px 5px #636e72;
 }
 
-.form-inline {
-    display: contents;
-}
-
 .img-perfil {
     display: block;
-    width: 55px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -206,18 +234,10 @@ button#menu-toggle {
     margin-right: 15px;
 }
 
-.btn-link:focus {
-    box-shadow: 0px 0px 1px #636e72;
-}
-
 button.btn.btn-link.mb-1 {
     width: 45px;
     height: 37px;
     margin-top: 3px;
-}
-
-.form-inline .form-control {
-    width: 500px;
 }
 
 .form-control:focus {
@@ -271,9 +291,483 @@ button.btn.btn-link.mb-1 {
 }
 
 /*Mobile*/
-@media only screen and (max-width: 511px) {
+@media only screen and (max-width: 747px) {
+    .navbar {
+        height: 70px;
+    }
+
+    .navbar-expand-sm .navbar-collapse {
+        width: 193%;
+        margin-right: -126px;
+        margin-left: -45px;
+    }
+
+    .logo {
+        margin-left: 16px;
+        width: 64px;
+        bottom: 5px;
+    }
+
+    .nav-search {
+        transform: translate(36%, 0);
+    }
+
+    .form-inline .form-control {
+        width: 52%;
+    }
+
+    li.nav-item.active {
+        margin-right: 20px;
+        width: 35px;
+    }
+
+    .navbar-expand-sm .navbar-nav .dropdown-menu {
+        top: 58px;
+    }
+
+    .img-perfil {
+        width: 40px;
+        height: 40px;
+        margin-top: 2px;
+    }
+
+    .search-icon {
+        width: 21px;
+        margin: 1px 128px 0px -3px;
+    }
+
+    .icon-right {
+        width: 22px;
+    }
+}
+
+@media only screen and (max-width: 700px)
+.form-inline .form-control {
+    width: 55%;
+}
+
+@media only screen and (max-width: 600px) {
+    .form-inline .form-control {
+        width: 54%;
+    }
+
+    .nav-search {
+        transform: translate(25%, 0);
+        margin-right: 14%;
+        margin-left: 15px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .navbar {
+        height: 140px;
+    }
+
+    .nav-search {
+        margin-right: 16%;
+        margin-left: 0;
+    }
+
     #sidebar {
         width: 100%;
         max-width: 100%;
+    }
+
+    #sidebar .sidebar-header {
+        padding: 55px;
+    }
+
+    .navbar-expand-sm .navbar-collapse {
+        width: auto;
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    li#dpAvatar {
+        left: 0;
+    }
+
+    .nav-right {
+        position: relative;
+        bottom: 76px;
+        left: 59%;
+        margin-right: 0;
+    }
+
+    li.nav-item.active {
+        margin-right: 20px;
+    }
+
+    .navbar-light .navbar-nav .active>.nav-link{
+        color: rgba(0,0,0,.9);
+        width: 36px;
+    }
+
+    .icon-right {
+        width: auto;
+        left: 2px;
+    }
+
+    div#dpAccount {
+        left: -120px;
+    }
+
+    .dropdown, .dropup {
+        margin-right: 21px;
+        margin-top: 7px;
+    }
+
+    .navbar-expand-sm .navbar-nav .dropdown-menu {
+        top: 65px;
+        left: -185px;
+    }
+
+    .form-inline .form-control {
+        width: 155%;
+        position: relative;
+        right: 176px;
+        top: 80px;
+    }
+
+    .img-perfil {
+        width: 45px;
+        height: 45px;
+        margin-top: 2px;
+    }
+
+    button.btn.btn-link.mb-1 {
+        width: 32px;
+        position: relative;
+        float: right;
+        left: 4px;
+        bottom: -40px;
+    }
+}
+
+@media only screen and (max-width: 545px) {
+    .form-inline .form-control {
+        width: 158%;
+    }
+
+    .nav-right {
+        left: 57%;
+    }
+}
+
+@media only screen and (max-width: 519px) {
+    .form-inline .form-control {
+        width: 161%;
+    }
+
+    .nav-right {
+        left: 53%;
+    }
+}
+
+@media only screen and (max-width: 498px) {
+    .form-inline .form-control {
+        width: 164%;
+    }
+}
+
+@media only screen and (max-width: 479px) {
+    .form-inline .form-control {
+        width: 167%;
+    }
+
+    .nav-right {
+        left: 45%;
+    }
+}
+
+@media only screen and (max-width: 459px) {
+    .form-inline .form-control {
+        width: 170%;
+    }
+}
+
+@media only screen and (max-width: 447px) {
+    .form-inline .form-control {
+        width: 172%;
+    }
+}
+
+@media only screen and (max-width: 428px) {
+    .form-inline .form-control {
+        width: 175%;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .navbar {
+        height: 112px;
+    }
+
+    .icon-right {
+        left: 0;
+    }
+
+    #sidebar .sidebar-header {
+        padding: 40px;
+    }
+
+    .navbar-expand-sm .navbar-nav .dropdown-menu {
+        top: 57px;
+        left: -190px;
+    }
+
+    div#dpAccount {
+        left: -129px;
+    }
+
+    .logo {
+        width: 50px;
+        bottom: -3px;
+    }
+
+    .img-perfil {
+        width: 36px;
+        height: 36px;
+        margin-top: 9px;
+    }
+
+    .form-inline .form-control {
+        width: 167%;
+        position: relative;
+        top: 58px;
+        right: 156px;
+    }
+
+    .nav-right {
+        bottom: 90px;
+        left: 48%;
+    }
+
+    .dropdown, .dropup {
+        margin-top: 7px;
+        margin-right: 20px;
+    }
+
+    .nav-left {
+        position: relative;
+        bottom: 18px;
+    }
+
+    button.btn.btn-link.mb-1 {
+        bottom: -17px;
+        left: 3px;
+    }
+
+    li.nav-item.active {
+        margin-right: 15px;
+    }
+}
+
+@media only screen and (max-width: 405px) {
+    .form-inline .form-control {
+        width: 169%;
+     }
+}
+
+@media only screen and (max-width: 393px) {
+    .form-inline .form-control {
+        width: 171%;
+     }
+
+     .nav-right {
+        left: 45%;
+    }
+}
+
+
+@media only screen and (max-width: 372px) {
+    .navbar {
+        height: 112px;
+    }
+
+    #sidebar .sidebar-header {
+        padding: 37px;
+    }
+
+    div#dpAccount {
+        top: 53px;
+    }
+
+    .nav-left {
+        bottom: 0;
+    }
+
+    .navbar-expand-sm .navbar-nav .dropdown-menu {
+        left: -188px;
+        top: 53px;
+    }
+
+    .logo {
+        width: 50px;
+        bottom: -3px;
+        margin-left: 30px;
+    }
+
+    .nav-right {
+        bottom: 134px;
+        left: 155px;
+    }
+
+    .icon-right {
+        left: 1px;
+    }
+
+    .dropdown, .dropup {
+        margin-top: 7px;
+        margin-right: 20px;
+    }
+
+    .img-perfil {
+        width: 35px;
+        height: 35px;
+        margin-top: 9px;
+    }
+
+    .form-inline .form-control {
+        width: 173%;
+        position: relative;
+        top: 10px;
+        right: 36px;
+    }
+
+    img#search {
+        width: 21px;
+    }
+
+    button.btn.btn-link.mb-1 {
+        left: 120px;
+        bottom: 30px;
+    }
+
+    li.nav-item.active {
+        margin-right: 14px;
+    }
+}
+
+@media only screen and (max-width: 367px) {
+    .navbar {
+        height: 112px;
+    }
+
+    #sidebar .sidebar-header {
+        padding: 40px;
+    }
+
+    .navbar-expand-sm .navbar-nav .dropdown-menu {
+        left: -194px;
+        top: 53px;
+    }
+
+    div#dpAccount {
+        left: -138px;
+        top: 53px;
+    }
+
+    .navbar-toggler:not(:disabled):not(.disabled) {
+        width: 37px;
+        position: absolute;
+        right: 8px;
+        top: 7px;
+        border: hidden;
+        transition: 0.3s;
+    }
+
+    .search-icon {
+        width: 20px;
+    }
+
+    .navbar-toggler:focus, .navbar-toggler:hover {
+       outline: 0;
+    }
+
+    .form-inline .form-control {
+        width: 162%;
+        right: 30px;
+        top: 0px;
+        margin-top: 50px;
+    }
+
+    input.form-control {
+        position: relative;
+        right: 39px;
+    }
+
+    div#navbarPesquisa {
+        position: relative;
+        top: -36px;
+    }
+
+    #sidebarCollapse {
+        bottom: -1px;
+    }
+
+    .logo {
+        bottom: -7px;
+        width: 48px;
+        left: -15px;
+    }
+
+    .icon-right {
+        width: 22px;
+        left: -2px;
+    }
+
+    .dropdown, .dropup {
+        position: relative;
+        margin-top: 7px;
+        width: 22px;
+        margin-right: 32px;
+    }
+
+    button.btn.btn-link.mb-1 {
+        left: 103px;
+        bottom: 0;
+        margin-top: -36px;
+    }
+
+    .img-perfil {
+        width: 30px;
+        height: 30px;
+        margin-left: -9px;
+    }
+
+    .nav-right {
+        width: auto;
+        display: -webkit-box;
+        bottom: 141px;
+        left: 42%;
+    }
+
+    .navbar-light .navbar-nav .active>.nav-link {
+        width: 27px;
+        margin-right: 61px;
+    }
+
+    li.nav-item.active {
+        margin-right: -40px;
+        width: auto;
+    }
+
+    .navbar-toggler[aria-expanded="true"] {
+        background: #d3d3d36e;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .form-inline .form-control {
+        width: 168%;
+    }
+
+    .nav-right {
+        left: 34%;
+    }
+
+    .nav-right {
+        left: 41%;
     }
 }

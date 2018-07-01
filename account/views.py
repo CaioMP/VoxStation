@@ -138,6 +138,7 @@ def edit_profile(request):
 
     edited = False  # Variável para verificar e mostrar se algo foi editado com sucesso
     has_error = False  # Váriavel para verificar e mostrar se ocorreu algum erro ao salvar
+    footer = True  # Váriavel para colocar o footer no final da base2.tml
 
     if request.method == 'POST':
         basicform = EditBasicForm(request.POST, instance=request.user)
@@ -161,7 +162,7 @@ def edit_profile(request):
         profileform = EditProfileForm(instance=request.user)
         auxform = AuxForm(instance=request.user)
 
-    context = {"basicform": basicform, "profileform": profileform, "auxform": auxform,
+    context = {"basicform": basicform, "profileform": profileform, "auxform": auxform, "footer": footer, "logado": request.user.is_active,
                "has_error": has_error, "edited": edited, "edited_password": edited_password, "user": request.user}
 
     if edited_password:
@@ -208,7 +209,7 @@ def change_password(request):
             if new_password2 == 'new_password2':
                 new_password2 = ''
 
-            context = {'form': form, 'old_password': old_password,
+            context = {'form': form, 'old_password': old_password, 'logado': request.user.is_active,
                        'new_password1': new_password1, 'new_password2': new_password2}
 
             return render(request, './account/change_password.html', context)
@@ -216,7 +217,7 @@ def change_password(request):
     else:
         edited_password = False
         form = ChangePasswordForm(request.user)
-    return render(request, './account/change_password.html', {'form': form})
+    return render(request, './account/change_password.html', {'form': form, 'logado': request.user.is_active})
 
 
 def NewChannelView(request):
@@ -239,9 +240,8 @@ def NewChannelView(request):
                         error_nome_canal = error
             form = NewChannelForm()
 
-    user = request.user.img_perfil
-
-    context = {'form': form, 'error_nome_canal': error_nome_canal, 'nome_canal': nome_canal, 'user': user}
+    context = {'form': form, 'error_nome_canal': error_nome_canal, 'nome_canal': nome_canal,
+               'user': request.user, 'logado': request.user.is_active}
 
     return render(request, './account/new_channel.html', context)
 
@@ -256,27 +256,3 @@ def historic(request, cod):
 
 def myPlaylists(request, cod):
     return render(request, './account/myplaylists.html')
-
-
-def myuploads(request):
-    audio = Audio()
-    if request.method == "POST":
-        form = AudioForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            form.save(commit=False)
-            audio.titulo = form.cleaned_data['titulo']
-            audio.audio = form.cleaned_data['audio']
-            audio.descricao = form.cleaned_data['descricao']
-            audio.capa = form.cleaned_data['capa']
-            audio.likes = 1
-            audio.deslikes = 1
-            audio.audiencia = 0
-            audio.reproducoes = 0
-            audio.save()
-
-            return redirect('/')
-        else:
-            return HttpResponse(request, "erro de validação")
-    form = AudioForm(instance=request.user)
-    return render(request, "./account/myUploads.html", {'form': form})
-

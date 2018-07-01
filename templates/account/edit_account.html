@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
 {% load static %}
 {% load i18n %}
@@ -129,37 +129,5 @@
             <input type="hidden" name="language" id="toSubmit" />
             <input type="submit" name="submit" value="submit" id="langSubmit" />
         </form>
-    </div>
-
-    <div class="footer">
-        <!--Botão de Salvar e Cancelar-->
-        <button class="btn btn-save" type="submit" id="submitForm" name="submitForm" onclick="Submit()">
-            <strong class="save-strong">{% trans 'Salvar' %}</strong>
-        </button>
-
-        <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}">
-            <strong class="mystrong">{% trans 'Cancelar' %}</strong>
-        </a>
-
-        <!--Alert de salvar-->
-        {% if edited %}
-            <div id="alert-save" class="alert alert-success fade alert-dismissible" role="alert">
-                {% trans 'Suas alterações foram salvas' %}
-            </div>
-        {% endif %}
-
-        <!--Alert de salvar senha-->
-        {% if edited_password %}
-            <div id="alert-password" class="alert alert-success fade alert-dismissible" role="alert">
-                {% trans 'Sua nova senha foi salva' %}
-            </div>
-        {% endif %}
-
-        <!--Alert de erro-->
-        {% if has_error %}
-            <div id="alert-error" class="alert alert-danger fade alert-dismissible" role="alert">
-                {% trans 'Oops, algo está errado!' %}
-            </div>
-        {% endif %}
     </div>
 {% endblock %}

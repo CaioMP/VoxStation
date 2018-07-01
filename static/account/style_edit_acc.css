@@ -13,7 +13,6 @@
 }
 
 body {
-    background-color: #032854;
     font-family: Raleway;
 }
 
@@ -26,13 +25,12 @@ input[type=submit] {
     margin: 0;
     position: relative;
     left: 50%;
+    top: 5%;
     transform: translate(-50%,0);
     min-width: 360px;
     max-width: 480px;
-    padding: 30px 40px;
+    padding: 30px 40px 95px;
     background-color: white;
-    border: 1px solid #d8dee2;
-    box-shadow: 3px 3px 10px #636e72;
 }
 
 .editAccBox label {
@@ -269,7 +267,6 @@ ul {
     width: 480px;
     text-align: center;
     background-color: white;
-    box-shadow: 3px 10px 10px #636e72;
 }
 
 /*Radio buttons */
@@ -381,4 +378,18 @@ input[type='radio']:hover:after {
 .errorlist {
     margin: 25px 15px 0px -57px;
     font-size: 14px;
+}
+
+@media only screen and (max-width: 575px) {
+    .editAccBox {
+        top: 10%;
+        padding: 30px 40px 170px;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .editAccBox {
+        top: 8%;
+        padding: 30px 40px 145px;
+    }
 }

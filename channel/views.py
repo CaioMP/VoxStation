@@ -42,10 +42,12 @@ def myuploads(request):
             return redirect('/')
         else:
             erro = True
-            return render(request, "./channel/myuploads.html", {'form': form, 'channels': channels, "tagform": tagform, "erro": erro})
+            return render(request, "./channel/myuploads.html", {'form': form, 'channels': channels, 'logado': request.user.is_active,
+                                                                "tagform": tagform, "erro": erro})
     tagform = TagForm()
     form = AudioForm(instance=request.user)
-    return render(request, "./channel/myuploads.html", {'form': form, 'channels': channels, "tagform": tagform})
+    return render(request, "./channel/myuploads.html", {'form': form, 'channels': channels,
+                                                        "tagform": tagform, 'logado': request.user.is_active})
 
 
 def channel(request, cod):

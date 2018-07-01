@@ -1,6 +1,7 @@
 <html lang="pt-br">
 <head>
     {% load static %}
+    {% load i18n %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -36,33 +37,34 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-light fixed-top">
-        <div class="container-fluid">
             <div class="nav-left">
                 <button type="button" id="sidebarCollapse" class="navbar-btn active">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-                <a href="{% url 'home:index' %}"><img class="logo" src="/static/resources/icones/logo.png"></a>
+                <a href="{% url 'home:index' %}" id="logo"><img class="logo" src="/static/resources/icones/logo.png"></a>
             </div>
 
-            <center>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPesquisa" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar">
-            </button>
-            <div class="navbar-collapse collapse" id="navbarPesquisa">
-                <form class="form-inline">
-                    <input class="form-control" type="search" placeholder="Pesquisar">
-                    <button class="btn btn-link mb-1" type="submit">
-                        <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar">
-                    </button>
-                </form>
-            </div></center>
+            <div class="nav-search">
+                <center>
+                    <div class="navbar-collapse" id="navbarPesquisa">
+                        <form class="form-inline">
+                            <input class="form-control" type="search" placeholder="Pesquisar">
+                            <button class="btn btn-link mb-1" type="submit">
+                                <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar" id="search">
+                            </button>
+                        </form>
+                    </div>
+                </center>
+            </div>
+
 
             <div class="nav-right">
                 <ul class="nav navbar-nav ml-auto">
-                     <li class="nav-item active">
-                        <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/upload.ico"></a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'channel:myuploads' %}">
+                            <img class="icon-right" src="/static/resources/icones/upload.ico"></a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/disc.ico"></a>
@@ -76,20 +78,22 @@
                             <a class="dropdown-item" href="#">Notific 3</a>
                         </div>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown" id="dpAvatar">
                         <a id="dropdownMenuButton" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
                             <img class="img-perfil" src="/static/images/default-user.png"/>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dpAccount">
+                            {% if logado %}
+                                <a class="dropdown-item" href="{% url 'account:edit_profile' %}">Editar Perfil</a>
+                                <a class="dropdown-item" href="{% url 'account:new_channel' %}">Criar canal</a> <!--Trocar por meus canais dps-->
+                                <a class="dropdown-item" href="{% url 'account:sign_out' %}">Sair</a>
+                            {% endif %}
                         </div>
                     </li>
                 </ul>
             </div>
-        </div>
+
     </nav>
      <nav id="sidebar" class="active">
             <div class="sidebar-header">
@@ -137,9 +141,10 @@
 
     <div class="wrapper">
         <div id="content">
-            {% block body %}
-            {% endblock %}
         </div>
     </div>
+
+    {% block body %}
+    {% endblock %}
 </body>
 </html>
