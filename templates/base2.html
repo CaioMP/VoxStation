@@ -92,6 +92,9 @@
                                 <a class="dropdown-item" href="{% url 'account:edit_profile' %}">Editar Perfil</a>
                                 <a class="dropdown-item" href="{% url 'account:new_channel' %}">Criar canal</a> <!--Trocar por meus canais dps-->
                                 <a class="dropdown-item" href="{% url 'account:sign_out' %}">Sair</a>
+                            {% else %}
+                                <a class="dropdown-item" href="{% url 'account:sign_in' %}">Entrar</a>
+                                <a class="dropdown-item" href="{% url 'account:sign_up' %}">Nova conta</a>
                             {% endif %}
                         </div>
                     </li>

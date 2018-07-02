@@ -1,4 +1,216 @@
 body {
     font-family: Raleway;
-    transform: translate(35%);
+}
+
+.ft-do-canal {
+    height: 2rem;
+    width: 2rem;
+    margin: 0 10px;
+    background: white;
+    position: relative;
+    top: -2px;
+}
+
+.icon-view {
+    display: inline-block;
+    width: 16px;
+    position: relative;
+    top: -2px;
+    margin-right: 3px;
+}
+
+.headerChannel {
+    background: black;
+    color: white;
+    height: 40px;
+    padding-top: 3px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #000000d6;
+    height: 19px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.container-fluid {
+    margin-top: 115px;
+    margin-bottom: 30px;
+    padding-right: 50px;
+}
+
+.h2, h2 {
+    font-size: 1.7rem;
+}
+
+.slideIcos {
+    border-radius: 50%;
+    background-color: white;
+    width: 50px;
+    box-shadow: 0px 0px 5px #636e72;
+}
+
+.slideIcos:hover {
+    box-shadow: 0px 0px 10px #636e72;
+}
+
+.carousel-control-next, .carousel-control-prev {
+    margin: 195px -22px 0px;
+    opacity: 1;
+    height: 52px;
+    width: 52px;
+}
+
+.carousel-control-next:hover, .carousel-control-prev:hover {
+    opacity: 1;
+}
+
+.card-img-top {
+    height: 25%;
+}
+
+.card-title {
+    white-space: nowrap;
+    margin-bottom: 0.75rem;
+    height: 30px;
+    overflow: hidden;
+    font-size: 22px;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 834px) {
+    .card-text {
+        margin-top: -5px;
+    }
+
+    .carousel-control-next, .carousel-control-prev {
+        margin: 175px -22px 0px;
+        opacity: 1;
+        height: 52px;
+        width: 52px;
+    }
+
+    .carousel-inner {
+        height: 68%;
+    }
+
+    .mt-5, .my-5 {
+        margin-top: 0rem!important;
+    }
+
+    p {
+        height: 6%;
+    }
+
+    .card-img-top {
+        height: 28%;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .col-md-3 {
+        max-width: 50%;
+    }
+
+    .carousel-inner {
+        height: auto;
+    }
+
+    .card {
+        margin-bottom: 30px;
+    }
+
+    p {
+        height: 4%;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        margin: 377px -22px 0px;
+    }
+
+    .card-text {
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .col-md-3 {
+        max-width: 100%;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        display: none;
+    }
+
+    .container-fluid {
+        margin-top: 185px;
+    }
+
+    .card {
+        margin-bottom: 44px;
+    }
+
+    .card-img-top {
+        height: 40%;
+    }
+
+    p {
+        height: 4%;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .container-fluid {
+        padding-right: 6%;
+        margin-top: 0;
+    }
+
+    div#page-content-wrapper {
+        margin-top: 140px;
+    }
+
+    .card-img-top {
+        height: 33%;
+    }
+
+    .carousel-inner {
+        position: relative;
+        right: 20px;
+        width: 107%;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .headerChannel {
+        padding: 6px 0 0;
+        margin-top: 10px;
+        margin-bottom: -5px;
+        font-size: 20px;
+        font-weight: bolder;
+        width: 107%;
+        position: relative;
+        left: -20px;
+    }
+
+    img.ft-do-canal {
+        height: 2rem;
+        width: 2rem;
+        margin-right: 5px;
+        background: white;
+    }
+
+    .card {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    p {
+        margin-top: -4px;
+    }
 }

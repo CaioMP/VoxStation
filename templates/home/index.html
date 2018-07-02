@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load i18n %}
 
 {% load static %}
@@ -9,33 +9,262 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-        <div class="col">
-            <div class="col-md-3 col-md-offset-4">
-                <!-- Aqui ficará o código html da tela inicial do site -->
-
-                {% if not logado %}
-                    <!--Link temporário para a página de cadastro-->
-                    <center><h5><strong><br/><a href="{% url 'account:sign_up' %}">Crie sua conta</a></strong></h5></center>
-
-                    <!--Link temporário para a página de login-->
-                    <center><h5><strong><br/><a href="{% url 'account:sign_in' %}">Iniciar Sessão</a></strong></h5></center>
-                {% endif %}
-
-                {% if logado %}
-                    <!--Link temporário para a página de editar perfil-->
-                    <center><h5><strong><br/><a href="{% url 'account:edit_profile' %}">Editar Perfil</a></strong></h5></center>
-
-                    <!--Link temporário para a página de criar canal-->
-                    <center><h5><strong><br/><a href="{% url 'account:new_channel' %}">Criar canal</a></strong></h5></center>
-
-                    <!--Link temporário para a página de uploads (vai estar em canal)-->
-                    <center><h5><strong><br/><a href="{% url 'channel:myuploads' %}">MyUploads</a></strong></h5></center>
-
-                    <!--Link temporário para o logout-->
-                    <center><h5><strong><br/><a href="{% url 'account:sign_out' %}">Sair</a></strong></h5></center>
-                {% endif %}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div id="carouselSlider-1" class="carousel slide ml-4 mt-5">
+                <h2 class="headerChannel">
+                    <a href="#">
+                    <img src="/static/images/default-user.png" class="thumbnail rounded-circle ft-do-canal"
+                         alt="foto do canal x">Título do canal</a>
+                </h2>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row mt-4">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item Nresponse">
+                        <div class="row mt-4">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card" >
+                                    <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card" >
+                                    <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#carouselSlider-1" class="carousel-control-prev" role="button" data-slide="prev">
+                    <img src="/static/resources/icones/prev.png" class="slideIcos" alt="">
+                </a>
+                <a href="#carouselSlider-1" class="carousel-control-next" role="button" data-slide="next">
+                    <img src="/static/resources/icones/next.png" class="slideIcos">
+                </a>
+            </div>
+            <div id="carouselSlider-2" class="carousel slide ml-4 mt-5">
+                <h2 class="headerChannel">
+                    <a href="#">
+                        <img src="/static/images/default-user.png" class="thumbnail rounded-circle ft-do-canal"
+                             alt="foto do canal x">Título do canal</a></h2>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row mt-4">
+                            <div class="col-md-3">
+                                <div class="card" >
+                                    <a href="#"><img src="/media/contas/user_1/capas_audio/bg_python.gif" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card" >
+                                    <a href="#"><img src="/media/contas/user_1/capas_audio/bg_python.gif" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/media/contas/user_1/capas_audio/bg_python.gif" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/media/contas/user_1/capas_audio/bg_python.gif" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item Nresponse">
+                        <div class="row mt-4">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/media/contas/user_1/capas_audio/bg_python.gif" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/media/contas/user_1/capas_audio/bg_python.gif" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card" >
+                                    <a href="#"><img src="/media/contas/user_1/capas_audio/bg_python.gif" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <a href="#"><img src="/media/contas/user_1/capas_audio/bg_python.gif" class="card-img-top" alt=""></a>
+                                    <div class="card-body">
+                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">primeiro audio do vox-station</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">Canal nome</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/play.png" class="icon-view"/>20K</p>
+                                            <p class="descript-thumb">data de publicação</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#carouselSlider-2" class="carousel-control-prev" role="button" data-slide="prev">
+                    <img src="/static/resources/icones/prev.png" class="slideIcos" alt="">
+                </a>
+                <a href="#carouselSlider-2" class="carousel-control-next" role="button" data-slide="next">
+                    <img src="/static/resources/icones/next.png" class="slideIcos" alt="">
+                </a>
             </div>
         </div>
     </div>
+
 {% endblock %}
