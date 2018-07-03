@@ -5,7 +5,6 @@ from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import ugettext_lazy as _
 
-
 USERNAME_REGEX = '^[a-zA-Z0-9.+-]*$'
 
 
@@ -122,6 +121,9 @@ class Canal(models.Model):
         # O áudio de fundo do canal irá para MEDIA_ROOT/user_<pk_do_canal>/canal_<nome>/audios/<filename>
         return 'contas/user_{0}/canal_{1}/audios/{2}'.format(instance.prop_key, instance.nome_canal, filename)
 
+
+
+
     prop_key = models.IntegerField(null=True)
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     nome_canal = models.CharField(max_length=30, blank=False,
@@ -130,7 +132,7 @@ class Canal(models.Model):
                                                      message=_('O nome do canal deve ser alfanumérico ou conter números.'),
                                                      code='invalid_username'
                                                      )], unique=True, null=False)
-    foto_canal = models.ImageField(upload_to=foto_canal_path, blank=True, null=True)
+    foto_canal = models.ImageField(upload_to=foto_canal_path, blank=True, null=True, default="static/images/default-user.png")
     data_criacao = models.DateTimeField(auto_now_add=True)
     capa = models.ImageField(upload_to=capa_path, blank=True, null=True)
     audio_fundo = models.FileField(upload_to=audio_fundo_path, blank=True, null=True)

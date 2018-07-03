@@ -14,6 +14,8 @@ class Audio(models.Model):
     def capa_path(instance, filename):
         return "contas/user_{}/capas_audio/{}".format(instance.proprietario.pk, filename)
 
+
+
     data_publicacao = models.DateTimeField(auto_now=True)
     estado = models.CharField(max_length=10)
     visibilidade = models.CharField(max_length=11)
