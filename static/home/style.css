@@ -11,12 +11,29 @@ body {
     top: -2px;
 }
 
+.icon-play {
+    display: block;
+    width: 55px;
+    opacity: .9;
+    margin: 40px 0 13px;
+}
+
 .icon-view {
     display: inline-block;
     width: 16px;
     position: relative;
     top: -2px;
     margin-right: 3px;
+}
+
+.icon-more {
+    display: block;
+    width: 20px;
+}
+
+figure {
+    margin: 0;
+    height: 131px;
 }
 
 .headerChannel {
@@ -26,6 +43,17 @@ body {
     padding-top: 3px;
     border-radius: 4px;
     margin-bottom: 5px;
+}
+
+.dropdown-menu.more {
+    background: #f8f9fa;
+    margin-top: 3px;
+    font-size: 14px;
+}
+
+.dropdown.more {
+    margin: 0;
+    float: left;
 }
 
 p {
@@ -61,7 +89,7 @@ p {
 }
 
 .carousel-control-next, .carousel-control-prev {
-    margin: 195px -22px 0px;
+    margin: 216px -22px 0px;
     opacity: 1;
     height: 52px;
     width: 52px;
@@ -72,7 +100,24 @@ p {
 }
 
 .card-img-top {
-    height: 25%;
+    height: 100%;
+}
+
+.fig-capa-audio figcaption{
+	opacity: 0;
+	padding: 0 10px;
+	position: absolute;
+	background-color: rgba(0, 0, 0, .4);
+	top: 0px;
+	width: 100%;
+	height: 46%;
+	transition: opacity 1s;
+	cursor: pointer;
+	color: white;
+}
+
+.fig-capa-audio:hover figcaption{
+	opacity: 1;
 }
 
 .card-title {
@@ -104,12 +149,20 @@ p {
         margin-top: 0rem!important;
     }
 
+    .icon-play {
+        width: 30px;
+    }
+
     p {
         height: 6%;
     }
 
-    .card-img-top {
-        height: 28%;
+    figure {
+        height: 102px;
+    }
+
+    .fig-capa-audio figcaption {
+        height: 38%;
     }
 }
 
@@ -122,12 +175,24 @@ p {
         height: auto;
     }
 
+    .icon-play {
+        width: 95px;
+    }
+
     .card {
         margin-bottom: 30px;
     }
 
     p {
         height: 4%;
+    }
+
+    .fig-capa-audio figcaption {
+        height: 178px;
+    }
+
+    figure {
+        height: 178px;
     }
 
     .carousel-control-prev, .carousel-control-next {
@@ -144,6 +209,10 @@ p {
         max-width: 100%;
     }
 
+    .icon-play {
+        width: 130px;
+    }
+
     .carousel-control-prev, .carousel-control-next {
         display: none;
     }
@@ -156,8 +225,12 @@ p {
         margin-bottom: 44px;
     }
 
-    .card-img-top {
-        height: 40%;
+    figure {
+        height: 216px;
+    }
+
+    .fig-capa-audio figcaption {
+        height: 57%;
     }
 
     p {
@@ -175,16 +248,16 @@ p {
         margin-top: 140px;
     }
 
-    .card-img-top {
-        height: 33%;
-    }
-
     .carousel-inner {
         position: relative;
         right: 20px;
         width: 107%;
         height: auto;
         overflow: hidden;
+    }
+
+    figure {
+        height: 198px;
     }
 
     .headerChannel {
@@ -204,6 +277,10 @@ p {
         margin-right: 5px;
         background: white;
     }
+
+    .icon-play {
+        width: 120px;
+     }
 
     .card {
         width: 100%;

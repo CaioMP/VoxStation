@@ -176,7 +176,7 @@ ul#id_genero {
     padding: 7px;
     width: 125px;
     margin-left: 10px;
-    background-color: #032854;
+    background-color: black;
 }
 
 .btn-save:focus {
@@ -185,7 +185,6 @@ ul#id_genero {
 
 .btn-save:hover {
     color: #fff;
-    background-color: #032854;
     opacity: 0.8;
 }
 
@@ -209,7 +208,6 @@ h2 {
     font-weight: bold;
     margin: 0;
     padding: 0 0 20px;
-    color: #032854;
     text-align: center;
     font-size: 29px;
 }

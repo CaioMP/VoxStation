@@ -14,8 +14,6 @@ class Audio(models.Model):
     def capa_path(instance, filename):
         return "contas/user_{}/capas_audio/{}".format(instance.proprietario.pk, filename)
 
-
-
     data_publicacao = models.DateTimeField(auto_now=True)
     estado = models.CharField(max_length=10)
     visibilidade = models.CharField(max_length=11)
@@ -33,6 +31,9 @@ class Audio(models.Model):
     anuncios = models.ManyToManyField(Anuncio)
     tag = models.ManyToManyField(Tag)
     feedback = models.ManyToManyField(MyUser, through="FeedBack", related_name="feedback")
+
+    def __str__(self):
+        return self.titulo
 
 
 class Playlist(models.Model):

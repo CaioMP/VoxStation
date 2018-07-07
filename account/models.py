@@ -121,9 +121,6 @@ class Canal(models.Model):
         # O áudio de fundo do canal irá para MEDIA_ROOT/user_<pk_do_canal>/canal_<nome>/audios/<filename>
         return 'contas/user_{0}/canal_{1}/audios/{2}'.format(instance.prop_key, instance.nome_canal, filename)
 
-
-
-
     prop_key = models.IntegerField(null=True)
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     nome_canal = models.CharField(max_length=30, blank=False,

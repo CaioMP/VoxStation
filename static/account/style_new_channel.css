@@ -100,7 +100,8 @@ figure.fig-fade:hover figcaption{
     position: relative;
     letter-spacing: 0.5px;
     border: 1px solid;
-    background-color: transparent;
+    background-color: black;
+    color: #f8f9fa;
 }
 
 label#btn-audio {
@@ -112,8 +113,9 @@ label#btn-audio {
 }
 
 .btn-capa:hover {
-    background-color: #032854;
-    color: white;
+    color: #fff;
+    background: black;
+    border: 1px solid #032854;
     opacity: 0.8;
 }
 

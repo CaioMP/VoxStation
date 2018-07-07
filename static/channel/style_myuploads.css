@@ -1,37 +1,67 @@
-form#form-up{
-	margin-top: 100px;
-	margin-left: 300px;
+.myUploadsBox {
+    transform: translate(50%, 0);
+    position: relative;
+    left: -50%;
+    max-width: 100%;
+    height: auto;
+    margin-top: 100px;
 }
-form#form-up input{
-	margin-bottom: 50px;
+
+select {
+    margin-bottom: 4;
 }
+
 div.progress{
 	display: none;
 }
+
 input[type='file']{
 	display: none;
 }
-.btn-up{
-	background-color: #032854;
-	color: white;
+
+h2 {
+    padding: 0 0 20px;
+    text-align: left;
 }
 
-figure.fig-fade{
-	position: relative;
-	box-shadow: 0px 0px 1px black;
+.has-float-label {
+    margin-bottom: 25px;
+    margin-top: 10px;
 }
 
-img#foto-hide{
-	position: relative;
-	width: 40px;
-	height: 40px;
-	margin-top: 5px;
-	margin-left: 5px;
+.btn-save.audio {
+    width: 180px;
+    margin: -5px 0 20;
 }
-img#foto-default{
-	width: 500px;
-	height: 300px;
+
+figure.fig-thumb.mr-5 {
+    position: relative;
+    top: -15px;
+    max-width: 175px;
+    margin-top: 18px;
+    height: 175px;
+    border-radius: 4%;
+    overflow: hidden;
+    margin-left: 1px;
+    box-shadow: 0px 0px 3px #636e72;
 }
+
+img#foto-default {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.buttons {
+    margin: 0px auto;
+}
+
+.myspan {
+    display: inline-grid;
+    font-size: 90%;
+    margin-top: 0;
+ }
+
 figure.fig-fade figcaption{
 	opacity: 0;
 	position: absolute;
@@ -40,24 +70,23 @@ figure.fig-fade figcaption{
 	width: 100%;
 	height: 100%;
 	transition: opacity 1s;
+	cursor: pointer;
 }
+
 figure.fig-fade:hover figcaption{
-		opacity: 1;
+	opacity: 1;
 }
 
 /* formatação pra formularios */
-select.select-channel{
-	padding: 5px;
-	width: 250px;
-	border-radius: 8px;
-	border: none;
-	box-shadow:  0px 0px 1px black;
-
+select.select-channel {
+    padding: 5px;
+    width: 250px;
 }
 
 .form_audio{
 	display: block;
 }
+
 .form_audio input{
 	border: none;
 	box-shadow: 0px 0px 0.5px black;
@@ -65,9 +94,61 @@ select.select-channel{
 	padding: 5px;
 	width: 600px;
 }
+
 .form_audio textarea{
 	border: none;
 	box-shadow: 0px 0px 0.5px black;
 	border-radius: 5px;
 	padding: 5px;
+}
+
+@media only screen and (max-width:575px) {
+    .content {
+        margin: 165px 15% 0;
+        overflow: auto;
+    }
+
+    figure.fig-thumb.mr-5 {
+        max-width: 160px;
+        height: 160px;
+    }
+
+    .camera {
+        margin: 54px;
+        width: 55px;
+    }
+
+    select.select-channel {
+        width: 210px;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .content {
+        margin: 140px 15% 0;
+    }
+
+    figure.fig-thumb.mr-5 {
+        max-width: 140px;
+        height: 140px;
+    }
+
+    .camera {
+        margin: 46px;
+        width: 50px;
+    }
+
+    select.select-channel {
+        width: 180px;
+    }
+
+    .btn-save {
+        width: 115px;
+        margin-left: -16px;
+    }
+
+    .btn-cancel {
+        width: 95px;
+        margin-right: 20px;
+    }
 }
