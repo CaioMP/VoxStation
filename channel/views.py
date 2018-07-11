@@ -50,11 +50,11 @@ def myuploads(request):
                                                         "tagform": tagform, 'logado': request.user.is_active})
 
 
-def channel(request, cod):
+def channel(request):
     return render(request, './channel/channel.html')
 
 
-def playlist(request, cod):
+def playlist(request):
     return render(request, './channel/playlists.html')
 
 
@@ -62,5 +62,9 @@ def about(request, cod):
     return render(request, './channel/about.html')
 
 
-def uploads(request, cod):
+def uploads(request):
     return render(request, './channel/uploads.html')
+
+
+def similar(request):
+    return render(request, './channel/similar.html')

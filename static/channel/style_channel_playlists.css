@@ -1,0 +1,121 @@
+a#audios {
+    color: initial !important;
+    text-decoration: none !important;
+}
+
+a#playlists {
+    color: #032854;
+    text-decoration: underline;
+}
+
+.audio-list {
+    display: block;
+    right: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.playlist {
+    padding: 1rem;
+    margin-bottom: 0 !important;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border: 1px solid rgba(0,0,0,.125);
+    margin-left: -1px;
+    color: white;
+    background: linear-gradient(-350deg, #032854, black);
+}
+
+.card {
+    border-radius: 4px 0 0 4px;
+}
+
+.audio {
+    margin-bottom: 1rem;
+    white-space: nowrap;
+    height: 30px;
+    overflow: hidden;
+    font-size: 14px;
+    text-overflow: ellipsis;
+}
+
+.thumb-audio {
+    display: inline-block;
+    vertical-align: sub;
+    margin-right: 10px;
+    width: 21px;
+}
+
+.time {
+    font-weight: lighter;
+    float: right;
+    margin-left: 23px;
+    margin-top: 5px;
+}
+
+.playlist-more {
+    margin-top: 55px;
+    margin-bottom: -25px;
+}
+
+.playlist-link {
+    background-color: transparent;
+    padding: 5px 0;
+    width: 100%;
+    font-weight: bold;
+    color: white;
+    border-color: white;
+}
+
+.playlist-link:hover {
+    background-color: #00000047;
+}
+
+@media only screen and (max-width: 834px) {
+    .playlist-more {
+        margin-top: 16px;
+        margin-bottom: -15px;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-md-6 {
+        display: inline-flex;
+        max-width: 50%;
+        margin-bottom: 1.25rem;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .col-md-6 {
+        width: 50%;
+    }
+
+    .playlist {
+        margin-bottom: 1.25rem !important;
+        margin-top: -30px;
+        width: 100% !important;
+        border-radius: 0 0 4px 4px;
+        margin-left: 0;
+    }
+
+    .card {
+        border-radius: 4px 4px 0 0;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .col-md-6 {
+        width: 100%;
+    }
+
+    .playlist {
+        margin-top: -44px;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .playlist {
+        margin-top: -30px;
+    }
+}

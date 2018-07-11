@@ -37,7 +37,7 @@ figure {
 }
 
 .headerChannel {
-    background: black;
+    background: linear-gradient(-160deg, #032854, black) !important;
     color: white;
     height: 40px;
     padding-top: 3px;
@@ -100,6 +100,7 @@ p {
 }
 
 .card-img-top {
+    display: block;
     height: 100%;
 }
 
@@ -204,6 +205,13 @@ p {
     }
 }
 
+@media only screen and (max-width: 767px) {
+    .row {
+        margin-top: -4px;
+        height: 95px;
+    }
+}
+
 @media only screen and (max-width: 575px) {
     .col-md-3 {
         max-width: 100%;
@@ -235,6 +243,10 @@ p {
 
     p {
         height: 4%;
+    }
+
+    .row {
+        height: 130px;
     }
 }
 

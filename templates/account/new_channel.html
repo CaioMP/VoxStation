@@ -39,12 +39,12 @@
                     <label for="foto-canal">
                         <figure class="fig-fade">
                             {% if not user.img_perfil %}
-                                <br/><img class="foto" src="/static/images/default-user.png" id="foto"/>
+                                <br/><img class="foto" src="/static/images/default-user.png" id="foto" alt="foto do canal"/>
                             {% else %}
-                                <br/><img class="foto" src="{{ user.img_perfil.url }}" id="foto_perfil"/>
+                                <br/><img class="foto" src="{{ user.img_perfil.url }}" id="foto_perfil" alt="foto do canal"/>
                             {% endif %}
                             <figcaption class="icon" id="icon">
-                                <img class="camera" src="/static/images/camera.png" alt="">
+                                <img class="camera" src="/static/images/camera.png" alt="icone de câmera">
                             </figcaption>
                         </figure>
                     </label>
