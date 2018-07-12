@@ -21,3 +21,7 @@ class AudioForm(forms.ModelForm):
 
 class TagForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
+
+
+class SearchChannelAudioForm(forms.Form):
+    text = forms.CharField()

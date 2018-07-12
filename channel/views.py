@@ -1,8 +1,9 @@
-from django.shortcuts import render, HttpResponse,redirect
-from .forms import AudioForm, TagForm
+from django.shortcuts import render, HttpResponse,redirect, reverse
+from .forms import AudioForm, TagForm,SearchChannelAudioForm
 from .models import Audio,Tag
 from account.models import Canal
-from .process import tagprocess
+from .process import tagprocess, getaudios, searchclear
+
 
 
 def myuploads(request):
@@ -50,21 +51,45 @@ def myuploads(request):
                                                         "tagform": tagform, 'logado': request.user.is_active})
 
 
-def channel(request):
-    return render(request, './channel/channel.html')
+def channel(request, nome):
+    chan = getaudios(Canal.objects.get(nome_canal=nome))
+
+    return render(request, './channel/channel.html', {'chan': chan})
 
 
-def playlist(request):
+def playlist(request,nome):
     return render(request, './channel/playlists.html')
 
 
-def about(request, cod):
+def about(request, nome):
     return render(request, './channel/about.html')
 
 
-def uploads(request):
-    return render(request, './channel/uploads.html')
+def uploads(request, nome):
+    contexto= {}
+    canal = Canal.objects.get(nome_canal=nome)
+    if request.method == 'POST':
+        search_form = SearchChannelAudioForm(request.POST)
+
+        if search_form.is_valid():
+            search = search_form.cleaned_data['text']
+            audios = searchclear(search,canal)
+            contexto['audios'] = audios
+            contexto['chan'] = canal
+            contexto['form_aud'] = SearchChannelAudioForm()
+            return render(request, './channel/uploads.html', contexto)
+        else:
+            contexto['chan'] = canal
+            contexto['erro'] = True
+            contexto['form_aud'] = SearchChannelAudioForm()
+            return render(request, './channel/uploads.html', contexto)
+    else:
+        audios = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao').reverse()
+        contexto['audios'] = audios
+        contexto['chan'] = canal
+        contexto['form_aud'] = SearchChannelAudioForm()
+        return render(request, './channel/uploads.html',contexto)
 
 
-def similar(request):
+def partner(request, nome):
     return render(request, './channel/similar.html')

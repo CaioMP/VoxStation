@@ -6,9 +6,10 @@ app_name = 'channel'
 
 urlpatterns = [
     path("myUploads", login_required(myuploads), name='myuploads'),
-    path("channel", channel, name='channel_view'),  # colocar o nome do canal aqui dps
-    path("playlist", playlist, name='playlist_view'),
-    path("about/<int:cod>", about, name='about_view'),
-    path("uploads", uploads, name='uploads_view'),
-    path("similar", similar, name='similar_view')
+    path("<str:nome>/", channel, name='channelView'),
+    path("playlist/<str:nome>", playlist, name='playlist_view'),
+    path("about/<str:nome>", about, name='about_view'),
+    path("uploads/<str:nome>", uploads, name='uploads_view'),
+    path("partner/<str:nome>", partner, name='partner_view')
+
 ]
