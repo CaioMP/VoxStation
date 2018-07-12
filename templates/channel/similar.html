@@ -14,6 +14,20 @@
 {% endblock %}
 
 {% block body %}
+    <div class="capa">
+        <div class="audio-fundo">
+            <i class="fas fa-volume-up"></i>
+            <br/><h2 id="audio-fundo-nome">Áudio Fundo</h2>
+        </div>
+        <a href="#" id="personalizar">Editar canal</a>
+        <center>
+            <img src="/static/images/default-user.png" id="foto" alt="foto do canal"/>
+            <h2>Nome do canal</h2>
+            <h6>N° seguidores</h6>
+        </center>
+        <a href="#" id="sintonizar">Sintonizar</a>
+        <a href="#" id="redes-sociais">Redes sociais</a>
+    </div>
     <div class="container-fluid">
         <div class="row sections">
             <div class="col-4 col-sm-2 col-md-2">
@@ -29,7 +43,7 @@
                 <center><a href="{% url 'channel:similar_view' %}" class="section" id="semelhantes">Semelhantes</a></center>
             </div>
             <div class="col-6 col-sm-2 col-md-2 sobre">
-                <center><a href="#" class="section" id="sobre">Sobre</a></center>
+                <center><a href="{% url 'channel:about_view' %}" class="section" id="sobre">Sobre</a></center>
             </div>
         </div>
         <div class="audioBox">

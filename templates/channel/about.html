@@ -1,10 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base2.html' %}
 
-</body>
-</html>
+{% load static %}
+
+{% block head %}
+    <title>Nome canal - VoxStation</title>
+    <link rel="stylesheet" href="{% static 'channel/style_channel_about.css' %}">
+    <link rel="stylesheet" href="{% static 'channel/style_channel_inicio.css' %}">
+    <link rel="stylesheet" href="{% static 'account/style_edit_acc.css' %}">
+    <link rel="stylesheet" href="{% static 'account/style_new_channel.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+    <div class="capa">
+        <div class="audio-fundo">
+            <i class="fas fa-volume-up"></i>
+            <br/><h2 id="audio-fundo-nome">Áudio Fundo</h2>
+        </div>
+        <a href="#" id="personalizar">Editar canal</a>
+        <center>
+            <img src="/static/images/default-user.png" id="foto" alt="foto do canal"/>
+            <h2>Nome do canal</h2>
+            <h6>N° seguidores</h6>
+        </center>
+        <a href="#" id="sintonizar">Sintonizar</a>
+        <a href="#" id="redes-sociais">Redes sociais</a>
+    </div>
+    <div class="container-fluid">
+        <div class="row sections">
+            <div class="col-4 col-sm-2 col-md-2">
+                <center><a href="{% url 'channel:channel_view' %}" class="section" id="inicio">Início</a></center>
+            </div>
+            <div class="col-4 col-sm-2 col-md-2">
+                <center><a href="{% url 'channel:uploads_view' %}" class="section" id="audios">Áudios</a></center>
+            </div>
+            <div class="col-4 col-sm-2 col-md-2">
+                <center><a href="{% url 'channel:playlist_view' %}" class="section" id="playlists">Playlists</a></center>
+            </div>
+            <div class="col-6 col-sm-2 col-md-2 semelhantes">
+                <center><a href="{% url 'channel:similar_view' %}" class="section" id="semelhantes">Semelhantes</a></center>
+            </div>
+            <div class="col-6 col-sm-2 col-md-2 sobre">
+                <center><a href="{% url 'channel:about_view' %}" class="section" id="sobre">Sobre</a></center>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row about">
+            <div class="col-md-6">
+                <h2 class="headerChannel mb-4">Descrição</h2>
+                <p class="descricao">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h2 class="headerChannel mb-4">Links</h2>
+                <div class="row links">
+                    <div class="col-6 link">
+                        <a href="#">https://link1.com/</a>
+                    </div>
+                    <div class="col-6 link">
+                        <a href="#">https://link2.com/</a>
+                    </div>
+                    <div class="col-6 link">
+                        <a href="#">https://link3.com/</a>
+                    </div>
+                    <div class="col-6 link">
+                        <a href="#">https://link4.com/</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="headerChannel mb-4">Estatísticas</h2>
+                <p class="descricao mb-3">Canal criado em 11 de Julho de 2018</p>
+                <p class="descricao mb-3">500.000 seguidores</p>
+                <p class="descricao mb-3">1.000.000 reproduções</p>
+                <p class="descricao">
+                    <img src="/static/resources/icones/like.png" alt="gostaram" class="icon">2.000.000 &nbsp;
+                    <img src="/static/resources/icones/dislike.png" alt="não gostaram" class="icon">2.000</p>
+            </div>
+            <div class="col-md-6">
+                <h2 class="headerChannel mb-4">Tags mais usadas</h2>
+                <div class="row links">
+                    <div class="col-4 link">
+                        <a href="#">#tag1</a>
+                    </div>
+                    <div class="col-4 link">
+                        <a href="#">#tag2</a>
+                    </div>
+                    <div class="col-4 link">
+                        <a href="#">#tag3</a>
+                    </div>
+                    <div class="col-4 link">
+                        <a href="#">#tag4</a>
+                    </div>
+                    <div class="col-4 link">
+                        <a href="#">#tag4</a>
+                    </div>
+                    <div class="col-4 link">
+                        <a href="#">#tag4</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

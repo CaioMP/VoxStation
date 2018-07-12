@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="capa">
+    <div class="capa" style="background-image: url(/static/channel/image_test.jpg);">
         <div class="audio-fundo">
             <i class="fas fa-volume-up"></i>
             <br/><h2 id="audio-fundo-nome">Áudio Fundo</h2>
@@ -39,7 +39,7 @@
                 <center><a href="{% url 'channel:playlist_view' chan.nome_canal %}" class="section" id="playlists">Playlists</a></center>
             </div>
             <div class="col-6 col-sm-2 col-md-2 semelhantes">
-                <center><a href="{% url 'channel:partner_view' chan.nome_canal %}" class="section" id="semelhantes">Semelhantes</a></center>
+                <center><a href="{% url 'channel:partner_view' chan.nome_canal %}" class="section" id="semelhantes">Parceiros</a></center>
             </div>
             <div class="col-6 col-sm-2 col-md-2 sobre">
                 <center><a href="#" class="section" id="sobre">Sobre</a></center>
@@ -54,7 +54,7 @@
                 </button>
             </form>
 
-                <div class="row mt-4">
+                <div class="row mt-4 audios">
                     {%if audios%}
                     {%for audio in audios%}
                     <div class="col-md-3">

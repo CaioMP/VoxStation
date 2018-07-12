@@ -5,7 +5,6 @@ from account.models import Canal
 from .process import tagprocess, getaudios, searchclear
 
 
-
 def myuploads(request):
     audio = Audio()
     channels = Canal.objects.filter(proprietario=request.user)
@@ -88,7 +87,7 @@ def uploads(request, nome):
         contexto['audios'] = audios
         contexto['chan'] = canal
         contexto['form_aud'] = SearchChannelAudioForm()
-        return render(request, './channel/uploads.html',contexto)
+        return render(request, './channel/uploads.html', contexto)
 
 
 def partner(request, nome):

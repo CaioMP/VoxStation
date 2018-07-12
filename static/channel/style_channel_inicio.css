@@ -1,6 +1,5 @@
 .capa {
     padding: 10px;
-    background-image: url(image_test.jpg);
     background-size: cover;
     height: 215px !important;
 }
