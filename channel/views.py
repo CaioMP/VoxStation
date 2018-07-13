@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse,redirect, reverse
 from .forms import AudioForm, TagForm,SearchChannelAudioForm
 from .models import Audio,Tag
 from account.models import Canal
-from .process import tagprocess, getaudios, searchclear
+from .process import *
 from account.models import MyUser
 
 def myuploads(request):
@@ -52,11 +52,10 @@ def myuploads(request):
 
 def channel(request, nome):
     contexto={}
-    chan = getaudios(Canal.objects.get(nome_canal=nome))
-    contexto['num_seguidores'] = chan.seguidor.all().count()
-    contexto['chan'] = chan
+    contexto['chan'] = getaudios(Canal.objects.get(nome_canal=nome))
+    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
     contexto['logado'] = request.user.is_active
-    if request.user == chan.proprietario:
+    if request.user == contexto['chan'].proprietario:
         contexto['direito_edicao']=True
     else:
         contexto['direito_edicao']=False
@@ -64,36 +63,60 @@ def channel(request, nome):
 
 
 def playlist(request,nome):
-    return render(request, './channel/playlists.html')
+    contexto = {}
+    contexto['logado'] = request.user.is_active
+    contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    if request.user == contexto['chan'].proprietario:
+        contexto['direito_edicao'] = True
+    else:
+        contexto['direito_edicao'] = False
+    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
+    return render(request, './channel/playlists.html', contexto)
 
 
 def about(request, nome):
-    return render(request, './channel/about.html')
+    contexto = {}
+    contexto['logado'] = request.user.is_active
+    contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
+    audios = Audio.objects.filter(canal_proprietario=contexto['chan'])
+    contexto['likes'] = get_status_channel(audios, 'likes')
+    contexto['deslikes'] = get_status_channel(audios, 'deslikes')
+    contexto['reproducoes_tot'] = get_status_channel(audios)
+    contexto['tags_mais_usadas'] = get_tags(audios)
+    if request.user == contexto['chan'].proprietario:
+        contexto['direito_edicao'] = True
+    else:
+        contexto['direito_edicao'] = False
+    return render(request, './channel/about.html', contexto)
 
 
 def uploads(request, nome):
     contexto= {}
-    canal = Canal.objects.get(nome_canal=nome)
-    contexto['num_seguidores'] = canal.seguidor.all().count()
+    contexto['logado'] = request.user.is_active
+    contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
+    if request.user == contexto['chan'].proprietario:
+        contexto['direito_edicao'] = True
+    else:
+        contexto['direito_edicao'] = False
+
     if request.method == 'POST':
         search_form = SearchChannelAudioForm(request.POST)
 
         if search_form.is_valid():
             search = search_form.cleaned_data['text']
-            audios = searchclear(search,canal)
+            audios = searchclear(search, contexto['chan'])
             contexto['audios'] = audios
-            contexto['chan'] = canal
             contexto['form_aud'] = SearchChannelAudioForm()
             return render(request, './channel/uploads.html', contexto)
         else:
-            contexto['chan'] = canal
             contexto['erro'] = True
             contexto['form_aud'] = SearchChannelAudioForm()
             return render(request, './channel/uploads.html', contexto)
     else:
-        audios = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao').reverse()
+        audios = Audio.objects.filter(canal_proprietario=contexto['chan']).order_by('data_publicacao').reverse()
         contexto['audios'] = audios
-        contexto['chan'] = canal
         contexto['form_aud'] = SearchChannelAudioForm()
         return render(request, './channel/uploads.html', contexto)
 
