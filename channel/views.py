@@ -3,7 +3,7 @@ from .forms import AudioForm, TagForm,SearchChannelAudioForm
 from .models import Audio,Tag
 from account.models import Canal
 from .process import tagprocess, getaudios, searchclear
-
+from account.models import MyUser
 
 def myuploads(request):
     audio = Audio()
@@ -51,9 +51,16 @@ def myuploads(request):
 
 
 def channel(request, nome):
+    contexto={}
     chan = getaudios(Canal.objects.get(nome_canal=nome))
-
-    return render(request, './channel/channel.html', {'chan': chan})
+    contexto['num_seguidores'] = chan.seguidor.all().count()
+    contexto['chan'] = chan
+    contexto['logado'] = request.user.is_active
+    if request.user == chan.proprietario:
+        contexto['direito_edicao']=True
+    else:
+        contexto['direito_edicao']=False
+    return render(request, './channel/channel.html', contexto)
 
 
 def playlist(request,nome):
@@ -67,6 +74,7 @@ def about(request, nome):
 def uploads(request, nome):
     contexto= {}
     canal = Canal.objects.get(nome_canal=nome)
+    contexto['num_seguidores'] = canal.seguidor.all().count()
     if request.method == 'POST':
         search_form = SearchChannelAudioForm(request.POST)
 

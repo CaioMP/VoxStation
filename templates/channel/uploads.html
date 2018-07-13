@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="capa" style="background-image: url(/static/channel/image_test.jpg);">
+    <div class="capa" style="background-image: url({{chan.capa.url}});">
         <div class="audio-fundo">
             <i class="fas fa-volume-up"></i>
             <br/><h2 id="audio-fundo-nome">Áudio Fundo</h2>
@@ -22,7 +22,7 @@
         <center>
             <img src="{{chan.foto_canal.url}}" id="foto" alt="foto do canal"/>
             <h2>{{chan.nome_canal}}</h2>
-            <h6>N° seguidores</h6>
+            <h6>{{num_seguidores}} seguidores</h6>
         </center>
         <a href="#" onmousedown="follow({{chan.id}})" id="sintonizar">Sintonizar</a>
         <a href="#" id="redes-sociais">Redes sociais</a>

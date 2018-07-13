@@ -133,7 +133,7 @@ class Canal(models.Model):
     data_criacao = models.DateTimeField(auto_now_add=True)
     capa = models.ImageField(upload_to=capa_path, blank=True, null=True)
     audio_fundo = models.FileField(upload_to=audio_fundo_path, blank=True, null=True)
-    seguidor = models.ManyToManyField("self", blank=True, related_name="segue", symmetrical=False, through="Seg")
+    seguidor = models.ManyToManyField(MyUser, blank=True, related_name="segue", symmetrical=False, through="Seg")
     descricao = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -169,6 +169,6 @@ class Resposta(models.Model):
 
 class Seg(models.Model):
     estado_choices = ((0, "normal"), (1, "bloqueado"))
-    seguidores = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="sendo_seguido_por")
-    seguindo = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="seguindo")
+    seguidores = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="sendo_seguido_por", default=None)
+    canal_seguido = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name="seguido",default=None )
     estado = models.CharField(max_length=10, choices=estado_choices)
