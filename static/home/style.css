@@ -42,7 +42,6 @@ figure {
     height: 40px;
     padding-top: 3px;
     border-radius: 4px;
-    margin-bottom: 5px;
 }
 
 .dropdown-menu.more {
@@ -143,7 +142,7 @@ p {
     }
 
     .carousel-inner {
-        height: 68%;
+        height: 100%;
     }
 
     .mt-5, .my-5 {
@@ -155,7 +154,7 @@ p {
     }
 
     p {
-        height: 6%;
+        height: 3.3%;
     }
 
     figure {
@@ -168,12 +167,12 @@ p {
 }
 
 @media only screen and (max-width: 767px) {
-    .col-md-3 {
-        max-width: 50%;
+    div#page-content-wrapper {
+        height: 110%;
     }
 
-    .carousel-inner {
-        height: auto;
+    .col-md-3 {
+        max-width: 50%;
     }
 
     .icon-play {
@@ -185,7 +184,7 @@ p {
     }
 
     p {
-        height: 4%;
+        height: 19%;
     }
 
     .fig-capa-audio figcaption {
@@ -207,12 +206,15 @@ p {
 
 @media only screen and (max-width: 767px) {
     .row {
-        margin-top: -4px;
         height: 95px;
     }
 }
 
 @media only screen and (max-width: 575px) {
+    div#page-content-wrapper {
+        height: 260%;
+    }
+
     .col-md-3 {
         max-width: 100%;
     }
@@ -238,11 +240,11 @@ p {
     }
 
     .fig-capa-audio figcaption {
-        height: 57%;
+        height: auto;
     }
 
     p {
-        height: 4%;
+        height: 15%;
     }
 
     .row {
@@ -264,7 +266,6 @@ p {
         position: relative;
         right: 20px;
         width: 107%;
-        height: auto;
         overflow: hidden;
     }
 

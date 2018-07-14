@@ -1,0 +1,238 @@
+body {
+    font-family: Raleway;
+}
+
+.infoBox {
+    min-height: 17.5rem;
+    margin-top: 4.6rem;
+    padding: 1.5rem;
+}
+
+.capa-playlist {
+    width: 17rem;
+    height: 10.7rem;
+    position: absolute;
+    top: 6.1rem;
+    left: 1.5rem;
+    z-index: -1;
+}
+
+.icon-play {
+    width: 17rem;
+    height: 100%;
+    padding: 3rem 6rem;
+    transition: opacity 1s;
+    background-color: rgba(0, 0, 0, .4);
+    opacity: 0;
+    max-width: 17rem;
+    height: 10.7rem;
+    position: absolute;
+    top: 6.1rem;
+    left: 1.5rem;
+}
+
+.icon-play:hover {
+    opacity: .9;
+}
+
+.info-canal {
+    position: absolute;
+    top: 13.5rem;
+    max-width: 17rem;
+    margin-top: 4rem;
+}
+
+.ft-do-canal {
+    height: 2rem;
+    width: 2rem;
+    margin-right: .25rem;
+}
+
+.nome-canal {
+    max-width: 15rem;
+    width: auto;
+    margin-top: -1.7rem;
+    margin-left: 2.3rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 18px;
+}
+
+.btn-sintonizar {
+    position: relative;
+    top: .8rem;
+    background: linear-gradient(-160deg, #032854, black);
+    color: white;
+    padding: 6px 24px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: .5px;
+}
+
+.btn-sintonizar:hover {
+    color: white;
+    background: linear-gradient(-160deg, #032854bf, black);
+}
+
+.icon-info {
+    display: inline-block;
+    width: 16px;
+    position: relative;
+    top: -2px;
+    margin-right: 3px;
+}
+
+.icones {
+    display: -webkit-inline-box;
+    float: left;
+    margin-top: -8px;
+}
+
+.icon-playlist {
+    width: 1.8rem;
+    margin-top: -1px;
+}
+
+.vincular {
+    position: relative;
+    top: -1px;
+    width: 19px;
+}
+
+.delete {
+    width: 1.5rem;
+}
+
+.visibility {
+    margin-top: 1px;
+    width: 23px;
+    margin-right: 1rem;
+}
+
+.dm-visibility.show {
+    padding: 0;
+    background-color: transparent;
+    border: hidden;
+    min-width: 22px;
+}
+
+.di-visibility {
+    padding: 4px 0;
+}
+
+.di-visibility:hover {
+    background-color: transparent;
+}
+
+.icon-visibility {
+    width: 1.4rem;
+    cursor: pointer;
+}
+
+.info-playlist {
+    margin-left: 19rem;
+}
+
+.last-update {
+    display: inline;
+    margin-left: 1.5rem;
+}
+
+.audioBox {
+    background: linear-gradient(-160deg, #032854, black);
+    color: white;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+.numero-audio {
+    display: inline;
+    margin-left: 1.5rem;
+    margin-right: -.5rem;
+    position: relative;
+    bottom: 3rem;
+    font-weight: bold;
+}
+
+.card {
+    display: -webkit-inline-box;
+    width: 90%;
+    height: 7rem;
+    margin-left: 2rem;
+    border: hidden;
+    background-color: transparent;
+}
+
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.audio {
+    margin-bottom: 1rem;
+}
+
+figure {
+    margin: 0;
+    width: 10rem;
+    height: 7rem;
+}
+
+.img-audio {
+    display: block;
+    height: 7rem;
+    width: 10rem;
+}
+
+figcaption {
+    opacity: 0;
+    padding: 0 10px;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .4);
+    top: 0px;
+    width: 10rem;
+    height: 7rem;
+    transition: opacity 1s;
+    cursor: pointer;
+    color: white;
+}
+
+figcaption:hover {
+    opacity: 1;
+}
+
+.icon-play-audio {
+    width: 43px;
+    opacity: .9;
+    margin: 2.2rem 0;
+}
+
+.card-body {
+    position: relative;
+    bottom: 7rem;
+    left: 10rem;
+    width: 60%;
+}
+
+.tempo {
+    text-align: right;
+    position: relative;
+    bottom: 7rem;
+    margin-left: 11rem;
+}
+
+@media only screen and (max-width: 770px) {
+    .last-update {
+        display: block;
+        margin-left: 0;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .card {
+        width: 87%;
+    }
+}

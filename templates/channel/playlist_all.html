@@ -1,0 +1,131 @@
+{% extends 'base2.html' %}
+
+{% load static %}
+
+{% block head %}
+    <title>Playlist - VoxStation</title> <!--Colocar o nome da playlist-->
+    <link rel="stylesheet" href="{% static 'channel/style_playlist_all.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+    <div class="infoBox">
+        <div class="info-playlist">
+            <div class="icones">
+                <a href="#" class="mr-3"><i class="fas fa-pen" style="color: black;"></i></a> <!--Editar o nome da playlist-->
+                <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_add.png" alt="adicionar playlist" class="icon-playlist"></a>
+                <!-- Aparecer esse icone caso o dono da playlist queira deletá-la
+                <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_delete.png" alt="excluir playlist" class="icon-playlist delete"></a>
+                <!-- Aparecer esse icone caso o usuário visitante tenha salvo a playlist
+                <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_add_check.png" alt="remover playlist" class="icon-playlist"></a>-->
+                <a href="#" class="mr-3"><img src="/static/resources/icones/random.png" alt="reproduzir aleatoriamente" class="icon-playlist"></a>
+                <div class="dropdown visibility"> <!--Visibilidade da playlist-->
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="mr-3">
+                        <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
+                        <div class="dropdown-menu dm-visibility" aria-labelledby="dropdownVisibility">
+                            <a class="dropdown-item di-visibility" href="#">
+                                <img src="/static/resources/icones/private.png" class="icon-visibility"/> <!--Playlist privada-->
+                            </a>
+                        </div>
+                    </a>
+                </div>
+                <a href="#" class="mr-3"><i class="fas fa-share" style="color: black; font-size: 18px;"></i></a>
+                <a href="#"><img src="/static/resources/icones/link.png" alt="vincular a um canal" class="icon-playlist vincular"></a>
+            </div>
+            <br>
+            <h3 style="word-break: break-all;">Nome da playlist</h3>
+
+            <img src="/static/resources/icones/view.png" alt="reproduções" class="icon-info">10.000
+            <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon-info ml-4">3
+            <div class="tumblr_mf171khjgJ1rapbo1o1_500_large.png">Última atualização há 5 horas atrás</div>
+            <div class="mt-4" style="word-break: break-all;">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit.
+            </div>
+        </div>
+
+        <img src="/media/contas/user_1/capas_audio/wc1724207.jpg" alt="capa da playlist" class="capa-playlist">
+        <a href="#"><img src="/static/resources/icones/play.png" alt="reproduzir" class="icon-play"></a>
+        <div class="info-canal">
+            <a href="#">
+                <img src="/static/images/default-user.png" alt="foto do canal" class="rounded-circle ft-do-canal">
+                <h5 class="nome-canal">Nome do canal</h5>
+            </a>
+            <a href="#" class="btn-sintonizar">Sintonizar</a>
+        </div>
+    </div>
+
+
+    <div class="audioBox mt-3">
+        <div class="audio">
+            <h5 class="numero-audio">1</h5>
+            <div class="card">
+                <figure>
+                    <a href="#"><img src="/media/contas/user_1/capas_audio/the-witcher-cover.jpg" class="img-audio" alt="imagem do áudio"></a>
+                    <figcaption>
+                        <center>
+                            <a href="#"><img src="/static/resources/icones/play.png" class="icon-play-audio"/></a>
+                        </center>
+                    </figcaption>
+                </figure>
+
+                <div class="card-body">
+                    <h4 class="card-title"><a href="#" class="audio-link">Título do áudio</a></h4>
+                    <div class="card-text">
+                        <p class="d-inline mr-3">Nome do canal</p>
+                        <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">10.000</p>
+                    </div>
+                </div>
+
+                <h5 class="tempo mr-3">3:20</h5>
+            </div>
+        </div>
+        <div class="audio">
+            <h5 class="numero-audio">2</h5>
+            <div class="card">
+                <figure>
+                    <a href="#"><img src="/media/contas/user_1/capas_audio/the-witcher-cover.jpg" class="img-audio" alt="imagem do áudio"></a>
+                    <figcaption>
+                        <center>
+                            <a href="#"><img src="/static/resources/icones/play.png" class="icon-play-audio"/></a>
+                        </center>
+                    </figcaption>
+                </figure>
+
+                <div class="card-body">
+                    <h4 class="card-title"><a href="#" class="audio-link">Título do áudio</a></h4>
+                    <div class="card-text">
+                        <p class="d-inline mr-3">Nome do canal</p>
+                        <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">10.000</p>
+                    </div>
+                </div>
+
+                <h5 class="tempo mr-3">3:20</h5>
+            </div>
+        </div>
+        <div class="audio">
+            <h5 class="numero-audio">3</h5>
+            <div class="card">
+                <figure>
+                    <a href="#"><img src="/media/contas/user_1/capas_audio/the-witcher-cover.jpg" class="img-audio" alt="imagem do áudio"></a>
+                    <figcaption>
+                        <center>
+                            <a href="#"><img src="/static/resources/icones/play.png" class="icon-play-audio"/></a>
+                        </center>
+                    </figcaption>
+                </figure>
+
+                <div class="card-body">
+                    <h4 class="card-title"><a href="#" class="audio-link">Título do áudio</a></h4>
+                    <div class="card-text">
+                        <p class="d-inline mr-3">Nome do canal</p>
+                        <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">10.000</p>
+                    </div>
+                </div>
+
+                <h5 class="tempo mr-3">3:20</h5>
+            </div>
+        </div>
+    </div>
+{% endblock %}

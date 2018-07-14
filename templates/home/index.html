@@ -13,14 +13,14 @@
         <div class="container-fluid">
             {% for channel in channels %}
             <div id="carouselSlider-{{forloop.counter}}" class="carousel slide ml-4 mt-5" data-ride="carousel">
-                <h2 class="headerChannel">
+                <h2 class="headerChannel mb-4">
                     <a href="#">
                     <img src="{{channel.foto_canal.url}}" class="thumbnail rounded-circle ft-do-canal"
                          alt="foto do canal x">{{channel.nome_canal}}</a>
                 </h2>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <div class="row mt-4">
+                        <div class="row">
                         {% for f_page_audio in channel.playlist1 %}
                             <div class="col-md-3">
                                 <div class="card">
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <div class="row mt-4">
+                        <div class="row">
                             {% for s_page_audio in channel.playlist2 %}
                             <div class="col-md-3">
                                 <div class="card">

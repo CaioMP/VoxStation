@@ -91,7 +91,7 @@ a#personalizar {
 }
 
 .carousel-inner {
-    padding: 0 40px;
+    margin-left: .9rem;
 }
 
 .mt-4 {
@@ -147,11 +147,35 @@ a.section:hover {
     .carousel {
         margin-bottom: 30px;
     }
+
+    .carousel-inner {
+        height: auto;
+    }
+}
+
+@media only screen and (max-width: 834px) {
+    .carousel-inner {
+        height: auto !important;
+    }
 }
 
 @media only screen and (max-width: 767px) {
     .row {
         height: auto !important;
+    }
+
+    .carousel-control-next, .carousel-control-prev {
+        margin: 24rem 9px 0px !important;
+    }
+
+    .descript-thumb {
+        height: 3.3%;
+    }
+}
+
+@media only screen and (max-width: 715px) {
+    .sobre {
+        padding-left: 80px;
     }
 }
 
@@ -172,6 +196,10 @@ a.section:hover {
     img#foto {
         width: 85px;
         height: 85px;
+    }
+
+    .sobre {
+        padding-left: 45px;
     }
 
     .capa a {
