@@ -41,8 +41,20 @@
                     {{chan.descricao}}
                 </p>
             </div>
+
             <div class="col-md-6">
-                <h2 class="headerChannel mb-4">Links</h2>
+                <h2 class="headerChannel mb-4 tags">Tags mais usadas</h2>
+                <div class="row links">
+                    {% for tag in tags_mais_usadas %}
+                    <div class="col-6 link">
+                        <a href="#">#{{tag}}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h2 class="headerChannel mb-4 mt-4">Links</h2>
                 <div class="row links">
                     <div class="col-6 link">
                         <a href="#">https://link1.com/</a>
@@ -56,26 +68,34 @@
                     <div class="col-6 link">
                         <a href="#">https://link4.com/</a>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <h2 class="headerChannel mb-4">Estatísticas</h2>
-                <p class="descricao mb-3">Canal criado em {{chan.data_criacao}}</p>
-                <p class="descricao mb-3">{{num_seguidores}} seguidores</p>
-                <p class="descricao mb-3">{{reproducoes_tot}} reproduções</p>
-                <p class="descricao">
-                    <img src="/static/resources/icones/like.png" alt="gostaram" class="icon">{{likes}} &nbsp;
-                    <img src="/static/resources/icones/dislike.png" alt="não gostaram" class="icon">{{deslikes}}</p>
-            </div>
-            <div class="col-md-6">
-                <h2 class="headerChannel mb-4">Tags mais usadas</h2>
-                <div class="row links">
-                    {% for tag in tags_mais_usadas %}
-                    <div class="col-4 link">
-                        <a href="#">#{{tag}}</a>
+                    <div class="col-6 link">
+                        <a href="#">https://link4.com/</a>
                     </div>
-                    {% endfor %}
+                    <div class="col-6 link">
+                        <a href="#">https://link4.com/</a>
+                    </div>
                 </div>
+            </div>
+
+            <div class="col-md-6 mb-5">
+                <h2 class="headerChannel mb-4 mt-4">Estatísticas</h2>
+                <p class="descricao mb-3">Canal criado em {{chan.data_criacao}}</p>
+                <p class="descricao mb-3">
+                    <img src="/static/images/default-user.png" alt="seguidores" class="icon seguidores">{{num_seguidores}}
+                </p>
+                <p class="descricao mb-3">
+                    <!--Colocar o número de áudios do canal-->
+                    <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon">0
+                </p>
+                <p class="descricao mb-3">
+                    <img src="/static/resources/icones/view.png" alt="reproduções" class="icon">{{reproducoes_tot}}
+                </p>
+                <p class="descricao mb-3">
+                    <img src="/static/resources/icones/like.png" alt="gostaram" style="bottom: 3px;" class="icon">{{likes}}
+                </p>
+                <p class="descricao">
+                    <img src="/static/resources/icones/dislike.png" alt="não gostaram" class="icon">{{deslikes}}
+                </p>
             </div>
         </div>
     </div>

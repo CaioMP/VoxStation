@@ -1,0 +1,52 @@
+.about {
+    background-color: white !important;
+}
+
+.descricao {
+    height: auto;
+    font-size: 1rem;
+    line-height: 1;
+    word-break: break-all;
+    margin-left: 3px;
+    white-space: normal;
+    text-overflow: initial;
+    overflow: initial;
+}
+
+/*Row dos links*/
+.links {
+    margin-top: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    background-color: white !important;
+    margin-left: -11px;
+}
+
+.link {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 1rem;
+    color: #007bff;
+}
+
+.icon {
+    position: relative;
+    display: inline;
+    vertical-align: middle;
+    width: 19px;
+    margin-right: .5rem;
+}
+
+.seguidores {
+    width: 25px;
+    margin-left: -6px;
+    position: relative;
+    left: 3px;
+}
+
+@media only screen and (max-width: 767px) {
+    .tags {
+       margin-top: 1.5rem !important;
+    }
+}
