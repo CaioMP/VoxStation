@@ -123,3 +123,7 @@ def uploads(request, nome):
 
 def partner(request, nome):
     return render(request, './channel/similar.html')
+
+
+def playlist_all(request):
+    return render(request, './channel/playlist_all.html')
