@@ -10,6 +10,6 @@ urlpatterns = [
     path("playlist/<str:nome>", playlist, name='playlist_view'),
     path("about/<str:nome>", about, name='about_view'),
     path("uploads/<str:nome>", uploads, name='uploads_view'),
-    path("partner/<str:nome>", partner, name='partner_view')
-
+    path("partner/<str:nome>", partner, name='partner_view'),
+    path("playlist_all", playlist_all, name='playlist_all_view')  # colocar o nome da playlist dps
 ]
