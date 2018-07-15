@@ -164,7 +164,7 @@
                     <h6 id="num_seg">{{num_seguidores}} seguidores</h6>
                 </center>
                 {%if logado%}
-                <a href="#" url_="{% url 'channel:follow_view' chan.nome_canal %}" id="sintonizar">{{botao}}</a>
+                <a href="#" style="background-color:{{cor}};" url_="{% url 'channel:follow_view' chan.nome_canal %}" id="sintonizar">{{botao}}</a>
                 {%endif%}
                 {%if direito_edicao%}
                 <a href="#" id="redes-sociais">Redes sociais</a>

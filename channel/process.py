@@ -74,13 +74,18 @@ def get_tags(audios):
     # retorna lista final
     return lista_final[:4]
 
-def ve_se_follow(request,canal):
+def ve_se_follow(request,canal,op=0):
 
     seguidor_em_questao = canal.seguidor.filter(pk=request.user.pk)
 
-    if seguidor_em_questao.exists():
-        return 'sintonizado'
+    if op==0:
+        if seguidor_em_questao.exists():
+            return 'sintonizado'
+        else:
+            return 'sintonizar'
     else:
-        return 'sintonizar'
-
+        if seguidor_em_questao.exists():
+            return '#2ecc71'
+        else:
+            return '#00000085'
 

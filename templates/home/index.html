@@ -14,7 +14,7 @@
             {% for channel in channels %}
             <div id="carouselSlider-{{forloop.counter}}" class="carousel slide ml-4 mt-5" data-ride="carousel">
                 <h2 class="headerChannel mb-4">
-                    <a href="#">
+                    <a href="{% url 'channel:channel_view' channel.nome_canal %}">
                     <img src="{{channel.foto_canal.url}}" class="thumbnail rounded-circle ft-do-canal"
                          alt="foto do canal x">{{channel.nome_canal}}</a>
                 </h2>

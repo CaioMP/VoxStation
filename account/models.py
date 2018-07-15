@@ -172,3 +172,6 @@ class Seg(models.Model):
     seguidores = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="sendo_seguido_por", default=None)
     canal_seguido = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name="seguido",default=None )
     estado = models.CharField(max_length=10, choices=estado_choices)
+
+    def __str__(self):
+        return self.canal_seguido.nome_canal+"_"+self.seguidores.username

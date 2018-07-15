@@ -13,7 +13,7 @@ $('document').ready( function(){
 			success:function(json){
 				console.log(json);
 				this_.text(json.estado);
-				this_.css("backgroundColor","red");
+				this_.css('background',json.cor);
 				$('#num_seg').text(json.num_seg);
 			},
 			error:function(){

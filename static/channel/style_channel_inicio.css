@@ -40,9 +40,9 @@ h2#audio-fundo-nome {
     color: white !important;
     margin-top: -15px;
     padding: 7px 17px;
-    background-color: #00000085 !important;
     border-radius: 4px;
     transition: 0.3s;
+    background-color: #00000085;
 }
 
 .capa a:hover {
@@ -58,6 +58,7 @@ a#personalizar {
     margin-bottom: -36px;
     text-align: center;
     width: 141px;
+    
 }
 
 .container-fluid {
