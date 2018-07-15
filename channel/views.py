@@ -1,9 +1,9 @@
-from django.shortcuts import render, HttpResponse,redirect, reverse
+from django.shortcuts import render,redirect
 from .forms import AudioForm, TagForm,SearchChannelAudioForm
-from .models import Audio,Tag
-from account.models import Canal
+from account.models import Canal,Seg
 from .process import *
-from account.models import MyUser
+from django.http import JsonResponse
+
 
 def myuploads(request):
     audio = Audio()
@@ -53,6 +53,7 @@ def myuploads(request):
 def channel(request, nome):
     contexto={}
     contexto['chan'] = getaudios(Canal.objects.get(nome_canal=nome))
+    contexto['botao'] = ve_se_follow(request,contexto['chan'])
     contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
     contexto['logado'] = request.user.is_active
     if request.user == contexto['chan'].proprietario:
@@ -66,6 +67,7 @@ def playlist(request,nome):
     contexto = {}
     contexto['logado'] = request.user.is_active
     contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['botao'] = ve_se_follow(request, contexto['chan'])
     if request.user == contexto['chan'].proprietario:
         contexto['direito_edicao'] = True
     else:
@@ -78,6 +80,7 @@ def about(request, nome):
     contexto = {}
     contexto['logado'] = request.user.is_active
     contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
     audios = Audio.objects.filter(canal_proprietario=contexto['chan'])
     contexto['likes'] = get_status_channel(audios, 'likes')
@@ -95,6 +98,7 @@ def uploads(request, nome):
     contexto= {}
     contexto['logado'] = request.user.is_active
     contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
     if request.user == contexto['chan'].proprietario:
         contexto['direito_edicao'] = True
@@ -123,6 +127,23 @@ def uploads(request, nome):
 
 def partner(request, nome):
     return render(request, './channel/similar.html')
+
+
+def follow(request,nome):
+    json_context = {}
+    canal = Canal.objects.get(nome_canal=nome)
+    seguidor = canal.seguidor.filter(pk=request.user.pk)
+    if seguidor.exists():
+        Seg.objects.get(canal_seguido=canal, seguidores=request.user).delete()
+        json_context['estado'] = "sintonizar"
+        json_context['cor'] = "#2ecc71"
+
+    else:
+        Seg.objects.create(canal_seguido=canal, seguidores=request.user)
+        json_context['estado'] = "sintonizado"
+        json_context['cor'] = "#2ecc71"
+    json_context['num_seg'] = str(canal.seguidor.all().count())+" seguidores"
+    return JsonResponse(json_context)
 
 
 def playlist_all(request):
