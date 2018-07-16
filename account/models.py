@@ -5,6 +5,7 @@ from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import ugettext_lazy as _
 
+
 USERNAME_REGEX = '^[a-zA-Z0-9.+-]*$'
 
 
@@ -170,8 +171,12 @@ class Resposta(models.Model):
 class Seg(models.Model):
     estado_choices = ((0, "normal"), (1, "bloqueado"))
     seguidores = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="sendo_seguido_por", default=None)
-    canal_seguido = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name="seguido",default=None )
+    canal_seguido = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name="seguido", default=None )
     estado = models.CharField(max_length=10, choices=estado_choices)
 
     def __str__(self):
         return self.canal_seguido.nome_canal+"_"+self.seguidores.username
+
+
+
+
