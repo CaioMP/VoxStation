@@ -3,3 +3,125 @@
   src: url('/static/resources/fonts/Raleway.ttf')  format("truetype"),
        local('Raleway');
 }
+
+.has-float-label input {
+    width: 100%;
+    font-weight: 500;
+}
+
+.has-float-label input:placeholder-shown:not(:focus)+*, .has-float-label select:placeholder-shown:not(:focus)+*, .has-float-label textarea:placeholder-shown:not(:focus)+* {
+    font-size: 113%;
+    margin-left: 5px;
+}
+
+.has-float-label input:focus, .has-float-label select:focus, .has-float-label textarea:focus {
+    border-bottom: 2px solid steelblue;
+}
+
+.has-float-label>span {
+    font-weight: bold;
+    top: -4px;
+    font-size: 100% !important;
+    transition: 0.5s !important;
+}
+
+.selectPlaylist {
+    width: 100%;
+    border: hidden;
+    border-bottom: 2px solid rgba(0,0,0,.1);
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 7px;
+    margin-bottom: 19px;
+}
+
+.selectPlaylist:focus {
+    outline: none;
+    border-bottom: 2px solid steelblue;
+}
+
+.spanPlaylist {
+    position: relative;
+    font-size: 100%;
+    font-weight: bold;
+    transition: 0.5s;
+}
+
+.fas-playlist {
+    color: black;
+    font-size: 14px;
+}
+
+.fa-question-circle {
+    margin-left: .3rem;
+}
+
+.fa-trash-alt {
+    margin-top: .4rem;
+    float: right;
+}
+
+/*Checkbox de playlist*/
+.pl-label {
+    display: inline;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pl-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border-radius: 4px;
+    transition: .3s;
+    background-color: #ccc;
+}
+
+.pl-label:hover input ~ .checkmark {
+    opacity: .5;
+    background-color: #032854;
+}
+
+.pl-label input:checked ~ .checkmark {
+    background-color: #032854;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.pl-label input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.pl-label .checkmark:after {
+    left: 10px;
+    top: 6px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

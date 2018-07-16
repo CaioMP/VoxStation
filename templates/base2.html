@@ -8,6 +8,9 @@
     <!--Font Raleway-->
     <link rel="stylesheet" href="{% static 'base.css' %}" type="text/css"/>
 
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
     <!--Floating Labels-->
     <link rel="stylesheet" href="{% static 'resources/float-label-css/float-label.min.css' %}" type="text/css"/>
 
@@ -163,23 +166,65 @@
                 </div>
 
                 <div class="modal-body">
-                    <label class="container">Playlist 1
+                    <label class="pl-label">Playlist 1
                         <input type="checkbox" checked="checked"> <!--Checkbox checked caso o áudio esteja na playlist-->
                         <span class="checkmark"></span>
-                    </label>
-                    <label class="container">Playlist 2
+                    </label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br> <!--Excluir playlist-->
+
+                    <label class="pl-label">Playlist 2
                         <input type="checkbox">
                         <span class="checkmark"></span>
-                    </label>
-                    <label class="container">Playlist 3
+                    </label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br>
+
+                    <label class="pl-label">Playlist 3
                         <input type="checkbox">
                         <span class="checkmark"></span>
-                    </label>
+                    </label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-add" data-dismiss="modal">Criar nova playlist</button>
+                    <button type="button" class="btn btn-add" data-toggle="modal" data-dismiss="modal" data-target="#createPlaylist">Criar nova playlist</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal de criação de playlists-->
+    <div class="modal fade" id="createPlaylist">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Crie sua playlist</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form>{% csrf_token %}
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label">
+                            <input type="text" maxlength="150" placeholder="Nome da playlist"
+                                   style="margin-bottom: 1rem;" required=""/>
+                            <span class="spanPlaylist">Nome da playlist</span>
+                        </label>
+                        <span class="spanPlaylist">Visibilidade</span>
+                        <select class="selectPlaylist">
+                            <option selected="selected">Público</option>
+                            <option>Privado</option>
+                        </select><br>
+
+                        <!--Caso o usuário tenha canais em sua conta criar esse select-->
+                        <span class="spanPlaylist">Associação</span><i class="fas fa-question-circle fas-playlist"></i>
+                        <select class="selectPlaylist">
+                            <option selected="selected">Nenhum</option>
+                            <option>Canal 1</option>
+                            <option>Canal 2</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer" style="padding: 1.2rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit" id="submitChannel" name="submitChannel">
+                            <strong>{% trans 'Criar' %}</strong>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
