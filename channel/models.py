@@ -33,8 +33,6 @@ class Audio(models.Model):
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="proprietario", null=True)
     anuncios = models.ManyToManyField(Anuncio)
     tag = models.ManyToManyField(Tag)
-
-
     def __str__(self):
         return self.titulo
 
@@ -42,7 +40,10 @@ class Audio(models.Model):
 class Playlist(models.Model):
     nome = models.CharField(max_length=20)
     audios = models.ManyToManyField(Audio)
-    proprietarios = models.ManyToManyField(MyUser)
+    proprietarios = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='playlist_proprietario', default=None)
+    canal = models.ManyToManyField(Canal, related_name="canal_playlist", default=None, through="CanalPlay")
+
+
 
 
 class FeedLike(models.Model):
@@ -55,3 +56,12 @@ class FeedDesLike(models.Model):
     data_do_feed = models.DateTimeField(auto_now=True)
     conta_feed = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="conta_do_deslike")
     Audio_feed = models.ForeignKey(Audio, on_delete=models.CASCADE, related_name="audio_do_deslike")
+
+
+class CanalPlay(models.Model):
+    canal = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name='canal_playlists', default=None)
+    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE, related_name='Playlist_canais', default=None)
+    in_home = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.canal.nome_canal + "." + self.playlist.nome
