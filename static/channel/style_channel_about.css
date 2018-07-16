@@ -1,3 +1,13 @@
+a#inicio {
+    color: initial !important;
+    text-decoration: none !important;
+}
+
+a#sobre {
+    color: #032854;
+    text-decoration: underline;
+}
+
 .about {
     background-color: white !important;
 }
