@@ -153,6 +153,36 @@
             {% endblock %}
         </div>
     </div>
+    <!--Modal de adicionar áudio a playlists-->
+    <div class="modal fade" id="addPlaylist">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar a...</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <label class="container">Playlist 1
+                        <input type="checkbox" checked="checked"> <!--Checkbox checked caso o áudio esteja na playlist-->
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Playlist 2
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Playlist 3
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-add" data-dismiss="modal">Criar nova playlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
     {% if footer %}
         <div class="footer">
             <!--Botão de Salvar e Cancelar-->
