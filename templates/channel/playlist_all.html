@@ -11,15 +11,28 @@
     <div class="infoBox">
         <div class="info-playlist">
             <div class="icones">
-                <a href="#" class="mr-3"><i class="fas fa-pen" style="color: black;"></i></a> <!--Editar o nome da playlist-->
-                <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_add.png" alt="adicionar playlist" class="icon-playlist"></a>
+                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Edite o nome da playlist">
+                    <i class="fas fa-pen" style="color: black;"></i>
+                </a> <!--Editar o nome da playlist-->
+                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Salvar playlist">
+                    <img src="/static/resources/icones/playlist_add.png" alt="salvar playlist" class="icon-playlist">
+                </a> <!--Salvar playlist-->
                 <!-- Aparecer esse icone caso o dono da playlist queira deletá-la
                 <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_delete.png" alt="excluir playlist" class="icon-playlist delete"></a>
                 <!-- Aparecer esse icone caso o usuário visitante tenha salvo a playlist
                 <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_add_check.png" alt="remover playlist" class="icon-playlist"></a>-->
-                <a href="#" class="mr-3"><img src="/static/resources/icones/random.png" alt="reproduzir aleatoriamente" class="icon-playlist"></a>
-                <div class="dropdown visibility"> <!--Visibilidade da playlist-->
-                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="mr-3">
+                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Reproduzir aleatoriamente">
+                    <img src="/static/resources/icones/random.png" alt="reproduzir aleatoriamente" class="icon-playlist">
+                </a><!--Reproduzir aleatoriamente-->
+                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Compartilhar playlist">
+                    <i class="fas fa-share" style="color: black; font-size: 18px;"></i>
+                </a><!--Compartilhar playlist-->
+                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Vincular a um canal">
+                    <img src="/static/resources/icones/link.png" alt="vincular a um canal" class="icon-playlist vincular">
+                </a><!--Vincular a um canal-->
+                <div class="dropdown visibility" data-toggle="tooltip" data-placement="right"
+                     title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
                         <div class="dropdown-menu dm-visibility" aria-labelledby="dropdownVisibility">
                             <a class="dropdown-item di-visibility" href="#">
@@ -28,8 +41,6 @@
                         </div>
                     </a>
                 </div>
-                <a href="#" class="mr-3"><i class="fas fa-share" style="color: black; font-size: 18px;"></i></a>
-                <a href="#"><img src="/static/resources/icones/link.png" alt="vincular a um canal" class="icon-playlist vincular"></a>
             </div>
             <br>
             <h3 style="word-break: break-all;">Nome da playlist</h3>
