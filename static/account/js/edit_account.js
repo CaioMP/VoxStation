@@ -25,33 +25,14 @@ $(function(){
 	})
 })
 
-//Função para fechar o alert depois de um tempo
-window.setTimeout(function() {
-    $(".alert").fadeTo(250, 0).slideUp(250, function(){
-        $(this).remove();
-    });
-}, 1800);
-
 $(document).ready(function() {
     checkError();//Função de verificar erros nos campos
 });
-
-//Efeito fade para o alert
-function showAlert(){
-    $(".fade").addClass("in")
-}
 
 //Muda o idioma imediatamente
 function changeLang() {
     document.getElementById('toSubmit').value = document.getElementById('lang').value;
     document.getElementById('langSubmit').click();
-}
-
-//Salva as alterações
-function Submit() {
-    document.getElementById('save').value = document.getElementById('submitForm').value;
-    document.getElementById('save').click();
-    showAlert();
 }
 
 //Mudar o input em caso de erro

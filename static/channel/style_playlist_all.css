@@ -17,6 +17,14 @@ body {
     z-index: -1;
 }
 
+.tooltip-inner {
+    background: linear-gradient(-357deg, #032854, black) !important;
+}
+
+.tooltip {
+    margin-top: .25rem !important;
+}
+
 .icon-play {
     width: 17rem;
     height: 100%;
