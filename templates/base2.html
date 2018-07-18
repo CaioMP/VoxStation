@@ -93,7 +93,6 @@
                                 <a class="dropdown-item" href="{% url 'account:edit_profile' %}">Editar Perfil</a>
                                 <a class="dropdown-item" href="{% url 'account:new_channel' %}">Criar canal</a> <!--Trocar por meus canais dps-->
                                 <a class="dropdown-item" href="{% url 'account:sign_out' %}">Sair</a>
-                                <a href="#" class=" play_id dropdown-item" aud="1">test</a>
                             {% else %}
                                 <a class="dropdown-item" href="{% url 'account:sign_in' %}">Entrar</a>
                                 <a class="dropdown-item" href="{% url 'account:sign_up' %}">Nova conta</a>
@@ -164,18 +163,12 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-<<<<<<< HEAD
                 <div class="modal-body" id="play_load">
                     {% for playlist in playlists %}
                     <label class="pl-label play_id" value="{{playlist.id}}" url_="{% url 'channel:playlist_add_view' %}">{{playlist.nome}}
                         <input type="checkbox" class="play_id" url_="channel/playlist_add"> <!--Checkbox checked caso o áudio esteja na playlist-->
                         <span class="checkmark"  url_="{% url 'channel:playlist_add_view' %}" aud_atre=""></span>
-=======
-                <div class="modal-body" id="modal-body" >
-                    <label class="pl-label">Playlist 1
-                        <input type="checkbox"> <!--Checkbox checked caso o áudio esteja na playlist-->
-                        <span class="checkmark"></span>
->>>>>>> 58ab1d1e3596d332c94c11d6052d30f45b5c3f93
+
                     </label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br> <!--Excluir playlist-->
                     {% endfor %}
                     <a href="#" class="play_id" aud="1"></a>
@@ -184,15 +177,11 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-add" data-toggle="modal" data-dismiss="modal" data-target="#createPlaylist">Criar nova playlist</button>
                 </div>
-                <div id="alert-addPlaylist" class="addAudioPl" role="alert">
-                    Adicionado a playlist <!--Colocar o nome da playlist-->
-                </div>
-                <div id="alert-removePlaylist" class="addAudioPl" role="alert">
-                    Removido de playlist <!--Colocar o nome da playlist-->
-                </div>
             </div>
         </div>
     </div>
+    <!--Alert de adicionar/remover áudio da playlist-->
+    <div id="alert-addPlaylist" class="addAudioPl" role="alert"></div>
 
     <!--Modal de criação de playlists-->
     <div class="modal fade" id="createPlaylist" aud_atre="">
@@ -202,6 +191,7 @@
                     <h4 class="modal-title">Crie sua playlist</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
+
                 <form id="form_playlist" method="get" action="" aud="">
                     <input type="hidden" id="audio_em_questao" value="">
                     <div class="modal-body" style="padding: 1.2rem;">
@@ -217,16 +207,11 @@
                         </select><br>
 
                         <!--Caso o usuário tenha canais em sua conta criar esse select-->
-<<<<<<< HEAD
-                        <span class="spanPlaylist">Associação</span><i class="fas fa-question-circle fas-playlist"></i>
-                        <select name="canal_atrelado" class="selectPlaylist">
-=======
                         <span class="spanPlaylist">Associação</span>
                         <a data-toggle="tooltip" data-placement="left" title="Associe esta playlist a um canal" style="float:right;">
                             <i class="fas fa-question-circle fas-playlist"></i>
                         </a>
-                        <select class="selectPlaylist">
->>>>>>> 58ab1d1e3596d332c94c11d6052d30f45b5c3f93
+                        <select class="selectPlaylist" name="canal_atrelado">
                             <option selected="selected">Nenhum</option>
                             {% for canal in canais_para_playlist %}
                             <option>{{canal.nome_canal}}</option>
@@ -235,7 +220,7 @@
                     </div>
 
                     <div class="modal-footer" style="padding: 1.2rem; margin-bottom: -1rem;">
-                        <button class="btn btn-add" type="submit" id="submitChannel" >
+                        <button class="btn btn-add" type="submit" id="submitChannel">
                             <strong>{% trans 'Criar' %}</strong>
                         </button>
                     </div>

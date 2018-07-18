@@ -40,6 +40,11 @@ $('document').ready( function(){
 			async:true,
 			success:function(json){
 				console.log(json.message);
+				$("#alert-addPlaylist").html(json.message);
+				document.getElementById("alert-addPlaylist").style.opacity = "1";
+				window.setTimeout(function() {
+				    document.getElementById("alert-addPlaylist").style.opacity = "0";
+				}, 1800);
 			},
 			error:function(){
 				alert("fudeu bahia");
@@ -62,7 +67,13 @@ $('document').ready( function(){
 			async:true,
 			success:function(json){
 				console.log(json.message);
+				$("#alert-addPlaylist").html(json.message);
+				document.getElementById("alert-addPlaylist").style.opacity = "1";
+				window.setTimeout(function() {
+				    document.getElementById("alert-addPlaylist").style.opacity = "0";
+				}, 1800);
 				$('#play_load').html(json.html);
+				$('#createPlaylist').modal('hide');
 			},
 			error:function(){
 				alert("fudeu bahia");

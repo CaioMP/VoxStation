@@ -11,7 +11,7 @@ def IndexView(request):
     contexto['logado'] = request.user.is_active
     if contexto['logado']:
         contexto['playlists'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canais_para_playlist'] = Canal.objects.filter(proprietario=request.user)
+        contexto['canais_para_playlist'] = Canal.objects.filter(proprietario=request.user)
     return render(request, './home/index.html', contexto)
 
 

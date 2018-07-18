@@ -175,11 +175,11 @@ def playlist_add(request):
     if play.audios.filter(pk=audio_cod).exists():
         play.audios.remove(audio_set)
         play.save()
-        json_context = {'message': 'audio removido de '+play.nome+' com sucesso'}
+        json_context = {'message': 'Removido de '+play.nome+''}
     else:
         play.audios.add(audio_set)
         play.save()
-        json_context = {'message': 'audio adicionado a ' + play.nome + ' com sucesso'}
+        json_context = {'message': 'Adicionado a ' + play.nome + ''}
     return JsonResponse(json_context)
 
 
@@ -195,12 +195,12 @@ def playlist_add_play(request):
     play['criada'].audios.add(audio_set)
     if play['canal_atrelado'] == 'Nenhum':
         json_context['html'] = gera_html(request, audio_cod)
-        json_context['message'] = 'playlist '+play['criada'].nome+" criada com sucesso"
+        json_context['message'] = 'Áudio adicionado a '+play['criada'].nome
         return JsonResponse(json_context)
     else:
         play['canal_set'] = Canal.objects.get(nome_canal=play['canal_atrelado'])
         CanalPlay.objects.create(canal=play['canal_set'],playlist=play['criada'])
-        json_context['message'] = 'playlist ' + play['criada'].nome+" criada com sucesso"
+        json_context['message'] = 'Áudio adicionado a ' + play['criada'].nome
         json_context['html'] = gera_html(request, audio_cod)
         return JsonResponse(json_context)
 
