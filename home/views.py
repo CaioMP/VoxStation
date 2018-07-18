@@ -1,14 +1,18 @@
 from django.shortcuts import render
 from account.models import Canal
+from channel.models import Playlist
 from channel.models import Audio,Anuncio
 from .process import GambiNice
 
 
 def IndexView(request):
-
-    channel = Canal.objects.all()
-    channels = GambiNice(channel)
-    return render(request, './home/index.html', {'logado': request.user.is_active, 'channels': channels})
+    contexto = {}
+    contexto['channels'] = GambiNice(Canal.objects.all())
+    contexto['logado'] = request.user.is_active
+    if contexto['logado']:
+        contexto['playlists'] = Playlist.objects.filter(proprietario=request.user)
+    contexto['canais_para_playlist'] = Canal.objects.filter(proprietario=request.user)
+    return render(request, './home/index.html', contexto)
 
 
 def search(request):

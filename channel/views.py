@@ -1,9 +1,9 @@
-from django.shortcuts import render,redirect
-from .forms import AudioForm, TagForm,SearchChannelAudioForm
-from account.models import Canal,Seg
+from django.shortcuts import render, redirect, HttpResponse
+from .forms import AudioForm, TagForm, SearchChannelAudioForm
+from account.models import Canal, Seg
 from .process import *
 from django.http import JsonResponse
-
+from .models import Playlist, Audio,CanalPlay
 
 def myuploads(request):
     audio = Audio()
@@ -152,3 +152,58 @@ def follow(request,nome):
 
 def playlist_all(request):
     return render(request, './channel/playlist_all.html')
+
+
+def playlist_load_modal(request):
+    json_context = {}
+
+    audio_cod = request.GET['aud']
+    audio_set = Audio.objects.get(pk=audio_cod)
+    load_modal = request.GET['load']
+
+    json_context['html'] = gera_html(request, audio_cod)
+    json_context['message'] = 'modal carregado'
+    return JsonResponse(json_context)
+
+
+def playlist_add(request):
+
+    audio_cod = request.GET['aud']
+    playlist = request.GET['playlist_cod']
+    audio_set = Audio.objects.get(pk=audio_cod)
+    play = Playlist.objects.get(pk=playlist)
+    if play.audios.filter(pk=audio_cod).exists():
+        play.audios.remove(audio_set)
+        play.save()
+        json_context = {'message': 'audio removido de '+play.nome+' com sucesso'}
+    else:
+        play.audios.add(audio_set)
+        play.save()
+        json_context = {'message': 'audio adicionado a ' + play.nome + ' com sucesso'}
+    return JsonResponse(json_context)
+
+
+def playlist_add_play(request):
+    json_context = {}
+    play = {}
+    audio_cod = request.GET['aud']
+    play['nome'] = request.GET['nome']
+    play['visibilidade'] = request.GET['visibilidade']
+    play['canal_atrelado'] = request.GET['canal_atrelado']
+    audio_set = Audio.objects.get(pk=audio_cod)
+    play['criada'] = Playlist.objects.create(nome=play['nome'], visibilidade=play['visibilidade'], proprietario=request.user)
+    play['criada'].audios.add(audio_set)
+    if play['canal_atrelado'] == 'Nenhum':
+        json_context['html'] = gera_html(request, audio_cod)
+        json_context['message'] = 'playlist '+play['criada'].nome+" criada com sucesso"
+        return JsonResponse(json_context)
+    else:
+        play['canal_set'] = Canal.objects.get(nome_canal=play['canal_atrelado'])
+        CanalPlay.objects.create(canal=play['canal_set'],playlist=play['criada'])
+        json_context['message'] = 'playlist ' + play['criada'].nome+" criada com sucesso"
+        json_context['html'] = gera_html(request, audio_cod)
+        return JsonResponse(json_context)
+
+
+
+

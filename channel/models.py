@@ -17,6 +17,9 @@ class Audio(models.Model):
     def capa_path(instance, filename):
         return "contas/user_{}/capas_audio/{}".format(instance.proprietario.pk, filename)
 
+    def capa_playlist_path(instance, filename):
+        return "contas/user_{}/capas_playlist/{}".format(instance.proprietario.pk, filename)
+
     data_publicacao = models.DateTimeField(auto_now=True)
     estado = models.CharField(max_length=10)
     visibilidade = models.CharField(max_length=11)
@@ -33,17 +36,21 @@ class Audio(models.Model):
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="proprietario", null=True)
     anuncios = models.ManyToManyField(Anuncio)
     tag = models.ManyToManyField(Tag)
+
     def __str__(self):
         return self.titulo
 
 
 class Playlist(models.Model):
+    visibilidade_choices = ((0, "publico"), (1, "privada"))
     nome = models.CharField(max_length=20)
     audios = models.ManyToManyField(Audio)
-    proprietarios = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='playlist_proprietario', default=None)
+    visibilidade = models.CharField(max_length=20, choices=visibilidade_choices, default="publico")
+    proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='playlist_proprietario', default=None)
     canal = models.ManyToManyField(Canal, related_name="canal_playlist", default=None, through="CanalPlay")
 
-
+    def __str__(self):
+        return self.nome
 
 
 class FeedLike(models.Model):

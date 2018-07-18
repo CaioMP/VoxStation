@@ -1,5 +1,6 @@
 from .models import Tag
-from .models import Audio
+from .models import Audio,Playlist
+
 
 
 def tagprocess(tagtext):
@@ -74,6 +75,7 @@ def get_tags(audios):
     # retorna lista final
     return lista_final[:4]
 
+
 def ve_se_follow(request,canal,op=0):
 
     seguidor_em_questao = canal.seguidor.filter(pk=request.user.pk)
@@ -89,3 +91,15 @@ def ve_se_follow(request,canal,op=0):
         else:
             return '#00000085'
 
+
+def gera_html(request, audio):
+    plays = Playlist.objects.filter(proprietario=request.user)
+    html = ""
+
+    for play in plays:
+        if play.audios.filter(pk=audio).exists():
+            html += '<label class="pl-label ">'+play.nome+'<input type="checkbox" aud="1" class="play_id" checked="checked" url_="channel/playlist_add" id="'+str(play.id)+'" > <span class="checkmark"></span></label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br><br>'
+        else:
+            html += '<label class="pl-label ">' + play.nome + '<input type="checkbox" aud="1" class="play_id" url_="channel/playlist_add" id="'+str(play.id)+'" ><span class="checkmark addplay_id" value="'+str(play.id)+'" url_="channel/playlist_add" ></span></label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br><br>'
+
+    return html
