@@ -42,12 +42,16 @@ class Audio(models.Model):
 
 
 class Playlist(models.Model):
-    visibilidade_choices = ((0, "publico"), (1, "privada"))
+    def playlist_capa_path(instance,filename):
+        return "contas/user_{}/capas_de_playlists/{}".format(instance.proprietario.pk, filename)
+    visibilidade_choices = (("publico", "público"), ("privada", "privada"))
     nome = models.CharField(max_length=20)
     audios = models.ManyToManyField(Audio)
     visibilidade = models.CharField(max_length=20, choices=visibilidade_choices, default="publico")
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='playlist_proprietario', default=None)
     canal = models.ManyToManyField(Canal, related_name="canal_playlist", default=None, through="CanalPlay")
+    ultima_atualizacao = models.DateTimeField(auto_now=True)
+    capa = models.ImageField(upload_to=playlist_capa_path, default=None, null=True)
 
     def __str__(self):
         return self.nome

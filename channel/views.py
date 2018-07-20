@@ -3,7 +3,9 @@ from .forms import AudioForm, TagForm, SearchChannelAudioForm
 from account.models import Canal, Seg
 from .process import *
 from django.http import JsonResponse
-from .models import Playlist, Audio,CanalPlay
+from .models import Playlist, Audio, CanalPlay
+from datetime import datetime
+from django.db.models import Sum
 
 def myuploads(request):
     audio = Audio()
@@ -19,9 +21,6 @@ def myuploads(request):
             audio.audio = form.cleaned_data['audio']
             audio.descricao = form.cleaned_data['descricao']
             audio.capa = form.cleaned_data['capa']
-            audio.likes = 1
-            audio.deslikes = 1
-            audio.audiencia = 0
             audio.reproducoes = 0
             audio.proprietario = request.user
             audio.save()
@@ -64,10 +63,12 @@ def channel(request, nome):
     return render(request, './channel/channel.html', contexto)
 
 
-def playlist(request,nome):
+def playlist(request, nome):
     contexto = {}
     contexto['logado'] = request.user.is_active
     contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['playlists'] = Playlist.objects.filter(canal=contexto['chan'])
+    contexto['playlists'] = ordena_pra_exibicao(contexto['playlists'])
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
     if request.user == contexto['chan'].proprietario:
@@ -150,8 +151,20 @@ def follow(request,nome):
     return JsonResponse(json_context)
 
 
-def playlist_all(request):
-    return render(request, './channel/playlist_all.html')
+def playlist_all(request,id):
+    contexto = {}
+    contexto['playlist'] = Playlist.objects.get(pk=id)
+    contexto['canal'] = contexto['playlist'].canal.get()
+    contexto['audios'] = contexto['playlist'].audios.filter()
+    contexto['capa_reserva'] = contexto['playlist'].audios.order_by('reproducoes').first()
+    print(contexto['capa_reserva'])
+    if contexto['playlist'].capa is None:
+        contexto['tem_capa'] = False
+        contexto['capa'] = contexto['capa_reserva'].capa
+    else:
+        contexto['tem_capa'] = True
+    contexto['reproducoes_tot'] = contexto['playlist'].audios.filter().aggregate(Sum('reproducoes'))['reproducoes__sum']
+    return render(request, './channel/playlist_all.html', contexto)
 
 
 def playlist_load_modal(request):
@@ -172,6 +185,8 @@ def playlist_add(request):
     playlist = request.GET['playlist_cod']
     audio_set = Audio.objects.get(pk=audio_cod)
     play = Playlist.objects.get(pk=playlist)
+    Playlist.objects.filter(pk=playlist).update(ultima_atualizacao=datetime.now())
+
     if play.audios.filter(pk=audio_cod).exists():
         play.audios.remove(audio_set)
         play.save()
@@ -191,7 +206,7 @@ def playlist_add_play(request):
     play['visibilidade'] = request.GET['visibilidade']
     play['canal_atrelado'] = request.GET['canal_atrelado']
     audio_set = Audio.objects.get(pk=audio_cod)
-    play['criada'] = Playlist.objects.create(nome=play['nome'], visibilidade=play['visibilidade'], proprietario=request.user)
+    play['criada'] = Playlist.objects.create(nome=play['nome'], visibilidade=play['visibilidade'], proprietario=request.user, capa=audio_set.capa)
     play['criada'].audios.add(audio_set)
     if play['canal_atrelado'] == 'Nenhum':
         json_context['html'] = gera_html(request, audio_cod)
@@ -199,7 +214,7 @@ def playlist_add_play(request):
         return JsonResponse(json_context)
     else:
         play['canal_set'] = Canal.objects.get(nome_canal=play['canal_atrelado'])
-        CanalPlay.objects.create(canal=play['canal_set'],playlist=play['criada'])
+        CanalPlay.objects.create(canal=play['canal_set'], playlist=play['criada'])
         json_context['message'] = 'Áudio adicionado a ' + play['criada'].nome
         json_context['html'] = gera_html(request, audio_cod)
         return JsonResponse(json_context)

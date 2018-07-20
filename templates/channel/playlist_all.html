@@ -43,99 +43,55 @@
                 </div>
             </div>
             <br>
-            <h3 style="word-break: break-all;">Nome da playlist</h3>
+            <h3 style="word-break: break-all;">{{playlist.nome}}</h3>
 
-            <img src="/static/resources/icones/view.png" alt="reproduções" class="icon-info">10.000
-            <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon-info ml-4">3
-            <div class="tumblr_mf171khjgJ1rapbo1o1_500_large.png">Última atualização há 5 horas atrás</div>
+            <img src="/static/resources/icones/view.png" alt="reproduções" class="icon-info">{{reproducoes_tot}}
+            <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon-info ml-4">{{playlist.audios.count}}
+            <div class="tumblr_mf171khjgJ1rapbo1o1_500_large.png">Última atualização {{playlist.ultima_atualizacao}}</div>
             <div class="mt-4" style="word-break: break-all;">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                 et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit.
             </div>
         </div>
-
-        <img src="/media/contas/user_1/capas_audio/wc1724207.jpg" alt="capa da playlist" class="capa-playlist">
+        {%if tem_capa%}
+        <img src="{{playlist.capa.url}}" alt="capa da playlist" class="capa-playlist">
+        {%else%}
+        <img src="{{capa.url}}" alt="capa da playlist" class="capa-playlist">
+        {%endif%}
         <a href="#"><img src="/static/resources/icones/play.png" alt="reproduzir" class="icon-play"></a>
         <div class="info-canal">
             <a href="#">
                 <img src="/static/images/default-user.png" alt="foto do canal" class="rounded-circle ft-do-canal">
-                <h5 class="nome-canal">Nome do canal</h5>
+                <h5 class="nome-canal">{{canal.nome_canal}}</h5>
             </a>
             <a href="#" class="btn-sintonizar">Sintonizar</a>
         </div>
     </div>
 
-
     <div class="audioBox mt-3">
+        {%for audio in audios%}
         <div class="audio">
-            <h5 class="numero-audio">1</h5>
+            <h5 class="numero-audio">{{forloop.counter}}</h5>
             <div class="card">
                 <figure>
-                    <a href="#"><img src="/media/contas/user_1/capas_audio/the-witcher-cover.jpg" class="img-audio" alt="imagem do áudio"></a>
+                    <a href="#"><img src="{{audio.capa.url}}" class="img-audio" alt="imagem do áudio"></a>
                     <figcaption>
                         <center>
                             <a href="#"><img src="/static/resources/icones/play.png" class="icon-play-audio"/></a>
                         </center>
                     </figcaption>
                 </figure>
-
                 <div class="card-body">
-                    <h4 class="card-title"><a href="#" class="audio-link">Título do áudio</a></h4>
+                    <h4 class="card-title"><a href="#" class="audio-link">{{audio.titulo}}</a></h4>
                     <div class="card-text">
                         <p class="d-inline mr-3">Nome do canal</p>
-                        <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">10.000</p>
+                        <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">{{audio.reproducoes}}</p>
                     </div>
                 </div>
-
                 <h5 class="tempo mr-3">3:20</h5>
             </div>
+            {% endfor %}
         </div>
-        <div class="audio">
-            <h5 class="numero-audio">2</h5>
-            <div class="card">
-                <figure>
-                    <a href="#"><img src="/media/contas/user_1/capas_audio/the-witcher-cover.jpg" class="img-audio" alt="imagem do áudio"></a>
-                    <figcaption>
-                        <center>
-                            <a href="#"><img src="/static/resources/icones/play.png" class="icon-play-audio"/></a>
-                        </center>
-                    </figcaption>
-                </figure>
-
-                <div class="card-body">
-                    <h4 class="card-title"><a href="#" class="audio-link">Título do áudio</a></h4>
-                    <div class="card-text">
-                        <p class="d-inline mr-3">Nome do canal</p>
-                        <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">10.000</p>
-                    </div>
-                </div>
-
-                <h5 class="tempo mr-3">3:20</h5>
-            </div>
-        </div>
-        <div class="audio">
-            <h5 class="numero-audio">3</h5>
-            <div class="card">
-                <figure>
-                    <a href="#"><img src="/media/contas/user_1/capas_audio/the-witcher-cover.jpg" class="img-audio" alt="imagem do áudio"></a>
-                    <figcaption>
-                        <center>
-                            <a href="#"><img src="/static/resources/icones/play.png" class="icon-play-audio"/></a>
-                        </center>
-                    </figcaption>
-                </figure>
-
-                <div class="card-body">
-                    <h4 class="card-title"><a href="#" class="audio-link">Título do áudio</a></h4>
-                    <div class="card-text">
-                        <p class="d-inline mr-3">Nome do canal</p>
-                        <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">10.000</p>
-                    </div>
-                </div>
-
-                <h5 class="tempo mr-3">3:20</h5>
-            </div>
-        </div>
-    </div>
+    </div> <!---marcador-->
 {% endblock %}

@@ -1,23 +1,25 @@
 $(document).ready(function() {
 	$('#form-up').submit(function(e){
 		if($('#id_audio').val()){
-			e.preventDefault()
-			$('.progress').show()
+			e.preventDefault();
+			$('.progress').show();
 			$(this).ajaxSubmit({
 				beforeSubmit:function(){
-						$('.progress-bar').width('100%')
+						
 				},
 				uploadProgress:function(event, position, total, percentComplete){
-					$('.progress-bar').width(percentComplete+'%')
-					$('.progress-bar').html('<div id="progress-status">'+percentComplete+' %</div>')
+					$('.progress-bar').width(percentComplete+'%');
+					$('.progress-bar').html('<div id="progress-status">'+percentComplete+' %</div>');
 				},
 				sucess:function(){
-					$('#progressBar').hide()
-					$('.progress-bar').html('<div id="progress-sfsd">Uploaded</div>')
+					window.setTimeout(function(){ 
+    					$('#progress-status').text('uploaded');
+					}, 3000);
+					$('.progress').hide();
 				},
-				resetForm:true
+				resetForm:true;
 			})
-			return true
+			return false;
 		}
 	})
 });

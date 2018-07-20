@@ -16,7 +16,6 @@
     <script src="{% static 'resources/JQuery/popper.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'channel/js/follow_button.js' %}"></script>
     <script src="{% static 'channel/js/play_add.js' %}"></script>
-
     <!--Bootstrap Links-->
     <link rel="stylesheet" href="{% static 'resources/bootstrap/css/bootstrap.min.css' %}" type="text/css"/>
     <script src="{% static 'resources/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
@@ -176,6 +175,83 @@
             {% endblock %}
         </div>
     </div>
+    <!---modal de playlist-->
+    <div class="modal fade" id="addPlaylist" >
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar a...</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body" id="play_load">
+                    {% for playlist in playlists %}
+                    <label class="pl-label play_id" value="{{playlist.id}}" url_="{% url 'channel:playlist_add_view' %}">{{playlist.nome}}
+                        <input type="checkbox" class="play_id" url_="channel/playlist_add"> <!--Checkbox checked caso o áudio esteja na playlist-->
+                        <span class="checkmark"  url_="{% url 'channel:playlist_add_view' %}" aud_atre=""></span>
+
+                    </label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br> <!--Excluir playlist-->
+                    {% endfor %}
+                    <a href="#" class="play_id" aud="1"></a>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-add" data-toggle="modal" data-dismiss="modal" data-target="#createPlaylist">Criar nova playlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!----modal de criar playlist----->
+
+       <div class="modal fade" id="createPlaylist" aud_atre="">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Crie sua playlist</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form id="form_playlist" method="get" action="" aud="">
+                    <input type="hidden" id="audio_em_questao" value="">
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label">
+                            <input name="nome" type="text" maxlength="150" placeholder="Nome da playlist"
+                                   style="margin-bottom: 1rem;" required=""/>
+                            <span class="spanPlaylist">Nome da playlist</span>
+                        </label>
+                        <span class="spanPlaylist">Visibilidade</span>
+                        <select name="visibilidade" class="selectPlaylist">
+                            <option selected="selected" value="publico">Público</option>
+                            <option value="privado">Privado</option>
+                        </select><br>
+
+                        <!--Caso o usuário tenha canais em sua conta criar esse select-->
+                        <span class="spanPlaylist">Associação</span>
+                        <a data-toggle="tooltip" data-placement="left" title="Associe esta playlist a um canal" style="float:right;">
+                            <i class="fas fa-question-circle fas-playlist"></i>
+                        </a>
+                        <select class="selectPlaylist" name="canal_atrelado">
+                            <option selected="selected">Nenhum</option>
+                            {% for canal in canais_para_playlist %}
+                            <option>{{canal.nome_canal}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="modal-footer" style="padding: 1.2rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit" id="submitChannel">
+                            <strong>{% trans 'Criar' %}</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!---fim do modal de criar playlist-->
+
+    <!-----alert de playlists-->
+    <div id="alert-addPlaylist" class="addAudioPl" role="alert"></div>
+    <!----- fim do alert de playlists-->
     {% if footer %}
         <div class="footer">
             <!--Botão de Salvar e Cancelar-->

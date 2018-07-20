@@ -103,3 +103,10 @@ def gera_html(request, audio):
             html += '<label class="pl-label ">' + play.nome + '<input type="checkbox" aud="1" class="play_id" url_="channel/playlist_add" id="'+str(play.id)+'" ><span class="checkmark addplay_id" value="'+str(play.id)+'" url_="channel/playlist_add" ></span></label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br><br>'
 
     return html
+
+
+def ordena_pra_exibicao(playlists):
+
+    for playlist in playlists:
+        playlist.audios_apresentaveis = playlist.audios.filter().order_by('reproducoes')[:4]
+    return playlists
