@@ -18,7 +18,7 @@ a#playlists {
 .last-update {
     white-space: initial;
     overflow: initial;
-    height: 7%;
+    height: 2rem;
     margin-bottom: 0;
 }
 
@@ -81,16 +81,10 @@ a#playlists {
     background-color: #00000047;
 }
 
-@media only screen and (max-width: 922px) {
+@media only screen and (max-width: 916px) {
     .last-update {
-        height: 11% !important;
-     }
-}
-
-@media only screen and (max-width: 834px) {
-    .last-update {
-        height: 13% !important;
-     }
+        height: 3.5rem !important;
+    }
 }
 
 @media only screen and (max-width: 834px) {
@@ -120,10 +114,6 @@ a#playlists {
         border-radius: 0 0 4px 4px;
         margin-left: 0;
         height: 17rem;
-    }
-
-    .last-update {
-        height: 10% !important;
     }
 
     .playlist-link {

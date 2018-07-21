@@ -151,4 +151,20 @@ img.icon.seguidores {
     .edit-capa-bottom {
         top: -12px;
     }
+
+    .row.mt-4 {
+        padding: 10px 0;
+    }
+
+    .headerChannel {
+        margin-left: .6rem !important;
+    }
+
+    .row.mt-4.audios {
+        padding: 10px 0;
+    }
+
+    input.form-control {
+        right: 0;
+    }
 }

@@ -4,6 +4,11 @@
        local('Raleway');
 }
 
+i.fas.fa-volume-up {
+    color: white;
+    text-shadow: 0px 0px 5px black;
+}
+
 .has-float-label input {
     width: 100%;
     font-weight: 500;
