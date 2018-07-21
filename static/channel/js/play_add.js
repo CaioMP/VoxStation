@@ -41,9 +41,11 @@ $('document').ready( function(){
 			success:function(json){
 				console.log(json.message);
 				$("#alert-addPlaylist").html(json.message);
+				document.getElementById("alert-addPlaylist").style.visibility = "visible";
 				document.getElementById("alert-addPlaylist").style.opacity = "1";
 				window.setTimeout(function() {
 				    document.getElementById("alert-addPlaylist").style.opacity = "0";
+				    document.getElementById("alert-addPlaylist").style.visibility = "hidden";
 				}, 1800);
 			},
 			error:function(){
@@ -68,9 +70,11 @@ $('document').ready( function(){
 			success:function(json){
 				console.log(json.message);
 				$("#alert-addPlaylist").html(json.message);
+				document.getElementById("alert-addPlaylist").style.visibility = "visible";
 				document.getElementById("alert-addPlaylist").style.opacity = "1";
 				window.setTimeout(function() {
 				    document.getElementById("alert-addPlaylist").style.opacity = "0";
+				    document.getElementById("alert-addPlaylist").style.visibility = "hidden";
 				}, 1800);
 				$('#play_load').html(json.html);
 				$('#createPlaylist').modal('hide');

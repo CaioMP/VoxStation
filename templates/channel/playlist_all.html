@@ -11,9 +11,11 @@
     <div class="infoBox">
         <div class="info-playlist">
             <div class="icones">
-                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Edite o nome da playlist">
-                    <i class="fas fa-pen" style="color: black;"></i>
-                </a> <!--Editar o nome da playlist-->
+                <span data-toggle="modal" data-target="#editBasicInfo">
+                    <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Edite o nome ou a capa de sua playlist">
+                        <i class="fas fa-pen" style="color: black;"></i>
+                    </a> <!--Editar o nome ou capa da playlist-->
+                </span>
                 <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Salvar playlist">
                     <img src="/static/resources/icones/playlist_add.png" alt="salvar playlist" class="icon-playlist">
                 </a> <!--Salvar playlist-->
@@ -30,7 +32,7 @@
                 <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Vincular a um canal">
                     <img src="/static/resources/icones/link.png" alt="vincular a um canal" class="icon-playlist vincular">
                 </a><!--Vincular a um canal-->
-                <div class="dropdown visibility" data-toggle="tooltip" data-placement="right"
+                <div class="dropdown visibility mr-3" data-toggle="tooltip" data-placement="bottom"
                      title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
@@ -41,6 +43,12 @@
                         </div>
                     </a>
                 </div>
+                <span data-toggle="modal" data-target="#editDescricao">
+                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Edite a descrição">
+                        <img src="/static/resources/icones/description.png" alt="edite a descrição" id="descricao"
+                             class="icon-playlist descricao"> <!--Alterar o display para 'block'-->
+                    </a> <!--Editar descrição (APARECER APENAS SE TIVER UMA DESCRIÇÃO)-->
+                </span>
             </div>
             <br>
             <h3 style="word-break: break-all;">{{playlist.nome}}</h3>
@@ -48,11 +56,16 @@
             <img src="/static/resources/icones/view.png" alt="reproduções" class="icon-info">{{reproducoes_tot}}
             <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon-info ml-4">{{playlist.audios.count}}
             <div class="tumblr_mf171khjgJ1rapbo1o1_500_large.png">Última atualização {{playlist.ultima_atualizacao}}</div>
-            <div class="mt-4" style="word-break: break-all;">
+
+            <!--Criar uma descrição (isso deve sumir caso o usuário já tenha dado uma descrição)-->
+            <a data-toggle="modal" data-target="#addDescricao" class="btn btn-sintonizar">Adicionar uma descrição</a>
+
+            <!--Aparecer essa parte caso a playlist possua uma descrição
+            <div class="mt-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                 et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit.
-            </div>
+            </div>-->
         </div>
         {%if tem_capa%}
         <img src="{{playlist.capa.url}}" alt="capa da playlist" class="capa-playlist">
@@ -61,7 +74,7 @@
         {%endif%}
         <a href="#"><img src="/static/resources/icones/play.png" alt="reproduzir" class="icon-play"></a>
         <div class="info-canal">
-            <a href="#">
+            <a href="{% url 'channel:channel_view' canal.nome_canal %}">
                 <img src="/static/images/default-user.png" alt="foto do canal" class="rounded-circle ft-do-canal">
                 <h5 class="nome-canal">{{canal.nome_canal}}</h5>
             </a>
@@ -73,7 +86,7 @@
         {%for audio in audios%}
         <div class="audio">
             <h5 class="numero-audio">{{forloop.counter}}</h5>
-            <div class="card">
+            <div class="card mb-3">
                 <figure>
                     <a href="#"><img src="{{audio.capa.url}}" class="img-audio" alt="imagem do áudio"></a>
                     <figcaption>

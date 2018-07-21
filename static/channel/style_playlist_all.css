@@ -1,5 +1,6 @@
 body {
     font-family: Raleway;
+    overflow: auto;
 }
 
 .infoBox {
@@ -15,6 +16,26 @@ body {
     top: 6.1rem;
     left: 1.5rem;
     z-index: -1;
+}
+
+/*A capa dentro do modal de editar playlist*/
+.edit-capa {
+    width: 12rem;
+    height: 8.7rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    margin-top: 7px;
+}
+
+.camera {
+    width: 12rem !important;
+    height: 8.7rem !important;
+    top: 103px !important;
+    left: 19px !important;
+    padding: 3rem 4rem !important;
+    cursor: pointer;
 }
 
 .tooltip-inner {
@@ -67,11 +88,22 @@ body {
     font-size: 18px;
 }
 
+.btn-add {
+    border: initial;
+    border-radius: 4px;
+    color: white;
+    background: linear-gradient(-160deg, #032854, black);
+}
+
+.btn-add:hover {
+    background: linear-gradient(-160deg, #032854bf, black);
+}
+
 .btn-sintonizar {
     position: relative;
     top: .8rem;
     background: linear-gradient(-160deg, #032854, black);
-    color: white;
+    color: white !important;
     padding: 6px 24px;
     border: 1px solid;
     border-radius: 4px;
@@ -80,8 +112,12 @@ body {
 }
 
 .btn-sintonizar:hover {
-    color: white;
+    color: white !important;
     background: linear-gradient(-160deg, #032854bf, black);
+}
+
+.btn-sintonizar:focus {
+    color: white;
 }
 
 .icon-info {
@@ -111,6 +147,10 @@ body {
 
 .delete {
     width: 1.5rem;
+}
+
+.modal-open {
+    padding-right: 0 !important;
 }
 
 .visibility {
@@ -152,7 +192,7 @@ body {
     background: linear-gradient(-160deg, #032854, black);
     color: white;
     padding-top: 1rem;
-    padding-bottom: 2rem;
+    padding-bottom: 7rem;
 }
 
 .numero-audio {
@@ -160,7 +200,7 @@ body {
     margin-left: 1.5rem;
     margin-right: -.5rem;
     position: relative;
-    bottom: 3rem;
+    bottom: 4rem;
     font-weight: bold;
 }
 
@@ -216,6 +256,12 @@ figcaption:hover {
     width: 43px;
     opacity: .9;
     margin: 2.2rem 0;
+}
+
+.icon-playlist.descricao {
+    display: none;
+    width: 1.4em;
+    margin-top: 0;
 }
 
 .card-body {

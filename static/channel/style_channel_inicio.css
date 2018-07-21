@@ -13,6 +13,13 @@ img#foto {
     box-shadow: 0px 0px 5px #00000033;
 }
 
+.nome_canal {
+    max-width: 70%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 h2, h6 {
     font-weight: lighter !important;
     text-shadow: 0px 0px 5px black;
@@ -63,7 +70,7 @@ a#personalizar {
 
 .container-fluid {
     margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 3rem !important;
     padding-right: 15 !important;
 }
 
@@ -93,6 +100,7 @@ a#personalizar {
 
 .carousel-inner {
     margin-left: .9rem;
+    height: 21rem !important;
 }
 
 .mt-4 {
@@ -276,6 +284,7 @@ a.section:hover {
     }
 
     .carousel-inner {
+        width: 100% !important;
         padding: 0 0px;
     }
 }

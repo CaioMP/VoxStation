@@ -7,6 +7,7 @@ from .models import Playlist, Audio, CanalPlay
 from datetime import datetime
 from django.db.models import Sum
 
+
 def myuploads(request):
     audio = Audio()
     channels = Canal.objects.filter(proprietario=request.user)
@@ -164,6 +165,7 @@ def playlist_all(request,id):
     else:
         contexto['tem_capa'] = True
     contexto['reproducoes_tot'] = contexto['playlist'].audios.filter().aggregate(Sum('reproducoes'))['reproducoes__sum']
+    contexto['logado'] = request.user.is_active
     return render(request, './channel/playlist_all.html', contexto)
 
 
@@ -220,5 +222,15 @@ def playlist_add_play(request):
         return JsonResponse(json_context)
 
 
-
-
+def edit_channel(request, nome):
+    contexto = {}
+    contexto['chan'] = getaudios(Canal.objects.get(nome_canal=nome))
+    contexto['botao'] = ve_se_follow(request, contexto['chan'])
+    contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
+    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
+    contexto['logado'] = request.user.is_active
+    if request.user == contexto['chan'].proprietario:
+        contexto['direito_edicao'] = True
+    else:
+        contexto['direito_edicao'] = False
+    return render(request, "./channel/edit_channel.html", contexto)

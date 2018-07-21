@@ -37,71 +37,231 @@
     {% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light fixed-top">
-            <div class="nav-left">
-                <button type="button" id="sidebarCollapse" class="navbar-btn active">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <a href="{% url 'home:index' %}" id="logo"><img class="logo" src="/static/resources/icones/logo.png"></a>
+    <!--Modal de adicionar áudio a playlists-->
+    <div class="modal fade" id="addPlaylist" >
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar a...</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body" id="play_load">
+                    {% for playlist in playlists %}
+                    <label class="pl-label play_id" value="{{playlist.id}}" url_="{% url 'channel:playlist_add_view' %}">{{playlist.nome}}
+                        <input type="checkbox" class="play_id" url_="channel/playlist_add"> <!--Checkbox checked caso o áudio esteja na playlist-->
+                        <span class="checkmark"  url_="{% url 'channel:playlist_add_view' %}" aud_atre=""></span>
+
+                    </label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br> <!--Excluir playlist-->
+                    {% endfor %}
+                    <a href="#" class="play_id" aud="1"></a>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-add" data-toggle="modal" data-dismiss="modal" data-target="#createPlaylist">Criar nova playlist</button>
+                </div>
             </div>
+        </div>
+    </div>
+    <!--Alert de adicionar/remover áudio da playlist-->
+    <div id="alert-addPlaylist" class="addAudioPl" role="alert"></div>
 
-            <div class="nav-search">
-                <center>
-                    <div class="navbar-collapse" id="navbarPesquisa">
-                        <form class="form-inline">
-                            <input class="form-control" type="search" placeholder="Pesquisar">
-                            <button class="btn btn-link mb-1" type="submit">
-                                <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar" id="search">
-                            </button>
-                        </form>
-                    </div>
-                </center>
-            </div>
+    <!--Modal de criação de playlists-->
+    <div class="modal fade" id="createPlaylist" aud_atre="">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Crie sua playlist</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
 
+                <form id="form_playlist" method="get" action="" aud="">{% csrf_token %}
+                    <input type="hidden" id="audio_em_questao" value="">
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label">
+                            <input name="nome" type="text" maxlength="150" placeholder="Nome da playlist"
+                                   style="margin-bottom: 1rem;" required=""/>
+                            <span class="spanPlaylist">Nome da playlist</span>
+                        </label>
+                        <span class="spanPlaylist">Visibilidade</span>
+                        <select name="visibilidade" class="selectPlaylist">
+                            <option selected="selected" value=0>Público</option>
+                            <option value=1>Privado</option>
+                        </select><br>
 
-            <div class="nav-right">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'channel:myuploads' %}">
-                            <img class="icon-right" src="/static/resources/icones/upload.ico"></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/disc.ico"></a>
-                    </li>
-                    <li class="dropdown">
-                        <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="icon-right" src="/static/resources/icones/notific.ico"></a>
-                        <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
-                            <a class="dropdown-item" href="#">Notific 1</a>
-                            <a class="dropdown-item" href="#">Notific 2</a>
-                            <a class="dropdown-item" href="#">Notific 3</a>
-                        </div>
-                    </li>
-                    <li class="dropdown" id="dpAvatar">
-                        <a id="dropdownMenuButton" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            {% if not user.img_perfil %}
-                                <img class="img-perfil" src="/static/images/default-user.png"/>
-                            {% else %}
-                                <img class="img-perfil" src="{{ user.img_perfil.url }}"/>
-                            {% endif %}
+                        <!--Caso o usuário tenha canais em sua conta criar esse select-->
+                        <span class="spanPlaylist">Associação</span>
+                        <a data-toggle="tooltip" data-placement="left" title="Associe esta playlist a um canal" style="float:right;">
+                            <i class="fas fa-question-circle fas-playlist"></i>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dpAccount">
-                            {% if logado %}
-                                <a class="dropdown-item" href="{% url 'account:edit_profile' %}">Editar Perfil</a>
-                                <a class="dropdown-item" href="{% url 'account:new_channel' %}">Criar canal</a> <!--Trocar por meus canais dps-->
-                                <a class="dropdown-item" href="{% url 'account:sign_out' %}">Sair</a>
-                            {% else %}
-                                <a class="dropdown-item" href="{% url 'account:sign_in' %}">Entrar</a>
-                                <a class="dropdown-item" href="{% url 'account:sign_up' %}">Nova conta</a>
-                            {% endif %}
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                        <select class="selectPlaylist" name="canal_atrelado">
+                            <option selected="selected">Nenhum</option>
+                            {% for canal in canais_para_playlist %}
+                            <option>{{canal.nome_canal}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
+                    <div class="modal-footer" style="padding: 1.2rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit" id="submitChannel">
+                            <strong>{% trans 'Criar' %}</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para edição do nome ou capa de playlists-->
+    <div class="modal fade" id="editBasicInfo">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Edite sua playlist</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form>{% csrf_token %}
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label" style="height: 45px;">
+                            <input name="nome" type="text" maxlength="150" placeholder="Nome da playlist" value="{{playlist.nome}}"
+                                   style="margin-bottom: 1rem;" required=""/>
+                            <span class="spanPlaylist">Nome da playlist</span>
+                        </label>
+
+                        <span class="spanPlaylist">Capa</span><br>
+                        {%if tem_capa%}
+                        <img src="{{playlist.capa.url}}" alt="capa da playlist" class="edit-capa">
+                        {%else%}
+                        <img src="{{capa.url}}" alt="capa da playlist" class="edit-capa">
+                        {%endif%}
+                        <label for="troca-capa-playlist">
+                            <img src="/static/images/camera.png" alt="trocar capa da playlist" class="icon-play camera">
+                        </label>
+                        <input type="file" id="troca-capa-playlist" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">{% trans 'Salvar' %} alterações</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para criar descrição de playlists-->
+    <div class="modal fade" id="addDescricao">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Adicione uma descrição</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form>
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label">
+                            <textarea rows="5" maxlength="1000" placeholder="Descreva sua playlist" required=""></textarea>
+                            <span>Descreva sua playlist</span>
+                        </label>
+                    </div>
+                    <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">Salvar</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para editar a descrição de playlists-->
+    <div class="modal fade" id="editDescricao">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Edite a descrição</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form>
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label">
+                            <textarea rows="5" maxlength="1000" placeholder="Descreva sua playlist" required=""></textarea>
+                            <span>Descreva sua playlist</span>
+                        </label>
+                    </div>
+                    <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">Salvar alterações</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-sm navbar-light fixed-top">
+        <div class="nav-left">
+            <button type="button" id="sidebarCollapse" class="navbar-btn active">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="{% url 'home:index' %}" id="logo"><img class="logo" src="/static/resources/icones/logo.png"></a>
+        </div>
+
+        <div class="nav-search">
+            <center>
+                <div class="navbar-collapse" id="navbarPesquisa">
+                    <form class="form-inline"> {% csrf_token %}
+                        <input class="form-control" type="search" placeholder="Pesquisar">
+                        <button class="btn btn-link mb-1" type="submit">
+                            <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar" id="search">
+                        </button>
+                    </form>
+                </div>
+            </center>
+        </div>
+
+        <div class="nav-right">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'channel:myuploads' %}">
+                        <img class="icon-right" src="/static/resources/icones/upload.ico"></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/disc.ico"></a>
+                </li>
+                <li class="dropdown">
+                    <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="icon-right" src="/static/resources/icones/notific.ico"></a>
+                    <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
+                        <a class="dropdown-item" href="#">Notific 1</a>
+                        <a class="dropdown-item" href="#">Notific 2</a>
+                        <a class="dropdown-item" href="#">Notific 3</a>
+                    </div>
+                </li>
+                <li class="dropdown" id="dpAvatar">
+                    <a id="dropdownMenuButton" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {% if not user.img_perfil %}
+                            <img class="img-perfil" src="/static/images/default-user.png"/>
+                        {% else %}
+                            <img class="img-perfil" src="{{ user.img_perfil.url }}"/>
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dpAccount">
+                        {% if logado %}
+                            <a class="dropdown-item" href="{% url 'account:edit_profile' %}">Editar Perfil</a>
+                            <a class="dropdown-item" href="{% url 'account:new_channel' %}">Criar canal</a> <!--Trocar por meus canais dps-->
+                            <a class="dropdown-item" href="{% url 'account:sign_out' %}">Sair</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{% url 'account:sign_in' %}">Entrar</a>
+                            <a class="dropdown-item" href="{% url 'account:sign_up' %}">Nova conta</a>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        </div>
     </nav>
      <nav id="sidebar" class="active">
             <div class="sidebar-header">
@@ -154,80 +314,7 @@
             {% endblock %}
         </div>
     </div>
-    <!--Modal de adicionar áudio a playlists-->
-    <div class="modal fade" id="addPlaylist" >
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Adicionar a...</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
 
-                <div class="modal-body" id="play_load">
-                    {% for playlist in playlists %}
-                    <label class="pl-label play_id" value="{{playlist.id}}" url_="{% url 'channel:playlist_add_view' %}">{{playlist.nome}}
-                        <input type="checkbox" class="play_id" url_="channel/playlist_add"> <!--Checkbox checked caso o áudio esteja na playlist-->
-                        <span class="checkmark"  url_="{% url 'channel:playlist_add_view' %}" aud_atre=""></span>
-
-                    </label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br> <!--Excluir playlist-->
-                    {% endfor %}
-                    <a href="#" class="play_id" aud="1"></a>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-add" data-toggle="modal" data-dismiss="modal" data-target="#createPlaylist">Criar nova playlist</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Alert de adicionar/remover áudio da playlist-->
-    <div id="alert-addPlaylist" class="addAudioPl" role="alert"></div>
-
-    <!--Modal de criação de playlists-->
-    <div class="modal fade" id="createPlaylist" aud_atre="">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header" style="padding: 1.2rem;">
-                    <h4 class="modal-title">Crie sua playlist</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <form id="form_playlist" method="get" action="" aud="">
-                    <input type="hidden" id="audio_em_questao" value="">
-                    <div class="modal-body" style="padding: 1.2rem;">
-                        <label class="has-float-label">
-                            <input name="nome" type="text" maxlength="150" placeholder="Nome da playlist"
-                                   style="margin-bottom: 1rem;" required=""/>
-                            <span class="spanPlaylist">Nome da playlist</span>
-                        </label>
-                        <span class="spanPlaylist">Visibilidade</span>
-                        <select name="visibilidade" class="selectPlaylist">
-                            <option selected="selected" value=0>Público</option>
-                            <option value=1>Privado</option>
-                        </select><br>
-
-                        <!--Caso o usuário tenha canais em sua conta criar esse select-->
-                        <span class="spanPlaylist">Associação</span>
-                        <a data-toggle="tooltip" data-placement="left" title="Associe esta playlist a um canal" style="float:right;">
-                            <i class="fas fa-question-circle fas-playlist"></i>
-                        </a>
-                        <select class="selectPlaylist" name="canal_atrelado">
-                            <option selected="selected">Nenhum</option>
-                            {% for canal in canais_para_playlist %}
-                            <option>{{canal.nome_canal}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="modal-footer" style="padding: 1.2rem; margin-bottom: -1rem;">
-                        <button class="btn btn-add" type="submit" id="submitChannel">
-                            <strong>{% trans 'Criar' %}</strong>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     {% if footer %}
         <div class="footer">
             <!--Botão de Salvar e Cancelar-->

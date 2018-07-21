@@ -170,6 +170,6 @@ label#btn-audio {
 .camera {
     display: block;
     width: 60px;
-    margin: 57px;
+    margin: 65px 60px;
     opacity: 0.9;
 }

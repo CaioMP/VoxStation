@@ -11,6 +11,10 @@ body {
     top: -2px;
 }
 
+.carousel-inner {
+    height: 18rem;
+}
+
 .icon-play {
     display: block;
     width: 55px;
@@ -163,7 +167,7 @@ p {
     }
 
     .carousel-inner {
-        height: 120%;
+        height: 19rem;
     }
 
     .mt-5, .my-5 {
@@ -175,7 +179,7 @@ p {
     }
 
     p {
-        height: 3.3%;
+        height: 1.5rem;
     }
 
     figure {
@@ -194,6 +198,10 @@ p {
 
     .col-md-3 {
         max-width: 50%;
+    }
+
+    .carousel-inner {
+        height: 46rem;
     }
 
     .icon-play {
@@ -244,8 +252,14 @@ p {
         top: 140px;
     }
 
+    .carousel-inner {
+        height: 104rem;
+    }
+
     .icon-play {
-        width: 130px;
+        width: 90px;
+        margin-top: 4rem;
+        margin-bottom: 2rem;
     }
 
     .carousel-control-prev, .carousel-control-next {
@@ -265,7 +279,7 @@ p {
     }
 
     .fig-capa-audio figcaption {
-        height: auto;
+        height: 13.5rem;
     }
 
     p {
@@ -283,6 +297,10 @@ p {
         margin-top: 0;
     }
 
+    .fig-capa-audio figcaption {
+        height: 12.4rem;
+    }
+
     div#page-content-wrapper {
         margin-top: 140px;
     }
@@ -291,6 +309,7 @@ p {
         position: relative;
         right: 20px;
         width: 107%;
+        height: 93rem;
         overflow: hidden;
     }
 
@@ -311,6 +330,7 @@ p {
         width: 107%;
         position: relative;
         left: -20px;
+        margin-right: -1.7rem !important;
     }
 
     img.ft-do-canal {
@@ -321,7 +341,7 @@ p {
     }
 
     .icon-play {
-        width: 120px;
+        width: 75px;
      }
 
     .card {
@@ -331,5 +351,11 @@ p {
 
     p {
         margin-top: -4px;
+    }
+}
+
+@media only screen and (max-width: 374px) {
+    .headerChannel {
+        margin-right: -1.8rem !important;
     }
 }

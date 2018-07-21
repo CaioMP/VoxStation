@@ -133,6 +133,7 @@
 }
 
 .addAudioPl {
+    visibility: hidden;
     min-width: 8rem;
     max-width: 100%;
     border: hidden !important;
@@ -141,13 +142,13 @@
     text-align: center;
     position: fixed !important;
     left: 50%;
+    top: 35rem;
     font-size: 14px;
     font-weight: bold;
     color: white !important;
     background: linear-gradient(-160deg, #032854, black);
     opacity: 0;
-    transition: opacity 0.15s linear;
+    transition: visibility 0.15s, opacity 0.15s linear;
     transform: translate(-50%,0);
-    margin-top: -4rem;
     z-index: 2000;
 }
