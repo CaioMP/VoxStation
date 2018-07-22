@@ -47,6 +47,58 @@ a.dropdown-item.filter {
     padding: 0.5rem 1.5rem;
 }
 
+.edit-capa {
+    background-size: cover;
+    width: 100%;
+    height: 20rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    margin-top: 7px;
+}
+
+.nome-canal {
+    height: 2.7rem;
+    margin-bottom: 1rem;
+}
+
+.modal-lg {
+    max-width: 100% !important;
+    margin-top: 1rem !important;
+    margin-left: 1rem !important;
+    margin-bottom: 0 !important;
+}
+
+.addLinksChannel {
+    margin-top: -11px !important;
+    max-width: 31.2rem !important;
+    min-height: calc(100% - (0.2rem * 2));
+}
+
+label.editCapa {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 1s;
+    background-color: rgba(0, 0, 0, .4);
+    cursor: pointer;
+}
+
+label.editCapa:hover {
+    opacity: 1;
+}
+
+.camera-capa {
+    position: relative;
+    margin: 0 !important;
+    width: 6.5rem !important;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .foto {
     margin-top: 0 !important;
 }
@@ -145,6 +197,26 @@ img.icon.seguidores {
     .edit-capa-bottom {
         top: -4px;
     }
+
+    div#editCapa {
+        padding-right: 0 !important;
+    }
+
+    .modal-dialog-centered {
+        margin: 0 !important;
+    }
+
+    .modal-content {
+        border-radius: 0 !important;
+    }
+
+    .edit-capa {
+        height: 17.2rem;
+    }
+
+    .camera-capa {
+        width: 5rem !important;
+    }
 }
 
 @media only screen and (max-width: 414px) {
@@ -166,5 +238,14 @@ img.icon.seguidores {
 
     input.form-control {
         right: 0;
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 0;
+    }
+
+    .edit-capa {
+        height: 13.7rem;
     }
 }

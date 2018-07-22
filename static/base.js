@@ -3,6 +3,11 @@ $(document).ready(function () {
         $('#sidebar').toggleClass('active');
         $(this).toggleClass('active');
     });
+
+    $('[rel="tooltip"]').tooltip();
+    $('[rel="tooltip').on('click', function () {
+        $(this).tooltip('hide');
+    });
 });
 
 $(function () {

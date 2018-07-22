@@ -113,23 +113,16 @@
         </div>
     </div>
 
-    <!--Modal para edição do nome ou capa de playlists-->
-    <div class="modal fade" id="editBasicInfo">
+    <!--Modal para edição da capa de playlists-->
+    <div class="modal fade" id="editCapaPlaylist">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header" style="padding: 1.2rem;">
-                    <h4 class="modal-title">Edite sua playlist</h4>
+                    <h4 class="modal-title">Edite sua capa</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
                     <div class="modal-body" style="padding: 1.2rem;">
-                        <label class="has-float-label" style="height: 45px;">
-                            <input name="{{ form.nome.name }}" id="{{ form.nome.id_for_label }}" type="text" maxlength="150" placeholder="Nome da playlist" value="{{playlist.nome}}"
-                                   style="margin-bottom: 1rem;" required=""/>
-                            <span class="spanPlaylist">Nome da playlist</span>
-                        </label>
-
-                        <span class="spanPlaylist">Capa</span><br>
                         {%if tem_capa%}
                         <img src="{{playlist.capa.url}}" alt="capa da playlist" class="edit-capa" id="foto-default">
                         {%else%}
@@ -150,16 +143,21 @@
         </div>
     </div>
 
-    <!--Modal para criar descrição de playlists-->
-    <div class="modal fade" id="addDescricao">
+    <!--Modal para edição do nome e descrição de playlists-->
+    <div class="modal fade" id="editPlaylist">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header" style="padding: 1.2rem;">
-                    <h4 class="modal-title">Adicione uma descrição</h4>
+                    <h4 class="modal-title">Informações básicas</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <form>
                     <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label" style="height: 45px;">
+                            <input name="{{ form.nome.name }}" id="{{ form.nome.id_for_label }}" type="text" maxlength="150" placeholder="Nome da playlist" value="{{playlist.nome}}"
+                                   style="margin-bottom: 1rem;" required=""/>
+                            <span class="spanPlaylist">Nome da playlist</span>
+                        </label>
                         <label class="has-float-label">
                             <textarea rows="5" maxlength="1000" placeholder="Descreva sua playlist" required=""></textarea>
                             <span>Descreva sua playlist</span>
@@ -196,6 +194,67 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para editar nome, descrição e links de canais-->
+    <div class="modal fade" id="editInfo">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Outras informações</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form>
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label nome-canal">
+                            <input type="text" value="{{chan.nome_canal}}" placeholder="Nome do canal" required="">
+                            <span>Nome do canal</span>
+                        </label>
+                        <label class="has-float-label">
+                            <textarea rows="5" maxlength="1000" placeholder="Descreva seu canal">{{chan.descricao}}</textarea>
+                            <span>Descreva seu canal</span>
+                        </label>
+                        <button class="btn btn-add" data-toggle="modal" data-target="#addLinksChannel">
+                            <strong class="save-strong">Adicionar links</strong>
+                        </button>
+                    </div>
+                    <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">Salvar alterações</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Adicionar links a um canal-->
+        <div class="modal fade" id="addLinksChannel">
+            <div class="modal-dialog modal-sm modal-dialog-centered addLinksChannel">
+                <div class="modal-content" id="contentLinksChannel">
+                    <div class="modal-header" style="padding: 1.2rem;">
+                        <h4 class="modal-title">Adicionar links</h4>
+                        <button type="button" class="close" onclick="hideModalLinks()">&times;</button>
+                    </div>
+                    <form>
+                        <div class="modal-body" style="padding: 1.2rem;">
+                            <label class="has-float-label nome-canal">
+                                <input type="text" placeholder="1° link">
+                                <span>1° link</span>
+                            </label>
+                            <button class="btn btn-add">
+                                <img src="/static/resources/icones/add.png" alt="adicione um novo link"
+                                     class="d-block" style="width: 20px;">
+                            </button>
+                        </div>
+                        <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                            <button class="btn btn-add" type="submit">
+                                <strong class="save-strong">Salvar</strong>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

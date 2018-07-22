@@ -11,28 +11,49 @@
     <div class="infoBox">
         <div class="info-playlist">
             <div class="icones">
-                <span data-toggle="modal" data-target="#editBasicInfo">
-                    <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Edite o nome ou a capa de sua playlist">
-                        <i class="fas fa-pen" style="color: black;"></i>
-                    </a> <!--Editar o nome ou capa da playlist-->
+                <span data-toggle="modal" data-target="#editCapaPlaylist">
+                    <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua capa">
+                        <i class="fas fa-camera" style="color: black;"></i>
+                    </a> <!--Editar a capa da playlist-->
                 </span>
-                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Salvar playlist">
+
+                <span data-toggle="modal" data-target="#editPlaylist" style="display:none;">
+                    <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua playlist">
+                        <i class="fas fa-pen" style="color: black;"></i>
+                    </a> <!--Editar o nome ou descrição da playlist(só alterar o display caso já exista uma descrição)-->
+                </span>
+                <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Salvar playlist">
                     <img src="/static/resources/icones/playlist_add.png" alt="salvar playlist" class="icon-playlist">
                 </a> <!--Salvar playlist-->
                 <!-- Aparecer esse icone caso o dono da playlist queira deletá-la
                 <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_delete.png" alt="excluir playlist" class="icon-playlist delete"></a>
                 <!-- Aparecer esse icone caso o usuário visitante tenha salvo a playlist
                 <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_add_check.png" alt="remover playlist" class="icon-playlist"></a>-->
-                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Reproduzir aleatoriamente">
+
+                <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Reproduzir aleatoriamente">
                     <img src="/static/resources/icones/random.png" alt="reproduzir aleatoriamente" class="icon-playlist">
                 </a><!--Reproduzir aleatoriamente-->
-                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Compartilhar playlist">
+
+                <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Compartilhar playlist">
                     <i class="fas fa-share" style="color: black; font-size: 18px;"></i>
                 </a><!--Compartilhar playlist-->
-                <a href="#" class="mr-3" data-toggle="tooltip" data-placement="bottom" title="Vincular a um canal">
-                    <img src="/static/resources/icones/link.png" alt="vincular a um canal" class="icon-playlist vincular">
-                </a><!--Vincular a um canal-->
-                <div class="dropdown visibility mr-3" data-toggle="tooltip" data-placement="bottom"
+
+                <!--Vincular a um canal-->
+                <div class="dropdown vincular mr-3" id="vincular" style="margin: 5px .25rem;">
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-link" data-toggle="tooltip" data-placement="right"
+                             title="Vincular a um canal"></i>
+                    </a>
+                    <ul class="dropdown-menu dm-vincular">
+                        <li class="dropdown-item di-vincular"><input type="radio" name="canal">Nenhum</li>
+                        <li class="dropdown-item di-vincular"><input type="radio" name="canal">Canal 1</li>
+                        <li class="dropdown-item di-vincular"><input type="radio" name="canal">Canal 2</li>
+                        <li class="divider"></li>
+                        <li><a href="#" class="btn btn-sintonizar" id="salvarVinculo">Salvar</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown visibility mr-3" rel="tooltip" data-toggle="tooltip" data-placement="right"
                      title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
@@ -43,12 +64,6 @@
                         </div>
                     </a>
                 </div>
-                <span data-toggle="modal" data-target="#editDescricao">
-                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Edite a descrição">
-                        <img src="/static/resources/icones/description.png" alt="edite a descrição" id="descricao"
-                             class="icon-playlist descricao"> <!--Alterar o display para 'block'-->
-                    </a> <!--Editar descrição (APARECER APENAS SE TIVER UMA DESCRIÇÃO)-->
-                </span>
             </div>
             <br>
             <h3 style="word-break: break-all;">{{playlist.nome}}</h3>
@@ -57,14 +72,12 @@
             <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon-info ml-4">{{playlist.audios.count}}
             <div class="tumblr_mf171khjgJ1rapbo1o1_500_large.png">Última atualização {{playlist.ultima_atualizacao}}</div>
 
-            <!--Criar uma descrição (isso deve sumir caso o usuário já tenha dado uma descrição)-->
-            <a data-toggle="modal" data-target="#addDescricao" class="btn btn-sintonizar">Adicionar uma descrição</a>
+            <!--Essa parte só deve aparecer caso o usuário não tenha dado uma descrição para a playlist-->
+            <a data-toggle="modal" data-target="#editPlaylist" class="btn btn-sintonizar">Editar playlist</a>
 
             <!--Aparecer essa parte caso a playlist possua uma descrição
             <div class="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit.
+                Descrição aqui!!
             </div>-->
         </div>
         {%if tem_capa%}
@@ -98,6 +111,7 @@
                 <div class="card-body">
                     <h4 class="card-title"><a href="#" class="audio-link">{{audio.titulo}}</a></h4>
                     <div class="card-text">
+                        <!--O áudio pode ser tanto do canal proprietário da playlist quanto de qualquer outro-->
                         <p class="d-inline mr-3">Nome do canal</p>
                         <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">{{audio.reproducoes}}</p>
                     </div>

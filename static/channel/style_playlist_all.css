@@ -20,8 +20,8 @@ body {
 
 /*A capa dentro do modal de editar playlist*/
 .edit-capa {
-    width: 12rem;
-    height: 8.7rem;
+    width: 28.6rem;
+    height: 17.7rem;
     position: relative;
     top: 0;
     left: 0;
@@ -30,12 +30,19 @@ body {
 }
 
 .camera {
-    width: 12rem !important;
-    height: 8.7rem !important;
-    top: 103px !important;
+    width: 28.6rem !important;
+    height: 17.65rem !important;
+    top: 27px !important;
     left: 19px !important;
-    padding: 3rem 4rem !important;
+    padding: 7rem 12rem !important;
     cursor: pointer;
+    max-width: 100% !important;
+}
+
+.fa-camera {
+    font-size: 21px;
+    position: relative;
+    top: 2px;
 }
 
 .tooltip-inner {
@@ -137,6 +144,7 @@ body {
 .icon-playlist {
     width: 1.8rem;
     margin-top: -1px;
+    cursor: pointer;
 }
 
 .vincular {
@@ -153,10 +161,37 @@ body {
     padding-right: 0 !important;
 }
 
+ul.dropdown-menu.dm-vincular.show {
+    margin-top: .65rem;
+    padding: 0.5rem;
+    background: #f8f9fa;
+}
+
+.di-vincular {
+    max-width: 15rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fa-link {
+    color: black;
+    font-size: 18px;
+    margin-top: -1px;
+    cursor: pointer;
+}
+
+a#salvarVinculo {
+    width: 100%;
+    font-size: 14px;
+    padding: 0.25rem;
+    top: 0;
+    margin-top: .5rem;
+}
+
 .visibility {
-    margin-top: 1px;
-    width: 23px;
-    margin-right: 1rem;
+    margin-top: 1px !important;
+    width: 22px;
 }
 
 .dm-visibility.show {
@@ -258,12 +293,6 @@ figcaption:hover {
     margin: 2.2rem 0;
 }
 
-.icon-playlist.descricao {
-    display: none;
-    width: 1.4em;
-    margin-top: 0;
-}
-
 .card-body {
     position: relative;
     bottom: 7rem;
@@ -278,6 +307,64 @@ figcaption:hover {
     margin-left: 11rem;
 }
 
+/*Radio buttons */
+input[type=radio] {
+    position: relative;
+    left: -12px;
+}
+
+input[type='radio']:after {
+    width: 21px;
+    height: 21px;
+    border-radius: 15px;
+    top: -5px;
+    left: -8px;
+    position: relative;
+    background-color: white;
+    content: close-quote;
+    display: -webkit-box;
+    border: 3px solid gray;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+input[type='radio']:checked:after {
+    width: 21px;
+    height: 21px;
+    border-radius: 15px;
+    top: -5px;
+    left: -8px;
+    position: relative;
+    background-color: white;
+    content: close-quote;
+    display: inline-block;
+    border: 7px solid #032854;
+}
+
+input[type='radio']:checked:hover:after {
+    border: 7px solid #033979;
+}
+
+input[type='radio']:hover:after {
+    border: 7px solid gray;
+}
+
+.radio input[type=radio] {
+    position: absolute;
+    margin-left: -37px;
+    top: 0px;
+    height: 1%;
+    width: 1%;
+}
+
+.radio {
+    position: relative;
+    display: inline-table;
+    margin-top: 8px;
+    margin-bottom: -3px;
+    padding: 6px;
+}
+
 @media only screen and (max-width: 770px) {
     .last-update {
         display: block;
@@ -288,5 +375,11 @@ figcaption:hover {
 @media only screen and (max-width: 700px) {
     .card {
         width: 87%;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .modal-content {
+        margin-top: 8rem;
     }
 }

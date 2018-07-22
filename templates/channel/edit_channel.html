@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
     <script src="{% static 'channel/js/edit_channel.js' %}"></script>
+    <script>
+        function hideModalLinks() {
+            $('#addLinksChannel').modal('hide');
+        }
+    </script>
 {% endblock %}
 
 {% block body %}
@@ -21,9 +26,11 @@
             <i class="fas fa-volume-up"></i>
         </a>
         {%if direito_edicao%}
-        <a href="#" class="edit_audio_fundo edit-capa-top" style="float: left;" data-toggle="tooltip" data-placement="bottom" title="Capa do seu canal">
-            <i class="fas fa-pen" style="color: white;"></i>
-        </a> <!--Editar o fundo-->
+        <span data-toggle="modal" data-target="#editCapa">
+            <a href="#" class="edit_audio_fundo edit-capa-top" rel="tooltip" style="float: left;" data-toggle="tooltip" data-placement="bottom" title="Capa do seu canal">
+                <i class="fas fa-pen" style="color: white;"></i>
+            </a>
+        </span><!--Editar o fundo-->
         {%endif%}
         <center>
             <figure class="fig-foto">
@@ -47,12 +54,14 @@
             </h6>
         </center>
         {%if logado%}
-        <a href="#" id="edit_info" class="edit-capa-bottom" data-toggle="tooltip" data-placement="top" title="Outras informações">
-            <i class="fas fa-info"></i>
-        </a> <!--Editar nome do canal, descrição e links-->
+        <span data-toggle="modal" data-target="#editInfo">
+            <a href="#" id="edit_info" class="edit-capa-bottom" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Outras informações">
+                <i class="fas fa-info"></i>
+            </a>
+        </span><!--Editar nome do canal, descrição e links-->
         {%endif%}
         {%if direito_edicao%}
-        <a href="#" id="redes-sociais" class="edit-capa-bottom" data-toggle="tooltip" data-placement="top" title="Suas redes sociais">
+        <a href="#" id="redes-sociais" class="edit-capa-bottom" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Suas redes sociais">
             <img src="/static/resources/icones/social.png" alt="edite suas redes sociais" class="social">
         </a>
         {%endif%}
