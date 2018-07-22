@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import AudioForm, TagForm, SearchChannelAudioForm
+from .forms import AudioForm, TagForm, SearchChannelAudioForm,PlaylistForm
 from account.models import Canal, Seg
 from .process import *
 from django.http import JsonResponse
@@ -152,18 +152,32 @@ def follow(request,nome):
     return JsonResponse(json_context)
 
 
-def playlist_all(request,id):
+def playlist_all(request, id):
     contexto = {}
+    contexto['form'] = PlaylistForm()
+    if request.method == 'POST':
+        contexto['dados_retornados'] = PlaylistForm(request.POST, request.FILES, instance=request.user)
+        if contexto['dados_retornados'].is_valid():
+            contexto['dados_retornados'].save(commit=False)
+            print(contexto['dados_retornados'].cleaned_data['capa'])
+            print(contexto['dados_retornados'].cleaned_data['nome'])
+            play = Playlist.objects.get(pk=id)
+            play.capa.delete(save=True)
+            play.nome = contexto['dados_retornados'].cleaned_data['nome']
+            play.capa = contexto['dados_retornados'].cleaned_data['capa']
+            play.save()
+
     contexto['playlist'] = Playlist.objects.get(pk=id)
     contexto['canal'] = contexto['playlist'].canal.get()
+    if contexto['canal'].seguidor.filter(pk=request.user.id).exists():
+        contexto['btn_message'] = 'Sintonizado'
+        contexto['btn_color'] = 'background:#2ecc71;'
+    else:
+        contexto['btn_message'] = 'Sintonizar'
+        contexto['btn_color'] = ''
     contexto['audios'] = contexto['playlist'].audios.filter()
     contexto['capa_reserva'] = contexto['playlist'].audios.order_by('reproducoes').first()
-    print(contexto['capa_reserva'])
-    if contexto['playlist'].capa is None:
-        contexto['tem_capa'] = False
-        contexto['capa'] = contexto['capa_reserva'].capa
-    else:
-        contexto['tem_capa'] = True
+    contexto['tem_capa'] = True
     contexto['reproducoes_tot'] = contexto['playlist'].audios.filter().aggregate(Sum('reproducoes'))['reproducoes__sum']
     contexto['logado'] = request.user.is_active
     return render(request, './channel/playlist_all.html', contexto)
@@ -234,3 +248,19 @@ def edit_channel(request, nome):
     else:
         contexto['direito_edicao'] = False
     return render(request, "./channel/edit_channel.html", contexto)
+
+
+def canalSeg(request):
+    canal_id = request.GET['canal']
+    json_context = {}
+    canal = Canal.objects.get(pk=canal_id)
+    if Seg.objects.filter(canal_seguido=canal, seguidores=request.user).exists():
+        Seg.objects.get(canal_seguido=canal, seguidores=request.user).delete()
+        json_context['message'] = 'Sintonizar'
+        json_context['fundo'] = ''
+    else:
+        Seg.objects.create(canal_seguido=canal, seguidores=request.user)
+        json_context['message'] = 'Sintonizado'
+        json_context['fundo'] = 'background:#2ecc71;'
+
+    return JsonResponse(json_context)

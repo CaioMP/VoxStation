@@ -16,6 +16,7 @@ urlpatterns = [
     path("playlist_all/<int:id>", playlist_all, name='playlist_all_view'),  # colocar o nome da playlist dps
     path("playlist_load_modal", playlist_load_modal, name='playlist_add_view'),
     path("playlist_add_audio", playlist_add),
-    path("playlist_add_play", playlist_add_play)
+    path("playlist_add_play", playlist_add_play),
+    path('follow_general',canalSeg, name='follow_general_view')
 
 ]

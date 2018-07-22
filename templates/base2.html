@@ -19,7 +19,8 @@
     <script src="{% static 'resources/JQuery/popper.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'channel/js/play_add.js' %}"></script>
     <script src="{% static 'channel/js/play_add_id.js' %}"></script>
-
+    <script src="{% static 'channel/js/capa_script.js' %}"></script>
+    <script src="{% static 'channel/js/follow_general_button.js' %}"></script>
     <!--Bootstrap Links-->
     <link rel="stylesheet" href="{% static 'resources/bootstrap/css/bootstrap.min.css' %}" type="text/css"/>
     <script src="{% static 'resources/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
@@ -120,24 +121,24 @@
                     <h4 class="modal-title">Edite sua playlist</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form>{% csrf_token %}
+                <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
                     <div class="modal-body" style="padding: 1.2rem;">
                         <label class="has-float-label" style="height: 45px;">
-                            <input name="nome" type="text" maxlength="150" placeholder="Nome da playlist" value="{{playlist.nome}}"
+                            <input name="{{ form.nome.name }}" id="{{ form.nome.id_for_label }}" type="text" maxlength="150" placeholder="Nome da playlist" value="{{playlist.nome}}"
                                    style="margin-bottom: 1rem;" required=""/>
                             <span class="spanPlaylist">Nome da playlist</span>
                         </label>
 
                         <span class="spanPlaylist">Capa</span><br>
                         {%if tem_capa%}
-                        <img src="{{playlist.capa.url}}" alt="capa da playlist" class="edit-capa">
+                        <img src="{{playlist.capa.url}}" alt="capa da playlist" class="edit-capa" id="foto-default">
                         {%else%}
                         <img src="{{capa.url}}" alt="capa da playlist" class="edit-capa">
                         {%endif%}
-                        <label for="troca-capa-playlist">
+                        <label for="id_capa">
                             <img src="/static/images/camera.png" alt="trocar capa da playlist" class="icon-play camera">
                         </label>
-                        <input type="file" id="troca-capa-playlist" accept="image/*" style="display: none;">
+                        <input name="{{ form.capa.name }}" id="{{ form.capa.id_for_label }}" value="{{playlist.capa.url}}" type="file" accept="image/*" style="display: none;">
                     </div>
                     <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
                         <button class="btn btn-add" type="submit">

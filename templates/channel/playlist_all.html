@@ -78,7 +78,7 @@
                 <img src="/static/images/default-user.png" alt="foto do canal" class="rounded-circle ft-do-canal">
                 <h5 class="nome-canal">{{canal.nome_canal}}</h5>
             </a>
-            <a href="#" class="btn-sintonizar">Sintonizar</a>
+            <a href="#" style="{{btn_color}}" url_="{%url 'channel:follow_general_view'%}" id={{canal.id}} class="btn-sintonizar">{{btn_message}}</a>
         </div>
     </div>
 

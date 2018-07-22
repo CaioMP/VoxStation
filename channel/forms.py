@@ -1,5 +1,5 @@
 from django import forms
-from .models import Audio
+from .models import Audio,Playlist
 
 
 class AudioForm(forms.ModelForm):
@@ -25,3 +25,17 @@ class TagForm(forms.Form):
 
 class SearchChannelAudioForm(forms.Form):
     text = forms.CharField()
+
+
+class PlaylistForm(forms.ModelForm):
+    nome = forms.CharField()
+    capa = forms.ImageField()
+
+    class Meta:
+        model = Playlist
+        fields = [
+            'nome',
+            'capa',
+        ]
+
+

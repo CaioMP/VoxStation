@@ -42,10 +42,10 @@ class Audio(models.Model):
 
 
 class Playlist(models.Model):
-    def playlist_capa_path(instance,filename):
+    def playlist_capa_path(instance, filename):
         return "contas/user_{}/capas_de_playlists/{}".format(instance.proprietario.pk, filename)
     visibilidade_choices = (("publico", "público"), ("privada", "privada"))
-    nome = models.CharField(max_length=20)
+    nome = models.CharField(max_length=50)
     audios = models.ManyToManyField(Audio)
     visibilidade = models.CharField(max_length=20, choices=visibilidade_choices, default="publico")
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='playlist_proprietario', default=None)
