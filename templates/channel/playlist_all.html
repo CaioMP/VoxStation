@@ -5,6 +5,8 @@
 {% block head %}
     <title>Playlist - VoxStation</title> <!--Colocar o nome da playlist-->
     <link rel="stylesheet" href="{% static 'channel/style_playlist_all.css' %}">
+    <script src="{% static 'channel/js/play_edit.js' %}"></script>
+    <script src="{% static 'channel/js/vincula_play.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -44,12 +46,13 @@
                         <i class="fas fa-link" data-toggle="tooltip" data-placement="right"
                              title="Vincular a um canal"></i>
                     </a>
-                    <ul class="dropdown-menu dm-vincular">
-                        <li class="dropdown-item di-vincular"><input type="radio" name="canal">Nenhum</li>
-                        <li class="dropdown-item di-vincular"><input type="radio" name="canal">Canal 1</li>
-                        <li class="dropdown-item di-vincular"><input type="radio" name="canal">Canal 2</li>
+                    <ul class="dropdown-menu dm-vincular" url_="{% url 'channel:vincula_view'%}" canal_="{{canal.nome_canal}}" id_={{playlist.id}}>
+                        <li class="dropdown-item di-vincular"><input value="" type="radio" name="canal">Nenhum</li>
+                        {% for channel in channels %}
+                        <li class="dropdown-item di-vincular"><input value="{{channel.nome_canal}}" type="radio" name="canal">{{channel.nome_canal}}</li>
+                        {%endfor%}
                         <li class="divider"></li>
-                        <li><a href="#" class="btn btn-sintonizar" id="salvarVinculo">Salvar</a></li>
+                        <li><a href="#" class="btn btn-editar" id="salvarVinculo">Salvar</a></li>
                     </ul>
                 </div>
 
@@ -66,14 +69,14 @@
                 </div>
             </div>
             <br>
-            <h3 style="word-break: break-all;">{{playlist.nome}}</h3>
+            <h3 style="word-break: break-all;" id="play_titul">{{playlist.nome}}</h3>
 
             <img src="/static/resources/icones/view.png" alt="reproduções" class="icon-info">{{reproducoes_tot}}
             <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon-info ml-4">{{playlist.audios.count}}
             <div class="tumblr_mf171khjgJ1rapbo1o1_500_large.png">Última atualização {{playlist.ultima_atualizacao}}</div>
 
             <!--Essa parte só deve aparecer caso o usuário não tenha dado uma descrição para a playlist-->
-            <a data-toggle="modal" data-target="#editPlaylist" class="btn btn-sintonizar">Editar playlist</a>
+            <a data-toggle="modal" data-target="#editPlaylist" class="btn btn-editar">Editar playlist</a>
 
             <!--Aparecer essa parte caso a playlist possua uma descrição
             <div class="mt-4">

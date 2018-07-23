@@ -126,6 +126,26 @@ body {
 .btn-sintonizar:focus {
     color: white;
 }
+.btn-editar{
+    position: relative;
+    top: .8rem;
+    background: linear-gradient(-160deg, #032854, black);
+    color: white !important;
+    padding: 6px 24px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: .5px;
+}
+
+.btn-editar:hover {
+    color: white !important;
+    background: linear-gradient(-160deg, #032854bf, black);
+}
+
+.btn-editar:focus {
+    color: white;
+}
 
 .icon-info {
     display: inline-block;

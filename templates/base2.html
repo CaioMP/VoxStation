@@ -131,7 +131,7 @@
                         <label for="id_capa">
                             <img src="/static/images/camera.png" alt="trocar capa da playlist" class="icon-play camera">
                         </label>
-                        <input name="{{ form.capa.name }}" id="{{ form.capa.id_for_label }}" value="{{playlist.capa.url}}" type="file" accept="image/*" style="display: none;">
+                        <input name="{{ capa_form.capa.name }}" id="{{ capa_form.capa.id_for_label }}" value="{{playlist.capa.url}}" type="file" accept="image/*" style="display: none;">
                     </div>
                     <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
                         <button class="btn btn-add" type="submit">
@@ -151,7 +151,8 @@
                     <h4 class="modal-title">Informações básicas</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form>
+                <form method="POST" action="" enctype="multipart/form-data" play={{playlist.id}} id="form_play" url_="{% url 'channel:play_edit_view'%}">
+                    {% csrf_token %}
                     <div class="modal-body" style="padding: 1.2rem;">
                         <label class="has-float-label" style="height: 45px;">
                             <input name="{{ form.nome.name }}" id="{{ form.nome.id_for_label }}" type="text" maxlength="150" placeholder="Nome da playlist" value="{{playlist.nome}}"
@@ -159,7 +160,7 @@
                             <span class="spanPlaylist">Nome da playlist</span>
                         </label>
                         <label class="has-float-label">
-                            <textarea rows="5" maxlength="1000" placeholder="Descreva sua playlist" required=""></textarea>
+                            <textarea rows="5" maxlength="1000" placeholder="Descreva sua playlist" ></textarea>
                             <span>Descreva sua playlist</span>
                         </label>
                     </div>

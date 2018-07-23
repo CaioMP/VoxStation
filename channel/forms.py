@@ -34,8 +34,18 @@ class PlaylistForm(forms.ModelForm):
     class Meta:
         model = Playlist
         fields = [
-            'nome',
-            'capa',
+            'nome'
         ]
+
+
+class capaForm(forms.ModelForm):
+    capa = forms.ImageField()
+
+    class Meta:
+        model = Playlist
+        fields = [
+            'capa'
+        ]
+
 
 

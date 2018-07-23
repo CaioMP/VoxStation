@@ -17,6 +17,8 @@ urlpatterns = [
     path("playlist_load_modal", playlist_load_modal, name='playlist_add_view'),
     path("playlist_add_audio", playlist_add),
     path("playlist_add_play", playlist_add_play),
-    path('follow_general',canalSeg, name='follow_general_view')
+    path('follow_general', canalSeg, name='follow_general_view'),
+    path('playlist_edit', play_edit, name='play_edit_view'),
+    path('vincular', vincula_play, name='vincula_view')
 
 ]

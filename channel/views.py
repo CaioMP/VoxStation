@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import AudioForm, TagForm, SearchChannelAudioForm,PlaylistForm
+from .forms import AudioForm, TagForm, SearchChannelAudioForm,PlaylistForm,capaForm
 from account.models import Canal, Seg
 from .process import *
 from django.http import JsonResponse
@@ -154,17 +154,23 @@ def follow(request,nome):
 
 def playlist_all(request, id):
     contexto = {}
+    contexto['channels'] = Canal.objects.filter(pk=request.user.pk)
     contexto['form'] = PlaylistForm()
+    contexto['capa_form'] = capaForm()
+    play = Playlist.objects.get(pk=id)
     if request.method == 'POST':
-        contexto['dados_retornados'] = PlaylistForm(request.POST, request.FILES, instance=request.user)
-        if contexto['dados_retornados'].is_valid():
-            contexto['dados_retornados'].save(commit=False)
-            print(contexto['dados_retornados'].cleaned_data['capa'])
-            print(contexto['dados_retornados'].cleaned_data['nome'])
-            play = Playlist.objects.get(pk=id)
+        print("deu requeste")
+        contexto['dados_retornados'] = PlaylistForm(request.POST, instance=request.user)
+        contexto['capa_retornada'] = capaForm(request.POST, request.FILES, instance=request.user)
+        if contexto['capa_retornada'].is_valid():
+            contexto['capa_retornada'].save(commit=False)
             play.capa.delete(save=True)
+            play.capa = contexto['capa_retornada'].cleaned_data['capa']
+            play.save()
+        if contexto['dados_retornados'].is_valid():
+            print('ta funcionando')
+            contexto['dados_retornados'].save(commit=False)
             play.nome = contexto['dados_retornados'].cleaned_data['nome']
-            play.capa = contexto['dados_retornados'].cleaned_data['capa']
             play.save()
 
     contexto['playlist'] = Playlist.objects.get(pk=id)
@@ -264,3 +270,34 @@ def canalSeg(request):
         json_context['fundo'] = 'background:#2ecc71;'
 
     return JsonResponse(json_context)
+
+
+def play_edit(request):
+    json_context = {}
+    playnome = request.GET['nome']
+    play_id = request.GET['id']
+
+    play = Playlist.objects.get(pk=play_id)
+    play.nome = playnome
+    play.save()
+    json_context['message'] = playnome
+    return JsonResponse(json_context)
+
+
+def vincula_play(request):
+    json_context = {}
+    playlist_id = request.GET['playlist']
+    canal_id = request.GET['canal']
+    canal_atual_id = request.GET['canal_atual']
+
+    canalAtual = Canal.objects.get(nome_canal=canal_atual_id)
+    play = Playlist.objects.get(pk=playlist_id)
+    canal = Canal.objects.get(nome_canal=canal_id)
+    CanalPlay.objects.get(canal=canalAtual, playlist=play).delete()
+    CanalPlay.objects.create(canal=canal, playlist=play)
+
+    json_context['message'] = 'playlist vinculada a '+canal.nome_canal
+    return JsonResponse(json_context)
+
+
+
