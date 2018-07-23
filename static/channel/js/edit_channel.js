@@ -11,3 +11,11 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
+function hideModalLinks() {
+    $('#addLinksChannel').modal('hide');
+}
+
+function addRedesSociais() {
+    document.getElementById('add-redes-sociais').style.display = "flex";
+}

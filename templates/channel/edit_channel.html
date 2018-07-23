@@ -13,18 +13,15 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
     <script src="{% static 'channel/js/edit_channel.js' %}"></script>
-    <script>
-        function hideModalLinks() {
-            $('#addLinksChannel').modal('hide');
-        }
-    </script>
 {% endblock %}
 
 {% block body %}
     <div class="capa" style="background-image: url({{chan.capa.url}});">
-        <a href="#" class="edit_audio_fundo edit-capa-top" data-toggle="tooltip" data-placement="bottom" title="Áudio de fundo">
+        <label for="edit-audio-fundo" class="edit_audio_fundo edit-capa-top"
+               data-toggle="tooltip" data-placement="bottom" title="Nome do áudio de fundo">
             <i class="fas fa-volume-up"></i>
-        </a>
+        </label>
+        <input type="file" accept="audio/*" style="display: none;" id="edit-audio-fundo">
         {%if direito_edicao%}
         <span data-toggle="modal" data-target="#editCapa">
             <a href="#" class="edit_audio_fundo edit-capa-top" rel="tooltip" style="float: left;" data-toggle="tooltip" data-placement="bottom" title="Capa do seu canal">
@@ -61,9 +58,11 @@
         </span><!--Editar nome do canal, descrição e links-->
         {%endif%}
         {%if direito_edicao%}
-        <a href="#" id="redes-sociais" class="edit-capa-bottom" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Suas redes sociais">
-            <img src="/static/resources/icones/social.png" alt="edite suas redes sociais" class="social">
-        </a>
+        <span data-toggle="modal" data-target="#editRedesSociais">
+            <a href="#" id="redes-sociais" class="edit-capa-bottom" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Suas redes sociais">
+                <img src="/static/resources/icones/social.png" alt="edite suas redes sociais" class="social">
+            </a>
+        </span>
         {%endif%}
     </div>
 
