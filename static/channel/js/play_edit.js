@@ -14,6 +14,9 @@ $('document').ready( function(){
 			async:true,
 			success:function(json){
 				$('#play_titul').text(json.message);
+				console.log(json.desc);
+				$('#desc').html(json.desc);
+				$('#desc_edit').hide();
 				$('.modal').modal('hide');
 			},
 			error:function(){

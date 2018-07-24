@@ -3,7 +3,7 @@ from .forms import AudioForm, TagForm, SearchChannelAudioForm,PlaylistForm,capaF
 from account.models import Canal, Seg
 from .process import *
 from django.http import JsonResponse
-from .models import Playlist, Audio, CanalPlay
+from .models import Playlist, Audio
 from datetime import datetime
 from django.db.models import Sum
 
@@ -13,7 +13,7 @@ def myuploads(request):
     channels = Canal.objects.filter(proprietario=request.user)
 
     if request.method == "POST":
-        tagform = TagForm(request.POST)
+        tagform = TagForm(request.POST, request.FILES)
         form = AudioForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid() and tagform.is_valid():
             form.save(commit=False)
@@ -154,12 +154,11 @@ def follow(request,nome):
 
 def playlist_all(request, id):
     contexto = {}
-    contexto['channels'] = Canal.objects.filter(pk=request.user.pk)
+    contexto['channels'] = Canal.objects.filter(proprietario=request.user)
     contexto['form'] = PlaylistForm()
     contexto['capa_form'] = capaForm()
     play = Playlist.objects.get(pk=id)
     if request.method == 'POST':
-        print("deu requeste")
         contexto['dados_retornados'] = PlaylistForm(request.POST, instance=request.user)
         contexto['capa_retornada'] = capaForm(request.POST, request.FILES, instance=request.user)
         if contexto['capa_retornada'].is_valid():
@@ -167,20 +166,25 @@ def playlist_all(request, id):
             play.capa.delete(save=True)
             play.capa = contexto['capa_retornada'].cleaned_data['capa']
             play.save()
-        if contexto['dados_retornados'].is_valid():
-            print('ta funcionando')
-            contexto['dados_retornados'].save(commit=False)
-            play.nome = contexto['dados_retornados'].cleaned_data['nome']
-            play.save()
-
     contexto['playlist'] = Playlist.objects.get(pk=id)
-    contexto['canal'] = contexto['playlist'].canal.get()
-    if contexto['canal'].seguidor.filter(pk=request.user.id).exists():
-        contexto['btn_message'] = 'Sintonizado'
-        contexto['btn_color'] = 'background:#2ecc71;'
+    if contexto['playlist'].proprietario == request.user:
+        contexto['direito_edicao'] = True
     else:
-        contexto['btn_message'] = 'Sintonizar'
-        contexto['btn_color'] = ''
+        contexto['direito_edicao'] = False
+    if contexto['playlist'].canal:
+        contexto['canal'] = contexto['playlist'].canal
+        if contexto['canal'].seguidor.filter(pk=request.user.id).exists():
+            contexto['btn_message'] = 'Sintonizado'
+            contexto['btn_color'] = 'background:#2ecc71;'
+        else:
+            contexto['btn_message'] = 'Sintonizar'
+            contexto['btn_color'] = ''
+
+    if contexto['playlist'].descricao == '':
+        contexto['tem_desc'] = False
+    else:
+        contexto['tem_desc'] = True
+    print(contexto['direito_edicao'])
     contexto['audios'] = contexto['playlist'].audios.filter()
     contexto['capa_reserva'] = contexto['playlist'].audios.order_by('reproducoes').first()
     contexto['tem_capa'] = True
@@ -228,18 +232,22 @@ def playlist_add_play(request):
     play['visibilidade'] = request.GET['visibilidade']
     play['canal_atrelado'] = request.GET['canal_atrelado']
     audio_set = Audio.objects.get(pk=audio_cod)
-    play['criada'] = Playlist.objects.create(nome=play['nome'], visibilidade=play['visibilidade'], proprietario=request.user, capa=audio_set.capa)
+    play['criada'] = Playlist.objects.create(nome=play['nome'], visibilidade=play['visibilidade'], proprietario=request.user, capa=audio_set.capa, descricao="")
     play['criada'].audios.add(audio_set)
+    play['criada'].save()
     if play['canal_atrelado'] == 'Nenhum':
         json_context['html'] = gera_html(request, audio_cod)
         json_context['message'] = 'Áudio adicionado a '+play['criada'].nome
         return JsonResponse(json_context)
     else:
         play['canal_set'] = Canal.objects.get(nome_canal=play['canal_atrelado'])
-        CanalPlay.objects.create(canal=play['canal_set'], playlist=play['criada'])
+        play['criada'].canal = play['canal_set']
+        play['criada'].save()
+        print(play['criada'].canal)
         json_context['message'] = 'Áudio adicionado a ' + play['criada'].nome
         json_context['html'] = gera_html(request, audio_cod)
         return JsonResponse(json_context)
+
 
 
 def edit_channel(request, nome):
@@ -275,12 +283,15 @@ def canalSeg(request):
 def play_edit(request):
     json_context = {}
     playnome = request.GET['nome']
+    playDesc = request.GET['descricao']
     play_id = request.GET['id']
 
     play = Playlist.objects.get(pk=play_id)
     play.nome = playnome
+    play.descricao = playDesc
     play.save()
     json_context['message'] = playnome
+    json_context['desc'] = playDesc
     return JsonResponse(json_context)
 
 
@@ -288,15 +299,15 @@ def vincula_play(request):
     json_context = {}
     playlist_id = request.GET['playlist']
     canal_id = request.GET['canal']
-    canal_atual_id = request.GET['canal_atual']
-
-    canalAtual = Canal.objects.get(nome_canal=canal_atual_id)
     play = Playlist.objects.get(pk=playlist_id)
-    canal = Canal.objects.get(nome_canal=canal_id)
-    CanalPlay.objects.get(canal=canalAtual, playlist=play).delete()
-    CanalPlay.objects.create(canal=canal, playlist=play)
-
-    json_context['message'] = 'playlist vinculada a '+canal.nome_canal
+    if canal_id == '0nenhum':
+        play.canal = None
+        json_context['message'] = 'playlist desvinculada'
+    else:
+        canal_set = Canal.objects.get(nome_canal=canal_id)
+        play.canal = canal_set
+        json_context['message'] = 'Playlist vinculada a '+canal_set.nome_canal
+    play.save()
     return JsonResponse(json_context)
 
 

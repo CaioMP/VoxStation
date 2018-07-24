@@ -11,7 +11,7 @@ $('document').ready( function(){
 			},
 			dataType:'json',
 			async:true,
-			data:{'playlist':this_.attr('id_'),'canal':valor,'canal_atual':this_.attr('canal_')},
+			data:{'playlist':this_.attr('id_'),'canal':valor},
 			success:function(json){
 				console.log(json);
 				$("#alert-addPlaylist").html(json.message);

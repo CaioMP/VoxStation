@@ -49,9 +49,10 @@ class Playlist(models.Model):
     audios = models.ManyToManyField(Audio)
     visibilidade = models.CharField(max_length=20, choices=visibilidade_choices, default="publico")
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='playlist_proprietario', default=None)
-    canal = models.ManyToManyField(Canal, related_name="canal_playlist", default=None, through="CanalPlay")
+    canal = models.ForeignKey(Canal, related_name="canal_playlist", default=None, null=True, blank=True,  on_delete=models.CASCADE)
     ultima_atualizacao = models.DateTimeField(auto_now=True)
     capa = models.ImageField(upload_to=playlist_capa_path, default=None, null=True)
+    descricao = models.TextField(default=None, blank=True, null=True)
 
     def __str__(self):
         return self.nome
@@ -69,10 +70,4 @@ class FeedDesLike(models.Model):
     Audio_feed = models.ForeignKey(Audio, on_delete=models.CASCADE, related_name="audio_do_deslike")
 
 
-class CanalPlay(models.Model):
-    canal = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name='canal_playlists', default=None)
-    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE, related_name='Playlist_canais', default=None)
-    in_home = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.canal.nome_canal + "." + self.playlist.nome

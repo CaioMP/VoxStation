@@ -86,8 +86,8 @@
                         </label>
                         <span class="spanPlaylist">Visibilidade</span>
                         <select name="visibilidade" class="selectPlaylist">
-                            <option selected="selected" value=0>Público</option>
-                            <option value=1>Privado</option>
+                            <option selected="selected" value="publico">Público</option>
+                            <option value="privada">Privado</option>
                         </select><br>
 
                         <!--Caso o usuário tenha canais em sua conta criar esse select-->
@@ -96,9 +96,9 @@
                             <i class="fas fa-question-circle fas-playlist"></i>
                         </a>
                         <select class="selectPlaylist" name="canal_atrelado">
-                            <option selected="selected">Nenhum</option>
+                            <option selected="selected" value="Nenhum">Nenhum</option>
                             {% for canal in canais_para_playlist %}
-                            <option>{{canal.nome_canal}}</option>
+                            <option value="{{canal.nome_canal}}">{{canal.nome_canal}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -160,7 +160,11 @@
                             <span class="spanPlaylist">Nome da playlist</span>
                         </label>
                         <label class="has-float-label">
-                            <textarea rows="5" maxlength="1000" placeholder="Descreva sua playlist" ></textarea>
+                            {%if tem_desc%}
+                            <textarea name="descricao" value="{{playlist.descricao}}" rows="5" maxlength="1000" placeholder="Descreva sua playlist" ></textarea>
+                            {%else%}
+                            <textarea name="descricao" rows="5" maxlength="1000"  placeholder="Descreva sua playlist" ></textarea>
+                            {%endif%}
                             <span>Descreva sua playlist</span>
                         </label>
                     </div>

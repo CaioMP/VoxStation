@@ -13,17 +13,20 @@
     <div class="infoBox">
         <div class="info-playlist">
             <div class="icones">
+                {%if direito_edicao %}
                 <span data-toggle="modal" data-target="#editCapaPlaylist">
                     <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua capa">
                         <i class="fas fa-camera" style="color: black;"></i>
                     </a> <!--Editar a capa da playlist-->
                 </span>
-
-                <span data-toggle="modal" data-target="#editPlaylist" style="display:none;">
+                {%if tem_desc%}
+                <span data-toggle="modal" data-target="#editPlaylist" style="">
                     <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua playlist">
                         <i class="fas fa-pen" style="color: black;"></i>
                     </a> <!--Editar o nome ou descrição da playlist(só alterar o display caso já exista uma descrição)-->
                 </span>
+                {%endif%}
+                {%endif%}
                 <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Salvar playlist">
                     <img src="/static/resources/icones/playlist_add.png" alt="salvar playlist" class="icon-playlist">
                 </a> <!--Salvar playlist-->
@@ -41,21 +44,33 @@
                 </a><!--Compartilhar playlist-->
 
                 <!--Vincular a um canal-->
+                {%if direito_edicao%}
                 <div class="dropdown vincular mr-3" id="vincular" style="margin: 5px .25rem;">
                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-link" data-toggle="tooltip" data-placement="right"
                              title="Vincular a um canal"></i>
                     </a>
+                    {%if playlist.canal%}
                     <ul class="dropdown-menu dm-vincular" url_="{% url 'channel:vincula_view'%}" canal_="{{canal.nome_canal}}" id_={{playlist.id}}>
-                        <li class="dropdown-item di-vincular"><input value="" type="radio" name="canal">Nenhum</li>
+                        <li class="dropdown-item di-vincular"><input value="0nenhum" type="radio" name="canal">Nenhum</li>
                         {% for channel in channels %}
                         <li class="dropdown-item di-vincular"><input value="{{channel.nome_canal}}" type="radio" name="canal">{{channel.nome_canal}}</li>
                         {%endfor%}
                         <li class="divider"></li>
                         <li><a href="#" class="btn btn-editar" id="salvarVinculo">Salvar</a></li>
                     </ul>
+                    {%else%}
+                    <ul class="dropdown-menu dm-vincular" url_="{% url 'channel:vincula_view'%}" canal_="0nenhum" id_={{playlist.id}}>
+                        <li class="dropdown-item di-vincular"><input value="0nenhum" type="radio" name="canal">Nenhum</li>
+                        {% for channel in channels %}
+                        <li class="dropdown-item di-vincular"><input value="{{channel.nome_canal}}" type="radio" name="canal">{{channel.nome_canal}}</li>
+                        {%endfor%}
+                        <li class="divider"></li>
+                        <li><a href="#" class="btn btn-editar" id="salvarVinculo">Salvar</a></li>
+                    </ul>
+                    {%endif%}
                 </div>
-
+                {%endif%}
                 <div class="dropdown visibility mr-3" rel="tooltip" data-toggle="tooltip" data-placement="right"
                      title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -76,25 +91,30 @@
             <div class="tumblr_mf171khjgJ1rapbo1o1_500_large.png">Última atualização {{playlist.ultima_atualizacao}}</div>
 
             <!--Essa parte só deve aparecer caso o usuário não tenha dado uma descrição para a playlist-->
-            <a data-toggle="modal" data-target="#editPlaylist" class="btn btn-editar">Editar playlist</a>
-
-            <!--Aparecer essa parte caso a playlist possua uma descrição
-            <div class="mt-4">
-                Descrição aqui!!
-            </div>-->
+            {%if direito_edicao%}
+            {%if not tem_desc%}
+            <a data-toggle="modal" data-target="#editPlaylist" id="desc_edit" class="btn btn-editar">Editar playlist</a>
+            {%endif%}
+            {%endif%}
+            {%if tem_desc%}
+            <div class="mt-4" id="desc">
+                {{playlist.descricao}}
+            </div>
+            {%endif%}
         </div>
-        {%if tem_capa%}
         <img src="{{playlist.capa.url}}" alt="capa da playlist" class="capa-playlist">
-        {%else%}
-        <img src="{{capa.url}}" alt="capa da playlist" class="capa-playlist">
-        {%endif%}
         <a href="#"><img src="/static/resources/icones/play.png" alt="reproduzir" class="icon-play"></a>
         <div class="info-canal">
+            {%if playlist.canal%}
             <a href="{% url 'channel:channel_view' canal.nome_canal %}">
-                <img src="/static/images/default-user.png" alt="foto do canal" class="rounded-circle ft-do-canal">
+                <img src="{{playlist.canal.foto_canal.url}}" alt="foto do canal" class="rounded-circle ft-do-canal">
                 <h5 class="nome-canal">{{canal.nome_canal}}</h5>
             </a>
             <a href="#" style="{{btn_color}}" url_="{%url 'channel:follow_general_view'%}" id={{canal.id}} class="btn-sintonizar">{{btn_message}}</a>
+            {%else%}
+            <img src="{{playlist.proprietario.img_perfil.url}}" alt="foto do canal" class="rounded-circle ft-do-canal">
+            <h5 class="nome-canal">{{playlist.proprietario.username}}</h5>
+            {%endif%}
         </div>
     </div>
 
