@@ -290,8 +290,7 @@ def play_edit(request):
     play.nome = playnome
     play.descricao = playDesc
     play.save()
-    json_context['message'] = playnome
-    json_context['desc'] = playDesc
+    json_context['message'] = "ok"
     return JsonResponse(json_context)
 
 

@@ -13,14 +13,11 @@ $('document').ready( function(){
 			dataType:'json',
 			async:true,
 			success:function(json){
-				$('#play_titul').text(json.message);
-				console.log(json.desc);
-				$('#desc').html(json.desc);
-				$('#desc_edit').hide();
-				$('.modal').modal('hide');
+				console.log(json.message);
+				window.location.reload();
 			},
 			error:function(){
-				alert("fudeu bahia");
+				alert("erro no servidor");
 			}
 		});
 
