@@ -1,0 +1,388 @@
+.row {
+    margin-top: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+    background-color: initial !important;
+}
+
+/*Parte do player (row)*/
+.playerBox {
+    margin-top: 5.5rem !important;
+    height: auto !important;
+    padding: initial !important;
+    background-color: white !important;
+}
+
+/*Parte do player (col-4) */
+.player {
+    padding: 0;
+    height: 18rem;
+    flex: auto;
+    max-width: 33rem;
+    overflow: hidden;
+}
+
+/*Capa do áudio reproduzindo*/
+img.thumb-audio {
+    width: 100%;
+    height: 100%;
+}
+
+/*Parte que fica o título e reproduções do áudio*/
+.header {
+    padding: .5rem 1rem .3rem;
+    position: absolute;
+    background-color: #00000070;
+    color: white;
+    width: 100%;
+    transition: transform .5s;
+}
+
+img.icon-view {
+    width: 1rem;
+    margin-top: -3px;
+    margin-right: .5rem;
+}
+
+/*Mostrar ou esconder a parte do título e reproduções do áudio*/
+.show-hide {
+    position: absolute;
+    right: 1rem;
+    top: 4.2rem;
+    margin: -2.7rem 0.5rem !important;
+    color: white !important;
+    transition: opacity .8s;
+    opacity: 0;
+}
+
+/*Parte que fica o tempo e volume do áudio*/
+.footer {
+    background-color: #00000070;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    padding: .5rem 1rem;
+    transition: opacity .8s;
+    opacity: 0;
+}
+
+.fa-volume-up {
+    position: absolute;
+    left: 0;
+    text-shadow: none !important;
+    margin: 3px .8rem !important;
+    font-size: 20px !important;
+}
+
+.tempo {
+    color: white !important;
+    position: absolute;
+    margin: -2px 1.5rem;
+    font-size: .8rem;
+}
+
+p#time-end {
+    right: 0;
+}
+
+p#time-initial {
+    margin-left: 2.6rem;
+}
+
+/*Range do volume*/
+input#volume {
+    position: absolute;
+    top: -2.5rem;
+    left: -2.8rem;
+    width: 4rem;
+    height: 6px;
+    transform: rotate(-90deg) !important;
+    background: #585858;
+    visibility: hidden;
+    transition: visibility 0s, opacity 0.5s linear;
+    opacity: 0;
+}
+
+input#volume::-webkit-slider-thumb {
+    background: white;
+    box-shadow: -250px 0 0 250px #032854;
+}
+
+/*Parte dos botões do player (lado de fora)*/
+.buttons {
+    max-width: 3.5rem;
+    height: 18rem;
+    padding: 2rem 1rem;
+    border-radius: 4px 0 0 4px;
+    background: linear-gradient(-350deg, #032854, black);
+}
+
+/*Parte dos ícones*/
+i.fas {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 4.5rem;
+    cursor: pointer;
+}
+
+.fa-angle-down {
+    visibility: hidden;
+}
+
+.icon-desc {
+    margin-bottom: 0 !important;
+    margin-top: 1rem;
+    color: black !important;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    visibility: visible;
+}
+
+img.icon {
+    width: 33px;
+    margin-top: -0.3rem;
+    cursor: pointer;
+}
+
+/*Parte onde ficam as informações do canal e feedback*/
+.channelBox {
+    padding: 1.25rem 0;
+    position: relative;
+    left: 50%;
+    max-width: 40rem;
+    transform: translate(-50%);
+}
+
+/*Foto do canal*/
+.img_channel {
+    position: absolute;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+}
+
+/*Nome do canal*/
+.nome_channel_play {
+    margin-left: 4rem;
+    word-break: break-word;
+    max-width: 50%;
+    font-size: 1.25rem;
+}
+
+.feedbackBox {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 1.4rem;
+}
+
+/*Ícones gostei/não gostei*/
+.icon.feedback {
+    height: 22px;
+    width: 22px;
+    margin-right: .5rem;
+}
+
+.sintonizar {
+    margin-top: 1rem;
+    margin-left: 4rem;
+}
+
+.btn-sintonizar {
+    background: linear-gradient(-160deg, #032854, black);
+    color: white !important;
+    padding: 6px 24px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: .5px;
+}
+
+.btn-sintonizar:hover {
+    color: white !important;
+    background: linear-gradient(-160deg, #032854bf, black);
+}
+
+.descricao {
+    display: none;
+    text-align: justify;
+    margin-top: 1.5rem;
+}
+
+p#descricao {
+    font-size: 1rem;
+}
+
+p {
+    margin: 1rem 0;
+    color: initial !important;
+    height: initial !important;
+    white-space: initial !important;
+    overflow: initial !important;
+}
+
+/*Parte das tags que ficam na descrição*/
+a.tag {
+    background-color: #032854;
+    color: white;
+    border-radius: 4px;
+    padding: .4rem .8rem;
+    margin-right: .5rem;
+}
+
+.pause {
+    position: relative;
+    left: 50%;
+    bottom: 50%;
+    margin-bottom: 0 !important;
+    transform: translate(-50%,-50%);
+    opacity: 0;
+    transition: opacity .8s;
+    font-size: 3rem !important;
+}
+
+@media only screen and (max-width: 667px) {
+    .player {
+        max-width: 75%;
+    }
+
+    .channelBox {
+        padding: 1.25rem .5rem;
+    }
+
+    .feedbackBox {
+        right: 1rem;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .playerBox {
+        margin-top: 9.5rem;
+    }
+
+    .player {
+        max-width: 70%;
+    }
+
+    .container-fluid {
+        position: relative;
+        top: 4rem;
+    }
+}
+
+@media only screen and (max-width: 475px) {
+    .player {
+        max-width: 65%;
+        height: 12rem;
+    }
+
+    .buttons {
+        height: 12rem;
+        max-width: 3rem;
+        padding: 1rem .8rem;
+    }
+
+    i.fas {
+        margin-bottom: 3rem;
+        font-size: 1.2rem;
+    }
+
+    img.icon {
+        width: 28px;
+    }
+
+    h5 {
+        font-size: 1rem;
+    }
+
+    .h6, h6 {
+        font-size: .8rem;
+    }
+
+    img.icon-view {
+        width: .8rem;
+    }
+
+    .show-hide {
+        margin: -2.85rem 0.5rem !important;
+    }
+
+    .footer {
+        height: 1.8rem;
+        padding: .2rem 1rem;
+    }
+
+    .fa-volume-up {
+        font-size: 17px !important;
+    }
+
+    .icon.feedback {
+        height: 18px;
+        width: 18px;
+    }
+
+    .img_channel {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .nome_channel_play {
+        margin-left: 3.5rem;
+        font-size: 1rem;
+    }
+
+    .sintonizar {
+        margin-left: 3.5rem;
+    }
+
+    .btn-sintonizar {
+        padding: 6px 15px;
+        font-size: .85rem;
+    }
+
+    p#descricao {
+        font-size: .9rem;
+    }
+
+    p#tags {
+        font-size: .9rem;
+    }
+
+    a.tag {
+        font-size: .9rem;
+    }
+
+    .pause {
+        font-size: 2rem !important;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .container-fluid {
+        top: 2rem;
+    }
+
+    .header {
+        height: 4rem;
+    }
+
+    .playerBox {
+        margin-top: 8rem;
+    }
+
+    .tempo {
+        font-size: .7rem;
+    }
+
+    p#time-initial {
+        margin-left: 2.4rem;
+    }
+
+    p#time-end {
+        right: -5px;
+    }
+}
+

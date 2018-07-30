@@ -310,4 +310,8 @@ def vincula_play(request):
     return JsonResponse(json_context)
 
 
+def player(request):
+    return render(request, './channel/player.html', {'logado': request.user.is_active})
+
+
 

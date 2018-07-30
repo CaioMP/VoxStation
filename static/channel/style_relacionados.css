@@ -1,0 +1,262 @@
+/*Configuração até width de 414px*/
+.carousel {
+    height: 28rem;
+    overflow: initial;
+    margin-top: 0 !important;
+}
+
+.carousel-inner {
+    position: relative;
+    right: 20px;
+}
+
+.carousel-item {
+    overflow: -webkit-paged-y;
+}
+
+.col-md-2 {
+    width: 51.5% !important;
+    height: 15.5rem;
+    margin-right: -24px !important;
+    margin-left: 6px !important;
+    margin-bottom: 0.2rem !important;
+}
+
+.icon-more {
+    width: 16px !important;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    display: block !important;
+    position: absolute;
+}
+
+a.dropdown-item {
+    font-size: .75rem;
+}
+
+figure {
+    height: 7rem !important;
+}
+
+figcaption.fc-capa-audio {
+    height: 7rem !important;
+}
+
+.icon-play {
+    margin: 36px 0 14px !important;
+    width: 42px !important;
+}
+
+.card {
+    width: 98%;
+}
+
+.card-title {
+    font-size: 1rem !important;
+    height: 18px !important;
+}
+
+.card-body {
+    padding: .8rem;
+}
+
+p.descript-thumb {
+    font-size: .8rem;
+}
+/*Fim da configuração 414px*/
+
+@media only screen and (min-width: 1333px) {
+    .col-md-2 {
+        width: 17% !important;
+    }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1332px) {
+    .col-md-2 {
+        width: 21% !important;
+    }
+}
+
+@media only screen and (max-width: 899px) {
+    .col-md-2 {
+        width: 22% !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .row {
+        padding: 0 1rem !important;
+    }
+
+    .col-md-2 {
+        flex: auto;
+        max-width: 100% !important;
+        margin-right: -19px !important;
+    }
+
+    .carousel {
+        height: 15.6rem;
+        overflow: hidden;
+    }
+
+    .card-title {
+        font-size: .9rem !important;
+    }
+
+    .descript-thumb {
+        font-size: .7rem !important;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        top: -4rem;
+        width: 36px !important;
+    }
+
+    .carousel-control-prev {
+        left: -.3rem !important;
+    }
+
+    .carousel-control-next {
+       right: -.4rem !important;
+    }
+
+    img.slideIcos {
+        width: 35px !important;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 767px) {
+    .col-md-2 {
+        width: 34.8% !important;
+        margin-bottom: -0.8rem !important;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        top: -11.5rem;
+    }
+
+    .carousel-control-prev {
+        left: -1rem !important;
+    }
+
+    .carousel-control-next {
+        right: -.8rem !important;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .col-md-2 {
+        width: 51.2% !important;
+        margin-bottom: 1.2rem !important;
+    }
+
+    figure {
+        height: 9rem !important;
+    }
+
+    figcaption.fc-capa-audio {
+        height: 9rem !important;
+    }
+
+    .icon-play {
+        margin: 47px 0 20px !important;
+        width: 52px !important;
+    }
+
+    .icon-more {
+        width: 20px !important;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        top: 24.5rem;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .col-md-2 {
+        margin-bottom: 0.2rem !important;
+    }
+
+    .carousel {
+        height: 30.5rem;
+    }
+
+    figure {
+        height: 8rem !important;
+    }
+
+    figcaption.fc-capa-audio {
+        height: 8rem !important;
+    }
+
+    .icon-play {
+        margin: 38px 0 18px !important;
+        width: 50px !important;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        top: 21.5rem;
+    }
+}
+
+@media only screen and (max-width: 475px) {
+    .col-md-2 {
+        width: 51.7% !important;
+        margin-bottom: -0.3rem !important;
+    }
+
+    .card-title {
+        font-size: .9rem !important;
+     }
+
+     p.descript-thumb {
+        font-size: .7rem;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        top: 20rem;
+        width: 36px !important;
+    }
+
+    img.slideIcos {
+        width: 35px !important;
+    }
+
+    .carousel-control-prev {
+        left: -.4rem;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .col-md-2 {
+        width: 51.2% !important;
+        height: 13.2rem;
+        margin-bottom: -1.2rem !important;
+    }
+
+    .carousel {
+        height: 35.5rem;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        top: 10.5rem;
+    }
+
+    .icon-more {
+        width: 16px !important;
+    }
+
+    figure {
+        height: 5.5rem !important;
+    }
+
+    figcaption.fc-capa-audio {
+        height: 5.5rem !important;
+    }
+
+    .icon-play {
+        margin: 25px 0 8px !important;
+        width: 38px !important;
+    }
+}

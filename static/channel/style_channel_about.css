@@ -9,6 +9,7 @@ a#sobre {
 }
 
 .about {
+    margin-top: -2rem !important;
     background-color: white !important;
 }
 

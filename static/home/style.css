@@ -136,7 +136,6 @@ p {
 	top: 0px;
 	width: 100%;
 	height: 46%;
-	transition: opacity 1s;
 	cursor: pointer;
 	color: white;
 }
