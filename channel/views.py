@@ -53,7 +53,7 @@ def myuploads(request):
 def channel(request, nome):
     contexto={}
     contexto['chan'] = getaudios(Canal.objects.get(nome_canal=nome))
-    contexto['botao'] = ve_se_follow(request,contexto['chan'])
+    contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
     contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
     contexto['logado'] = request.user.is_active
@@ -135,7 +135,7 @@ def partner(request, nome):
     return render(request, './channel/similar.html')
 
 
-def follow(request,nome):
+def follow(request, nome):
     json_context = {}
     canal = Canal.objects.get(nome_canal=nome)
     seguidor = canal.seguidor.filter(pk=request.user.pk)
@@ -313,5 +313,29 @@ def vincula_play(request):
 def player(request):
     return render(request, './channel/player.html', {'logado': request.user.is_active})
 
+
+def addSocialWebs(request, nome):
+    redes = {}
+    json_context = {}
+    canal_detentor = nome
+    redes['facebook'] = request.GET['facebook']
+    redes['instagram'] = request.GET['instagram']
+    redes['twitter'] = request.GET['twitter']
+    redes['youtube'] = request.GET['youtube']
+    redes['twitch'] = request.GET['twitch']
+    redes['googleplus'] = request.GET['googleplus']
+    validacao = validaSocialWebs(redes, canal_detentor)
+    certificado_links = certifica_link(redes)
+    if validacao['status']:
+        canal = Canal.objects.get(nome_canal=nome)
+        canal.facebook = redes['facebook']
+        canal.instagram = redes['instagram']
+        canal.twitch = redes['twitch']
+        canal.twitter = redes['twitter']
+        canal.youtube = redes['youtube']
+        canal.googleplus = redes['googleplus']
+        canal.save()
+
+    return JsonResponse(validacao)
 
 

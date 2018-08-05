@@ -136,7 +136,12 @@ class Canal(models.Model):
     audio_fundo = models.FileField(upload_to=audio_fundo_path, blank=True, null=True)
     seguidor = models.ManyToManyField(MyUser, blank=True, related_name="segue", symmetrical=False, through="Seg")
     descricao = models.TextField(null=True, blank=True)
-
+    facebook = models.CharField(blank=True, default='', max_length=500)
+    twitch = models.CharField(blank=True, default='', max_length=100)
+    instagram = models.CharField(blank=True, default='', max_length=200)
+    youtube = models.CharField(blank=True, default='', max_length=200)
+    twitter = models.CharField(blank=True, default='', max_length=100)
+    googleplus = models.CharField(blank=True, default='', max_length=200)
     def __str__(self):
         return self.nome_canal
 

@@ -13,9 +13,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
     <script src="{% static 'channel/js/edit_channel.js' %}"></script>
+    <script src="{%static 'channel/js/social_add.js' %}"></script>
 {% endblock %}
 
 {% block body %}
+
     <div class="capa" style="background-image: url({{chan.capa.url}});">
         <label for="edit-audio-fundo" class="edit_audio_fundo edit-capa-top"
                data-toggle="tooltip" data-placement="bottom" title="Nome do áudio de fundo">

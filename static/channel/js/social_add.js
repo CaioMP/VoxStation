@@ -1,31 +1,32 @@
 $('document').ready( function(){
-	$('#salvarVinculo').on('click',function(){
-		console.log('disparo funciona')
-		var this_ = $(".dm-vincular");
-		var valor = $("input[name=canal]:checked").val();
+	$('#add_redes_sociais').on('click',function(){
+		console.log('disparo efetuado');
+		var this_ = $(this);
+		var redes = {
+			'twitch':$('#twitch').val(),
+			'facebook':$('#facebook').val(),
+			'youtube':$('#youtube').val(),
+			'googleplus':$('#googleplus').val(),
+			'twitter':$('#twitter').val(),
+			'instagram':$('#instagram').val(),
+		};
 		$.ajax({
-			url: this_.attr('url_'),
+			url:this_.attr('uc'),
 			type:'GET',
-			beforeSend:function(){
-				
-			},
 			dataType:'json',
-			async:true,
-			data:{'playlist':this_.attr('id_'),'canal':valor},
+			data:redes,
 			success:function(json){
 				console.log(json);
 				$("#alert-addPlaylist").html(json.message);
 				document.getElementById("alert-addPlaylist").style.visibility = "visible";
 				document.getElementById("alert-addPlaylist").style.opacity = "1";
-				window.setTimeout(function() {
-					window.location.reload();
+				window.setTimeout(function(){
 				    document.getElementById("alert-addPlaylist").style.opacity = "0";
 				    document.getElementById("alert-addPlaylist").style.visibility = "hidden";
-				}, 1000);
-				$('#play_load').html(json.html);
+				}, 5000);
 			},
 			error:function(){
-				alert("fudeu bahia");
+				alert('erro ao mudar redes sociais');
 			}
 		});
 	});

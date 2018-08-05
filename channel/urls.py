@@ -20,5 +20,6 @@ urlpatterns = [
     path('follow_general', canalSeg, name='follow_general_view'),
     path('playlist_edit', play_edit, name='play_edit_view'),
     path('vincular', vincula_play, name='vincula_view'),
-    path('audio', player, name='player_view')  # colocar o id do áudio aqui dps
+    path('audio', player, name='player_view'),  # colocar o id do áudio aqui dps
+    path('add_social/<str:nome>', addSocialWebs, name='add_social_view')
 ]

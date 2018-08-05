@@ -419,7 +419,7 @@
                                     </div>
                                     <div class="dropdown-menu dm-redes-sociais" id="dropdownFacebook">
                                         <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" placeholder="Link do seu Facebook">
+                                            <input value="{{chan.facebook}}" id="facebook" type="text" placeholder="Link do seu Facebook">
                                             <span>Link do seu Facebook</span>
                                         </label>
                                     </div>
@@ -435,7 +435,7 @@
                                     </div>
                                     <div class="dropdown-menu dm-redes-sociais" id="dropdownGooglePlus">
                                         <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" placeholder="Link do seu Google+">
+                                            <input value="{{chan.googleplus}}" id="googleplus" type="text" placeholder="Link do seu Google+">
                                             <span>Link do seu Google+</span>
                                         </label>
                                     </div>
@@ -451,7 +451,7 @@
                                     </div>
                                     <div class="dropdown-menu dm-redes-sociais" id="dropdownInstagram">
                                         <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" placeholder="Link do seu Instagram">
+                                            <input value="{{chan.instagram}}" id="instagram" type="text" placeholder="Link do seu Instagram">
                                             <span>Link do seu Instagram</span>
                                         </label>
                                     </div>
@@ -467,7 +467,7 @@
                                     </div>
                                     <div class="dropdown-menu dm-redes-sociais" id="dropdownTwitter">
                                         <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" placeholder="Link do seu Twitter">
+                                            <input value="{{chan.twitter}}" id="twitter" type="text" placeholder="Link do seu Twitter">
                                             <span>Link do seu Twitter</span>
                                         </label>
                                     </div>
@@ -483,7 +483,7 @@
                                     </div>
                                     <div class="dropdown-menu dm-redes-sociais" id="dropdownYoutube">
                                         <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" placeholder="Link do seu Youtube">
+                                            <input value="{{chan.youtube}}" id="youtube" type="text" placeholder="Link do seu Youtube">
                                             <span>Link do seu Youtube</span>
                                         </label>
                                     </div>
@@ -499,7 +499,7 @@
                                     </div>
                                     <div class="dropdown-menu dm-redes-sociais" id="dropdownTwitch">
                                         <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" placeholder="Link do seu Twitch">
+                                            <input value="{{chan.twitch}}" id="twitch" type="text" placeholder="Link do seu Twitch">
                                             <span>Link do seu Twitch</span>
                                         </label>
                                     </div>
@@ -509,7 +509,7 @@
                     </div>
                 </div>
                 <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
-                    <button class="btn btn-add" type="submit">
+                    <button uc="{% url 'channel:add_social_view' chan.nome_canal %}" id="add_redes_sociais" class="btn btn-add" type="submit">
                         <strong class="save-strong">Salvar</strong>
                     </button>
                 </div>

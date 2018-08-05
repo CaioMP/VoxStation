@@ -1,6 +1,6 @@
 from .models import Tag
-from .models import Audio,Playlist
-
+from .models import Audio, Playlist, Canal
+from urllib import request
 
 
 def tagprocess(tagtext):
@@ -110,3 +110,80 @@ def ordena_pra_exibicao(playlists):
     for playlist in playlists:
         playlist.audios_apresentaveis = playlist.audios.filter().order_by('reproducoes')[:4]
     return playlists
+
+def validaSocialWebs(redes, canal_detentor):
+    errosInvalido = []
+    errosNotFound = []
+    erros_de_pagina = []
+    mensagem = {}
+    alterados = []
+    canal = Canal.objects.get(nome_canal=canal_detentor)
+    for rede in redes:
+        if redes[rede].isspace() or redes[rede] == '':
+            continue
+        else:
+            try:
+                a = request.urlopen(redes[rede])
+            except ValueError:
+                errosInvalido.append(rede)
+            except request.HTTPError as e:
+                print(e.getcode())
+                errosNotFound.append(rede)
+            else:
+                continue
+    if len(errosInvalido) != 0:
+        mensagem['status'] = False
+        mensagem['message'] = 'link inválido em : '
+        for rede_errada in errosInvalido:
+           mensagem['message'] += rede_errada+' '
+    elif len(errosNotFound) != 0:
+        mensagem['status'] = False
+        mensagem['message'] = 'pagina não existente em : '
+        for rede_errada in errosNotFound:
+            mensagem['message'] += rede_errada + ' '
+
+    else:
+        mensagem['status'] = True
+        if canal.facebook != redes['facebook']:
+            alterados.append('facebook')
+
+        if canal.twitter != redes['twitter']:
+            alterados.append('twitter')
+
+        if canal.youtube != redes['youtube']:
+            alterados.append('youtube')
+
+        if canal.twitch != redes['twitch']:
+            alterados.append('twitch')
+
+        if canal.instagram != redes['instagram']:
+            alterados.append('instagram')
+
+        if canal.googleplus != redes['googleplus']:
+            alterados.append('googleplus')
+        if len(alterados) == 0:
+            mensagem['message'] = 'sem atualizações'
+        else:
+            mensagem['message'] = 'atualização bem sucedida em : '
+            for rede in alterados:
+                mensagem['message'] += rede+' '
+    return mensagem
+
+def certifica_link(redes):
+
+    mensagem = {}
+    ocorrencias = 0
+    mensagem['message'] = 'links fora do modelo de sua social em : '
+    mensagem['status'] = False
+    for rede in redes:
+        if rede not in redes[rede]:
+            if redes[rede].isspace() or redes[rede] == '':
+                continue
+            else:
+                mensagem['message'] += rede
+                ocorrencias += 1
+        if ocorrencias == 0:
+            mensagem['status'] = True
+    return mensagem
+
+
