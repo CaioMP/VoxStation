@@ -21,7 +21,7 @@ def getaudios(canal):
     return canal
 
 
-def searchclear(search,canal):
+def searchclear(search, canal):
 
     audio = Audio.objects.filter(titulo__contains=search, canal_proprietario=canal)
     if audio.exists():
@@ -111,6 +111,7 @@ def ordena_pra_exibicao(playlists):
         playlist.audios_apresentaveis = playlist.audios.filter().order_by('reproducoes')[:4]
     return playlists
 
+
 def validaSocialWebs(redes, canal_detentor):
     errosInvalido = []
     errosNotFound = []
@@ -133,12 +134,12 @@ def validaSocialWebs(redes, canal_detentor):
                 continue
     if len(errosInvalido) != 0:
         mensagem['status'] = False
-        mensagem['message'] = 'link inválido em : '
+        mensagem['message'] = 'Link inválido em '
         for rede_errada in errosInvalido:
            mensagem['message'] += rede_errada+' '
     elif len(errosNotFound) != 0:
         mensagem['status'] = False
-        mensagem['message'] = 'pagina não existente em : '
+        mensagem['message'] = 'A página não existe em '
         for rede_errada in errosNotFound:
             mensagem['message'] += rede_errada + ' '
 
@@ -162,18 +163,18 @@ def validaSocialWebs(redes, canal_detentor):
         if canal.googleplus != redes['googleplus']:
             alterados.append('googleplus')
         if len(alterados) == 0:
-            mensagem['message'] = 'sem atualizações'
+            mensagem['message'] = 'Sem atualizações'
         else:
-            mensagem['message'] = 'atualização bem sucedida em : '
+            mensagem['message'] = 'Atualização bem sucedida em '
             for rede in alterados:
                 mensagem['message'] += rede+' '
     return mensagem
 
-def certifica_link(redes):
 
+def certifica_link(redes):
     mensagem = {}
     ocorrencias = 0
-    mensagem['message'] = 'links fora do modelo de sua social em : '
+    mensagem['message'] = 'Links incorretos em '
     mensagem['status'] = False
     for rede in redes:
         if rede not in redes[rede]:

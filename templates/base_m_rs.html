@@ -1,0 +1,636 @@
+<html lang="pt-br">
+<head>
+    {% load static %}
+    {% load i18n %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Font Raleway-->
+    <link rel="stylesheet" href="{% static 'base.css' %}" type="text/css"/>
+
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="{% static 'resources/fontawesome-free-5.2.0-web/css/all.css' %}">
+
+    <!--Floating Labels-->
+    <link rel="stylesheet" href="{% static 'resources/float-label-css/float-label.min.css' %}" type="text/css"/>
+
+    <!--JQuery-->
+    <script src="{% static 'resources/JQuery/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'resources/JQuery/popper.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'channel/js/play_add.js' %}"></script>
+    <script src="{% static 'channel/js/play_add_id.js' %}"></script>
+    <script src="{% static 'channel/js/capa_script.js' %}"></script>
+    <script src="{% static 'channel/js/follow_general_button.js' %}"></script>
+    <!--Bootstrap Links-->
+    <link rel="stylesheet" href="{% static 'resources/bootstrap/css/bootstrap.min.css' %}" type="text/css"/>
+    <script src="{% static 'resources/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'resources/bootstrap/js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+
+
+    <!--Navbar || Sidebar-->
+    <link rel="stylesheet" href="{% static 'resources/navbar/navbar.css' %}" type="text/css"/>
+    <script src="{% static 'resources/navbar/bootstrap-4.1.0.min.js' %}" type="text/javascript"></script>
+
+    <!--JS da base-->
+    <script src="{% static 'base.js' %}"></script>
+
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <!--Modal de adicionar áudio a playlists-->
+    <div class="modal fade" id="addPlaylist" >
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar a...</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body" id="play_load">
+                    {% for playlist in playlists %}
+                    <label class="pl-label play_id" value="{{playlist.id}}" url_="{% url 'channel:playlist_add_view' %}">{{playlist.nome}}
+                        <input type="checkbox" class="play_id" url_="channel/playlist_add"> <!--Checkbox checked caso o áudio esteja na playlist-->
+                        <span class="checkmark"  url_="{% url 'channel:playlist_add_view' %}" aud_atre=""></span>
+
+                    </label><a href="#"><i class="fas fa-trash-alt fas-playlist"></i></a><br><br> <!--Excluir playlist-->
+                    {% endfor %}
+                    <a href="#" class="play_id" aud="1"></a>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-add" data-toggle="modal" data-dismiss="modal" data-target="#createPlaylist">Criar nova playlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Alert de adicionar/remover áudio da playlist-->
+    <div id="alert-addPlaylist" class="addAudioPl" role="alert"></div>
+
+    <!--Modal de criação de playlists-->
+    <div class="modal fade" id="createPlaylist" aud_atre="">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Crie sua playlist</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form id="form_playlist" method="get" action="" aud="">{% csrf_token %}
+                    <input type="hidden" id="audio_em_questao" value="">
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label" id="nome_playlist">
+                            <input name="nome" type="text" maxlength="150" placeholder="Nome da playlist"
+                                   style="margin-bottom: 1rem;" required=""/>
+                            <span class="spanPlaylist">Nome da playlist</span>
+                        </label>
+                        <span class="spanPlaylist">Visibilidade</span>
+                        <select name="visibilidade" class="selectPlaylist">
+                            <option selected="selected" value="publico">Público</option>
+                            <option value="privada">Privado</option>
+                        </select><br>
+
+                        <!--Caso o usuário tenha canais em sua conta criar esse select-->
+                        <span class="spanPlaylist">Associação</span>
+                        <a data-toggle="tooltip" data-placement="left" title="Associe esta playlist a um canal" style="float:right;">
+                            <i class="fas fa-question-circle fas-playlist"></i>
+                        </a>
+                        <select class="selectPlaylist" name="canal_atrelado">
+                            <option selected="selected" value="Nenhum">Nenhum</option>
+                            {% for canal in canais_para_playlist %}
+                            <option value="{{canal.nome_canal}}">{{canal.nome_canal}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="modal-footer" style="padding: 1.2rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit" id="submitChannel">
+                            <strong>{% trans 'Criar' %}</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para edição da capa de playlists-->
+    <div class="modal fade" id="editCapaPlaylist">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Edite sua capa</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        {%if tem_capa%}
+                        <img src="{{playlist.capa.url}}" alt="capa da playlist" class="edit-capa" id="foto-default">
+                        {%else%}
+                        <img src="{{capa.url}}" alt="capa da playlist" class="edit-capa">
+                        {%endif%}
+                        <label for="id_capa">
+                            <img src="/static/images/camera.png" alt="trocar capa da playlist" class="icon-play camera">
+                        </label>
+                        <input name="{{ capa_form.capa.name }}" id="{{ capa_form.capa.id_for_label }}" value="{{playlist.capa.url}}" type="file" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">{% trans 'Salvar' %} alterações</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para edição do nome e descrição de playlists-->
+    <div class="modal fade" id="editPlaylist">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Informações básicas</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form method="POST" action="" enctype="multipart/form-data" play={{playlist.id}} id="form_play" url_="{% url 'channel:play_edit_view'%}">
+                    {% csrf_token %}
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label" style="height: 45px;">
+                            <input name="{{ form.nome.name }}" id="{{ form.nome.id_for_label }}" type="text" maxlength="150" placeholder="Nome da playlist" value="{{playlist.nome}}"
+                                   style="margin-bottom: 1rem;" required=""/>
+                            <span class="spanPlaylist">Nome da playlist</span>
+                        </label>
+                        <label class="has-float-label">
+                            {%if tem_desc%}
+                            <textarea name="descricao" rows="5" maxlength="1000" placeholder="Descreva sua playlist" >{{playlist.descricao}}</textarea>
+                            {%else%}
+                            <textarea name="descricao"  rows="5" maxlength="1000"  placeholder="Descreva sua playlist" ></textarea>
+                            {%endif%}
+                            <span>Descreva sua playlist</span>
+                        </label>
+                    </div>
+                    <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">Salvar</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para editar a descrição de playlists-->
+    <div class="modal fade" id="editDescricao">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Edite a descrição</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form>
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label">
+                            <textarea rows="5" maxlength="1000" placeholder="Descreva sua playlist" required=""></textarea>
+                            <span>Descreva sua playlist</span>
+                        </label>
+                    </div>
+                    <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">Salvar alterações</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para editar a capa de canais-->
+    <div class="modal fade" id="editCapa">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Edite sua capa</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form>
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <figure class="fig-fade">
+                            <label for="edit-capa" class="edit-capa" style="background-image: url({{chan.capa.url}});">
+                                <figcaption style="border-radius: 0;">
+                                    <img src="/static/images/camera.png" alt="alterar a capa do canal {{chan.nome_canal}}"
+                                         class="d-block camera-capa">
+                                </figcaption>
+                            </label>
+                        </figure>
+                        <input type="file" id="edit-capa" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="modal-footer" style="padding: 1.2rem;">
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">Salvar alterações</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para editar nome e descrição de canais-->
+    <div class="modal fade" id="editInfo">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Outras informações</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form>
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <label class="has-float-label nome-canal">
+                            <input type="text" value="{{chan.nome_canal}}" placeholder="Nome do canal" required="">
+                            <span>Nome do canal</span>
+                        </label>
+                        <label class="has-float-label">
+                            <textarea rows="5" maxlength="1000" placeholder="Descreva seu canal">{{chan.descricao}}</textarea>
+                            <span>Descreva seu canal</span>
+                        </label>
+                    </div>
+                    <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">Salvar alterações</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Editar as redes sociais exibidas em um canal-->
+    <div class="modal fade" id="editRedesSociais">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content mdc-redes-sociais">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Suas redes sociais</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="fecharAdd()">&times;</button>
+                </div>
+                <div class="modal-body" style="padding: 1.2rem;">
+                    <div class="container-fluid" style="margin-bottom: 0 !important;">
+                        <!--Caso o usuário não possua redes sociais associadas ao canal-->
+                        <!--Por default o display é block, mas caso o canal possua deve ser trocado para none-->
+                        <div class="row redes-sociais" id="nenhuma-rede-social">
+                            <div class="col-12">
+                                <h5 style="font-size: 1rem;">
+                                    Você ainda não adicionou nenhuma rede social para {{chan.nome_canal}}.
+                                </h5>
+                            </div>
+                        </div>
+
+                        <!--Caso o usuário possua redes sociais associadas ao canal
+                        <div class="row redes-sociais" id="redes-sociais-salvas">
+                            <!--Dps de verificar quais redes sociais o canal possui tornar o ícone dela visível
+                            <div class="col-4 mb-4" id="facebook">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownFacebookCanal" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-facebook-square fa-redes-sociais" style="color: #5061a6;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownFacebookCanal">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input type="text" value="Facebook do canal" placeholder="Link do seu Facebook">
+                                            <span>Link do seu Facebook</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4 mb-4" id="google-plus">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownGooglePlusCanal" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-google-plus-g fa-redes-sociais"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownGooglePlusCanal">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input type="text" value="Google+ do canal" placeholder="Link do seu Google+">
+                                            <span>Link do seu Google+</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4 mb-4" id="instagram">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownInstagramCanal" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-instagram fa-redes-sociais"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownInstagramCanal">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input type="text" value="Instagram do canal" placeholder="Link do seu Instagram">
+                                            <span>Link do seu Instagram</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4" id="twitter">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownTwitterCanal" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-twitter fa-redes-sociais" style="color: #2aa9e0;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownTwitterCanal">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input type="text" value="Twitter do canal" placeholder="Link do seu Twitter">
+                                            <span>Link do seu Twitter</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4" id="youtube">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownYoutubeCanal" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-youtube fa-redes-sociais" style="color: #ff0000;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownYoutubeCanal">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input type="text" value="Twitter do canal" placeholder="Link do seu Youtube">
+                                            <span>Link do seu Youtube</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4" id="twitch">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownTwitchCanal" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-twitch fa-redes-sociais" style="color: #6441a5;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownTwitchCanal">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input type="text" value="Twitch do canal" placeholder="Link do seu Twitch">
+                                            <span>Link do seu Twitch</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                    <a href="#addRedesSociais" data-toggle="modal" data-dismiss="modal" onclick="addRedesSociais()"
+                       class="btn btn-add add-redes-sociais">
+                        <strong class="save-strong">Adicionar</strong>
+                    </a>
+                    <button class="btn btn-add" type="submit">
+                        <strong class="save-strong">Salvar</strong>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Adicionar redes sociais a canal-->
+    <div class="modal fade" id="addRedesSociais">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content mdc-redes-sociais">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title" id="title-redes-sociais">Escolha alguma rede social</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="fecharAdd()">&times;</button>
+                </div>
+                <div class="modal-body" style="padding: 1.2rem;">
+                    <div class="container-fluid" style="margin-bottom: 0 !important;">
+                        <!--Quando o usuário clicar em adicionar-->
+                        <div class="row redes-sociais" id="add-redes-sociais">
+                            <div class="col-4 mb-4">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownFacebook" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-facebook-square fa-redes-sociais" style="color: #5061a6;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownFacebook">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input value="{{chan.facebook}}" id="facebook" type="text" placeholder="Link do seu Facebook">
+                                            <span>Link do seu Facebook</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4 mb-4">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownGooglePlus" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-google-plus-g fa-redes-sociais"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownGooglePlus">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input value="{{chan.googleplus}}" id="googleplus" type="text" placeholder="Link do seu Google+">
+                                            <span>Link do seu Google+</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4 mb-4">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownInstagram" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-instagram fa-redes-sociais"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownInstagram">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input value="{{chan.instagram}}" id="instagram" type="text" placeholder="Link do seu Instagram">
+                                            <span>Link do seu Instagram</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownTwitter" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-twitter fa-redes-sociais" style="color: #2aa9e0;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownTwitter">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input value="{{chan.twitter}}" id="twitter" type="text" placeholder="Link do seu Twitter">
+                                            <span>Link do seu Twitter</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownYoutube" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-youtube fa-redes-sociais" style="color: #ff0000;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownYoutube">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input value="{{chan.youtube}}" id="youtube" type="text" placeholder="Link do seu Youtube">
+                                            <span>Link do seu Youtube</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                            <div class="col-4">
+                                <center>
+                                    <div class="dropdown dp-redes-sociais">
+                                        <a data-toggle="collapse" data-target="#dropdownTwitch" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="fab fa-twitch fa-redes-sociais" style="color: #6441a5;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownTwitch">
+                                        <label class="has-float-label lb-redes-sociais">
+                                            <input value="{{chan.twitch}}" id="twitch" type="text" placeholder="Link do seu Twitch">
+                                            <span>Link do seu Twitch</span>
+                                        </label>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                    <button uc="{% url 'channel:add_social_view' chan.nome_canal %}" id="add_redes_sociais" class="btn btn-add" type="submit">
+                        <strong class="save-strong">Salvar</strong>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-sm navbar-light fixed-top">
+        <div class="nav-left">
+            <button type="button" id="sidebarCollapse" class="navbar-btn active">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="{% url 'home:index' %}" id="logo"><img class="logo" src="/static/resources/icones/logo.png"></a>
+        </div>
+
+        <div class="nav-search">
+            <center>
+                <div class="navbar-collapse" id="navbarPesquisa">
+                    <form class="form-inline"> {% csrf_token %}
+                        <input class="form-control" type="search" placeholder="Pesquisar">
+                        <button class="btn btn-link mb-1" type="submit">
+                            <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar" id="search">
+                        </button>
+                    </form>
+                </div>
+            </center>
+        </div>
+
+        <div class="nav-right">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'channel:myuploads' %}">
+                        <img class="icon-right" src="/static/resources/icones/upload.ico"></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/disc.ico"></a>
+                </li>
+                <li class="dropdown">
+                    <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="icon-right" src="/static/resources/icones/notific.ico"></a>
+                    <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
+                        <a class="dropdown-item" href="#">Notific 1</a>
+                        <a class="dropdown-item" href="#">Notific 2</a>
+                        <a class="dropdown-item" href="#">Notific 3</a>
+                    </div>
+                </li>
+                <li class="dropdown" id="dpAvatar">
+                    <a id="dropdownMenuButton" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {% if not user.img_perfil %}
+                            <img class="img-perfil" src="/static/images/default-user.png"/>
+                        {% else %}
+                            <img class="img-perfil" src="{{ user.img_perfil.url }}"/>
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dpAccount">
+                        {% if logado %}
+                            <a class="dropdown-item" href="{% url 'account:edit_profile' %}">Editar Perfil</a>
+                            <a class="dropdown-item" href="{% url 'account:new_channel' %}">Criar canal</a> <!--Trocar por meus canais dps-->
+                            <a class="dropdown-item" href="{% url 'account:sign_out' %}">Sair</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{% url 'account:sign_in' %}">Entrar</a>
+                            <a class="dropdown-item" href="{% url 'account:sign_up' %}">Nova conta</a>
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+     <nav id="sidebar" class="active">
+            <div class="sidebar-header">
+                <center><h3>x</h3></center>
+            </div>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="{% url 'home:index' %}"><img class="icon-left" src="/static/resources/icones/home.png">Início</a>
+                </li>
+                <li>
+                    <a href="#"><img class="icon-left" src="/static/resources/icones/favorites.png">Favoritos</a>
+                </li>
+                <li>
+                    <a href="#"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
+                    <a href="#pageSubmenu" aria-expanded="true">
+                        <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
+                    <ul class="list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 1</a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 2</a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><br/>
+                    <a href="#pageSubchannel" aria-expanded="true"><img class="icon-left" src="/static/resources/icones/channel.png">Canais</a>
+                    <ul class="list-unstyled" id="pageSubchannel">
+                        <li>
+                            <a href="#"><img class="icon-left channel" src="/static/images/default-user.png">Canal 1</a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="icon-left channel" src="/static/images/default-user.png">Canal 2</a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="icon-left channel" src="/static/images/default-user.png">Canal 3</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+    <div class="wrapper">
+        <div id="content">
+            {% block body %}
+
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

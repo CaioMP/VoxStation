@@ -140,6 +140,12 @@ i.fas {
     visibility: visible;
 }
 
+.fa-question-circle.fas-playlist {
+    margin-bottom: 0;
+    color: black;
+    font-size: 14px;
+}
+
 img.icon {
     width: 33px;
     margin-top: -0.3rem;
@@ -242,6 +248,31 @@ a.tag {
     opacity: 0;
     transition: opacity .8s;
     font-size: 3rem !important;
+}
+
+label#lb_comentar {
+    margin-left: 4.2rem;
+    margin-right: 1rem;
+    margin-top: -7px;
+}
+
+button#comentar {
+    margin-right: 1rem;
+    float: right;
+    cursor: pointer;
+    width: 5rem;
+    padding: .3rem;
+    font-size: .9rem;
+}
+
+button#descartar {
+    margin-right: .5rem;
+    float: right;
+    cursor: pointer;
+    width: 5rem;
+    padding: .3rem;
+    font-size: .9rem;
+    font-weight: bold;
 }
 
 @media only screen and (max-width: 667px) {

@@ -13,14 +13,20 @@ i.fas.fa-volume-up {
     text-shadow: 0px 0px 5px black;
 }
 
+label#nome_playlist {
+    height: 44px;
+    margin-bottom: 15px;
+}
+
 .has-float-label input {
     width: 100%;
     font-weight: 500;
 }
 
 .has-float-label input:placeholder-shown:not(:focus)+*, .has-float-label select:placeholder-shown:not(:focus)+*, .has-float-label textarea:placeholder-shown:not(:focus)+* {
-    font-size: 113%;
+    font-size: 100% !important;
     margin-left: 5px;
+    top: 0.9em !important;
 }
 
 .has-float-label input:focus, .has-float-label select:focus, .has-float-label textarea:focus {
@@ -29,8 +35,8 @@ i.fas.fa-volume-up {
 
 .has-float-label>span {
     font-weight: bold;
-    top: -4px;
-    font-size: 100% !important;
+    top: -5px !important;
+    font-size: 85% !important;
     transition: 0.5s !important;
 }
 
@@ -55,7 +61,7 @@ i.fas.fa-volume-up {
 
 .spanPlaylist {
     position: relative;
-    font-size: 100%;
+    font-size: 85%;
     font-weight: bold;
     transition: 0.5s;
 }

@@ -1,10 +1,11 @@
-{% extends 'base2.html' %}
+{% extends 'base_modals.html' %}
 
 {% load static %}
 
 {% block head %}
     <title>VoxStation - Nome do áudio</title>
     <link rel="stylesheet" href="{% static 'channel/style_player.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'channel/edit_channel.css' %}">
     <link rel="stylesheet" href="{% static 'channel/style_relacionados.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'resources/slideTime.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'channel/style_channel_inicio.css' %}">
@@ -515,5 +516,27 @@
                 <img src="/static/resources/icones/next.png" class="slideIcos" alt="">
             </a>
         </div>
+        <h2 class="headerChannel">10 comentários
+            <div class="dropdown filter">
+                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-filter" style="margin-bottom: 0;font-size: 1.25rem;"></i>
+                <div class="dropdown-menu filter" aria-labelledby="dropdownFilter">
+                    <a class="dropdown-item filter" href="#">Mais relevantes</a>
+                    <a class="dropdown-item filter" href="#">Mais antigos</a>
+                    <a class="dropdown-item filter" href="#">Mais recentes</a>
+                </div>
+                </a>
+            </div>
+        </h2>
+        <br><br>
+        <img src="/media/contas/user_1/canal_Mychannel/fotos/tumblr_mf171khjgJ1rapbo1o1_500_large.png"
+             style="width: 2.5rem;height: 2.5rem;" alt="sua foto" class="img_channel ml-2">
+        <label class="has-float-label" id="lb_comentar">
+            <input type="text" placeholder="Comente algo...">
+            <span>Comente algo...</span>
+        </label>
+
+        <button class="btn-sintonizar" id="comentar">Publicar</button>
+        <button class="btn btn-default btn-descartar" id="descartar">Descartar</button>
     </div>
 {% endblock %}
