@@ -47,3 +47,58 @@ function hideDescription() {
     document.getElementById('hideDescription').style.visibility = "hidden";
     document.getElementById('showDescription').style.visibility = "visible";
 }
+
+window.addEventListener('click', function(e){
+  if (document.getElementById('lb_comentar').contains(e.target)){
+    document.getElementById('comment').style.display = "block";
+  } else{
+    document.getElementById('comment').style.display = "none";
+  }
+});
+
+/*Mostra o botão de responder ao passar o mouse em cima do comentário*/
+function showOpc(id) {
+    var responder = document.getElementById(id).getElementsByClassName("resposta")[0].style.display;
+    if (responder != "block") {
+        document.getElementById(id).getElementsByClassName("responder")[0].style.display = "block";
+    }
+}
+
+/*Esconde o botão de responder ao tirar o mouse do comentário*/
+function hideOpc(id) {
+    var responder = document.getElementById(id).getElementsByClassName("resposta")[0].style.display;
+    if (responder != "block") {
+        document.getElementById(id).getElementsByClassName("responder")[0].style.display = "none";
+    }
+}
+
+function showResponder(parentElement) {
+    /*Não permitir que mais de uma resposta seja dada ao mesmo tempo*/
+    var x_all = document.getElementsByClassName("resposta");
+    var resposta_all = document.getElementsByClassName("responder");
+    var responder = document.getElementsByClassName("responder");
+    for (var i=0; i<x_all.length; i++){
+        x_all[i].style.display = "none";
+        resposta_all[i].innerHTML = "Responder";
+        responder[i].style.display = "none";
+    }
+
+    document.getElementById(parentElement).getElementsByTagName("TEXTAREA")[0].value = "";
+    document.getElementById(parentElement).getElementsByClassName("responder")[0].innerHTML = "Limpar";
+    document.getElementById(parentElement).getElementsByClassName("responder")[0].style.display = "block";
+
+    /*Habilita a parte de responder*/
+    var x = document.getElementById(parentElement).getElementsByClassName("resposta");
+    x[0].style.display = "block";
+}
+
+function closeResponder() {
+    var resposta = document.getElementsByClassName("responder");
+    var x = document.getElementsByClassName("resposta");
+
+    for (var i=0; i<x.length; i++){
+        x[i].style.display = "none";
+        resposta[i].innerHTML = "Responder";
+    }
+}
+

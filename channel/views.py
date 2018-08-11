@@ -311,7 +311,9 @@ def vincula_play(request):
 
 
 def player(request):
-    return render(request, './channel/player.html', {'logado': request.user.is_active})
+    comentarios = [1, 2]
+
+    return render(request, './channel/player.html', {'logado': request.user.is_active, 'comentarios': comentarios})
 
 
 def addSocialWebs(request, nome):
