@@ -31,8 +31,12 @@
     position: absolute;
 }
 
-a.dropdown-item {
-    font-size: .75rem;
+.dropdown-menu.more {
+    font-size: .75rem !important;
+}
+
+a.dropdown-item.filter {
+    font-size: .8rem;
 }
 
 figure {
