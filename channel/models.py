@@ -21,20 +21,20 @@ class Audio(models.Model):
         return "contas/user_{}/capas_playlist/{}".format(instance.proprietario.pk, filename)
 
     data_publicacao = models.DateTimeField(auto_now=True)
-    estado = models.CharField(max_length=10)
-    visibilidade = models.CharField(max_length=11)
+    estado = models.CharField(max_length=10, blank=True, null=True)
+    visibilidade = models.CharField(max_length=11, blank=True, null=True)
     likes = models.ManyToManyField(MyUser, default=None, through="FeedLike", related_name="likes")
     deslikes = models.ManyToManyField(MyUser, default=None, through="FeedDesLike", related_name="deslikes")
     titulo = models.CharField(max_length=50)
     audio = models.FileField(upload_to=audio_path, blank=True, null=True)
     capa = models.ImageField(upload_to=capa_path, blank=True, null=True)
-    duracao = models.CharField(max_length=15)
+    duracao = models.CharField(max_length=15, blank=True, null=True)
     reproducoes = models.IntegerField()
     descricao = models.TextField(max_length=500)
-    categoria = models.CharField(max_length=15)
+    categoria = models.CharField(max_length=15, blank=True, null=True)
     canal_proprietario = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name="canal_proprietario", default=None, null=True)
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="proprietario", null=True)
-    anuncios = models.ManyToManyField(Anuncio)
+    anuncios = models.ManyToManyField(Anuncio, blank=True, null=True)
     tag = models.ManyToManyField(Tag)
 
     def __str__(self):
@@ -53,7 +53,7 @@ class Playlist(models.Model):
     ultima_atualizacao = models.DateTimeField(auto_now=True)
     capa = models.ImageField(upload_to=playlist_capa_path, default=None, null=True)
     descricao = models.TextField(default=None, blank=True, null=True)
-
+    numero_de_audios = models.IntegerField(default=1)
     def __str__(self):
         return self.nome
 

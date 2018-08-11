@@ -1,8 +1,7 @@
 from .models import Tag
 from .models import Audio, Playlist, Canal
 from urllib import request
-
-
+from datetime import datetime
 def tagprocess(tagtext):
     tagl = tagtext.replace(" ", "")
     taglist = tagl.split("#")
@@ -186,5 +185,128 @@ def certifica_link(redes):
         if ocorrencias == 0:
             mensagem['status'] = True
     return mensagem
+
+
+def setOrdemAudios(op,nome_canal):
+    canal = Canal.objects.get(nome_canal=nome_canal)
+    html = ''
+    if op == 'recentes':
+        audios = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao').reverse()
+    elif op == 'antigos':
+        audios = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao')
+    elif op == 'populares':
+        audios = Audio.objects.filter(canal_proprietario=canal).order_by('reproducoes')
+
+    for audio in audios:
+        html += '''<div class="col-md-3 mb-4"><div class="card">
+                            <figure class="fig-capa-audio">
+                                <a href="#"><img src="{}" class="card-img-top" alt="imagem do áudio"></a>
+                                <figcaption class="fc-capa-audio">
+                                    <center>
+                                        <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                        <div class="dropdown more">
+                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                <a class="dropdown-item" href="#">Adicionar a playlist</a>
+                                                <a class="dropdown-item" href="#">Compartilhar</a>
+                                                <a class="dropdown-item" href="#">Editar</a>
+                                                <a class="dropdown-item" href="#">Remover</a>
+                                            </div>
+                                            </a>
+                                        </div>
+                                    </center>
+                                </figcaption>
+                            </figure>
+
+                            <div class="card-body">
+                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">{}</h4></a>
+                                <div class="card-text">
+                                    <p class="descript-thumb">{}</p>
+                                    <p class="descript-thumb">
+                                        <img src="/static/resources/icones/view.png" class="icon-view"/>
+                                        {}</p>
+                                    <p class="descript-thumb">{}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>'''.format(audio.capa.url, audio.titulo, audio.canal_proprietario, audio.reproducoes, audio.data_publicacao.strftime('%d/%m/%y as %H:%M'))
+    return html
+
+
+
+
+def setOrdemPlaylists(op, canal):
+    if op == "recentes":
+        playlists = Playlist.objects.filter(canal=canal).order_by('ultima_atualizacao').reverse()
+    elif op == 'antigos':
+        playlists = Playlist.objects.filter(canal=canal).order_by('ultima_atualizacao')
+    elif op == "mais audios":
+        playlists = Playlist.objects.filter(canal=canal).order_by('numero_de_audios').reverse()
+    elif op == "menos audios":
+        playlists = Playlist.objects.filter(canal=canal).order_by('numero_de_audios')
+
+    html = ""
+    lista_audios = ""
+    audios_ap = []
+    playlists = ordena_pra_exibicao(playlists)
+    for playlist in playlists:
+        for audio in playlist.audios_apresentaveis:
+            lista_audios += """ <li class="audio">
+                                <strong class="time">3:40</strong>
+                                <a href="#" class="titulo">
+                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>{}</a>
+                            </li>""".format(audio.titulo)
+
+        html += ''' <div class="col-md-6">
+                    <div class="card">
+                        <figure class="fig-capa-audio">
+                            <a href="#"><img src="{}" class="card-img-top" alt=""></a>
+                            <figcaption class="fc-capa-audio">
+                                <center>
+                                    <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                    <div class="dropdown more">
+                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                        <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                            <a class="dropdown-item" href="#">Editar</a>
+                                            <a class="dropdown-item" href="#">Excluir</a>
+                                            <a class="dropdown-item" href="#">Compartilhar</a>
+                                        </div>
+                                        </a>
+                                    </div>
+                                </center>
+                            </figcaption>
+                        </figure>
+
+                        <div class="card-body">
+                            <a href="#" class="audio-link"><h4 class="card-title audio-titul">{}</h4></a>
+                            <div class="card-text">
+                                <p class="descript-thumb">{}</p>
+                                <p class="descript-thumb">
+                                    <img src="/static/resources/icones/disc.ico" class="icon-view"/>
+                                    {}</p>
+                                <p class="descript-thumb last-update">{}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 playlist">
+                        <ul class="audio-list">
+                            {}
+                            <li class="playlist-more">
+                                <center><a href="/channel/playlist_all/{}" class="btn playlist-link">Ver mais</a></center>
+                            </li>
+                        </ul>
+                    </div>
+                </div>'''.format(playlist.capa.url,
+                                 playlist.nome,
+                                 playlist.canal.nome_canal,
+                                 playlist.numero_de_audios,
+                                 playlist.ultima_atualizacao.strftime('%d/%m/%y as %H:%M'),
+                                 lista_audios,
+                                 playlist.id)
+        lista_audios = ""
+    return html
+
 
 

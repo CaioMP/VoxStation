@@ -21,6 +21,7 @@
     <script src="{% static 'channel/js/play_add_id.js' %}"></script>
     <script src="{% static 'channel/js/capa_script.js' %}"></script>
     <script src="{% static 'channel/js/follow_general_button.js' %}"></script>
+    <script src="{% static 'channel/js/edit_channel_info.js' %}"></script>
     <!--Bootstrap Links-->
     <link rel="stylesheet" href="{% static 'resources/bootstrap/css/bootstrap.min.css' %}" type="text/css"/>
     <script src="{% static 'resources/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
@@ -241,14 +242,14 @@
                     <h4 class="modal-title">Outras informações</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form>
+                <form cn_="{%url 'channel:chan_edit_info_view' chan.nome_canal%}" id="form_chan_edit">
                     <div class="modal-body" style="padding: 1.2rem;">
                         <label class="has-float-label nome-canal">
-                            <input type="text" value="{{chan.nome_canal}}" placeholder="Nome do canal" required="">
+                            <input type="text" value="{{chan.nome_canal}}" id="nome" name="nome" placeholder="Nome do canal" required="">
                             <span>Nome do canal</span>
                         </label>
                         <label class="has-float-label">
-                            <textarea rows="5" maxlength="1000" placeholder="Descreva seu canal">{{chan.descricao}}</textarea>
+                            <textarea rows="5" maxlength="1000" id="descricao" name="descricao" placeholder="Descreva seu canal">{{chan.descricao}}</textarea>
                             <span>Descreva seu canal</span>
                         </label>
                     </div>
