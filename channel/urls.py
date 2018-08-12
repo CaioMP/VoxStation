@@ -21,5 +21,8 @@ urlpatterns = [
     path('playlist_edit', play_edit, name='play_edit_view'),
     path('vincular', vincula_play, name='vincula_view'),
     path('audio', player, name='player_view'),  # colocar o id do áudio aqui dps
-    path('add_social/<str:nome>', addSocialWebs, name='add_social_view')
+    path('add_social/<str:nome>', addSocialWebs, name='add_social_view'),
+    path('ordena_audio/<str:nome>', ordenaAudio, name='ordena_audio_view'),
+    path('ordena_play/<str:nome>', ordenaPlay, name='ordena_play_view'),
+    path('chan_edit/<str:nome>',channelEditInfo,name='chan_edit_info_view')
 ]

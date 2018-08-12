@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
     <script src="{% static 'channel/js/edit_channel.js' %}"></script>
     <script src="{%static 'channel/js/social_add.js' %}"></script>
+    <script src="{%static 'channel/js/ordena.js' %}"></script>
+    <script src="{%static 'channel/js/ordenaPlay.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -24,13 +26,11 @@
             <i class="fas fa-volume-up"></i>
         </label>
         <input type="file" accept="audio/*" style="display: none;" id="edit-audio-fundo">
-        {%if direito_edicao%}
         <span data-toggle="modal" data-target="#editCapa">
             <a href="#" class="edit_audio_fundo edit-capa-top" rel="tooltip" style="float: left;" data-toggle="tooltip" data-placement="bottom" title="Capa do seu canal">
                 <i class="fas fa-pen" style="color: white;"></i>
             </a>
         </span><!--Editar o fundo-->
-        {%endif%}
         <center>
             <figure class="fig-foto">
                 <label for="edit_foto_canal">
@@ -44,7 +44,7 @@
                 <input type="file" name="edit_foto_canal" id="edit_foto_canal" accept="image/*">
             </figure>
 
-            <h2 class="nome_canal d-inline-block">{{chan.nome_canal}}</h2>
+            <h2 class="nome_canal d-inline-block" id="nome_canal">{{chan.nome_canal}}</h2>
 
             <h6 id="num_seg" class="nome_canal">
                 <img src="/static/images/default-user-white.png" alt="seguidores" class="icon seguidores"
@@ -52,22 +52,20 @@
                 {{num_seguidores}}
             </h6>
         </center>
-        {%if logado%}
+
         <span data-toggle="modal" data-target="#editInfo">
             <a href="#" id="edit_info" class="edit-capa-bottom" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Outras informações">
                 <i class="fas fa-info"></i>
             </a>
-        </span><!--Editar nome do canal, descrição e links-->
-        {%endif%}
-        {%if direito_edicao%}
+        </span>
+        <!--Editar nome do canal, descrição e links-->
         <span data-toggle="modal" data-target="#editRedesSociais">
             <a href="#" id="redes-sociais" class="edit-capa-bottom" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Suas redes sociais">
                 <img src="/static/resources/icones/social.png" alt="edite suas redes sociais" class="social">
             </a>
         </span>
-        {%endif%}
-    </div>
 
+    </div>
     <div class="tab">
         <button class="tablinks active" onclick="openTab(event, 'Audios')">Áudios</button>
         <button class="tablinks" onclick="openTab(event, 'Playlists')">Playlists</button>
@@ -78,12 +76,12 @@
             <div class="dropdown filter">
                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-filter"></i>
-                <div class="dropdown-menu filter" aria-labelledby="dropdownFilter">
-                    <a class="dropdown-item filter" href="#">Mais recentes</a>
-                    <a class="dropdown-item filter" href="#">Mais antigos</a>
-                    <a class="dropdown-item filter" href="#">Mais populares</a>
-                    <a class="dropdown-item filter" href="#">Mais curtos</a>
-                    <a class="dropdown-item filter" href="#">Mais longos</a>
+                <div class="dropdown-menu filter" id="caminho" identifier="{%url 'channel:ordena_audio_view' chan.nome_canal%}" aria-labelledby="dropdownFilter">
+                    <a class="dropdown-item filter op" val="recentes" href="#">Mais recentes</a>
+                    <a class="dropdown-item filter op" val="antigos" href="#">Mais antigos</a>
+                    <a class="dropdown-item filter op" val="populares" href="#">Mais populares</a>
+                    <a class="dropdown-item filter " val="recentes" href="#">Mais curtos</a>
+                    <a class="dropdown-item filter " val="recentes" href="#">Mais longos</a>
                 </div>
                 </a>
             </div>
@@ -97,11 +95,12 @@
                 </button>
             </form>
 
-                <div class="row mt-4 audios">
+                <div class="row mt-4 audios" id="container_audios">
+                    {%for audio in audios%}
                     <div class="col-md-3 mb-4">
                         <div class="card">
                             <figure class="fig-capa-audio">
-                                <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt="imagem do áudio"></a>
+                                <a href="#"><img src="{{audio.capa.url}}" class="card-img-top" alt="imagem do áudio"></a>
                                 <figcaption class="fc-capa-audio">
                                     <center>
                                         <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
@@ -121,255 +120,18 @@
                             </figure>
 
                             <div class="card-body">
-                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome áudio</h4></a>
+                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{audio.titulo}}</h4></a>
                                 <div class="card-text">
-                                    <p class="descript-thumb">Nome canal</p>
+                                    <p class="descript-thumb">{{chan.nome_canal}}</p>
                                     <p class="descript-thumb">
                                         <img src="/static/resources/icones/view.png" class="icon-view"/>
-                                        1200</p>
-                                    <p class="descript-thumb">12 minutos atrás</p>
+                                        {{audio.reproducoes}}</p>
+                                    <p class="descript-thumb">{{audio.data_publicacao}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card">
-                            <figure class="fig-capa-audio">
-                                <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt="imagem do áudio"></a>
-                                <figcaption class="fc-capa-audio">
-                                    <center>
-                                        <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                        <div class="dropdown more">
-                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="#">Adicionar a playlist</a>
-                                                <a class="dropdown-item" href="#">Compartilhar</a>
-                                                <a class="dropdown-item" href="#">Editar</a>
-                                                <a class="dropdown-item" href="#">Remover</a>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </center>
-                                </figcaption>
-                            </figure>
-
-                            <div class="card-body">
-                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome áudio</h4></a>
-                                <div class="card-text">
-                                    <p class="descript-thumb">Nome canal</p>
-                                    <p class="descript-thumb">
-                                        <img src="/static/resources/icones/view.png" class="icon-view"/>
-                                        1200</p>
-                                    <p class="descript-thumb">12 minutos atrás</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card">
-                            <figure class="fig-capa-audio">
-                                <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt="imagem do áudio"></a>
-                                <figcaption class="fc-capa-audio">
-                                    <center>
-                                        <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                        <div class="dropdown more">
-                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="#">Adicionar a playlist</a>
-                                                <a class="dropdown-item" href="#">Compartilhar</a>
-                                                <a class="dropdown-item" href="#">Editar</a>
-                                                <a class="dropdown-item" href="#">Remover</a>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </center>
-                                </figcaption>
-                            </figure>
-
-                            <div class="card-body">
-                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome áudio</h4></a>
-                                <div class="card-text">
-                                    <p class="descript-thumb">Nome canal</p>
-                                    <p class="descript-thumb">
-                                        <img src="/static/resources/icones/view.png" class="icon-view"/>
-                                        1200</p>
-                                    <p class="descript-thumb">12 minutos atrás</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card">
-                            <figure class="fig-capa-audio">
-                                <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt="imagem do áudio"></a>
-                                <figcaption class="fc-capa-audio">
-                                    <center>
-                                        <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                        <div class="dropdown more">
-                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="#">Adicionar a playlist</a>
-                                                <a class="dropdown-item" href="#">Compartilhar</a>
-                                                <a class="dropdown-item" href="#">Editar</a>
-                                                <a class="dropdown-item" href="#">Remover</a>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </center>
-                                </figcaption>
-                            </figure>
-
-                            <div class="card-body">
-                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome áudio</h4></a>
-                                <div class="card-text">
-                                    <p class="descript-thumb">Nome canal</p>
-                                    <p class="descript-thumb">
-                                        <img src="/static/resources/icones/view.png" class="icon-view"/>
-                                        1200</p>
-                                    <p class="descript-thumb">12 minutos atrás</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card">
-                            <figure class="fig-capa-audio">
-                                <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt="imagem do áudio"></a>
-                                <figcaption class="fc-capa-audio">
-                                    <center>
-                                        <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                        <div class="dropdown more">
-                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="#">Adicionar a playlist</a>
-                                                <a class="dropdown-item" href="#">Compartilhar</a>
-                                                <a class="dropdown-item" href="#">Editar</a>
-                                                <a class="dropdown-item" href="#">Remover</a>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </center>
-                                </figcaption>
-                            </figure>
-
-                            <div class="card-body">
-                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome áudio</h4></a>
-                                <div class="card-text">
-                                    <p class="descript-thumb">Nome canal</p>
-                                    <p class="descript-thumb">
-                                        <img src="/static/resources/icones/view.png" class="icon-view"/>
-                                        1200</p>
-                                    <p class="descript-thumb">12 minutos atrás</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card">
-                            <figure class="fig-capa-audio">
-                                <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt="imagem do áudio"></a>
-                                <figcaption class="fc-capa-audio">
-                                    <center>
-                                        <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                        <div class="dropdown more">
-                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="#">Adicionar a playlist</a>
-                                                <a class="dropdown-item" href="#">Compartilhar</a>
-                                                <a class="dropdown-item" href="#">Editar</a>
-                                                <a class="dropdown-item" href="#">Remover</a>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </center>
-                                </figcaption>
-                            </figure>
-
-                            <div class="card-body">
-                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome áudio</h4></a>
-                                <div class="card-text">
-                                    <p class="descript-thumb">Nome canal</p>
-                                    <p class="descript-thumb">
-                                        <img src="/static/resources/icones/view.png" class="icon-view"/>
-                                        1200</p>
-                                    <p class="descript-thumb">12 minutos atrás</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card">
-                            <figure class="fig-capa-audio">
-                                <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt="imagem do áudio"></a>
-                                <figcaption class="fc-capa-audio">
-                                    <center>
-                                        <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                        <div class="dropdown more">
-                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="#">Adicionar a playlist</a>
-                                                <a class="dropdown-item" href="#">Compartilhar</a>
-                                                <a class="dropdown-item" href="#">Editar</a>
-                                                <a class="dropdown-item" href="#">Remover</a>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </center>
-                                </figcaption>
-                            </figure>
-
-                            <div class="card-body">
-                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome áudio</h4></a>
-                                <div class="card-text">
-                                    <p class="descript-thumb">Nome canal</p>
-                                    <p class="descript-thumb">
-                                        <img src="/static/resources/icones/view.png" class="icon-view"/>
-                                        1200</p>
-                                    <p class="descript-thumb">12 minutos atrás</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-4">
-                        <div class="card">
-                            <figure class="fig-capa-audio">
-                                <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt="imagem do áudio"></a>
-                                <figcaption class="fc-capa-audio">
-                                    <center>
-                                        <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                        <div class="dropdown more">
-                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="#">Adicionar a playlist</a>
-                                                <a class="dropdown-item" href="#">Compartilhar</a>
-                                                <a class="dropdown-item" href="#">Editar</a>
-                                                <a class="dropdown-item" href="#">Remover</a>
-                                            </div>
-                                            </a>
-                                        </div>
-                                    </center>
-                                </figcaption>
-                            </figure>
-
-                            <div class="card-body">
-                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome áudio</h4></a>
-                                <div class="card-text">
-                                    <p class="descript-thumb">Nome canal</p>
-                                    <p class="descript-thumb">
-                                        <img src="/static/resources/icones/view.png" class="icon-view"/>
-                                        1200</p>
-                                    <p class="descript-thumb">12 minutos atrás</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {%endfor%}
                     <!--
                     <p class="text text-center">Nenhum áudio que possui esse título foi encontrado</p>-->
                     </div>
@@ -380,12 +142,12 @@
             <div class="dropdown filter">
                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-filter"></i>
-                <div class="dropdown-menu filter" aria-labelledby="dropdownFilter">
-                    <a class="dropdown-item filter" href="#">Mais recentes</a>
-                    <a class="dropdown-item filter" href="#">Mais antigos</a>
-                    <a class="dropdown-item filter" href="#">Mais populares</a>
-                    <a class="dropdown-item filter" href="#">Mais áudios</a>
-                    <a class="dropdown-item filter" href="#">Menos áudios</a>
+                <div class="dropdown-menu filter" id="caminhoPlay" identifier="{%url 'channel:ordena_play_view' chan.nome_canal%}" aria-labelledby="dropdownFilter">
+                    <a class="dropdown-item filter opPlay" val="recentes" href="#">Mais recentes</a>
+                    <a class="dropdown-item filter opPlay" val="antigos" href="#">Mais antigos</a>
+                    <a class="dropdown-item filter " href="#">Mais populares</a>
+                    <a class="dropdown-item filter opPlay" val="mais audios" href="#">Mais áudios</a>
+                    <a class="dropdown-item filter opPlay" val="menos audios"href="#">Menos áudios</a>
                 </div>
                 </a>
             </div>
@@ -400,11 +162,12 @@
                 </button>
             </form>
 
-            <div class="row mt-4">
+            <div class="row mt-4 " id="container_plays">
+                {%for playlist in playlists%}
                 <div class="col-md-6">
                     <div class="card">
                         <figure class="fig-capa-audio">
-                            <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
+                            <a href="#"><img src="{{playlist.capa.url}}" class="card-img-top" alt=""></a>
                             <figcaption class="fc-capa-audio">
                                 <center>
                                     <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
@@ -423,224 +186,32 @@
                         </figure>
 
                         <div class="card-body">
-                            <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome da playlist</h4></a>
+                            <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{playlist.nome}}</h4></a>
                             <div class="card-text">
                                 <p class="descript-thumb">{{chan.nome_canal}}</p>
                                 <p class="descript-thumb">
                                     <img src="/static/resources/icones/disc.ico" class="icon-view"/>
-                                    20</p>
-                                <p class="descript-thumb last-update">Última atualização 5 dias atrás</p>
+                                    {{playlist.numero_de_audios}}</p>
+                                <p class="descript-thumb last-update">{{playlist.ultima_atualizacao}}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 playlist">
                         <ul class="audio-list">
+                            {% for audio in playlist.audios_apresentaveis%}
                             <li class="audio">
                                 <strong class="time">3:40</strong>
                                 <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
+                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>{{audio.titulo}}</a>
                             </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
+                            {%endfor%}
                             <li class="playlist-more">
-                                <center><a href="#" class="btn playlist-link">Ver mais</a></center>
+                                <center><a href="{%url 'channel:playlist_all_view' playlist.id%}" class="btn playlist-link">Ver mais</a></center>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <figure class="fig-capa-audio">
-                            <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
-                            <figcaption class="fc-capa-audio">
-                                <center>
-                                    <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                    <div class="dropdown more">
-                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                        <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                            <a class="dropdown-item" href="#">Editar</a>
-                                            <a class="dropdown-item" href="#">Excluir</a>
-                                            <a class="dropdown-item" href="#">Compartilhar</a>
-                                        </div>
-                                        </a>
-                                    </div>
-                                </center>
-                            </figcaption>
-                        </figure>
-
-                        <div class="card-body">
-                            <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome da playlist</h4></a>
-                            <div class="card-text">
-                                <p class="descript-thumb">{{chan.nome_canal}}</p>
-                                <p class="descript-thumb">
-                                    <img src="/static/resources/icones/disc.ico" class="icon-view"/>
-                                    20</p>
-                                <p class="descript-thumb last-update">Última atualização 5 dias atrás</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 playlist">
-                        <ul class="audio-list">
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="playlist-more">
-                                <center><a href="#" class="btn playlist-link">Ver mais</a></center>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <figure class="fig-capa-audio">
-                            <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
-                            <figcaption class="fc-capa-audio">
-                                <center>
-                                    <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                    <div class="dropdown more">
-                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                        <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                            <a class="dropdown-item" href="#">Editar</a>
-                                            <a class="dropdown-item" href="#">Excluir</a>
-                                            <a class="dropdown-item" href="#">Compartilhar</a>
-                                        </div>
-                                        </a>
-                                    </div>
-                                </center>
-                            </figcaption>
-                        </figure>
-
-                        <div class="card-body">
-                            <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome da playlist</h4></a>
-                            <div class="card-text">
-                                <p class="descript-thumb">{{chan.nome_canal}}</p>
-                                <p class="descript-thumb">
-                                    <img src="/static/resources/icones/disc.ico" class="icon-view"/>
-                                    20</p>
-                                <p class="descript-thumb last-update">Última atualização 5 dias atrás</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 playlist">
-                        <ul class="audio-list">
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="playlist-more">
-                                <center><a href="#" class="btn playlist-link">Ver mais</a></center>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <figure class="fig-capa-audio">
-                            <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
-                            <figcaption class="fc-capa-audio">
-                                <center>
-                                    <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                    <div class="dropdown more">
-                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                        <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                            <a class="dropdown-item" href="#">Editar</a>
-                                            <a class="dropdown-item" href="#">Excluir</a>
-                                            <a class="dropdown-item" href="#">Compartilhar</a>
-                                        </div>
-                                        </a>
-                                    </div>
-                                </center>
-                            </figcaption>
-                        </figure>
-
-                        <div class="card-body">
-                            <a href="#" class="audio-link"><h4 class="card-title audio-titul">Nome da playlist</h4></a>
-                            <div class="card-text">
-                                <p class="descript-thumb">{{chan.nome_canal}}</p>
-                                <p class="descript-thumb">
-                                    <img src="/static/resources/icones/disc.ico" class="icon-view"/>
-                                    20</p>
-                                <p class="descript-thumb last-update">Última atualização 5 dias atrás</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 playlist">
-                        <ul class="audio-list">
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="audio">
-                                <strong class="time">3:40</strong>
-                                <a href="#" class="titulo">
-                                    <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>Nome do áudio</a>
-                            </li>
-                            <li class="playlist-more">
-                                <center><a href="#" class="btn playlist-link">Ver mais</a></center>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                {%endfor%}
             </div>
         </div>
     </div>

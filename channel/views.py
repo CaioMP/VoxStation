@@ -215,9 +215,11 @@ def playlist_add(request):
 
     if play.audios.filter(pk=audio_cod).exists():
         play.audios.remove(audio_set)
+        play.numero_de_audios -= 1
         play.save()
         json_context = {'message': 'Removido de '+play.nome+''}
     else:
+        play.numero_de_audios += 1
         play.audios.add(audio_set)
         play.save()
         json_context = {'message': 'Adicionado a ' + play.nome + ''}
@@ -252,15 +254,15 @@ def playlist_add_play(request):
 
 def edit_channel(request, nome):
     contexto = {}
-    contexto['chan'] = getaudios(Canal.objects.get(nome_canal=nome))
-    contexto['botao'] = ve_se_follow(request, contexto['chan'])
-    contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
-    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
-    contexto['logado'] = request.user.is_active
+    contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['audios'] = Audio.objects.filter(canal_proprietario=contexto['chan'])
+    contexto['playlists'] = ordena_pra_exibicao(Playlist.objects.filter(canal=contexto['chan']))
     if request.user == contexto['chan'].proprietario:
-        contexto['direito_edicao'] = True
+        contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
+        if not request.user.is_active:
+            redirect('/')
     else:
-        contexto['direito_edicao'] = False
+        redirect('/')
     return render(request, "./channel/edit_channel.html", contexto)
 
 
@@ -341,3 +343,34 @@ def addSocialWebs(request, nome):
     return JsonResponse(validacao)
 
 
+def ordenaAudio(request,nome):
+    json = {}
+    op = request.GET['opcao']
+    json['html'] = setOrdemAudios(op, nome)
+    return JsonResponse(json)
+
+
+def ordenaPlay(request, nome):
+    json_context = {}
+    canal = Canal.objects.get(nome_canal=nome)
+    op = request.GET['opcao']
+    json_context['html'] = setOrdemPlaylists(op, canal)
+    return JsonResponse(json_context)
+
+def channelEditInfo(request, nome):
+    canal = Canal.objects.get(nome_canal=nome)
+    json_context = {}
+    canal_nome_novo = request.GET['nome']
+    canal_descricao = request.GET['descricao']
+
+    canal.descricao = canal_descricao
+    json_context['descricao'] = canal_descricao
+    if Canal.objects.filter(nome_canal=canal_nome_novo).exists() and canal.nome_canal != canal_nome_novo:
+        json_context['nome'] = canal.nome_canal
+        json_context['message'] = "já existe um canal com esse, nome tente outro"
+    else:
+        canal.nome_canal = canal_nome_novo
+        json_context['nome'] = canal.nome_canal
+        json_context['message'] = "atualização efetuada com sucesso"
+    canal.save()
+    return JsonResponse(json_context)
