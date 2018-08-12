@@ -102,3 +102,23 @@ function closeResponder() {
     }
 }
 
+function showRespostas(parentElement) {
+    x = document.getElementById(parentElement).getElementsByClassName("respostas");
+    for (var i=0; i<x.length; i++){
+        x[i].style.display = "block";
+    }
+
+    document.getElementById(parentElement).getElementsByClassName("ver")[0].style.display = "none";
+    document.getElementById(parentElement).getElementsByClassName("esconder")[0].style.display = "block";
+}
+
+function hideRespostas(parentElement) {
+    x = document.getElementById(parentElement).getElementsByClassName("respostas");
+    for (var i=0; i<x.length; i++){
+        x[i].style.display = "none";
+    }
+
+    document.getElementById(parentElement).getElementsByClassName("ver")[0].style.display = "block";
+    document.getElementById(parentElement).getElementsByClassName("esconder")[0].style.display = "none";
+}
+

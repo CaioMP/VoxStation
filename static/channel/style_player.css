@@ -346,13 +346,18 @@ a.dropdown-item.di-identity:hover {
 .comentario {
     margin: -.5rem 1rem 1rem 4rem;
     word-break: break-word;
-    max-height: 3.6rem;
-    overflow: hidden;
 }
 
 .comments h6 {
     color: black;
     text-shadow: none;
+}
+
+.comments i {
+    margin: 0;
+    cursor: default;
+    color: initial;
+    font-size: .8rem;
 }
 
 .date-comment {
@@ -394,6 +399,27 @@ a.dropdown-item.di-identity:hover {
     margin-top: .5rem;
 }
 
+.ver-respostas {
+    cursor: pointer;
+    font-weight: bold !important;
+    margin-left: 4rem;
+    width: max-content;
+}
+
+.respostas {
+    display: none;
+    margin-left: 3rem;
+}
+
+.nome-comment {
+    display: table-cell;
+    font-size: .9rem;
+    font-weight: bold !important;
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /*Dropdown de responder como*/
 .resp {
     position: relative;
@@ -405,8 +431,18 @@ a.dropdown-item.di-identity:hover {
     width: 6rem !important;
 }
 
+.n-comment {
+    font-size: 1.2rem;
+    background: linear-gradient(-160deg, #032854, black);
+    color: white;
+    height: 2.5rem;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-bottom: -1rem;
+}
+
 @media only screen and (max-width: 767px) {
-    .headerChannel {
+    .n-comment {
         margin-top: 3rem !important;
     }
 }
@@ -426,7 +462,7 @@ a.dropdown-item.di-identity:hover {
 }
 
 @media only screen and (max-width: 600px) {
-    .headerChannel {
+    .n-comment {
         margin-top: 27rem !important;
     }
 }
@@ -445,8 +481,21 @@ a.dropdown-item.di-identity:hover {
         top: 4rem;
     }
 
-    .headerChannel {
+    .n-comment {
         margin-top: 21rem !important;
+    }
+
+    .comments h6 {
+        margin-bottom: .5rem !important;
+    }
+
+    .ver-respostas {
+        height: 1rem;
+    }
+
+    .fa-clock {
+        font-size: .8rem !important;
+        margin-bottom: 0 !important;
     }
 }
 
@@ -536,8 +585,111 @@ a.dropdown-item.di-identity:hover {
         font-size: 2rem !important;
     }
 
-    .headerChannel {
+    .n-comment {
+        font-size: 1rem;
+        height: 2.2rem;
         margin-top: 19rem !important;
+    }
+
+    .fa-filter {
+        font-size: 1rem !important;
+    }
+
+    .img_channel {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+
+    .dropdown-menu.dm-identity.show {
+        top: 2.5rem !important;
+    }
+
+    .di-identity {
+        width: 2rem !important;
+        height: 2rem !important;
+        margin-left: 0 !important;
+    }
+
+    label#lb_comentar {
+        margin: -1.25rem 0 5px 3.5rem !important;
+    }
+
+    .respostas {
+        margin-left: 0;
+        margin-top: -.5rem !important;
+    }
+
+    textarea {
+        font-size: .8rem !important;
+    }
+
+    .has-float-label>span {
+        font-size: 70% !important;
+    }
+
+    .has-float-label textarea:placeholder-shown:not(:focus)+* {
+        font-size: 90% !important;
+        top: 0.7em !important;
+    }
+
+    .lb-resposta {
+        position: relative;
+        top: .9rem;
+        margin-top: -.5rem !important;
+        margin-bottom: 1.2rem;
+    }
+
+    .btn-publicar {
+        font-size: .7rem;
+        padding: 3px;
+        width: 5rem !important;
+        margin-right: 0;
+        height: 26px;
+    }
+
+    .btn-descartar {
+        font-size: .7rem;
+        padding: 3px;
+        width: 4rem;
+    }
+
+    .btn.responder {
+        font-size: 0.75rem !important;
+        padding: 2px 7px !important;
+        top: 5px;
+    }
+
+    .nome-comment {
+        font-size: .75rem !important;
+        max-width: 7rem;
+    }
+
+    .comentario {
+        font-size: .9rem !important;
+    }
+
+    .f-comment {
+        width: 13px !important;
+        height: 13px !important;
+    }
+
+    .feed-com {
+        font-size: .85rem;
+    }
+
+    .ver-respostas {
+        font-size: .75rem !important;
+    }
+
+    .date-comment {
+        position: relative;
+        top: 1.2rem;
+        font-size: .7rem !important;
+        margin-right: 0 !important;
+    }
+
+    .fa-clock {
+        font-size: .75rem !important;
     }
 }
 
@@ -566,7 +718,7 @@ a.dropdown-item.di-identity:hover {
         right: -5px;
     }
 
-    .headerChannel {
+    .n-comment {
         margin-top: 4rem !important;
     }
 }

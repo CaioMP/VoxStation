@@ -516,10 +516,10 @@
                 <img src="/static/resources/icones/next.png" class="slideIcos" alt="">
             </a>
         </div>
-        <h2 class="headerChannel">10 comentários
+        <h3 class="n-comment">4 comentários
             <div class="dropdown filter">
                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-filter" style="margin-bottom: 0;font-size: 1.25rem;"></i>
+                    <i class="fas fa-filter" style="margin-bottom: 0;font-size: 1.2rem;"></i>
                 <div class="dropdown-menu filter" aria-labelledby="dropdownFilter">
                     <a class="dropdown-item filter" href="#">Mais relevantes</a>
                     <a class="dropdown-item filter" href="#">Mais antigos</a>
@@ -527,7 +527,7 @@
                 </div>
                 </a>
             </div>
-        </h2>
+        </h3>
         <br><br>
         <!--Comentar como-->
         <div class="dropdown identity">
@@ -562,18 +562,18 @@
             <!--Imagem da pessoa que comentou (colocar o nome do usuário no alt depois)-->
             <a href="#">
                 <img src="/static/images/default-user.png" alt="imagem de " class="img_other-user ml-2 mr-3 mt-3">
-                <h6 class="d-inline" style="font-size: .9rem;font-weight: bold !important;">Nome do usuário</h6>
+                <h6 class="nome-comment">Nome do usuário</h6>
             </a>
-            <h6 class="date-comment d-inline mr-3" style="font-size: .9rem;"><i class="fas fa-clock mr-1" style="margin:0;cursor:default;color: initial;font-size: .8rem;"></i> 4 horas atrás</h6>
+            <h6 class="date-comment d-inline mr-3" style="font-size: .9rem;"><i class="fas fa-clock mr-1"></i> 4 horas atrás</h6>
 
             <h6 class="comentario">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                 ex ea commodo consequat.
             </h6>
-            <div class="ml-5 d-inline">
-                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3"></a>1000
-                <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3"></a>
+            <div class="ml-5 d-inline feed-com">
+                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>1000
+                <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>
             </div>
 
             <button onclick="showResponder(this.parentElement.id)" class="btn mr-3 responder">Responder</button>
@@ -599,6 +599,62 @@
                 <div class="buttons-comment" style="float: right;">
                     <button class="btn btn-default btn-descartar" onclick="closeResponder()" style="margin-right: .2rem;">Cancelar</button>
                     <button class="btn btn-publicar btn-resp">Responder</button>
+                </div>
+            </div>
+
+            <a onclick="showRespostas(this.parentElement.id)">
+                <h6 class="ver-respostas mt-3 ver"><i class="fas fa-share mr-1" style="cursor:pointer;font-size: 1rem;"></i>Ver 5 respostas</h6>
+            </a>
+            <a onclick="hideRespostas(this.parentElement.id)">
+                <h6 class="ver-respostas mt-3 esconder" style="color: #032854 !important;display: none;">
+                    <i class="fas fa-share mr-1" style="cursor: pointer;color: #032854;font-size: 1rem;"></i>Esconder as respostas</h6>
+            </a>
+
+            <!--Aqui ficarão as respostas do comentário-->
+            <!--Na parte lógica fazer um loop para percorrer todas as respostas associadas ao comentário-->
+            <div class="comments mt-3 respostas" id="resposta-{{forloop.counter}}"
+                 onmouseover="showOpc(this.id)" onmouseleave="hideOpc(this.id)">
+                <!--Imagem da pessoa que comentou (colocar o nome do usuário no alt depois)-->
+                <a href="#">
+                    <img src="/static/images/default-user.png" alt="imagem de " class="img_other-user ml-2 mr-3 mt-3">
+                    <h6 class="nome-comment">Nome do usuário</h6>
+                </a>
+                <h6 class="date-comment d-inline mr-3" style="font-size: .9rem;"><i class="fas fa-clock mr-1"></i> 4 horas atrás</h6>
+
+                <h6 class="comentario">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                    ex ea commodo consequat.
+                </h6>
+                <div class="ml-5 d-inline feed-com">
+                    <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>1000
+                    <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>
+                </div>
+
+                <button onclick="showResponder(this.parentElement.id)" class="btn mr-3 responder">Responder</button>
+                <div class="resposta">
+                    <!--Responder como-->
+                    <div class="dropdown identity resp">
+                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="/media/contas/user_1/canal_Mychannel/fotos/tumblr_mf171khjgJ1rapbo1o1_500_large.png"
+                                 style="width: 2rem;height: 2rem;" alt="sua foto" class="img_channel ml-2"> <!--Foto da conta do usuário-->
+                            <div class="dropdown-menu dm-identity" aria-labelledby="dropdownIdentity">
+                                <a href="#" class="dropdown-item di-identity" style="margin-top: -.5rem;width: 2rem;height: 2rem;">
+                                    <!--Aqui ficarão as fotos dos canais do usuário-->
+                                    <img src="/static/images/default-user.png" style="position: relative;width: 2rem;height: 2rem;" alt="foto de seu canal" class="img_channel img-identity">
+                                </a>
+                            </div>
+                        </a>
+                    </div>
+                    <label class="has-float-label lb-resposta">
+                        <textarea rows="1" placeholder="Responda..."></textarea>
+                        <span>Responda...</span>
+                    </label>
+
+                    <div class="buttons-comment" style="float: right;">
+                        <button class="btn btn-default btn-descartar" onclick="closeResponder()" style="margin-right: .2rem;">Cancelar</button>
+                        <button class="btn btn-publicar btn-resp">Responder</button>
+                    </div>
                 </div>
             </div>
         </div>
