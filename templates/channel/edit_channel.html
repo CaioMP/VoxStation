@@ -126,7 +126,8 @@
                                     <p class="descript-thumb">
                                         <img src="/static/resources/icones/view.png" class="icon-view"/>
                                         {{audio.reproducoes}}</p>
-                                    <p class="descript-thumb">{{audio.data_publicacao}}</p>
+                                    <p class="descript-thumb">
+                                        {{audio.data_publicacao|date:"d/m/y"}} às {{audio.data_publicacao|date:"H:i"}}</p>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +193,9 @@
                                 <p class="descript-thumb">
                                     <img src="/static/resources/icones/disc.ico" class="icon-view"/>
                                     {{playlist.numero_de_audios}}</p>
-                                <p class="descript-thumb last-update">{{playlist.ultima_atualizacao}}</p>
+                                <p class="descript-thumb last-update">
+                                    {{playlist.ultima_atualizacao|date:"d/m/y"}} às {{playlist.ultima_atualizacao|date:"H:i"}}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -212,6 +215,9 @@
                     </div>
                 </div>
                 {%endfor%}
+                {% if not playlists %}
+                    <p><h5 class="ml-4"><strong>Esse canal não possui playlists.</strong></h5></p>
+                {% endif %}
             </div>
         </div>
     </div>

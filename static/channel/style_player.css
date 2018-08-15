@@ -146,6 +146,15 @@ i.fas {
     font-size: 14px;
 }
 
+.date_audio_play {
+    cursor: default !important;
+    font-size: .8rem !important;
+    margin-bottom: .5rem !important;
+    color: black !important;
+    position: relative;
+    top: -1px;
+}
+
 img.icon {
     width: 33px;
     margin-top: -0.3rem;

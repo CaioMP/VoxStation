@@ -111,13 +111,10 @@ a#personalizar {
 
 .slideIcos {
     display: block;
-    background-color: #ffffffb8 !important;
-    width: 45px !important;
-    box-shadow: 0px 0px 10px #636e72 !important;
 }
 
 .carousel-control-next, .carousel-control-prev {
-    margin: 170px 9px 0px !important;
+    margin: 11.5rem -.5rem 0 !important;
 }
 
 a#inicio {

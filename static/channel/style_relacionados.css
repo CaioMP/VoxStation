@@ -113,16 +113,16 @@ p.descript-thumb {
     }
 
     .carousel-control-prev, .carousel-control-next {
-        top: -4rem;
+        top: -5rem;
         width: 36px !important;
     }
 
     .carousel-control-prev {
-        left: -.3rem !important;
+        left: .75rem !important;
     }
 
     .carousel-control-next {
-       right: -.4rem !important;
+        right: .75rem !important;
     }
 
     img.slideIcos {

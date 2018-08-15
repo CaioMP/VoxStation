@@ -73,14 +73,16 @@
                                     <p class="descript-thumb">
                                         <img src="/static/resources/icones/view.png" class="icon-view"/>
                                         {{audio.reproducoes}}</p>
-                                    <p class="descript-thumb">{{audio.data_publicacao}}</p>
+                                    <p class="descript-thumb">
+                                        {{audio.data_publicacao|date:"d/m/y"}} às
+                                        {{audio.data_publicacao|date:"H:i"}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {%endfor%}
                     {%else%}
-                    <p class="text text-center">nenhum audio que possui esse titúlo foi encontrado</p>
+                    <p><h5 class="ml-4 mt-3"><strong>Nenhum áudio com esse titúlo foi encontrado.</strong></h5></p>
                     {%endif%}
                     </div>
                 </div>

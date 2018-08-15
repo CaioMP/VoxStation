@@ -103,9 +103,9 @@ p {
 
 .slideIcos {
     border-radius: 50%;
-    background-color: white;
-    width: 50px;
-    box-shadow: 0px 0px 5px #636e72;
+    background-color: #ffffffb8;
+    width: 45px;
+    box-shadow: 0px 0px 10px #636e72;
 }
 
 .slideIcos:hover {

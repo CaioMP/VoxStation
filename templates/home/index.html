@@ -50,7 +50,8 @@
                                         <div class="card-text">
                                             <p class="descript-thumb">{{channel.nome_canal}}</p>
                                             <p class="descript-thumb"><img src="/static/resources/icones/view.png" class="icon-view"/>{{f_page_audio.reproducoes}}</p>
-                                            <p class="descript-thumb">{{f_page_audio.data_publicacao|date:"d-M-y H:i"}}</p>
+                                            <p class="descript-thumb">
+                                                {{f_page_audio.data_publicacao|date:"d/m/y"}} às {{f_page_audio.data_publicacao|date:"H:i"}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +88,8 @@
                                         <div class="card-text">
                                             <p class="descript-thumb">{{channel.nome_canal}}</p>
                                             <p class="descript-thumb"><img src="/static/resources/icones/view.png" class="icon-view"/>{{s_page_audio.reproducoes}}</p>
-                                            <p class="descript-thumb">{{s_page_audio.data_publicacao|date:"d-M-y H:i"}}</p>
+                                            <p class="descript-thumb">
+                                                {{s_page_audio.data_publicacao|date:"d/m/y"}} às {{s_page_audio.data_publicacao|date:"H:i"}}</p>
                                         </div>
                                     </div>
                                 </div>

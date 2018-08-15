@@ -68,7 +68,8 @@
                                     <p class="descript-thumb">
                                         <img src="/static/resources/icones/disc.ico" class="icon-view"/>
                                         20</p>
-                                    <p class="descript-thumb last-update">Última atualização {{playlist.ultima_atualizacao}}</p>
+                                    <p class="descript-thumb last-update">Última atualização
+                                        {{playlist.ultima_atualizacao|date:"d/m/y"}} às {{playlist.ultima_atualizacao|date:"H:i"}}</p>
                                 </div>
                             </div>
                         </div>
@@ -89,6 +90,9 @@
                     </div>
                     {%endfor%}
                 </div> <!------marca---->
+                {% if not playlists %}
+                    <p><h5 class="ml-4"><strong>Esse canal não possui playlists.</strong></h5></p>
+                {% endif %}
             </div>
         </div>
 {% endblock %}

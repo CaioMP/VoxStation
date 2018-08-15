@@ -81,16 +81,14 @@ a#playlists {
     background-color: #00000047;
 }
 
-@media only screen and (max-width: 916px) {
-    .last-update {
-        height: 3.5rem !important;
-    }
-}
-
 @media only screen and (max-width: 834px) {
     .playlist-more {
         margin-top: 16px;
         margin-bottom: -15px;
+    }
+
+    .last-update {
+        height: 3.5rem !important;
     }
 }
 
@@ -124,6 +122,16 @@ a#playlists {
     .card {
         border-radius: 4px 4px 0 0;
     }
+
+    .last-update {
+        height: 2rem !important;
+    }
+}
+
+@media only screen and (max-width: 694px) {
+    .last-update {
+        height: 3rem !important;
+    }
 }
 
 @media only screen and (max-width: 575px) {
@@ -136,13 +144,13 @@ a#playlists {
     }
 
     .last-update {
-        height: 6% !important;
+        height: 2rem !important;
     }
 }
 
-@media only screen and (max-width: 442px) {
+@media only screen and (max-width: 386px) {
     .last-update {
-        height: 9% !important;
+        height: 3rem !important;
     }
 }
 
