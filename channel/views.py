@@ -50,9 +50,9 @@ def myuploads(request):
                                                         "tagform": tagform, 'logado': request.user.is_active})
 
 
-def channel(request, nome):
+def channel(request,id):
     contexto={}
-    contexto['chan'] = getaudios(Canal.objects.get(nome_canal=nome))
+    contexto['chan'] = getaudios(Canal.objects.get(pk=id))
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
     contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
@@ -64,10 +64,10 @@ def channel(request, nome):
     return render(request, './channel/channel.html', contexto)
 
 
-def playlist(request, nome):
+def playlist(request, id):
     contexto = {}
     contexto['logado'] = request.user.is_active
-    contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['chan'] = Canal.objects.get(pk=id)
     contexto['playlists'] = Playlist.objects.filter(canal=contexto['chan'])
     contexto['playlists'] = ordena_pra_exibicao(contexto['playlists'])
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
@@ -80,10 +80,10 @@ def playlist(request, nome):
     return render(request, './channel/playlists.html', contexto)
 
 
-def about(request, nome):
+def about(request, id):
     contexto = {}
     contexto['logado'] = request.user.is_active
-    contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['chan'] = Canal.objects.get(pk=id)
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
     contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
@@ -99,10 +99,10 @@ def about(request, nome):
     return render(request, './channel/about.html', contexto)
 
 
-def uploads(request, nome):
+def uploads(request, id):
     contexto= {}
     contexto['logado'] = request.user.is_active
-    contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['chan'] = Canal.objects.get(pk=id)
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
     contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
@@ -131,13 +131,13 @@ def uploads(request, nome):
         return render(request, './channel/uploads.html', contexto)
 
 
-def partner(request, nome):
+def partner(request, id):
     return render(request, './channel/similar.html')
 
 
-def follow(request, nome):
+def follow(request, id):
     json_context = {}
-    canal = Canal.objects.get(nome_canal=nome)
+    canal = Canal.objects.get(pk=id)
     seguidor = canal.seguidor.filter(pk=request.user.pk)
     if seguidor.exists():
         Seg.objects.get(canal_seguido=canal, seguidores=request.user).delete()
@@ -252,9 +252,9 @@ def playlist_add_play(request):
 
 
 
-def edit_channel(request, nome):
+def edit_channel(request, id):
     contexto = {}
-    contexto['chan'] = Canal.objects.get(nome_canal=nome)
+    contexto['chan'] = Canal.objects.get(pk=id)
     contexto['audios'] = Audio.objects.filter(canal_proprietario=contexto['chan'])
     contexto['playlists'] = ordena_pra_exibicao(Playlist.objects.filter(canal=contexto['chan']))
     if request.user == contexto['chan'].proprietario:
@@ -269,7 +269,7 @@ def edit_channel(request, nome):
 def canalSeg(request):
     canal_id = request.GET['canal']
     json_context = {}
-    canal = Canal.objects.get(pk=canal_id)
+    canal = Canal.objects.get(canal_nome=canal_id)
     if Seg.objects.filter(canal_seguido=canal, seguidores=request.user).exists():
         Seg.objects.get(canal_seguido=canal, seguidores=request.user).delete()
         json_context['message'] = 'Sintonizar'
@@ -318,10 +318,10 @@ def player(request):
     return render(request, './channel/player.html', {'logado': request.user.is_active, 'comentarios': comentarios})
 
 
-def addSocialWebs(request, nome):
+def addSocialWebs(request, id):
     redes = {}
     json_context = {}
-    canal_detentor = nome
+    canal_detentor = id
     redes['facebook'] = request.GET['facebook']
     redes['instagram'] = request.GET['instagram']
     redes['twitter'] = request.GET['twitter']
@@ -331,7 +331,7 @@ def addSocialWebs(request, nome):
     validacao = validaSocialWebs(redes, canal_detentor)
     certificado_links = certifica_link(redes)
     if validacao['status']:
-        canal = Canal.objects.get(nome_canal=nome)
+        canal = Canal.objects.get(pk=id)
         canal.facebook = redes['facebook']
         canal.instagram = redes['instagram']
         canal.twitch = redes['twitch']
@@ -343,22 +343,22 @@ def addSocialWebs(request, nome):
     return JsonResponse(validacao)
 
 
-def ordenaAudio(request,nome):
+def ordenaAudio(request,id):
     json = {}
     op = request.GET['opcao']
-    json['html'] = setOrdemAudios(op, nome)
+    json['html'] = setOrdemAudios(op, id)
     return JsonResponse(json)
 
 
-def ordenaPlay(request, nome):
+def ordenaPlay(request, id):
     json_context = {}
-    canal = Canal.objects.get(nome_canal=nome)
+    canal = Canal.objects.get(pk=id)
     op = request.GET['opcao']
     json_context['html'] = setOrdemPlaylists(op, canal)
     return JsonResponse(json_context)
 
-def channelEditInfo(request, nome):
-    canal = Canal.objects.get(nome_canal=nome)
+def channelEditInfo(request, id):
+    canal = Canal.objects.get(pk=id)
     json_context = {}
     canal_nome_novo = request.GET['nome']
     canal_descricao = request.GET['descricao']

@@ -111,13 +111,13 @@ def ordena_pra_exibicao(playlists):
     return playlists
 
 
-def validaSocialWebs(redes, canal_detentor):
+def validaSocialWebs(redes, canal_id):
     errosInvalido = []
     errosNotFound = []
     erros_de_pagina = []
     mensagem = {}
     alterados = []
-    canal = Canal.objects.get(nome_canal=canal_detentor)
+    canal = Canal.objects.get(pk=canal_id)
     for rede in redes:
         if redes[rede].isspace() or redes[rede] == '':
             continue

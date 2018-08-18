@@ -20,7 +20,7 @@ $('document').ready( function(){
 				    document.getElementById("alert-addPlaylist").style.opacity = "0";
 				    document.getElementById("alert-addPlaylist").style.visibility = "hidden";
 				}, 1800);
-				window.location.href = '/channel/edit/'+json.nome;
+				window.location.reload();
 
 			},
 			error:function(){

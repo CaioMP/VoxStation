@@ -76,7 +76,7 @@
             <div class="dropdown filter">
                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-filter"></i>
-                <div class="dropdown-menu filter" id="caminho" identifier="{%url 'channel:ordena_audio_view' chan.nome_canal%}" aria-labelledby="dropdownFilter">
+                <div class="dropdown-menu filter" id="caminho" identifier="{%url 'channel:ordena_audio_view' chan.id%}" aria-labelledby="dropdownFilter">
                     <a class="dropdown-item filter op" val="recentes" href="#">Mais recentes</a>
                     <a class="dropdown-item filter op" val="antigos" href="#">Mais antigos</a>
                     <a class="dropdown-item filter op" val="populares" href="#">Mais populares</a>
@@ -143,7 +143,7 @@
             <div class="dropdown filter">
                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-filter"></i>
-                <div class="dropdown-menu filter" id="caminhoPlay" identifier="{%url 'channel:ordena_play_view' chan.nome_canal%}" aria-labelledby="dropdownFilter">
+                <div class="dropdown-menu filter" id="caminhoPlay" identifier="{%url 'channel:ordena_play_view' chan.id%}" aria-labelledby="dropdownFilter">
                     <a class="dropdown-item filter opPlay" val="recentes" href="#">Mais recentes</a>
                     <a class="dropdown-item filter opPlay" val="antigos" href="#">Mais antigos</a>
                     <a class="dropdown-item filter " href="#">Mais populares</a>

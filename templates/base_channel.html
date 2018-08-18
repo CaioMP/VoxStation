@@ -156,7 +156,7 @@
                     <br/><h2 id="audio-fundo-nome">Áudio Fundo</h2>
                 </div>
                 {%if direito_edicao%}
-                <a href="{% url 'channel:edit_channel_view' chan.nome_canal %}" id="personalizar">Editar canal</a>
+                <a href="{% url 'channel:edit_channel_view' chan.id %}" id="personalizar">Editar canal</a>
                 {%endif%}
                 <center>
                     <img src="{{chan.foto_canal.url}}" id="foto" alt="foto do canal"/>
@@ -164,7 +164,7 @@
                     <h6 id="num_seg">{{num_seguidores}} seguidores</h6>
                 </center>
                 {%if logado%}
-                <a href="#" style="background-color:{{cor}};" url_="{% url 'channel:follow_view' chan.nome_canal %}" id="sintonizar">{{botao}}</a>
+                <a href="#" style="background-color:{{cor}};" url_="{% url 'channel:follow_view' chan.id %}" id="sintonizar">{{botao}}</a>
                 {%endif%}
                 {%if direito_edicao%}
                 <a href="#" id="redes-sociais">Redes sociais</a>
