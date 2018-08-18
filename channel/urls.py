@@ -24,5 +24,8 @@ urlpatterns = [
     path('add_social/<int:id>', addSocialWebs, name='add_social_view'),
     path('ordena_audio/<int:id>', ordenaAudio, name='ordena_audio_view'),
     path('ordena_play/<int:id>', ordenaPlay, name='ordena_play_view'),
-    path('chan_edit/<int:id>', channelEditInfo,name='chan_edit_info_view')
+    path('chan_edit/<int:id>', channelEditInfo, name='chan_edit_info_view'),
+    path('change_cover/<int:id>', changeCover, name="change_cover_view"),
+    path('change_back_audio/<int:id>', changeBackAudio, name="change_back_view"),
+    path('change_photo/<int:id>', changePhoto, name="change_photo_view")
 ]

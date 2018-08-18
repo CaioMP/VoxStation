@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import AudioForm, TagForm, SearchChannelAudioForm,PlaylistForm,capaForm
+from .forms import *
 from account.models import Canal, Seg
 from .process import *
 from django.http import JsonResponse
@@ -254,6 +254,9 @@ def playlist_add_play(request):
 
 def edit_channel(request, id):
     contexto = {}
+    contexto['foto_form'] = FotoCanalForm()
+    contexto['audio_form'] = AudioDeFundoForm()
+    contexto['capa_form'] = CanalCapaForm()
     contexto['chan'] = Canal.objects.get(pk=id)
     contexto['audios'] = Audio.objects.filter(canal_proprietario=contexto['chan'])
     contexto['playlists'] = ordena_pra_exibicao(Playlist.objects.filter(canal=contexto['chan']))
@@ -374,3 +377,49 @@ def channelEditInfo(request, id):
         json_context['message'] = "atualização efetuada com sucesso"
     canal.save()
     return JsonResponse(json_context)
+
+
+def changeCover(request, id):
+    chan = Canal.objects.get(pk=id)
+
+    if request.method == "POST":
+        Capa = CanalCapaForm(request.POST, request.FILES, instance=request.user)
+        print('oi')
+        print(Capa.is_valid())
+        if Capa.is_valid():
+            Capa.save(commit=False)
+            chan.capa.delete(save=True)
+            print('foi')
+            chan.capa = Capa.cleaned_data['capa']
+            chan.save()
+    return redirect('/channel/edit/{}'.format(id))
+
+
+def changeBackAudio(request,id):
+    chan = Canal.objects.get(pk=id)
+
+    if request.method == "POST":
+        audio = AudioDeFundoForm(request.POST, request.FILES, instance=request.user)
+        if audio.is_valid():
+            audio.save(commit=False)
+            chan.audio_fundo.delete(save=True)
+            chan.audio_fundo = audio.cleaned_data['audio_fundo']
+            chan.save()
+    return redirect('/channel/edit/{}'.format(id))
+
+
+def changePhoto(request, id):
+    chan = Canal.objects.get(pk=id)
+
+    if request.method == 'POST':
+        photo = FotoCanalForm(request.POST, request.FILES, instance=request.user)
+        print("chegou")
+        print(photo.is_valid())
+        if photo.is_valid():
+            photo.save(commit=False)
+            chan.foto_canal.delete(save=True)
+            chan.foto_canal = photo.cleaned_data['foto_canal']
+            print('trocou')
+            chan.save()
+    return redirect('/channel/edit/{}'.format(id))
+

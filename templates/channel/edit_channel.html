@@ -16,16 +16,20 @@
     <script src="{%static 'channel/js/social_add.js' %}"></script>
     <script src="{%static 'channel/js/ordena.js' %}"></script>
     <script src="{%static 'channel/js/ordenaPlay.js' %}"></script>
+    <script src="{%static 'channel/js/submit_channel_data.js' %}"></script>
 {% endblock %}
 
 {% block body %}
 
     <div class="capa" style="background-image: url({{chan.capa.url}});">
-        <label for="edit-audio-fundo" class="edit_audio_fundo edit-capa-top"
+        <label for="audio" class="edit_audio_fundo edit-capa-top"
                data-toggle="tooltip" data-placement="bottom" title="Nome do áudio de fundo">
             <i class="fas fa-volume-up"></i>
         </label>
-        <input type="file" accept="audio/*" style="display: none;" id="edit-audio-fundo">
+        <form  enctype="multipart/form-data" method="post" id="formulario_audio" style="display:none;" action="{%url 'channel:change_back_view' chan.id%}">
+            {% csrf_token %}
+            <input required="" id="audio" name="{{audio_form.audio_fundo.name}}" type="file" accept="audio/*" >
+        </form>
         <span data-toggle="modal" data-target="#editCapa">
             <a href="#" class="edit_audio_fundo edit-capa-top" rel="tooltip" style="float: left;" data-toggle="tooltip" data-placement="bottom" title="Capa do seu canal">
                 <i class="fas fa-pen" style="color: white;"></i>
@@ -33,7 +37,7 @@
         </span><!--Editar o fundo-->
         <center>
             <figure class="fig-foto">
-                <label for="edit_foto_canal">
+                <label for="foto">
                     <figure class="fig-fade">
                         <img src="{{chan.foto_canal.url}}" id="foto_canal" alt="foto do canal" class="foto"/>
                         <figcaption>
@@ -41,7 +45,10 @@
                         </figcaption>
                     </figure>
                 </label>
-                <input type="file" name="edit_foto_canal" id="edit_foto_canal" accept="image/*">
+                <form id="formulario_foto" style="display:none;" enctype="multipart/form-data" action="{% url 'channel:change_photo_view' chan.id %}" method="POST" >
+                    {% csrf_token %}
+                    <input required="" type="file" name="{{foto_form.foto_canal.name}}" id="foto" accept="image/*" >
+                </form>
             </figure>
 
             <h2 class="nome_canal d-inline-block" id="nome_canal">{{chan.nome_canal}}</h2>

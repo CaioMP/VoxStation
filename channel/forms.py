@@ -1,6 +1,6 @@
 from django import forms
-from .models import Audio,Playlist
-
+from .models import Audio, Playlist
+from account.models import Canal
 
 class AudioForm(forms.ModelForm):
     audio = forms.FileField(widget=forms.FileInput)
@@ -48,4 +48,31 @@ class capaForm(forms.ModelForm):
         ]
 
 
+class CanalCapaForm(forms.ModelForm):
+    capa = forms.ImageField()
 
+    class Meta:
+        model = Canal
+        fields = [
+            'capa'
+        ]
+
+
+class AudioDeFundoForm(forms.ModelForm):
+    audio_fundo = forms.FileField()
+
+    class Meta:
+        model = Canal
+        fields = [
+            'audio_fundo'
+        ]
+
+
+class FotoCanalForm(forms.ModelForm):
+    foto_canal = forms.ImageField()
+
+    class Meta:
+        model = Canal
+        fields = [
+            'foto_canal'
+        ]
