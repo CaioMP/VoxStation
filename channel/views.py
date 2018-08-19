@@ -272,8 +272,10 @@ def edit_channel(request, id):
 
         if remove_audio.is_valid():
             if request.POST['remove'] == "removido":
-                audio = Audio.objects.get(titulo=request.POST['audio_removido'])  # Pega o áudio que será removido
-                audio.delete()
+                audio = Audio.objects.filter(titulo=request.POST['audio_removido'])  # Pega o áudio que será removido
+                if audio.exists():
+                    audio_removido = audio.first()
+                    audio_removido.delete()
 
     return render(request, "./channel/edit_channel.html", contexto)
 
