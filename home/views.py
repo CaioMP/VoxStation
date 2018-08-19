@@ -16,4 +16,4 @@ def IndexView(request):
 
 
 def search(request):
-    return render(request, './home/search.html')
+    return render(request, './home/search.html', {"logado": request.user.is_active})
