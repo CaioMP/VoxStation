@@ -19,3 +19,17 @@ function hideModalLinks() {
 function addRedesSociais() {
     document.getElementById('add-redes-sociais').style.display = "flex";
 }
+
+/*Mostra o alert quando um áudio é removido e da submit no form depois*/
+function showAlertRemove(audio) {
+    document.getElementById("alert-removeAudio").style.visibility = "visible";
+    document.getElementById("alert-removeAudio").style.opacity = "1";
+    console.log(audio);
+    document.getElementById("id_audio_removido").value = audio;
+    window.setTimeout(function() {
+        document.getElementById("alert-removeAudio").style.opacity = "0";
+        document.getElementById("alert-removeAudio").style.visibility = "hidden";
+        document.getElementById("id_remove").value = "removido";
+        document.getElementById("remove_audio_form").submit();
+    }, 1500);
+}

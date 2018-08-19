@@ -2,6 +2,7 @@ from django import forms
 from .models import Audio, Playlist
 from account.models import Canal
 
+
 class AudioForm(forms.ModelForm):
     audio = forms.FileField(widget=forms.FileInput)
     capa = forms.ImageField(widget=forms.FileInput)
@@ -21,6 +22,15 @@ class AudioForm(forms.ModelForm):
 
 class TagForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
+
+
+class RemoveAudio(forms.Form):
+    remove = forms.CharField(widget=forms.HiddenInput)
+    audio_removido = forms.CharField(widget=forms.HiddenInput)
+
+    class Meta:
+        model = Audio
+        fields = ['remove', 'audio_removido']
 
 
 class SearchChannelAudioForm(forms.Form):

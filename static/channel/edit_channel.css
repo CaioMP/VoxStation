@@ -191,6 +191,15 @@ img.icon.seguidores {
     filter: drop-shadow(0px 2px 0 black) drop-shadow(0px -1px 0 black);
 }
 
+.ed-thumb {
+    opacity: .9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: .5rem 1rem;
+    font-size: .9rem;
+}
+
 .fig-fade figcaption {
     border-radius: 50%;
 }
@@ -262,8 +271,31 @@ img.icon.seguidores {
     color: white;
 }
 
+.btn-add:active {
+    background: linear-gradient(-160deg, #032854, black) !important;
+}
+
+.cn-remove {
+    width: 5.6rem !important;
+    height: 2.1rem;
+    border-radius: 4px !important;
+    padding: 5px !important;
+}
+
 .audioBox {
     padding: 0 15px;
+}
+
+.edit-img-aud {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+    .ed-thumb {
+        top: .5rem;
+    }
 }
 
 @media only screen and (max-width: 575px) {

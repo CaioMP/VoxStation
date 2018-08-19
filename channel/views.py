@@ -251,10 +251,10 @@ def playlist_add_play(request):
         return JsonResponse(json_context)
 
 
-
 def edit_channel(request, id):
     contexto = {}
     contexto['foto_form'] = FotoCanalForm()
+    contexto['remove_form'] = RemoveAudio()
     contexto['audio_form'] = AudioDeFundoForm()
     contexto['capa_form'] = CanalCapaForm()
     contexto['chan'] = Canal.objects.get(pk=id)
@@ -266,6 +266,15 @@ def edit_channel(request, id):
             redirect('/')
     else:
         redirect('/')
+
+    if request.method == "POST":
+        remove_audio = RemoveAudio(request.POST)
+
+        if remove_audio.is_valid():
+            if request.POST['remove'] == "removido":
+                audio = Audio.objects.get(titulo=request.POST['audio_removido'])  # Pega o áudio que será removido
+                audio.delete()
+
     return render(request, "./channel/edit_channel.html", contexto)
 
 

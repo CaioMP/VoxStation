@@ -105,20 +105,21 @@
                 <div class="row mt-4 audios" id="container_audios">
                     {%for audio in audios%}
                     <div class="col-md-3 mb-4">
-                        <div class="card">
+                        <div class="card" style="border-radius: 4px;">
                             <figure class="fig-capa-audio">
                                 <a href="#"><img src="{{audio.capa.url}}" class="card-img-top" alt="imagem do áudio"></a>
                                 <figcaption class="fc-capa-audio">
                                     <center>
                                         <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                        <a data-toggle="modal" data-target="#editImgAudio-{{audio.pk}}"><i class="fas fa-pen ed-thumb"></i></a>
                                         <div class="dropdown more">
                                             <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <img src="/static/resources/icones/more.png" class="icon-more"/>
                                             <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="#">Adicionar a playlist</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#addPlaylist">Adicionar a playlist</a>
                                                 <a class="dropdown-item" href="#">Compartilhar</a>
-                                                <a class="dropdown-item" href="#">Editar</a>
-                                                <a class="dropdown-item" href="#">Remover</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#editAudio-{{audio.pk}}">Editar</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#removeAudio-{{audio.pk}}">Remover</a>
                                             </div>
                                             </a>
                                         </div>
@@ -175,7 +176,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <figure class="fig-capa-audio">
-                            <a href="#"><img src="{{playlist.capa.url}}" class="card-img-top" alt=""></a>
+                            <a href="#"><img src="{{playlist.capa.url}}" style="border-radius: 4px 0 0;" class="card-img-top" alt=""></a>
                             <figcaption class="fc-capa-audio">
                                 <center>
                                     <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>

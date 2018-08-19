@@ -135,7 +135,7 @@ p {
 	background-color: rgba(0, 0, 0, .4);
 	top: 0px;
 	width: 100%;
-	height: 46%;
+	height: 47%;
 	cursor: pointer;
 	color: white;
 }
@@ -146,11 +146,12 @@ p {
 
 .card-title {
     white-space: nowrap;
-    margin-bottom: 0.75rem;
+    margin-bottom: .25rem;
     height: 30px;
     overflow: hidden;
-    font-size: 22px;
+    font-size: 17px;
     text-overflow: ellipsis;
+    font-weight: bold;
 }
 
 @media only screen and (max-width: 834px) {
