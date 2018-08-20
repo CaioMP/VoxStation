@@ -142,6 +142,8 @@ class Canal(models.Model):
     youtube = models.CharField(blank=True, default='', max_length=200)
     twitter = models.CharField(blank=True, default='', max_length=100)
     googleplus = models.CharField(blank=True, default='', max_length=200)
+    numero_seguidores = models.IntegerField(default=0)
+
     def __str__(self):
         return self.nome_canal
 

@@ -189,16 +189,8 @@ def certifica_link(redes):
     return mensagem
 
 
-def setOrdemAudios(op,nome_canal):
-    canal = Canal.objects.get(nome_canal=nome_canal)
+def setOrdemAudios(audios):
     html = ''
-    if op == 'recentes':
-        audios = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao').reverse()
-    elif op == 'antigos':
-        audios = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao')
-    elif op == 'populares':
-        audios = Audio.objects.filter(canal_proprietario=canal).order_by('reproducoes')
-
     for audio in audios:
         html += '''<div class="col-md-3 mb-4"><div class="card">
                             <figure class="fig-capa-audio">
@@ -238,19 +230,11 @@ def setOrdemAudios(op,nome_canal):
 
 
 
-def setOrdemPlaylists(op, canal):
-    if op == "recentes":
-        playlists = Playlist.objects.filter(canal=canal).order_by('ultima_atualizacao').reverse()
-    elif op == 'antigos':
-        playlists = Playlist.objects.filter(canal=canal).order_by('ultima_atualizacao')
-    elif op == "mais audios":
-        playlists = Playlist.objects.filter(canal=canal).order_by('numero_de_audios').reverse()
-    elif op == "menos audios":
-        playlists = Playlist.objects.filter(canal=canal).order_by('numero_de_audios')
+def setOrdemPlaylists(playlists):
+
 
     html = ""
     lista_audios = ""
-    audios_ap = []
     playlists = ordena_pra_exibicao(playlists)
     for playlist in playlists:
         for audio in playlist.audios_apresentaveis:

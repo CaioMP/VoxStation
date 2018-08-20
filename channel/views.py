@@ -360,7 +360,15 @@ def addSocialWebs(request, id):
 def ordenaAudio(request,id):
     json = {}
     op = request.GET['opcao']
-    json['html'] = setOrdemAudios(op, id)
+    canal = Canal.objects.get(nome_canal=id)
+
+    if op == 'recentes':
+        audios = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao').reverse()
+    elif op == 'antigos':
+        audios = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao')
+    elif op == 'populares':
+        audios = Audio.objects.filter(canal_proprietario=canal).order_by('reproducoes')
+    json['html'] = setOrdemAudios(audios)
     return JsonResponse(json)
 
 
@@ -368,7 +376,15 @@ def ordenaPlay(request, id):
     json_context = {}
     canal = Canal.objects.get(pk=id)
     op = request.GET['opcao']
-    json_context['html'] = setOrdemPlaylists(op, canal)
+    if op == "recentes":
+        playlists = Playlist.objects.filter(canal=canal).order_by('ultima_atualizacao').reverse()
+    elif op == 'antigos':
+        playlists = Playlist.objects.filter(canal=canal).order_by('ultima_atualizacao')
+    elif op == "mais audios":
+        playlists = Playlist.objects.filter(canal=canal).order_by('numero_de_audios').reverse()
+    elif op == "menos audios":
+        playlists = Playlist.objects.filter(canal=canal).order_by('numero_de_audios')
+    json_context['html'] = setOrdemPlaylists(playlists)
     return JsonResponse(json_context)
 
 def channelEditInfo(request, id):

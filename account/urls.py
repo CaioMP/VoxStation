@@ -15,4 +15,5 @@ urlpatterns = [
     path("new_channel/", login_required(views.NewChannelView), name='new_channel'),
     path("myPlaylist/<int:cod>/", views.myPlaylists, name='myplaylists'),
     path("change_password/", login_required(views.change_password), name='change_password')
+
 ]
