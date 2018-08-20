@@ -51,8 +51,9 @@
             <div class="nav-search">
                 <center>
                     <div class="navbar-collapse" id="navbarPesquisa">
-                        <form class="form-inline">
-                            <input class="form-control" type="search" placeholder="Pesquisar">
+                        {%csrf_token%}
+                        <form class="form-inline" method="post" action="{%url 'home:search'%}" >
+                            <input class="form-control" name="pesquisa" type="search" placeholder="Pesquisar">
                             <button class="btn btn-link mb-1" type="submit">
                                 <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar" id="search">
                             </button>

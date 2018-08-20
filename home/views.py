@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from account.models import Canal
 from channel.models import Playlist
-from channel.models import Audio,Anuncio
-from .process import GambiNice
-
+from channel.models import Audio, Anuncio
+from .process import *
+from channel.process import ordena_pra_exibicao
 
 def IndexView(request):
     contexto = {}
@@ -16,4 +16,27 @@ def IndexView(request):
 
 
 def search(request):
-    return render(request, './home/search.html', {"logado": request.user.is_active})
+    contexto = {}
+    if request.method == "POST":
+        pesquisa = request.POST['pesquisa']
+
+        contexto['canais'] = Canal.objects.filter(nome_canal__contains=pesquisa)
+        contexto['audios'] = Audio.objects.filter(titulo__contains=pesquisa)
+        contexto['playlists_show'] = Playlist.objects.filter(nome__contains=pesquisa)
+        contexto['canais'] = checkExist(contexto['canais'])
+        contexto['audios'] = checkExist(contexto['audios'])
+        contexto['playlists_show'] = checkExist(contexto['playlists_show'])
+        if contexto['canais']:
+            contexto['canais'] = contaSeg(contexto['canais'])
+        if contexto['playlists_show']:
+            contexto['playlists_show'] = ordena_pra_exibicao(contexto['playlists_show'])
+        if contexto['canais'] and contexto['audios'] and contexto['playlists_show']:
+            contexto['tot_result'] = contexto['canais'].count() + contexto['playlists_show'].count() + contexto['audios'].count()
+        elif contexto['canais'] and contexto['playlists_show']:
+            contexto['tot_result'] = contexto['canais'].count() + contexto['playlists_show'].count()
+        elif contexto['canais'] and contexto['audios']:
+            contexto['tot_result'] = contexto['canais'].count() + contexto['audios'].count()
+        elif contexto['playlists_show'] and contexto['audios']:
+            contexto['tot_result'] = contexto['playlists_show'].count() + contexto['audios'].count()
+    return render(request, './home/search.html', contexto)
+
