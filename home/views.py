@@ -19,24 +19,18 @@ def search(request):
     contexto = {}
     if request.method == "POST":
         pesquisa = request.POST['pesquisa']
-
+        contexto['pesquisa'] = pesquisa
         contexto['canais'] = Canal.objects.filter(nome_canal__contains=pesquisa)
         contexto['audios'] = Audio.objects.filter(titulo__contains=pesquisa)
         contexto['playlists_show'] = Playlist.objects.filter(nome__contains=pesquisa)
         contexto['canais'] = checkExist(contexto['canais'])
         contexto['audios'] = checkExist(contexto['audios'])
-        contexto['playlists_show'] = checkExist(contexto['playlists_show'])
-        if contexto['canais']:
+        if contexto['canais'] != False:
             contexto['canais'] = contaSeg(contexto['canais'])
-        if contexto['playlists_show']:
+        contexto['playlists_show'] = checkExist(contexto['playlists_show'])
+        if contexto['playlists_show'] != False:
             contexto['playlists_show'] = ordena_pra_exibicao(contexto['playlists_show'])
-        if contexto['canais'] and contexto['audios'] and contexto['playlists_show']:
-            contexto['tot_result'] = contexto['canais'].count() + contexto['playlists_show'].count() + contexto['audios'].count()
-        elif contexto['canais'] and contexto['playlists_show']:
-            contexto['tot_result'] = contexto['canais'].count() + contexto['playlists_show'].count()
-        elif contexto['canais'] and contexto['audios']:
-            contexto['tot_result'] = contexto['canais'].count() + contexto['audios'].count()
-        elif contexto['playlists_show'] and contexto['audios']:
-            contexto['tot_result'] = contexto['playlists_show'].count() + contexto['audios'].count()
+        contexto['tot_result'], contexto['tot_playlists'], contexto['tot_audios'], contexto['tot_canais'] = contaResultados(contexto['canais'], contexto['audios'], contexto['playlists_show'])
+
     return render(request, './home/search.html', contexto)
 

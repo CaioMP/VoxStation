@@ -12,14 +12,14 @@
 {% block body %}
     <div class="header">
         <center>
-            <h4><strong>Pesquisa</strong></h4>
+            <h4><strong>{{pesquisa}}</strong></h4>
             <h5>{{tot_result}} resultados</h5>
         </center>
     </div>
 
     <!--Caso existam canais da pesquisa-->
     <h4 class="sub-header" id="subChannel">
-        <img src="/static/resources/icones/channel.png" alt="Canais" class="icon-header">Canais (4)
+        <img src="/static/resources/icones/channel.png" alt="Canais" class="icon-header">Canais ({{tot_canais}})
         <div class="dropdown filter" id="filter-canais">
             <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-filter"></i>
@@ -77,7 +77,6 @@
                         </div>
                         {%endfor%}
                         {%else%}
-                        <p>nada encontrado</p>
                         {%endif%}
                     </div>
                 </div>
@@ -87,7 +86,7 @@
 
     <!--Áudios da pesquisa-->
     <h4 class="sub-header" id="subAudio">
-        <img src="/static/resources/icones/disc.ico" alt="Áudios" class="icon-header">Áudios (6)
+        <img src="/static/resources/icones/disc.ico" alt="Áudios" class="icon-header">Áudios ({{tot_audios}})
         <div class="dropdown filter" id="filter-audios">
             <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-filter"></i>
@@ -166,7 +165,6 @@
                         </div>
                         {%endfor%}
                         {%else%}
-                        <p>nada encontrado</p>
                         {%endif%}
                     </div>
                 </div>
@@ -176,12 +174,11 @@
 
     <!--Playlists da pesquisa-->
     <h4 class="sub-header" id="subPlaylist">
-        <img src="/static/resources/icones/playlists.png" alt="Áudios" class="icon-header i-playlist">Playlists (4)
+        <img src="/static/resources/icones/playlists.png" alt="Áudios" class="icon-header i-playlist">Playlists ({{tot_playlists}})
         <div class="dropdown filter" id="filter-playlists">
             <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-filter"></i>
             <div class="dropdown-menu filter" aria-labelledby="dropdownFilter">
-                <a class="dropdown-item filter" href="#">Mais populares</a>
                 <a class="dropdown-item filter" href="#">Mais recentes</a>
                 <a class="dropdown-item filter" href="#">Mais antigos</a>
                 <a class="dropdown-item filter" href="#">Mais áudios</a>
@@ -221,7 +218,7 @@
                     </figure>
 
                     <div class="card-body info-playlist">
-                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{palylist.nome}}</h4></a>
+                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{playlist.nome}}</h4></a>
                         <div class="card-text">
                             <p class="descript-thumb">{{playlist.canal.nome_canal}}</p>
                             <p class="descript-thumb">
@@ -249,7 +246,6 @@
             </div>
          {%endfor%}
             {%else%}
-            <p>nada encontrado</p>
             {%endif%}
         </div>
     </div>

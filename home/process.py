@@ -26,3 +26,23 @@ def contaSeg(canais):
         canal.num_audios = Audio.objects.filter(canal_proprietario=canal).count()
         canal.tags_main = get_tags(Audio.objects.filter(canal_proprietario=canal))[:2]
     return canais
+
+
+def contaResultados(canais, audios, playlists):
+
+    if audios!= False:
+        num_audios = audios.count()
+    else:
+        num_audios = 0
+    if playlists != False:
+        num_playlists = playlists.count()
+    else:
+        num_playlists = 0
+    if canais != False:
+        num_canais = canais.count()
+    else:
+        num_canais = 0
+
+    total = num_canais+num_audios+num_playlists
+
+    return total, num_playlists, num_audios, num_canais
