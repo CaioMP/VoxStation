@@ -16,6 +16,15 @@
             <h5>{{tot_result}} resultados</h5>
         </center>
     </div>
+    {% if not canais %}
+        {% if not audios %}
+            {% if not playlists_show %}
+                <center>
+                    <h5 class="mt-4" id="nadaMsg"><strong>Nada encontrado para {{pesquisa}}</strong></h5>
+                </center>
+            {% endif %}
+        {% endif %}
+    {% endif %}
 
     <!--Caso existam canais da pesquisa-->
     <h4 class="sub-header" id="subChannel">
@@ -41,7 +50,7 @@
         <div id="carouselSlider-1" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div class="row canais">
+                    <div class="row canais" id="chanBox">
                         {%if canais%}
                         {%for canal in canais%}
                         <div class="col-6 col-sm-4 col-md-3">
@@ -77,6 +86,11 @@
                         </div>
                         {%endfor%}
                         {%else%}
+                        <!--Esconde o sub-header e a row de canais-->
+                        <script>
+                            document.getElementById("subChannel").style.display = "none";
+                            document.getElementById("chanBox").style.display = "none";
+                        </script>
                         {%endif%}
                     </div>
                 </div>
@@ -121,7 +135,7 @@
         <div id="carouselSlider-2" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div class="row canais">
+                    <div class="row canais" id="audBox">
                         {%if audios%}
                         {%for audio in audios%}
                         <div class="col-12 col-sm-6 col-md-4 col-xl-3">
@@ -165,6 +179,10 @@
                         </div>
                         {%endfor%}
                         {%else%}
+                        <script>
+                            document.getElementById("subAudio").style.display = "none";
+                            document.getElementById("audBox").style.display = "none";
+                        </script>
                         {%endif%}
                     </div>
                 </div>
@@ -193,13 +211,13 @@
     </h4>
 
     <div class="container-fluid" id="playlists">
-        <div class="row mt-4">
+        <div class="row mt-4" id="plBox">
             {%if playlists_show%}
             {%for playlist in playlists_show%}
             <div class="col-md-6" style="margin-bottom: 1.8rem;">
                 <div class="card">
                     <figure class="fig-capa-audio">
-                        <a href="#"><img src="{{playlist.capa.url}}" style="height: 100%;"
+                        <a href="#"><img src="{{playlist.capa.url}}" style="height: 100%; border-radius: 4px 0 4px;"
                                          class="card-img-top" alt=""></a>
                         <figcaption class="fc-capa-audio">
                             <center>
@@ -246,6 +264,10 @@
             </div>
          {%endfor%}
             {%else%}
+            <script>
+                document.getElementById("subPlaylist").style.display = "none";
+                document.getElementById("plBox").style.display = "none";
+            </script>
             {%endif%}
         </div>
     </div>
