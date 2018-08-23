@@ -59,6 +59,7 @@
                         {%endfor%}
                         </div>
                     </div>
+                    {% if channel.playlist2 %}
                     <div class="carousel-item">
                         <div class="row">
                             {% for s_page_audio in channel.playlist2 %}
@@ -97,13 +98,16 @@
                             {%endfor%}
                         </div>
                     </div>
+                    {% endif %}
                 </div>
+                {% if channel.playlist2 %}
                 <a href="#carouselSlider-{{forloop.counter}}" class="carousel-control-prev" role="button" data-slide="prev">
                     <img src="/static/resources/icones/prev.png" class="slideIcos" alt="">
                 </a>
                 <a href="#carouselSlider-{{forloop.counter}}" class="carousel-control-next" role="button" data-slide="next">
                     <img src="/static/resources/icones/next.png" class="slideIcos" alt="">
                 </a>
+                {% endif %}
             </div>
             {% endfor %}
         </div>

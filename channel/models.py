@@ -43,6 +43,7 @@ class Audio(models.Model):
         return self.titulo
 
 
+
 class Playlist(models.Model):
     def playlist_capa_path(instance, filename):
         return "contas/user_{}/capas_de_playlists/{}".format(instance.proprietario.pk, filename)

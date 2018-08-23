@@ -7,6 +7,7 @@ from channel.process import ordena_pra_exibicao
 from django.http import JsonResponse
 from datetime import datetime
 
+
 def IndexView(request):
     contexto = {}
     contexto['channels'] = GambiNice(Canal.objects.all())
@@ -14,6 +15,7 @@ def IndexView(request):
     if contexto['logado']:
         contexto['playlists'] = Playlist.objects.filter(proprietario=request.user)
         contexto['canais_para_playlist'] = Canal.objects.filter(proprietario=request.user)
+
     return render(request, './home/index.html', contexto)
 
 
@@ -69,12 +71,12 @@ def audioordena(request, pesquisa):
     elif op == "esta semana":
         audios_candidatos = Audio.objects.filter(titulo__contains=pesquisa)
         for audio_candidato in audios_candidatos:
-            if audio_candidato.data_publicacao.year == datetime.year and audio_candidato.data_publicacao.month == datetime.month and abs(hoje - datetime.strptime(audio_candidato.data_publicacao, "%y-%m-%d")) < 7:
+            if audio_candidato.data_publicacao.year == hoje.year and audio_candidato.data_publicacao.month == hoje.month and abs(hoje - datetime.strptime(audio_candidato.data_publicacao, "%y-%m-%d")) < 7:
                 audios.append(audio_candidato)
     elif op == "este mes":
         audios_candidatos = Audio.objects.filter(titulo__contains=pesquisa)
         for audio_candidato in audios_candidatos:
-            if audio_candidato.data_publicacao.year == datetime.year and audio_candidato.data_publicacao.month == datetime.month:
+            if audio_candidato.data_publicacao.year == hoje.year and audio_candidato.data_publicacao.month == hoje.month:
                 audios.append(audio_candidato)
     elif op == "este ano":
         audios_candidatos = Audio.objects.filter(titulo__contains=pesquisa)

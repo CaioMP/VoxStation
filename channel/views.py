@@ -61,6 +61,7 @@ def channel(request,id):
         contexto['direito_edicao']=True
     else:
         contexto['direito_edicao']=False
+
     return render(request, './channel/channel.html', contexto)
 
 
@@ -132,7 +133,18 @@ def uploads(request, id):
 
 
 def partner(request, id):
-    return render(request, './channel/similar.html')
+    contexto = {}
+    contexto['chan'] = getaudios(Canal.objects.get(pk=id))
+    contexto['botao'] = ve_se_follow(request, contexto['chan'])
+    contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
+    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
+    contexto['logado'] = request.user.is_active
+    if request.user == contexto['chan'].proprietario:
+        contexto['direito_edicao'] = True
+    else:
+        contexto['direito_edicao'] = False
+
+    return render(request, './channel/similar.html', contexto)
 
 
 def follow(request, id):
@@ -253,6 +265,7 @@ def playlist_add_play(request):
 
 def edit_channel(request, id):
     contexto = {}
+    contexto['logado'] = request.user.is_active
     contexto['foto_form'] = FotoCanalForm()
     contexto['remove_form'] = RemoveAudio()
     contexto['audio_form'] = AudioDeFundoForm()

@@ -199,7 +199,7 @@
             <div class="dropdown-menu filter" id="caminhoPlay" indentifier="{% url 'home:ordena_play_view' pesquisa %}" aria-labelledby="dropdownFilter">
                 <a class="dropdown-item filter opPlay" val="mais recentes" href="#">Mais recentes</a>
                 <a class="dropdown-item filter opPlay" val="mais antigos" href="#">Mais antigos</a>
-                <a class="dropdown-item filter opPlay" val="mais audios"href="#">Mais áudios</a>
+                <a class="dropdown-item filter opPlay" val="mais audios" href="#">Mais áudios</a>
             </div>
             </a>
         </div>
@@ -257,7 +257,7 @@
                         </li>
                         {%endfor%}
                         <li class="playlist-more">
-                            <center><a href="#" class="btn playlist-link">Ver mais</a></center>
+                            <center><a href="{%url 'channel:playlist_all_view' playlist.id%}" class="btn playlist-link">Ver mais</a></center>
                         </li>
                     </ul>
                 </div>
