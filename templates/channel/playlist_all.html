@@ -86,7 +86,7 @@
             <br>
             <h3 style="word-break: break-all;" id="play_titul">{{playlist.nome}}</h3>
 
-            <img src="/static/resources/icones/view.png" alt="reproduções" class="icon-info">{{reproducoes_tot}}
+            <img src="/static/resources/icones/view.png" alt="reproduções" class="icon-info">{{playlist.reproducoes}}
             <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon-info ml-4">{{playlist.audios.count}}
             <div class="tumblr_mf171khjgJ1rapbo1o1_500_large.png">Última atualização {{playlist.ultima_atualizacao}}</div>
 
@@ -103,7 +103,7 @@
             {%endif%}
         </div>
         <img src="{{playlist.capa.url}}" alt="capa da playlist" class="capa-playlist">
-        <a href="#"><img src="/static/resources/icones/play.png" alt="reproduzir" class="icon-play"></a>
+        <a href="{% url 'channel:playlist_play_view' playlist.id %}"><img src="/static/resources/icones/play.png" alt="reproduzir" class="icon-play"></a>
         <div class="info-canal">
             {%if playlist.canal%}
             <a href="{% url 'channel:channel_view' canal.id %}">

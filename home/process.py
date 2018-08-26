@@ -1,8 +1,9 @@
 from channel.models import Audio
 from account.models import Canal
-from channel.process import get_tags,ordena_pra_exibicao
+from channel.process import get_tags, ordena_pra_exibicao
 
-def GambiNice(canais):
+
+def orderAudios(canais):
     canalF = []
     for canal in canais:
         audio = Audio.objects.filter(canal_proprietario=canal)

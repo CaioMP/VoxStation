@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block head %}
-    <title>{{ audio.titulo }} - VoxStation</title>
+    <title>{{ playlist.nome }} - VoxStation</title>
     <link rel="stylesheet" href="{% static 'channel/style_player.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'channel/edit_channel.css' %}">
     <link rel="stylesheet" href="{% static 'channel/style_relacionados.css' %}" type="text/css">
@@ -29,6 +29,11 @@
                 <div class="header" id="header">
                     <h5>{{ audio.titulo }}</h5>
                     <h6><img src="/static/resources/icones/view_white.png" alt="{{audio.reproducoes}} de reproduções" class="icon-view">{{audio.reproducoes}}</h6>
+                    <div class="playlist-audios">
+                        {% for aud in playlist.audios.all %}
+                        <h6>{{forloop.counter}} {{aud.titulo}}</h6>
+                        {% endfor %}
+                    </div>
                 </div>
 
                 <!--Esconder o header-->
@@ -59,7 +64,6 @@
                 <img src="{{canal_proprietario.foto_canal.url}}" alt="foto do canal {{canal_proprietario.nome_canal}}" class="img_channel">
                 <div class="nome_channel_play"><strong>{{canal_proprietario.nome_canal}}</strong></div>
             </a>
-
 
             <!--Botão de sintonizar-->
             <div class="sintonizar">

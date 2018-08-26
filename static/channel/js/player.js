@@ -31,15 +31,8 @@ function showFooter() {
 
 function hideFooter() {
     document.getElementById('footer').style.opacity = "0";
-    document.getElementById('volume').style.opacity = "0";
-    document.getElementById('volume').style.visibility = "hidden";
     document.getElementById('showHeader').style.opacity = "0";
     document.getElementById('hideHeader').style.opacity = "0";
-}
-
-function showVolume() {
-    document.getElementById('volume').style.visibility = "visible";
-    document.getElementById('volume').style.opacity = "1";
 }
 
 function showDescription() {

@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from .models import Playlist, Audio
 from datetime import datetime
 from django.db.models import Sum
+import random
 
 
 def myuploads(request):
@@ -86,6 +87,45 @@ def playlist(request, id):
         contexto['direito_edicao'] = False
     contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
     return render(request, './channel/playlists.html', contexto)
+
+
+def playlist_play(request, id):
+    comentarios = [1, 2]
+    playlist = Playlist.objects.get(pk=id)
+    audio = playlist.audios.first()
+    canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
+
+    playlist1 = []
+    playlist2 = []
+    audios = []
+
+    for audio_y in Audio.objects.all():
+        audios.append(audio_y)
+
+    random.shuffle(audios)
+
+    for audio_x in audios:
+        if len(playlist1) < 6:
+            playlist1.append(audio_x)
+        elif len(playlist2) < 6:
+            playlist2.append(audio_x)
+
+    context = {
+        'playlist': playlist,
+        'audio': audio,
+        'canal_proprietario': canal_proprietario,
+        'playlist1': playlist1,
+        'playlist2': playlist2,
+        'logado': request.user.is_active,
+        'comentarios': comentarios
+    }
+    audio.reproducoes += 1
+    audio.save()
+
+    for aud in playlist.audios.all():
+        print(aud.titulo)
+
+    return render(request, './channel/playlist_play.html', context)
 
 
 def about(request, id):
@@ -207,7 +247,8 @@ def playlist_all(request, id):
     contexto['audios'] = contexto['playlist'].audios.filter()
     contexto['capa_reserva'] = contexto['playlist'].audios.order_by('reproducoes').first()
     contexto['tem_capa'] = True
-    contexto['reproducoes_tot'] = contexto['playlist'].audios.filter().aggregate(Sum('reproducoes'))['reproducoes__sum']
+    contexto['playlist'].reproducoes += 1
+    contexto['playlist'].save()
     contexto['logado'] = request.user.is_active
     return render(request, './channel/playlist_all.html', contexto)
 
@@ -353,14 +394,32 @@ def player(request, id):
     comentarios = [1, 2]
     audio = Audio.objects.get(pk=id)
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
+
+    playlist1 = []
+    playlist2 = []
+    audios = []
+
+    for audio_y in Audio.objects.all():
+        audios.append(audio_y)
+
+    random.shuffle(audios)
+
+    for audio_x in audios:
+        if len(playlist1) < 6:
+            playlist1.append(audio_x)
+        elif len(playlist2) < 6:
+            playlist2.append(audio_x)
+
     context = {
         'audio': audio,
         'canal_proprietario': canal_proprietario,
+        'playlist1': playlist1,
+        'playlist2': playlist2,
         'logado': request.user.is_active,
         'comentarios': comentarios
     }
-
-    print(audio.audio.url)
+    audio.reproducoes += 1
+    audio.save()
 
     return render(request, './channel/player.html', context)
 

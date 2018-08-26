@@ -1,6 +1,7 @@
 /*Parte do MediaElement*/
 .mejs__container {
     width: 100% !important;
+    height: 100% !important;
     background-color: transparent;
 }
 
@@ -84,48 +85,6 @@ img.icon-view {
     opacity: 0;
 }
 
-.fa-volume-up {
-    position: absolute;
-    left: 0;
-    text-shadow: none !important;
-    margin: 3px .8rem !important;
-    font-size: 20px !important;
-}
-
-.tempo {
-    color: white !important;
-    position: absolute;
-    margin: -2px 1.5rem;
-    font-size: .8rem;
-}
-
-p#time-end {
-    right: 0;
-}
-
-p#time-initial {
-    margin-left: 2.6rem;
-}
-
-/*Range do volume*/
-input#volume {
-    position: absolute;
-    top: -2.5rem;
-    left: -2.8rem;
-    width: 4rem;
-    height: 6px;
-    transform: rotate(-90deg) !important;
-    background: #585858;
-    visibility: hidden;
-    transition: visibility 0s, opacity 0.5s linear;
-    opacity: 0;
-}
-
-input#volume::-webkit-slider-thumb {
-    background: white;
-    box-shadow: -250px 0 0 250px #032854;
-}
-
 /*Parte dos botões do player (lado de fora)*/
 .buttons {
     max-width: 3.5rem;
@@ -145,6 +104,10 @@ i.fas {
 
 .fa-angle-down {
     visibility: hidden;
+}
+
+i#showHeader {
+    text-shadow: 0px 0px 2px black;
 }
 
 .icon-desc {
@@ -199,6 +162,7 @@ img.icon {
 
 /*Nome do canal*/
 .nome_channel_play {
+    display: -webkit-inline-box;
     margin-left: 4rem;
     word-break: break-word;
     max-width: 50%;
@@ -497,6 +461,10 @@ a.dropdown-item.di-identity:hover {
         top: 4rem;
     }
 
+    .header {
+        padding: .5rem 1rem 0rem;
+    }
+
     .n-comment {
         margin-top: 21rem !important;
     }
@@ -516,9 +484,21 @@ a.dropdown-item.di-identity:hover {
 }
 
 @media only screen and (max-width: 475px) {
+    .mejs__container {
+        margin-top: .4rem;
+    }
+
+    .mejs__volume-button {
+        display: none;
+    }
+
     .player {
         max-width: 65%;
         height: 12rem;
+    }
+
+    .header {
+        height: 4rem;
     }
 
     .buttons {
@@ -554,11 +534,6 @@ a.dropdown-item.di-identity:hover {
 
     .footer {
         height: 1.8rem;
-        padding: .2rem 1rem;
-    }
-
-    .fa-volume-up {
-        font-size: 17px !important;
     }
 
     .icon.feedback {
@@ -716,10 +691,6 @@ a.dropdown-item.di-identity:hover {
 
     .playerBox {
         margin-top: 8rem;
-    }
-
-    .tempo {
-        font-size: .7rem;
     }
 
     p#time-initial {

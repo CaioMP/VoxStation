@@ -11,7 +11,7 @@ from datetime import datetime
 
 def IndexView(request):
     contexto = {}
-    contexto['channels'] = GambiNice(Canal.objects.all())
+    contexto['channels'] = orderAudios(Canal.objects.all())
     contexto['logado'] = request.user.is_active
     if contexto['logado']:
         contexto['playlists'] = Playlist.objects.filter(proprietario=request.user)
