@@ -27,16 +27,23 @@ def myuploads(request):
             audio.save()
             tagtext = tagform.cleaned_data['text']
             taglist = tagprocess(tagtext)
+            print(taglist)
             for tagitem in taglist:
                 query = Tag.objects.filter(nome=tagitem)
                 if query.exists():
-                    audio.tag.set(query)
+                    query = Tag.objects.get(nome=tagitem)
+                    print(query)
+                    print('ja existia no banco a tag {}'.format(query.nome))
+                    audio.tag.add(query)
                     audio.save()
                 else:
                     query = Tag.objects.create(nome=tagitem)
                     query.save()
-                    query = Tag.objects.filter(nome=tagitem)
-                    audio.tag.set(query)
+                    print(query)
+                    print("foi criada a tag {} agora".format(query.nome))
+                    query = Tag.objects.get(nome=tagitem)
+                    print(query)
+                    audio.tag.add(query)
                     audio.save()
 
             return redirect('/')
@@ -265,6 +272,9 @@ def playlist_add_play(request):
 
 def edit_channel(request, id):
     contexto = {}
+    contexto['audios_edit'] = EditAudioForm()
+    contexto['Tag_edit'] = TagForm()
+    contexto['capa_audio_form'] = EditCapaAudioForm()
     contexto['logado'] = request.user.is_active
     contexto['foto_form'] = FotoCanalForm()
     contexto['remove_form'] = RemoveAudio()
@@ -473,3 +483,44 @@ def changePhoto(request, id):
             chan.save()
     return redirect('/channel/edit/{}'.format(id))
 
+
+def editAudioFoto(request, id, id_channel):
+    if request.method == "POST":
+       capaform = capaForm(request.POST, request.FILES)
+       if capaform.is_valid():
+            capaform.save(commit=False)
+            audio = Audio.objects.get(pk=id)
+            audio.capa.delete(save=True)
+            audio.capa = capaform.cleaned_data['capa']
+            audio.save()
+    return redirect("/channel/edit/{}".format(id_channel))
+
+
+def editAudio(request, id, id_channel):
+    if request.method == "POST":
+        tag = TagForm(request.POST, request.FILES)
+        audio_form = EditAudioForm(request.POST)
+        print(tag.is_valid())
+        print(audio_form.is_valid())
+        if tag.is_valid() and audio_form.is_valid():
+            print('ta valido')
+            audio = Audio.objects.get(pk=id)
+            audio.titulo = audio_form.cleaned_data['titulo']
+            audio.descricao = audio_form.cleaned_data['descricao']
+            tags = tagprocess(tag.cleaned_data['text'])
+            audio.tag.clear()
+            for tag in tags:
+                query = Tag.objects.filter(nome=tag)
+                if query.exists():
+                    query = Tag.objects.get(nome=tag)
+                    print(query)
+                    print('ja existia no banco a tag {}'.format(query.nome))
+                    audio.tag.add(query)
+                    audio.save()
+                else:
+                    query = Tag.objects.create(nome=tag)
+                    query.save()
+                    query = Tag.objects.get(nome=tag)
+                    audio.tag.add(query)
+                    audio.save()
+    return redirect("/channel/edit/{}".format(id_channel))

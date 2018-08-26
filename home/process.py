@@ -81,7 +81,7 @@ def setOrdemAudiosSearch(audios):
                                         <p class="desc-audio">{}</p>
                                         <!--Número de áudios-->
                                         <p class="desc-audio">
-                                            <img src="/static/resources/icones/view.png" class="icon-view views"/>100
+                                            <img src="/static/resources/icones/view.png" class="icon-view views"/>{}
                                         </p>
                                         <p class="desc-audio">
                                             {}
@@ -89,7 +89,11 @@ def setOrdemAudiosSearch(audios):
                                     </div>
                                 </div>
                             </div>
-                        </div>'''.format(audio.capa.url, audio.titulo, audio.canal_proprietario, audio.reproducoes, audio.data_publicacao.strftime('%d/%m/%y as %H:%M'))
+                        </div>'''.format(audio.capa.url,
+                                         audio.titulo,
+                                         audio.canal_proprietario,
+                                         audio.reproducoes,
+                                         audio.data_publicacao.strftime('%d/%m/%y as %H:%M'))
     return html
 
 
@@ -132,7 +136,7 @@ def setOrdemPlaylistsSearch(playlists):
                             <p class="descript-thumb">{}</p>
                             <p class="descript-thumb">
                                 <img src="/static/resources/icones/disc.ico" style="width: 1rem;" class="icon-view"/>
-                                20</p>
+                                {}</p>
                             <p class="descript-thumb last-update">Última atualização <br>
                                 {}</p>
                         </div>
@@ -142,7 +146,7 @@ def setOrdemPlaylistsSearch(playlists):
                     <ul class="audio-list">
                         {}
                         <li class="playlist-more">
-                            <center><a href="#" class="btn playlist-link">Ver mais</a></center>
+                            <center><a href="playlist_all/{}" class="btn playlist-link">Ver mais</a></center>
                         </li>
                     </ul>
                 </div>
@@ -155,6 +159,7 @@ def setOrdemPlaylistsSearch(playlists):
                                  playlist.id)
         lista_audios = ""
     return html
+
 
 def setOrdemCanais(canais):
     html = ""
@@ -193,6 +198,10 @@ def setOrdemCanais(canais):
                                     </div>
                                 </div>
                             </div>
-                        </div>""".format(canal.capa.url, canal.nome_canal, canal.seguidor.all().count(), num_audios, tags)
+                        </div>""".format(canal.foto_canal.url,
+                                         canal.nome_canal,
+                                         canal.seguidor.all().count(),
+                                         num_audios,
+                                         tags)
         tags = ''
     return html

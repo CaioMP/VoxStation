@@ -107,10 +107,8 @@
             <div class="dropdown-menu filter" id="caminhoAudio" indentifier="{% url 'home:ordena_audio_view' pesquisa %}" aria-labelledby="dropdownFilter">
                 <a class="dropdown-item filter opAudio" val="populares" href="#">Mais reproduzidos</a>
                 <a class="dropdown-item filter opAudio" val="melhor avaliados" href="#">Melhor avaliados</a>
-                <a class="dropdown-item filter opAudio" val="hoje" href="#">Hoje</a>
-                <a class="dropdown-item filter opAudio" val="esta semana" href="#">a uma semana</a>
-                <a class="dropdown-item filter opAudio" val="este mes" href="#">A um mês</a>
-                <a class="dropdown-item filter opAudio" val="este ano" href="#">A um ano</a>
+                <a class="dropdown-item filter opAudio" val="recentes" href="#">Recentes</a>
+                <a class="dropdown-item filter opAudio" val="antigos" href="#">Antigos</a>
             </div>
             </a>
         </div>
@@ -197,8 +195,8 @@
             <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-filter"></i>
             <div class="dropdown-menu filter" id="caminhoPlay" indentifier="{% url 'home:ordena_play_view' pesquisa %}" aria-labelledby="dropdownFilter">
-                <a class="dropdown-item filter opPlay" val="mais recentes" href="#">Mais recentes</a>
-                <a class="dropdown-item filter opPlay" val="mais antigos" href="#">Mais antigos</a>
+                <a class="dropdown-item filter opPlay" val="recentes" href="#">Mais recentes</a>
+                <a class="dropdown-item filter opPlay" val="antigos" href="#">Mais antigos</a>
                 <a class="dropdown-item filter opPlay" val="mais audios" href="#">Mais áudios</a>
             </div>
             </a>

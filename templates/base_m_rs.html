@@ -244,11 +244,11 @@
                     <h4 class="modal-title">Edite a imagem de {{audio.titulo}}</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="#" enctype="multipart/form-data" method="post">
+                <form action="{% url 'channel:edit_audio_capa_view' audio.id chan.id %}" enctype="multipart/form-data" method="post">
                     {% csrf_token %}
                     <div class="modal-body" style="padding: 1.2rem;">
                         <figure class="fig-fade">
-                            <label for="id_img_canal" class="edit-capa">
+                            <label for="id_img_audio{{forloop.counter}}" class="edit-capa">
                                 <img src="{{audio.capa.url}}" alt="Editar imagem de {{audio.titulo}}" class="edit-img-aud">
                                 <figcaption style="border-radius: 0;">
                                     <img src="/static/images/camera.png" alt="alterar a imagem de {{audio.titulo}}"
@@ -256,7 +256,7 @@
                                 </figcaption>
                             </label>
                         </figure>
-                        <input required="" type="file" id="id_img_canal" accept="image/*" style="display: none;">
+                        <input required="" name="{{capa_audio_form.capa.name}}" type="file" id="id_img_audio{{forloop.counter}}" accept="image/*" style="display: none;">
                     </div>
                     <div class="modal-footer" style="padding: 1.2rem;">
                         <button class="btn btn-add" type="submit">
@@ -279,29 +279,28 @@
                     <h4 class="modal-title">Informações básicas</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form method="POST" action="" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'channel:edit_audio_view' audio.id chan.id %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="modal-body" style="padding: 1.2rem;">
                         <label class="has-float-label" style="height: 45px;">
-                            <input name="titulo" id="titulo" type="text" maxlength="150" placeholder="Nome do áudio" value="{{audio.titulo}}"
+                            <input name="titulo" id="titulo" name="{{audios_edit.titulo.name}}" type="text" maxlength="150" placeholder="Nome do áudio" value="{{audio.titulo}}"
                                    style="margin-bottom: 1rem;" required=""/>
                             <span class="spanPlaylist">Nome do áudio</span>
                         </label>
                         <label class="has-float-label">
                             {%if audio.descricao%}
-                            <textarea name="descricao" rows="5" maxlength="1000" placeholder="Descreva seu áudio" >{{audio.descricao}}</textarea>
+                            <textarea name="descricao" rows="5" name="{{audios_edit.descricao.name}}" maxlength="1000" placeholder="Descreva seu áudio" >{{audio.descricao}}</textarea>
                             {%else%}
-                            <textarea name="descricao" rows="5" maxlength="1000"  placeholder="Descreva sua playlist" ></textarea>
+                            <textarea name="descricao" name="{{audios_edit.descricao.name}}" rows="5" maxlength="1000"  placeholder="Descreva sua playlist" ></textarea>
                             {%endif%}
                             <span>Descreva seu áudio</span>
                         </label>
                         <label class="has-float-label">
                             {%if audio.tag.all%}
-                                {% for tag in audio.tag.all %}
-                                    <textarea name="tag" rows="3" maxlength="1000" placeholder="Tags">#{{tag.nome}}</textarea>
-                                {% endfor %}
+                            <textarea  name="{{Tag_edit.text.name}}" rows="3" maxlength="1000" placeholder="Tags">{% for tag in audio.tag.all %}#{{tag.nome}} {% endfor %}
+                             </textarea>
                             {%else%}
-                            <textarea name="tag" rows="3" maxlength="1000"  placeholder="Tags" ></textarea>
+                            <textarea name="{{Tag_edit.text.name}}" rows="3" maxlength="1000"  placeholder="Tags" ></textarea>
                             {%endif%}
                             <span>Tags</span>
                         </label>

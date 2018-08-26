@@ -86,3 +86,26 @@ class FotoCanalForm(forms.ModelForm):
         fields = [
             'foto_canal'
         ]
+
+
+class EditAudioForm(forms.ModelForm):
+    titulo = forms.CharField()
+    descricao = forms.Textarea()
+
+    class Meta:
+        model = Audio
+        fields = [
+            'titulo',
+            'descricao',
+        ]
+
+
+class EditCapaAudioForm(forms.ModelForm):
+    capa = forms.ImageField()
+
+    class Meta:
+        model = Audio
+        fields = [
+            "capa"
+        ]
+

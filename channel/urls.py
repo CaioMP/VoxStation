@@ -27,5 +27,7 @@ urlpatterns = [
     path('chan_edit/<int:id>', channelEditInfo, name='chan_edit_info_view'),
     path('change_cover/<int:id>', changeCover, name="change_cover_view"),
     path('change_back_audio/<int:id>', changeBackAudio, name="change_back_view"),
-    path('change_photo/<int:id>', changePhoto, name="change_photo_view")
+    path('change_photo/<int:id>', changePhoto, name="change_photo_view"),
+    path('edit_audios_capa/<int:id>/<int:id_channel>', editAudioFoto, name='edit_audio_capa_view'),
+    path('edit_audios/<int:id>/<int:id_channel>', editAudio, name='edit_audio_view')
 ]

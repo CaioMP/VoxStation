@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from datetime import datetime
 
 
+
 def IndexView(request):
     contexto = {}
     contexto['channels'] = GambiNice(Canal.objects.all())
@@ -39,7 +40,7 @@ def search(request):
     return render(request, './home/search.html', contexto)
 
 
-def playordena(request,pesquisa):
+def playordena(request, pesquisa):
     json = {}
     op = request.GET['op']
 
@@ -63,26 +64,11 @@ def audioordena(request, pesquisa):
         audios = Audio.objects.filter(titulo__contains=pesquisa).order_by('reproducoes')
     elif op == 'melhor avaliados':
         audios = Audio.objects.filter(titulo__contains=pesquisa).order_by('numero_likes')
-    elif op == 'hoje':
-        audios_candidatos = Audio.objects.filter(titulo__contains=pesquisa)
-        for audio_candidato in audios_candidatos:
-            if audio_candidato.data_publicacao == hoje:
-                audios.append(audio_candidato)
-    elif op == "esta semana":
-        audios_candidatos = Audio.objects.filter(titulo__contains=pesquisa)
-        for audio_candidato in audios_candidatos:
-            if audio_candidato.data_publicacao.year == hoje.year and audio_candidato.data_publicacao.month == hoje.month and abs(hoje - datetime.strptime(audio_candidato.data_publicacao, "%y-%m-%d")) < 7:
-                audios.append(audio_candidato)
-    elif op == "este mes":
-        audios_candidatos = Audio.objects.filter(titulo__contains=pesquisa)
-        for audio_candidato in audios_candidatos:
-            if audio_candidato.data_publicacao.year == hoje.year and audio_candidato.data_publicacao.month == hoje.month:
-                audios.append(audio_candidato)
-    elif op == "este ano":
-        audios_candidatos = Audio.objects.filter(titulo__contains=pesquisa)
-        for audio_candidato in audios_candidatos:
-            if audio_candidato.data_publicacao.year == datetime.year:
-                audios.append(audio_candidato)
+    elif op == "recentes":
+        audios = Audio.objects.filter(titulo__contains=pesquisa).order_by('data_publicacao').reverse()
+    elif op == "antigos":
+        audios = Audio.objects.filter(titulo__contains=pesquisa).order_by('data_publicacao')
+
     json['html'] = setOrdemAudiosSearch(audios)
     return JsonResponse(json)
 
