@@ -26,10 +26,11 @@
                             <div class="col-md-3">
                                 <div class="card" >
                                     <figure class="fig-capa-audio">
-                                        <a href="#"><img src="{{f_page_audio.capa.url}}" class="card-img-top" alt=""></a>
+                                        <img src="{{f_page_audio.capa.url}}" class="card-img-top" alt="">
                                         <figcaption class="fc-capa-audio">
                                             <center>
-                                                <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                                <a href="{% url 'channel:player_view' f_page_audio.id %}">
+                                                    <img src="/static/resources/icones/play.png" class="icon-play"/></a>
                                                 <div class="dropdown more">
                                                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <img src="/static/resources/icones/more.png" class="icon-more"/>
@@ -66,10 +67,10 @@
                             <div class="col-md-3">
                                 <div class="card">
                                     <figure class="fig-capa-audio">
-                                        <a href="#"><img src="{{s_page_audio.capa.url}}" class="card-img-top" alt=""></a>
+                                        <img src="{{s_page_audio.capa.url}}" class="card-img-top" alt="">
                                         <figcaption class="fc-capa-audio">
                                             <center>
-                                                <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                                <a href="{% url 'channel:player_view' s_page_audio.id %}"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
                                                 <div class="dropdown more">
                                                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <img src="/static/resources/icones/more.png" class="icon-more"/>

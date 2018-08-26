@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block head %}
-    <title>Nome do áudio - VoxStation</title>
+    <title>{{ audio.titulo }} - VoxStation</title>
     <link rel="stylesheet" href="{% static 'channel/style_player.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'channel/edit_channel.css' %}">
     <link rel="stylesheet" href="{% static 'channel/style_relacionados.css' %}" type="text/css">
@@ -28,7 +28,7 @@
             <!--Parte do player-->
             <div class="col-4 player" onmouseover="showFooter()" onmouseleave="hideFooter()">
                 <div class="header" id="header">
-                    <h5>Título do áudio</h5>
+                    <h5>{{ audio.titulo }}</h5>
                     <h6><img src="/static/resources/icones/view_white.png" alt="número de reproduções" class="icon-view">10000</h6>
                 </div>
 
@@ -39,17 +39,16 @@
                 <a onclick="showHeader()"><i class="fas fa-angle-down show-hide" id="showHeader"></i></a>
 
                 <!--Colocar o nome do áudio no lugar de 'áudio' no alt-->
-                <img src="/media/contas/user_1/capas_audio/the-witcher-cover_0KYpyZ0.jpg" alt="capa de áudio" class="thumb-audio">
-
-                <!--Botão para pausar o áudio-->
-                <a href="#"><i class="fas fa-pause-circle pause" id="pause"></i></a>
+                <img src="{{audio.capa.url}}" alt="capa de {{ audio.titulo }}" class="thumb-audio">
 
                 <div class="footer" id="footer">
+                    <!--
                     <input type="range" id="volume" value="100">
                     <a onmouseover="showVolume()"><i class="fas fa-volume-up"></i></a>
                     <center><input type="range" id="time-audio"></center>
                     <p class="tempo" id="time-initial">0:00</p>
-                    <p class="tempo" id="time-end">4:00</p>
+                    <p class="tempo" id="time-end">4:00</p>-->
+                    <audio id="audio-player" src="{{audio.audio.url}}" type="audio/mp3" controls="controls"></audio>
                 </div>
             </div>
 
@@ -64,9 +63,9 @@
         <div class="channelBox">
             <!--Informações do canal-->
             <a href="#">
-                <img src="/media/contas/user_1/canal_Mychannel/fotos/tumblr_mf171khjgJ1rapbo1o1_500_large.png" alt="foto do canal" class="img_channel">
+                <img src="{{canal_proprietario.foto_canal.url}}" alt="foto do canal {{canal_proprietario.nome_canal}}" class="img_channel">
             </a>
-            <div class="nome_channel_play"><strong>Nome do canal</strong></div>
+            <div class="nome_channel_play"><strong>{{canal_proprietario.nome_canal}}</strong></div>
 
 
             <!--Botão de sintonizar-->
@@ -76,27 +75,38 @@
 
             <!--Feedback-->
             <div class="feedbackBox">
-                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" class="icon feedback"></a>1000
+                {% if audio.numero_likes %}
+                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" class="icon feedback"></a>{{audio.numero_likes}}
+                {% else %}
+                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" class="icon feedback"></a>
+                {% endif %}
                 <br>
+                {% if audio.numero_deslikes %}
                 <div class="mt-2">
-                    <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" class="icon feedback"></a>10
+                    <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" class="icon feedback"></a>{{audio.numero_deslikes}}
                 </div>
+                {% else %}
+                <div class="mt-2">
+                    <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" class="icon feedback"></a>
+                </div>
+                {% endif %}
             </div>
             <div class="descricao" id="descBox">
                 <p id="descricao">
                     <h5 style="font-size: .9rem;">
                         <i class="fas fa-clock mr-1 date_audio_play"></i>
-                        Publicado em 20/07/18 às 16:38</h5>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat.</p>
+                        Publicado em {{audio.data_publicacao|date:"d/m/y"}} às {{audio.data_publicacao|date:"H:i"}}</h5>
+                    {{ audio.descricao }}
+                </p>
 
                 <p id="tags" style="margin-top: 1rem;">
                     <strong>Tags</strong>
                     <div class="mt-2">
-                        <a href="#" class="tag">#Tag1</a>
-                        <a href="#" class="tag">#Tag2</a>
-                        <a href="#" class="tag">#Tag3</a>
+                        {%if audio.tag.all%}
+                                {% for tag in audio.tag.all %}
+                                    <a href="#" class="tag">#{{tag.nome}}</a>
+                                {% endfor %}
+                        {% endif %}
                     </div>
                 </p>
             </div>

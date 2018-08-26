@@ -339,10 +339,20 @@ def vincula_play(request):
     return JsonResponse(json_context)
 
 
-def player(request):
+def player(request, id):
     comentarios = [1, 2]
+    audio = Audio.objects.get(pk=id)
+    canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
+    context = {
+        'audio': audio,
+        'canal_proprietario': canal_proprietario,
+        'logado': request.user.is_active,
+        'comentarios': comentarios
+    }
 
-    return render(request, './channel/player.html', {'logado': request.user.is_active, 'comentarios': comentarios})
+    print(audio.audio.url)
+
+    return render(request, './channel/player.html', context)
 
 
 def addSocialWebs(request, id):

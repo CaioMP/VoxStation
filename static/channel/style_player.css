@@ -1,3 +1,21 @@
+/*Parte do MediaElement*/
+.mejs__container {
+    width: 100% !important;
+    background-color: transparent;
+}
+
+.mejs__controls .mejs__time-rail .mejs__time-total { background: #999999; }
+
+.mejs__controls .mejs__time-rail .mejs__time-loaded { background: #cccccc; }
+
+.mejs__controls .mejs__time-rail .mejs__time-current { background: #032854; }
+
+.mejs__volume-handle {
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+}
+
 .row {
     margin-top: 0 !important;
     height: auto !important;
@@ -62,7 +80,6 @@ img.icon-view {
     bottom: 0;
     width: 100%;
     height: 2.5rem;
-    padding: .5rem 1rem;
     transition: opacity .8s;
     opacity: 0;
 }
@@ -249,16 +266,6 @@ a.tag {
     margin-right: .5rem;
 }
 
-.pause {
-    position: relative;
-    left: 50%;
-    bottom: 50%;
-    margin-bottom: 0 !important;
-    transform: translate(-50%,-50%);
-    opacity: 0;
-    transition: opacity .8s;
-    font-size: 3rem !important;
-}
 
 label#lb_comentar {
     margin-left: 4.2rem;
@@ -588,10 +595,6 @@ a.dropdown-item.di-identity:hover {
 
     a.tag {
         font-size: .9rem;
-    }
-
-    .pause {
-        font-size: 2rem !important;
     }
 
     .n-comment {

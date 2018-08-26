@@ -1,3 +1,11 @@
+$(document).ready(function() {
+    $('#audio-player').mediaelementplayer({
+        alwaysShowControls: true,
+        features: ['playpause','volume','progress'],
+        audioVolume: 'vertical',
+    });
+});
+
 function hideHeader() {
     document.getElementById('header').style.transform = "translateY(-100%)";
     document.getElementById('hideHeader').style.visibility = "hidden";
@@ -17,7 +25,6 @@ function showHeader() {
 function showFooter() {
     document.getElementById('footer').style.opacity = "1";
     document.getElementById('hideHeader').style.opacity = "1";
-    document.getElementById('pause').style.opacity = "1";
     document.getElementById('showHeader').style.opacity = "1";
     document.getElementById('hideHeader').style.opacity = "1";
 }
@@ -26,7 +33,6 @@ function hideFooter() {
     document.getElementById('footer').style.opacity = "0";
     document.getElementById('volume').style.opacity = "0";
     document.getElementById('volume').style.visibility = "hidden";
-    document.getElementById('pause').style.opacity = "0";
     document.getElementById('showHeader').style.opacity = "0";
     document.getElementById('hideHeader').style.opacity = "0";
 }
