@@ -11,6 +11,8 @@ from datetime import datetime
 
 def IndexView(request):
     contexto = {}
+    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
     contexto['channels'] = orderAudios(Canal.objects.all())
     contexto['logado'] = request.user.is_active
     if contexto['logado']:
@@ -22,6 +24,8 @@ def IndexView(request):
 
 def search(request):
     contexto = {}
+    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
     if request.method == "POST":
         pesquisa = request.POST['pesquisa']
         contexto['pesquisa'] = pesquisa

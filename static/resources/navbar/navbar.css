@@ -85,13 +85,10 @@ form.form-inline {
     margin: 0 30px 0 20px;
 }
 
-img.icon-left.playlist {
-    width: 22px;
-}
-
 img.icon-left.channel {
     width: 29px;
-}
+    height: 29px;
+    border-radius: 50%;}
 
 .search-icon {
     display: block;

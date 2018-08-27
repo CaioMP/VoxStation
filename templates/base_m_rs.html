@@ -713,29 +713,21 @@
                     <a href="#pageSubmenu" aria-expanded="true">
                         <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
                     <ul class="list-unstyled" id="pageSubmenu">
+                        {%for playlist in play_side%}
                         <li>
-                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 1</a>
+                            <a href="{%url 'channel:playlist_all_view' playlist.id%}"><img class="icon-left channel" src="{{playlist.capa.url}}">{{playlist.nome}}</a>
                         </li>
-                        <li>
-                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 2</a>
-                        </li>
-                        <li>
-                            <a href="#"><img class="icon-left playlist" src="/static/resources/icones/playlists.png">Playlist 3</a>
-                        </li>
+                        {%endfor%}
                     </ul>
                 </li>
                 <li><br/>
                     <a href="#pageSubchannel" aria-expanded="true"><img class="icon-left" src="/static/resources/icones/channel.png">Canais</a>
                     <ul class="list-unstyled" id="pageSubchannel">
+                        {%for canais in canal_side%}
                         <li>
-                            <a href="#"><img class="icon-left channel" src="/static/images/default-user.png">Canal 1</a>
+                            <a href="{%url 'channel:channel_view' canais.id%}"><img class="icon-left channel" src="{{canais.foto_canal.url}}">{{canais.nome_canal}}</a>
                         </li>
-                        <li>
-                            <a href="#"><img class="icon-left channel" src="/static/images/default-user.png">Canal 2</a>
-                        </li>
-                        <li>
-                            <a href="#"><img class="icon-left channel" src="/static/images/default-user.png">Canal 3</a>
-                        </li>
+                        {%endfor%}
                     </ul>
                 </li>
             </ul>
