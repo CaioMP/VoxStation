@@ -44,33 +44,35 @@
                 </a><!--Compartilhar playlist-->
 
                 <!--Vincular a um canal-->
-                {%if direito_edicao%}
-                <div class="dropdown vincular mr-3" id="vincular" style="margin: 5px .25rem;">
-                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-link" data-toggle="tooltip" data-placement="right"
-                             title="Vincular a um canal"></i>
-                    </a>
-                    {%if playlist.canal%}
-                    <ul class="dropdown-menu dm-vincular" url_="{% url 'channel:vincula_view'%}" canal_="{{canal.nome_canal}}" id_={{playlist.id}}>
-                        <li class="dropdown-item di-vincular"><input value="0nenhum" type="radio" name="canal">Nenhum</li>
-                        {% for channel in channels %}
-                        <li class="dropdown-item di-vincular"><input value="{{channel.nome_canal}}" type="radio" name="canal">{{channel.nome_canal}}</li>
-                        {%endfor%}
-                        <li class="divider"></li>
-                        <li><a href="#" class="btn btn-editar" id="salvarVinculo">Salvar</a></li>
-                    </ul>
-                    {%else%}
-                    <ul class="dropdown-menu dm-vincular" url_="{% url 'channel:vincula_view'%}" canal_="0nenhum" id_={{playlist.id}}>
-                        <li class="dropdown-item di-vincular"><input value="0nenhum" type="radio" name="canal">Nenhum</li>
-                        {% for channel in channels %}
-                        <li class="dropdown-item di-vincular"><input value="{{channel.nome_canal}}" type="radio" name="canal">{{channel.nome_canal}}</li>
-                        {%endfor%}
-                        <li class="divider"></li>
-                        <li><a href="#" class="btn btn-editar" id="salvarVinculo">Salvar</a></li>
-                    </ul>
+                {% if logado %}
+                    {%if direito_edicao%}
+                    <div class="dropdown vincular mr-3" id="vincular" style="margin: 5px .25rem;">
+                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-link" data-toggle="tooltip" data-placement="right"
+                                 title="Vincular a um canal"></i>
+                        </a>
+                        {%if playlist.canal%}
+                        <ul class="dropdown-menu dm-vincular" url_="{% url 'channel:vincula_view'%}" canal_="{{canal.nome_canal}}" id_={{playlist.id}}>
+                            <li class="dropdown-item di-vincular"><input value="0nenhum" type="radio" name="canal">Nenhum</li>
+                            {% for channel in channels %}
+                            <li class="dropdown-item di-vincular"><input value="{{channel.nome_canal}}" type="radio" name="canal">{{channel.nome_canal}}</li>
+                            {%endfor%}
+                            <li class="divider"></li>
+                            <li><a href="#" class="btn btn-editar" id="salvarVinculo">Salvar</a></li>
+                        </ul>
+                        {%else%}
+                        <ul class="dropdown-menu dm-vincular" url_="{% url 'channel:vincula_view'%}" canal_="0nenhum" id_={{playlist.id}}>
+                            <li class="dropdown-item di-vincular"><input value="0nenhum" type="radio" name="canal">Nenhum</li>
+                            {% for channel in channels %}
+                            <li class="dropdown-item di-vincular"><input value="{{channel.nome_canal}}" type="radio" name="canal">{{channel.nome_canal}}</li>
+                            {%endfor%}
+                            <li class="divider"></li>
+                            <li><a href="#" class="btn btn-editar" id="salvarVinculo">Salvar</a></li>
+                        </ul>
+                        {%endif%}
+                    </div>
                     {%endif%}
-                </div>
-                {%endif%}
+                {% endif %}
                 <div class="dropdown visibility mr-3" rel="tooltip" data-toggle="tooltip" data-placement="right"
                      title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
                     <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,6 +84,7 @@
                         </div>
                     </a>
                 </div>
+
             </div>
             <br>
             <h3 style="word-break: break-all;" id="play_titul">{{playlist.nome}}</h3>
@@ -135,7 +138,7 @@
                     <h4 class="card-title"><a href="#" class="audio-link">{{audio.titulo}}</a></h4>
                     <div class="card-text">
                         <!--O áudio pode ser tanto do canal proprietário da playlist quanto de qualquer outro-->
-                        <p class="d-inline mr-3">Nome do canal</p>
+                        <p class="d-inline mr-3">{{audio.canal_proprietario}}</p>
                         <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">{{audio.reproducoes}}</p>
                     </div>
                 </div>

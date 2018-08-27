@@ -635,11 +635,13 @@
 
     <nav class="navbar navbar-expand-sm navbar-light fixed-top">
         <div class="nav-left">
+            {% if logado %}
             <button type="button" id="sidebarCollapse" class="navbar-btn active">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
+            {% endif %}
             <a href="{% url 'home:index' %}" id="logo"><img class="logo" src="/static/resources/icones/logo.png"></a>
         </div>
 
@@ -697,41 +699,44 @@
             </ul>
         </div>
     </nav>
-     <nav id="sidebar" class="active">
-            <div class="sidebar-header">
-                <center><h3>x</h3></center>
-            </div>
-            <ul class="list-unstyled components">
-                <li>
-                    <a href="{% url 'home:index' %}"><img class="icon-left" src="/static/resources/icones/home.png">Início</a>
-                </li>
-                <li>
-                    <a href="#"><img class="icon-left" src="/static/resources/icones/favorites.png">Favoritos</a>
-                </li>
-                <li>
-                    <a href="#"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
-                    <a href="#pageSubmenu" aria-expanded="true">
-                        <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
-                    <ul class="list-unstyled" id="pageSubmenu">
-                        {%for playlist in play_side%}
-                        <li>
-                            <a href="{%url 'channel:playlist_all_view' playlist.id%}"><img class="icon-left channel" src="{{playlist.capa.url}}">{{playlist.nome}}</a>
-                        </li>
-                        {%endfor%}
-                    </ul>
-                </li>
-                <li><br/>
-                    <a href="#pageSubchannel" aria-expanded="true"><img class="icon-left" src="/static/resources/icones/channel.png">Canais</a>
-                    <ul class="list-unstyled" id="pageSubchannel">
-                        {%for canais in canal_side%}
-                        <li>
-                            <a href="{%url 'channel:channel_view' canais.id%}"><img class="icon-left channel" src="{{canais.foto_canal.url}}">{{canais.nome_canal}}</a>
-                        </li>
-                        {%endfor%}
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+
+    {% if logado %}
+    <nav id="sidebar" class="active">
+        <div class="sidebar-header">
+            <center><h3>x</h3></center>
+        </div>
+        <ul class="list-unstyled components">
+            <li>
+                <a href="{% url 'home:index' %}"><img class="icon-left" src="/static/resources/icones/home.png">Início</a>
+            </li>
+            <li>
+                <a href="#"><img class="icon-left" src="/static/resources/icones/favorites.png">Favoritos</a>
+            </li>
+            <li>
+                <a href="#"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
+                <a href="#pageSubmenu" aria-expanded="true">
+                    <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
+                <ul class="list-unstyled" id="pageSubmenu">
+                    {%for playlist in play_side%}
+                    <li>
+                        <a href="{%url 'channel:playlist_all_view' playlist.id%}"><img class="icon-left channel" src="{{playlist.capa.url}}">{{playlist.nome}}</a>
+                    </li>
+                    {%endfor%}
+                </ul>
+            </li>
+            <li><br/>
+                <a href="#pageSubchannel" aria-expanded="true"><img class="icon-left" src="/static/resources/icones/channel.png">Canais</a>
+                <ul class="list-unstyled" id="pageSubchannel">
+                    {%for canais in canal_side%}
+                    <li>
+                        <a href="{%url 'channel:channel_view' canais.id%}"><img class="icon-left channel" src="{{canais.foto_canal.url}}">{{canais.nome_canal}}</a>
+                    </li>
+                    {%endfor%}
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
 
     <div class="wrapper">
         <div id="content">

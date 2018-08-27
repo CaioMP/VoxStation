@@ -11,9 +11,12 @@ import random
 
 def myuploads(request):
     audio = Audio()
+
+    if request.user.is_active:
+        canais_side = Canal.objects.filter(seguidor=request.user)
+        playlist_side = Playlist.objects.filter(proprietario=request.user)
+
     channels = Canal.objects.filter(proprietario=request.user)
-    canais_side = Canal.objects.filter(seguidor=request.user)
-    playlist_side = Playlist.objects.filter(proprietario=request.user)
     if request.method == "POST":
         tagform = TagForm(request.POST, request.FILES)
         form = AudioForm(request.POST, request.FILES, instance=request.user)
@@ -65,8 +68,11 @@ def myuploads(request):
 
 def channel(request,id):
     contexto={}
-    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
     contexto['chan'] = getaudios(Canal.objects.get(pk=id))
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
@@ -82,8 +88,11 @@ def channel(request,id):
 
 def playlist(request, id):
     contexto = {}
-    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
     contexto['logado'] = request.user.is_active
     contexto['chan'] = Canal.objects.get(pk=id)
     contexto['playlists'] = Playlist.objects.filter(canal=contexto['chan'])
@@ -120,8 +129,6 @@ def playlist_play(request, id):
             playlist2.append(audio_x)
 
     context = {
-        'canal_side': Canal.objects.filter(seguidor=request.user),
-        'play_side': Playlist.objects.filter(proprietario=request.user),
         'playlist': playlist,
         'audio': audio,
         'canal_proprietario': canal_proprietario,
@@ -133,6 +140,10 @@ def playlist_play(request, id):
     audio.reproducoes += 1
     audio.save()
 
+    if request.user.is_active:
+        context['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        context['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
     for aud in playlist.audios.all():
         print(aud.titulo)
 
@@ -141,8 +152,10 @@ def playlist_play(request, id):
 
 def about(request, id):
     contexto = {}
-    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
     contexto['logado'] = request.user.is_active
     contexto['chan'] = Canal.objects.get(pk=id)
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
@@ -162,8 +175,11 @@ def about(request, id):
 
 def uploads(request, id):
     contexto= {}
-    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
     contexto['logado'] = request.user.is_active
     contexto['chan'] = Canal.objects.get(pk=id)
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
@@ -196,8 +212,10 @@ def uploads(request, id):
 
 def partner(request, id):
     contexto = {}
-    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
     contexto['chan'] = getaudios(Canal.objects.get(pk=id))
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
@@ -230,9 +248,11 @@ def follow(request, id):
 
 def playlist_all(request, id):
     contexto = {}
-    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
-    contexto['channels'] = Canal.objects.filter(proprietario=request.user)
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['channels'] = Canal.objects.filter(proprietario=request.user)
     contexto['form'] = PlaylistForm()
     contexto['capa_form'] = capaForm()
     play = Playlist.objects.get(pk=id)
@@ -331,8 +351,10 @@ def playlist_add_play(request):
 
 def edit_channel(request, id):
     contexto = {}
-    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
     contexto['audios_edit'] = EditAudioForm()
     contexto['Tag_edit'] = TagForm()
     contexto['capa_audio_form'] = EditCapaAudioForm()
@@ -412,6 +434,7 @@ def vincula_play(request):
 
 def player(request, id):
     comentarios = [1, 2]
+
     audio = Audio.objects.get(pk=id)
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
 
@@ -431,8 +454,6 @@ def player(request, id):
             playlist2.append(audio_x)
 
     context = {
-        'play_side': Playlist.objects.filter(proprietario=request.user),
-        'canal_side': Canal.objects.filter(seguidor=request.user),
         'audio': audio,
         'canal_proprietario': canal_proprietario,
         'playlist1': playlist1,
@@ -442,6 +463,10 @@ def player(request, id):
     }
     audio.reproducoes += 1
     audio.save()
+
+    if request.user.is_active:
+        context['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        context['canal_side'] = Canal.objects.filter(seguidor=request.user)
 
     return render(request, './channel/player.html', context)
 
@@ -500,6 +525,7 @@ def ordenaPlay(request, id):
         playlists = Playlist.objects.filter(canal=canal).order_by('numero_de_audios')
     json_context['html'] = setOrdemPlaylists(playlists)
     return JsonResponse(json_context)
+
 
 def channelEditInfo(request, id):
     canal = Canal.objects.get(pk=id)

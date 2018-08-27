@@ -23,7 +23,7 @@
 
     <div class="capa" style="background-image: url({{chan.capa.url}});">
         <label for="audio" class="edit_audio_fundo edit-capa-top"
-               data-toggle="tooltip" data-placement="bottom" title="Nome do áudio de fundo">
+               data-toggle="tooltip" data-placement="bottom" title="Áudio de fundo">
             <i class="fas fa-volume-up"></i>
         </label>
         <form  enctype="multipart/form-data" method="post" id="formulario_audio" style="display:none;" action="{%url 'channel:change_back_view' chan.id%}">
@@ -39,7 +39,7 @@
             <figure class="fig-foto">
                 <label for="foto">
                     <figure class="fig-fade">
-                        <img src="{{chan.foto_canal.url}}" id="foto_canal" alt="foto do canal" class="foto"/>
+                        <img src="{{chan.foto_canal.url}}" id="foto_canal" alt="foto do canal" style="border-radius:50%;" class="foto"/>
                         <figcaption>
                             <img class="camera" src="/static/images/camera.png" alt="editar foto do canal">
                         </figcaption>

@@ -8,11 +8,13 @@ from django.http import JsonResponse
 from datetime import datetime
 
 
-
 def IndexView(request):
     contexto = {}
-    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
     contexto['channels'] = orderAudios(Canal.objects.all())
     contexto['logado'] = request.user.is_active
     if contexto['logado']:
@@ -24,8 +26,10 @@ def IndexView(request):
 
 def search(request):
     contexto = {}
-    contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-    contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
     if request.method == "POST":
         pesquisa = request.POST['pesquisa']
         contexto['pesquisa'] = pesquisa
@@ -41,6 +45,7 @@ def search(request):
             contexto['playlists_show'] = ordena_pra_exibicao(contexto['playlists_show'])
         contexto['tot_result'], contexto['tot_playlists'], contexto['tot_audios'], contexto['tot_canais'] = contaResultados(contexto['canais'], contexto['audios'], contexto['playlists_show'])
 
+    contexto['logado'] = request.user.is_active
     return render(request, './home/search.html', contexto)
 
 
