@@ -14,6 +14,33 @@ def tagprocess(tagtext):
     return TagR
 
 
+# Função para pegar o próximo e anterior áudio de uma playlist dependendo do áudio atual
+def audioposition(audio, playlist):
+    ordem_audios = []
+    x = 0
+    audio_atual = 0
+
+    for a in playlist.audios.all():
+        ordem_audios.append(a)
+        if a == audio:
+            audio_atual = x
+        x += 1
+
+    anterior = ordem_audios[audio_atual]
+    proximo = ordem_audios[audio_atual]
+    primeiro = playlist.audios.first()
+    ultimo = playlist.audios.last()
+
+    if audio == primeiro:
+        anterior = ultimo
+    if audio == ultimo:
+        proximo = primeiro
+    else:
+        anterior = ordem_audios[audio_atual - 1]
+        proximo = ordem_audios[audio_atual + 1]
+    return anterior, proximo
+
+
 def getaudios(canal):
 
     canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao')[:4]

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'channel/style_channel_inicio.css' %}">
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
     <script src="{% static 'channel/js/player.js' %}" type="text/javascript"></script>
+    <script src="{% static 'channel/js/playlist-play.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -18,7 +19,9 @@
             <!--Botões da esquerda-->
             <div class="col-4 buttons">
                 <a href="#"><i class="fas fa-sync-alt"></i></a><br>
-                <a href="#"><i class="fas fa-step-backward"></i></a><br>
+                <a href="{% url 'channel:playlist_play_view' playlist.id anterior %}">
+                    <i class="fas fa-step-backward"></i>
+                </a><br>
                 <a data-toggle="modal" data-target="#addPlaylist">
                     <img src="/static/resources/icones/playlist_add_white.png" alt="adicionar a playlist" class="icon">
                 </a>
@@ -27,14 +30,29 @@
             <!--Parte do player-->
             <div class="col-4 player" onmouseover="showFooter()" onmouseleave="hideFooter()">
                 <div class="header" id="header">
-                    <h5>{{ audio.titulo }}</h5>
-                    <h6><img src="/static/resources/icones/view_white.png" alt="{{audio.reproducoes}} de reproduções" class="icon-view">{{audio.reproducoes}}</h6>
-                    <div class="playlist-audios">
+                    <div class="info-audio" id="infoAudio">
+                        <h5>{{ audio.titulo }}</h5>
+                        <h6><img src="/static/resources/icones/view_white.png" alt="{{audio.reproducoes}} de reproduções" class="icon-view">{{audio.reproducoes}}</h6>
+                    </div>
+                    <div class="playlist-audios" style="display: none;" id="playlistAudios">
+                        <div class="nome-playlist">
+                            <h5>{{ playlist.nome }}</h5>
+                            <a onclick="hideAudiosPl()" id="hideAudiosPl"><i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
                         {% for aud in playlist.audios.all %}
-                        <h6>{{forloop.counter}} {{aud.titulo}}</h6>
+                        <a href="{% url 'channel:playlist_play_view' playlist.id aud.id %}">
+                            <h6 class="audio-playlist">{{forloop.counter}}. {{aud.titulo}}</h6>
+                            <h6 class="duracao-audio" id="duracao"></h6>
+                        </a>
                         {% endfor %}
+                        <br>
                     </div>
                 </div>
+
+                <!--Mostrar áudios da playlist-->
+                <a onclick="showAudiosPl()" id="showAudiosPl">
+                    <i class="fas fa-list-ul show-playlist" id="showAudiosPlIcon"></i>
+                </a>
 
                 <!--Esconder o header-->
                 <a onclick="hideHeader()"><i class="fas fa-angle-up show-hide" id="hideHeader"></i></a>
@@ -53,7 +71,9 @@
             <!--Botões da direita-->
             <div class="col-4 buttons" style="border-radius: 0 4px 4px 0;">
                 <a href="#"><i class="fas fa-random"></i></a><br>
-                <a href="#"><i class="fas fa-step-forward"></i></a><br>
+                <a href="{% url 'channel:playlist_play_view' playlist.id proximo %}">
+                    <i class="fas fa-step-forward"></i>
+                </a><br>
                 <a href="#"><i class="fas fa-share"></i></a>
             </div>
         </div>

@@ -106,7 +106,7 @@
             {%endif%}
         </div>
         <img src="{{playlist.capa.url}}" alt="capa da playlist" class="capa-playlist">
-        <a href="{% url 'channel:playlist_play_view' playlist.id %}"><img src="/static/resources/icones/play.png" alt="reproduzir" class="icon-play"></a>
+        <a href="{% url 'channel:playlist_play_view' playlist.id id_audio.id %}"><img src="/static/resources/icones/play.png" alt="reproduzir" class="icon-play"></a>
         <div class="info-canal">
             {%if playlist.canal%}
             <a href="{% url 'channel:channel_view' canal.id %}">

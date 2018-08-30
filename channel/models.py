@@ -27,6 +27,7 @@ class Audio(models.Model):
     deslikes = models.ManyToManyField(MyUser, default=None, through="FeedDesLike", related_name="deslikes")
     numero_likes = models.IntegerField(default=0)
     numero_deslikes = models.IntegerField(default=0)
+
     titulo = models.CharField(max_length=50)
     audio = models.FileField(upload_to=audio_path, blank=True, null=True)
     capa = models.ImageField(upload_to=capa_path, blank=True, null=True)

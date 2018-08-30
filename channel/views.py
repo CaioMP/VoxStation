@@ -6,6 +6,9 @@ from django.http import JsonResponse
 from .models import Playlist, Audio
 from datetime import datetime
 from django.db.models import Sum
+from tinytag import TinyTag
+from codecs import utf_8_decode
+from os.path import basename
 import random
 
 
@@ -107,10 +110,13 @@ def playlist(request, id):
     return render(request, './channel/playlists.html', contexto)
 
 
-def playlist_play(request, id):
+def playlist_play(request, id, id_audio):
     comentarios = [1, 2]
     playlist = Playlist.objects.get(pk=id)
-    audio = playlist.audios.first()
+    audio = Audio.objects.get(pk=id_audio)
+    anterior = audioposition(audio, playlist)[0]
+    proximo = audioposition(audio, playlist)[1]
+
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
 
     playlist1 = []
@@ -131,6 +137,8 @@ def playlist_play(request, id):
     context = {
         'playlist': playlist,
         'audio': audio,
+        'proximo': proximo.pk,
+        'anterior': anterior.pk,
         'canal_proprietario': canal_proprietario,
         'playlist1': playlist1,
         'playlist2': playlist2,
@@ -140,12 +148,15 @@ def playlist_play(request, id):
     audio.reproducoes += 1
     audio.save()
 
+    '''
+    tag = TinyTag.get("media/contas/user_6/audios/EP._109_-_D.V_TRIBO_-__Diáspora__Prod._Coyote_Bea.m4a")
+    print(tag.duration)
+    print(basename(audio.audio.url))
+    '''
+
     if request.user.is_active:
         context['play_side'] = Playlist.objects.filter(proprietario=request.user)
         context['canal_side'] = Canal.objects.filter(seguidor=request.user)
-
-    for aud in playlist.audios.all():
-        print(aud.titulo)
 
     return render(request, './channel/playlist_play.html', context)
 
@@ -265,6 +276,7 @@ def playlist_all(request, id):
             play.capa = contexto['capa_retornada'].cleaned_data['capa']
             play.save()
     contexto['playlist'] = Playlist.objects.get(pk=id)
+    contexto['id_audio'] = contexto['playlist'].audios.first()
     if contexto['playlist'].proprietario == request.user:
         contexto['direito_edicao'] = True
     else:
