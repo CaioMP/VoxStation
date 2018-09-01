@@ -17,6 +17,8 @@
 }
 
 .playlist-audios {
+    transform: translateX(-110%);
+    transition: transform .5s;
     height: -webkit-fill-available;
 }
 
