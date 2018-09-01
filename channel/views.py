@@ -6,9 +6,6 @@ from django.http import JsonResponse
 from .models import Playlist, Audio
 from datetime import datetime
 from django.db.models import Sum
-from tinytag import TinyTag
-from codecs import utf_8_decode
-from os.path import basename
 import random
 
 

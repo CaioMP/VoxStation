@@ -63,51 +63,6 @@ img.icon-view {
     margin-right: .5rem;
 }
 
-/*Parte caso esteja reproduzindo uma playlist*/
-.show-playlist {
-    position: absolute;
-    right: 4rem;
-    top: 1.7rem;
-    font-size: 1.1rem !important;
-    transition: opacity .8s;
-    opacity: 0;
-}
-
-.fa-arrow-circle-right {
-    margin-bottom: 0 !important;
-    margin-right: 1rem;
-    float: right;
-    position: relative;
-    bottom: 1.8rem;
-    font-size: 1.25rem !important;
-}
-
-.playlist-audios {
-    height: -webkit-fill-available;
-}
-
-.nome-playlist {
-    margin-top: .7rem;
-}
-
-h6.duracao-audio {
-    position: absolute;
-    right: 2rem;
-    margin-top: -2rem;
-    margin-bottom: 0;
-}
-
-.audio-playlist {
-    height: 2.5rem;
-    padding: .5rem;
-    margin-bottom: 0;
-}
-
-.audio-playlist:hover {
-    background-color: #0000000d;
-    border-radius: 4px;
-}
-
 /*Mostrar ou esconder a parte do título e reproduções do áudio*/
 .show-hide {
     position: absolute;
@@ -197,7 +152,7 @@ img.icon {
 
 /*Foto do canal*/
 .img_channel {
-    position: absolute;
+    float: left;
     border-radius: 50%;
     width: 3rem;
     height: 3rem;
@@ -208,7 +163,6 @@ img.icon {
 /*Nome do canal*/
 .nome_channel_play {
     display: -webkit-inline-box;
-    margin-left: 4rem;
     word-break: break-word;
     max-width: 50%;
     font-size: 1.25rem;
@@ -582,8 +536,8 @@ a.dropdown-item.di-identity:hover {
     }
 
     .icon.feedback {
-        height: 18px;
-        width: 18px;
+        height: 16px;
+        width: 16px;
     }
 
     .img_channel {
@@ -592,7 +546,6 @@ a.dropdown-item.di-identity:hover {
     }
 
     .nome_channel_play {
-        margin-left: 3.5rem;
         font-size: 1rem;
     }
 

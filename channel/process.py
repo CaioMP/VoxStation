@@ -38,6 +38,7 @@ def audioposition(audio, playlist):
     else:
         anterior = ordem_audios[audio_atual - 1]
         proximo = ordem_audios[audio_atual + 1]
+
     return anterior, proximo
 
 

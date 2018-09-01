@@ -1,0 +1,98 @@
+.show-playlist {
+    position: absolute;
+    right: 4rem;
+    top: 1.7rem;
+    font-size: 1.1rem !important;
+    transition: opacity .8s;
+    opacity: 0;
+}
+
+.fa-arrow-circle-right {
+    margin-top: 5px;
+    margin-bottom: 0 !important;
+    margin-right: 1rem;
+    float: right;
+    position: relative;
+    font-size: 1.25rem !important;
+}
+
+.playlist-audios {
+    height: -webkit-fill-available;
+}
+
+.capa-pl-play {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.nome-playlist {
+    margin-top: .7rem;
+}
+
+h6.duracao-audio {
+    position: absolute;
+    right: 2rem;
+    margin-top: -2rem;
+    margin-bottom: 0;
+}
+
+.audio-playlist {
+    height: 2.5rem;
+    padding: .5rem;
+    margin-bottom: 0;
+}
+
+.audio-playlist:hover {
+    background-color: #03285430;
+    border-radius: 4px;
+}
+
+/*Icone do fone para o áudio q está sendo reproduzido no momento*/
+.icon-pl-audio {
+    width: 1.25rem;
+    margin-right: 3px;
+}
+
+.playing {
+    background-color: #0328545e !important;
+    border-radius: 4px;
+}
+
+@media only screen and (max-width: 475px){
+    .header {
+        height: auto !important;
+    }
+
+    .capa-pl-play {
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+
+    .fa-arrow-circle-right {
+        font-size: 1rem !important;
+        margin-right: 0;
+    }
+
+    .audio-playlist {
+        font-size: .75rem !important;
+        height: 1.8rem !important;
+        margin-bottom: 5px !important;
+    }
+
+    h6 {
+        margin-bottom: .8rem !important;
+    }
+
+    i#showAudiosPlIcon {
+        font-size: .8rem !important;
+        margin-top: -.15rem;
+    }
+
+    .icon-pl-audio {
+        width: 1rem;
+        margin-top: -4px;
+    }
+}

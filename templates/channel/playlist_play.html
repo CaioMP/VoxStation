@@ -5,6 +5,7 @@
 {% block head %}
     <title>{{ playlist.nome }} - VoxStation</title>
     <link rel="stylesheet" href="{% static 'channel/style_player.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'channel/style_playlist_play.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'channel/edit_channel.css' %}">
     <link rel="stylesheet" href="{% static 'channel/style_relacionados.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'channel/style_channel_inicio.css' %}">
@@ -36,14 +37,26 @@
                     </div>
                     <div class="playlist-audios" style="display: none;" id="playlistAudios">
                         <div class="nome-playlist">
-                            <h5>{{ playlist.nome }}</h5>
+                            <a href="{% url 'channel:playlist_all_view' playlist.id %}">
+                                <img src="{{ playlist.capa.url }}" class="capa-pl-play d-inline" alt="capa da playlist {{ playlist.nome }}">
+                                <h5 class="d-inline">{{ playlist.nome }}</h5>
+                            </a>
                             <a onclick="hideAudiosPl()" id="hideAudiosPl"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                         {% for aud in playlist.audios.all %}
-                        <a href="{% url 'channel:playlist_play_view' playlist.id aud.id %}">
-                            <h6 class="audio-playlist">{{forloop.counter}}. {{aud.titulo}}</h6>
-                            <h6 class="duracao-audio" id="duracao"></h6>
-                        </a>
+                            {% if aud == audio %} <!--Áudio reproduzindo no momento-->
+                                <a href="{% url 'channel:playlist_play_view' playlist.id aud.id %}">
+                                    <h6 class="audio-playlist playing">
+                                        <img src="/static/resources/icones/play.png" alt="reproduzindo" class="icon-pl-audio">
+                                        {{aud.titulo}}
+                                    </h6>
+                                </a>
+                            {% else %}
+                            <a href="{% url 'channel:playlist_play_view' playlist.id aud.id %}">
+                                <h6 class="audio-playlist">{{forloop.counter}}. {{aud.titulo}}</h6>
+                                <!--<h6 class="duracao-audio" id="duracao"></h6>-->
+                            </a>
+                            {% endif %}
                         {% endfor %}
                         <br>
                     </div>
