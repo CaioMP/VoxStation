@@ -29,6 +29,7 @@ urlpatterns = [
     path('playlist_edit', play_edit, name='play_edit_view'),
     path('vincular', vincula_play, name='vincula_view'),
     path('comentar/<int:audio_id>', comentar, name='comentar_view'),
+    path('responder/<int:audio_id>/<int:comentario_id>', responder, name='responder_view'),
 
     # De áudio
     path('audio/<int:id>', player, name='player_view'),

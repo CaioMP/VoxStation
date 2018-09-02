@@ -5,6 +5,7 @@ from .process import *
 from django.http import JsonResponse
 from .models import Playlist, Audio, Comentario, Resposta, MyUser
 from datetime import datetime
+from django.forms import formset_factory
 from django.db.models import Sum
 import random
 
@@ -115,7 +116,9 @@ def playlist_play(request, id, id_audio):
     anterior = audioposition(audio, playlist)[0]
     proximo = audioposition(audio, playlist)[1]
     n_comentarios = get_n_comentarios(comentarios, respostas)
+
     comentario_form = ComentarioForm()
+    resposta_form = RespostaForm(prefix="resposta")
 
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
 
@@ -144,18 +147,13 @@ def playlist_play(request, id, id_audio):
         'playlist2': playlist2,
         'logado': request.user.is_active,
         'comentario_form': comentario_form,
+        'resposta_form': resposta_form,
         'comentarios': comentarios,
         'respostas': respostas,
         'n_comentarios': n_comentarios
     }
     audio.reproducoes += 1
     audio.save()
-
-    '''
-    tag = TinyTag.get("media/contas/user_6/audios/EP._109_-_D.V_TRIBO_-__Diáspora__Prod._Coyote_Bea.m4a")
-    print(tag.duration)
-    print(basename(audio.audio.url))
-    '''
 
     if request.user.is_active:
         context['play_side'] = Playlist.objects.filter(proprietario=request.user)
@@ -177,6 +175,25 @@ def comentar(request, audio_id):
             comentario.save()
 
     return HttpResponse("comentário salvo")
+
+
+def responder(request, audio_id, comentario_id):
+    audio = Audio.objects.get(pk=audio_id)
+    comentario = Comentario.objects.get(pk=comentario_id)
+
+    if request.method == 'POST':
+        resposta_form = RespostaForm(request.POST)
+        if resposta_form.is_valid():
+            resposta = Resposta()
+            resposta.conteudo = request.POST['conteudo']
+            resposta.comentarista = request.user
+            resposta.audio_comentado = audio
+            resposta.comentario_em_questao = comentario
+            comentario.possui_resposta += 1
+            resposta.save()
+            comentario.save()
+
+    return HttpResponse("resposta salva")
 
 
 def about(request, id):
@@ -463,7 +480,12 @@ def vincula_play(request):
 
 
 def player(request, id):
-    comentarios = [1, 2]
+    comentarios = Comentario.objects.filter(audio_comentado=id)
+    respostas = Resposta.objects.filter(audio_comentado=id)
+    n_comentarios = get_n_comentarios(comentarios, respostas)
+
+    comentario_form = ComentarioForm()
+    resposta_form = RespostaForm(prefix="resposta")
 
     audio = Audio.objects.get(pk=id)
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
@@ -489,8 +511,13 @@ def player(request, id):
         'playlist1': playlist1,
         'playlist2': playlist2,
         'logado': request.user.is_active,
-        'comentarios': comentarios
+        'comentario_form': comentario_form,
+        'resposta_form': resposta_form,
+        'comentarios': comentarios,
+        'respostas': respostas,
+        'n_comentarios': n_comentarios
     }
+
     audio.reproducoes += 1
     audio.save()
 

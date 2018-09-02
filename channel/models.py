@@ -1,5 +1,7 @@
 from django.db import models
 from account.models import MyUser, Anuncio, Canal
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 class Tag(models.Model):
@@ -44,12 +46,19 @@ class Audio(models.Model):
 
 
 class Comentario(models.Model):
+    comentarista = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     conteudo = models.TextField()
     likes = models.IntegerField(null=True, default=0)
     deslikes = models.IntegerField(null=True, default=0)
-    data = models.DateTimeField(auto_now=True)
+    possui_resposta = models.IntegerField(default=0)
+    data = models.DateTimeField(auto_now_add=True)
     audio_comentado = models.ForeignKey(Audio, on_delete=models.CASCADE, default=None, null=True)
-    comentarista = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-data']
+
+    def __unicode__(self):
+        return str(self.comentarista)
 
     def __str__(self):
         comentario = str(self.comentarista) + " em " + str(self.audio_comentado)

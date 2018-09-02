@@ -8,6 +8,7 @@ $(document).ready(function() {
             data: frm.serialize(),
             success: function (data) {
                 document.getElementById("id_conteudo").value = "";
+                $('#alert-comentar').html('Comentário enviado');
                 document.getElementById("alert-comentar").style.visibility = "visible";
 				document.getElementById("alert-comentar").style.opacity = "1";
 				window.setTimeout(function() {

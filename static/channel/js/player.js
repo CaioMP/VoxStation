@@ -16,7 +16,9 @@ function hideHeader() {
     document.getElementById('hideHeader').style.opacity = "0";
     document.getElementById('showHeader').style.visibility = "visible";
     document.getElementById('showHeader').style.opacity = "1";
-    document.getElementById('showAudiosPl').style.visibility = "hidden";
+    if (document.getElementById('showAudiosPl')) {
+        document.getElementById('showAudiosPl').style.visibility = "hidden";
+    }
 }
 
 function showHeader() {
@@ -25,7 +27,9 @@ function showHeader() {
     document.getElementById('hideHeader').style.opacity = "1";
     document.getElementById('showHeader').style.visibility = "hidden";
     document.getElementById('showHeader').style.opacity = "0";
-    document.getElementById('showAudiosPl').style.visibility = "visible";
+    if (document.getElementById('showAudiosPl')) {
+        document.getElementById('showAudiosPl').style.visibility = "visible";
+    }
 }
 
 function showFooter() {
@@ -33,14 +37,18 @@ function showFooter() {
     document.getElementById('hideHeader').style.opacity = "1";
     document.getElementById('showHeader').style.opacity = "1";
     document.getElementById('hideHeader').style.opacity = "1";
-    document.getElementById('showAudiosPlIcon').style.opacity = "1";
+    if (document.getElementById('showAudiosPlIcon')) {
+        document.getElementById('showAudiosPlIcon').style.opacity = "1";
+    }
 }
 
 function hideFooter() {
     document.getElementById('footer').style.opacity = "0";
     document.getElementById('showHeader').style.opacity = "0";
     document.getElementById('hideHeader').style.opacity = "0";
-    document.getElementById('showAudiosPlIcon').style.opacity = "0";
+    if (document.getElementById('showAudiosPlIcon')) {
+        document.getElementById('showAudiosPlIcon').style.opacity = "0";
+    }
 }
 
 function showDescription() {

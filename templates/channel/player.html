@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{% static 'channel/style_channel_inicio.css' %}">
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
     <script src="{% static 'channel/js/player.js' %}" type="text/javascript"></script>
+    <script src="{% static 'channel/js/comentar.js' %}" type="text/javascript"></script>
+    <script src="{% static 'channel/js/responder.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -200,147 +202,139 @@
             </a>
         </div>
 
-        <h3 class="n-comment">4 comentários
-            <div class="dropdown filter">
-                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-filter" style="margin-bottom: 0;font-size: 1.2rem;"></i>
-                <div class="dropdown-menu filter" aria-labelledby="dropdownFilter">
-                    <a class="dropdown-item filter" href="#">Mais relevantes</a>
-                    <a class="dropdown-item filter" href="#">Mais antigos</a>
-                    <a class="dropdown-item filter" href="#">Mais recentes</a>
-                </div>
-                </a>
-            </div>
-        </h3>
-        <br><br>
-        <!--Comentar como-->
-        <div class="dropdown identity">
-            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="/media/contas/user_1/canal_Mychannel/fotos/tumblr_mf171khjgJ1rapbo1o1_500_large.png"
-                     style="width: 2.5rem;height: 2.5rem;" alt="sua foto" class="img_channel ml-2"> <!--Foto da conta do usuário-->
-                <div class="dropdown-menu dm-identity" aria-labelledby="dropdownIdentity">
-                    <a href="#" class="dropdown-item di-identity ml-1">
-                        <!--Aqui ficarão as fotos dos canais do usuário-->
-                        <img src="/static/images/default-user.png" style="position: relative;width: 2.1rem;height: 2.1rem;" alt="foto de seu canal" class="img_channel img-identity">
+        {% if n_comentarios == 0 %}
+            <h3 class="n-comment">Nenhum comentário</h3>
+        {% endif %}
+        {% if n_comentarios == 1 %}
+            <h3 class="n-comment">{{ n_comentarios }} comentário</h3>
+        {% endif %}
+        {% if n_comentarios > 1 %}
+            <h3 class="n-comment">{{ n_comentarios }} comentários
+                <div class="dropdown filter">
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-filter" style="margin-bottom: 0;font-size: 1.2rem;"></i>
+                    <div class="dropdown-menu filter" aria-labelledby="dropdownFilter">
+                        <a class="dropdown-item filter" href="#">Mais relevantes</a>
+                        <a class="dropdown-item filter" href="#">Mais antigos</a>
+                        <a class="dropdown-item filter" href="#">Mais recentes</a>
+                    </div>
                     </a>
                 </div>
-            </a>
-        </div>
+            </h3>
+        {% endif %}
+        <br><br>
+        <!--Foto do usuário que vai comentar-->
+        {% if not user.img_perfil %}
+            <img class="img_channel ml-2" style="width: 2.5rem;height: 2.5rem;" alt="sua foto" src="/static/images/default-user.png"/>
+        {% else %}
+            <img class="img_channel ml-2" style="width: 2.5rem;height: 2.5rem;" alt="sua foto" src="{{ user.img_perfil.url }}"/>
+        {% endif %}
 
-        <form></form>
-        <!--Parte do comentário do usuário logado-->
-        <label class="has-float-label" id="lb_comentar">
-            <textarea rows="1" placeholder="Comente algo..."></textarea>
-            <span>Comente algo...</span>
-        </label>
+        <form method="POST" id="comentarForm" action="{% url 'channel:comentar_view' audio.id %}">{% csrf_token %}
+            <!--Parte do comentário do usuário logado-->
+            <label class="has-float-label" id="lb_comentar">
+                <textarea rows="1" name="{{ comentario_form.conteudo.name }}" id="{{ comentario_form.conteudo.id_for_label }}"
+                          required="" placeholder="Comente algo..."></textarea>
+                <span>Comente algo...</span>
+            </label>
 
-        <div class="buttons-comment mb-5" style="display:none;" id="comment">
-            <button class="btn btn-publicar" id="comentar">Publicar</button>
-            <button class="btn btn-default btn-descartar" id="descartar">Descartar</button>
-        </div>
+            <div class="buttons-comment mb-5" style="display:none;" id="comment">
+                <button class="btn btn-publicar" type="submit" id="comentar">Publicar</button>
+                <button class="btn btn-default btn-descartar" type="button" id="descartar" onclick="descartarAudio()">Descartar</button>
+            </div>
+        </form>
 
         {% for comentario in comentarios %}
-
         <!--Parte dos outros comentários (público)-->
         <div class="comments mt-3" id="comment-{{forloop.counter}}" onmouseover="showOpc(this.id)" onmouseleave="hideOpc(this.id)">
-            <!--Imagem da pessoa que comentou (colocar o nome do usuário no alt depois)-->
+            <!--Imagem da pessoa que comentou-->
             <a href="#">
-                <img src="/static/images/default-user.png" alt="imagem de " class="img_other-user ml-2 mr-3 mt-3">
-                <h6 class="nome-comment">Nome do usuário</h6>
+                {% if comentario.comentarista.img_perfil %}
+                <img src="{{ comentario.comentarista.img_perfil.url }}" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                {% else %}
+                <img src="/static/images/default-user.png" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                {% endif %}
+                <h6 class="nome-comment">{{ comentario.comentarista }}</h6>
             </a>
-            <h6 class="date-comment d-inline mr-3" style="font-size: .9rem;"><i class="fas fa-clock mr-1"></i> 20/07/18 às 16:38</h6>
+            <h6 class="date-comment d-inline mr-3" style="font-size: .9rem;"><i class="fas fa-clock mr-1"></i>
+                {{comentario.data|date:"d/m/y"}} às {{comentario.data|date:"H:i"}}</h6>
 
             <h6 class="comentario">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat.
+                {{ comentario.conteudo }}
             </h6>
             <div class="ml-5 d-inline feed-com">
-                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>1000
-                <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>
+                <a href="#">
+                    <img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment">
+                </a>{{ comentario.likes }}
+                <a href="#">
+                    <img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment">
+                </a>{{ comentario.deslikes }}
             </div>
 
+            <!--Mostra o input de reponder-->
             <button onclick="showResponder(this.parentElement.id)" class="btn mr-3 responder">Responder</button>
-            <div class="resposta">
-                <!--Responder como-->
-                <div class="dropdown identity resp">
-                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="/media/contas/user_1/canal_Mychannel/fotos/tumblr_mf171khjgJ1rapbo1o1_500_large.png"
-                             style="width: 2rem;height: 2rem;" alt="sua foto" class="img_channel ml-2"> <!--Foto da conta do usuário-->
-                        <div class="dropdown-menu dm-identity" aria-labelledby="dropdownIdentity">
-                            <a href="#" class="dropdown-item di-identity" style="margin-top: -.5rem;width: 2rem;height: 2rem;">
-                                <!--Aqui ficarão as fotos dos canais do usuário-->
-                                <img src="/static/images/default-user.png" style="position: relative;width: 2rem;height: 2rem;" alt="foto de seu canal" class="img_channel img-identity">
-                            </a>
-                        </div>
-                    </a>
-                </div>
-                <label class="has-float-label lb-resposta">
-                    <textarea rows="1" placeholder="Responda..."></textarea>
-                    <span>Responda...</span>
-                </label>
 
-                <div class="buttons-comment" style="float: right;">
-                    <button class="btn btn-default btn-descartar" onclick="closeResponder()" style="margin-right: .2rem;">Cancelar</button>
-                    <button class="btn btn-publicar btn-resp">Responder</button>
-                </div>
+            <!--Parte de responder-->
+            <div class="resposta" style="margin-left: 3.2rem;">
+                <!--Foto do usuário que vai responder-->
+                {% if not user.img_perfil %}
+                    <img class="img_channel ml-2" style="width: 2.3rem;height: 2.3rem;" alt="sua foto" src="/static/images/default-user.png"/>
+                {% else %}
+                    <img class="img_channel ml-2" style="width: 2.3rem;height: 2.3rem;" alt="sua foto" src="{{ user.img_perfil.url }}"/>
+                {% endif %}
+                <!--Formulário de responder-->
+                <form method="POST" class="responderForm" id="responderForm" action="{% url 'channel:responder_view' audio.id comentario.id %}">{% csrf_token %}
+                    <label class="has-float-label lb-resposta">
+                        <textarea rows="1" name="{{ resposta_form.conteudo.name }}" required=""
+                                  id="{{ resposta_form.conteudo.id_for_label }}" placeholder="Responda..."></textarea>
+                        <span>Responda...</span>
+                    </label>
+
+                    <div class="buttons-comment" style="float: right;">
+                        <button type="button" class="btn btn-default btn-descartar" onclick="closeResponder()" style="margin-right: .2rem;">Cancelar</button>
+                        <button type="submit" class="btn btn-publicar btn-resp">Responder</button>
+                    </div>
+                </form>
             </div>
 
+            {% if comentario.possui_resposta %}
             <a onclick="showRespostas(this.parentElement.id)">
-                <h6 class="ver-respostas mt-3 ver"><i class="fas fa-share mr-1" style="cursor:pointer;font-size: 1rem;"></i>Ver 5 respostas</h6>
+                <h6 class="ver-respostas mt-3 ver"><i class="fas fa-share mr-1" style="cursor:pointer;font-size: 1rem;"></i>Ver {{comentario.possui_resposta}} respostas</h6>
             </a>
             <a onclick="hideRespostas(this.parentElement.id)">
                 <h6 class="ver-respostas mt-3 esconder" style="color: #032854 !important;display: none;">
                     <i class="fas fa-share mr-1" style="cursor: pointer;color: #032854;font-size: 1rem;"></i>Esconder as respostas</h6>
             </a>
+            {% endif %}
 
             <!--Aqui ficarão as respostas do comentário-->
-            <!--Na parte lógica fazer um loop para percorrer todas as respostas associadas ao comentário-->
-            <div class="comments mt-3 respostas" id="resposta-{{forloop.counter}}"
-                 onmouseover="showOpc(this.id)" onmouseleave="hideOpc(this.id)">
-                <!--Imagem da pessoa que comentou (colocar o nome do usuário no alt depois)-->
-                <a href="#">
-                    <img src="/static/images/default-user.png" alt="imagem de " class="img_other-user ml-2 mr-3 mt-3">
-                    <h6 class="nome-comment">Nome do usuário</h6>
-                </a>
-                <h6 class="date-comment d-inline mr-3" style="font-size: .9rem;"><i class="fas fa-clock mr-1"></i> 4 horas atrás</h6>
+            {% for resposta in respostas %}
+                {% if resposta.comentario_em_questao == comentario %}
+                <div class="comments mt-3 respostas" id="resposta-{{forloop.counter}}">
+                    <!--Imagem da pessoa que respondeu-->
+                    <a href="#">
+                        {% if resposta.comentarista.img_perfil %}
+                        <img src="{{ resposta.comentarista.img_perfil.url }}" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                        {% else %}
+                        <img src="/static/images/default-user.png" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                        {% endif %}
+                        <h6 class="nome-comment">{{ resposta.comentarista }}</h6>
+                    </a>
+                    <h6 class="date-comment d-inline mr-3" style="font-size: .9rem;"><i class="fas fa-clock mr-1"></i>
+                    {{resposta.data|date:"d/m/y"}} às {{resposta.data|date:"H:i"}}
+                    </h6>
 
-                <h6 class="comentario">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat.
-                </h6>
-                <div class="ml-5 d-inline feed-com">
-                    <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>1000
-                    <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>
-                </div>
-
-                <button onclick="showResponder(this.parentElement.id)" class="btn mr-3 responder">Responder</button>
-                <div class="resposta">
-                    <!--Responder como-->
-                    <div class="dropdown identity resp">
-                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="/media/contas/user_1/canal_Mychannel/fotos/tumblr_mf171khjgJ1rapbo1o1_500_large.png"
-                                 style="width: 2rem;height: 2rem;" alt="sua foto" class="img_channel ml-2"> <!--Foto da conta do usuário-->
-                            <div class="dropdown-menu dm-identity" aria-labelledby="dropdownIdentity">
-                                <a href="#" class="dropdown-item di-identity" style="margin-top: -.5rem;width: 2rem;height: 2rem;">
-                                    <!--Aqui ficarão as fotos dos canais do usuário-->
-                                    <img src="/static/images/default-user.png" style="position: relative;width: 2rem;height: 2rem;" alt="foto de seu canal" class="img_channel img-identity">
-                                </a>
-                            </div>
+                    <h6 class="comentario">{{ resposta.conteudo }}</h6>
+                    <div class="ml-5 d-inline feed-com">
+                        <a href="#">
+                            <img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>{{ resposta.likes }}
+                        <a href="#">
+                            <img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment">{{ resposta.deslikes }}
                         </a>
                     </div>
-                    <label class="has-float-label lb-resposta">
-                        <textarea rows="1" placeholder="Responda..."></textarea>
-                        <span>Responda...</span>
-                    </label>
-
-                    <div class="buttons-comment" style="float: right;">
-                        <button class="btn btn-default btn-descartar" onclick="closeResponder()" style="margin-right: .2rem;">Cancelar</button>
-                        <button class="btn btn-publicar btn-resp">Responder</button>
-                    </div>
                 </div>
-            </div>
+                {% endif %}
+            {% endfor %}
         </div>
         {% endfor %}
     </div>

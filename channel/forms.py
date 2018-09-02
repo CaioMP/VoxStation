@@ -114,3 +114,9 @@ class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
         fields = ["conteudo"]
+
+
+class RespostaForm(forms.ModelForm):
+    class Meta:
+        model = Resposta
+        fields = ["conteudo"]
