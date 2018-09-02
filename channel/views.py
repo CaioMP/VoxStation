@@ -3,7 +3,7 @@ from .forms import *
 from account.models import Canal, Seg
 from .process import *
 from django.http import JsonResponse
-from .models import Playlist, Audio
+from .models import Playlist, Audio, Comentario, Resposta, MyUser
 from datetime import datetime
 from django.db.models import Sum
 import random
@@ -108,11 +108,14 @@ def playlist(request, id):
 
 
 def playlist_play(request, id, id_audio):
-    comentarios = [1, 2]
+    comentarios = Comentario.objects.filter(audio_comentado=id_audio)
+    respostas = Resposta.objects.filter(audio_comentado=id_audio)
     playlist = Playlist.objects.get(pk=id)
     audio = Audio.objects.get(pk=id_audio)
     anterior = audioposition(audio, playlist)[0]
     proximo = audioposition(audio, playlist)[1]
+    n_comentarios = get_n_comentarios(comentarios, respostas)
+    comentario_form = ComentarioForm()
 
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
 
@@ -140,7 +143,10 @@ def playlist_play(request, id, id_audio):
         'playlist1': playlist1,
         'playlist2': playlist2,
         'logado': request.user.is_active,
-        'comentarios': comentarios
+        'comentario_form': comentario_form,
+        'comentarios': comentarios,
+        'respostas': respostas,
+        'n_comentarios': n_comentarios
     }
     audio.reproducoes += 1
     audio.save()
@@ -156,6 +162,21 @@ def playlist_play(request, id, id_audio):
         context['canal_side'] = Canal.objects.filter(seguidor=request.user)
 
     return render(request, './channel/playlist_play.html', context)
+
+
+def comentar(request, audio_id):
+    audio = Audio.objects.get(pk=audio_id)
+
+    if request.method == 'POST':
+        comentario_form = ComentarioForm(request.POST)
+        if comentario_form.is_valid():
+            comentario = Comentario()
+            comentario.conteudo = request.POST['conteudo']
+            comentario.comentarista = request.user
+            comentario.audio_comentado = audio
+            comentario.save()
+
+    return HttpResponse("comentário salvo")
 
 
 def about(request, id):

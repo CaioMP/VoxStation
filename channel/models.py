@@ -27,7 +27,6 @@ class Audio(models.Model):
     deslikes = models.ManyToManyField(MyUser, default=None, through="FeedDesLike", related_name="deslikes")
     numero_likes = models.IntegerField(default=0)
     numero_deslikes = models.IntegerField(default=0)
-
     titulo = models.CharField(max_length=50)
     audio = models.FileField(upload_to=audio_path, blank=True, null=True)
     capa = models.ImageField(upload_to=capa_path, blank=True, null=True)
@@ -37,11 +36,38 @@ class Audio(models.Model):
     categoria = models.CharField(max_length=15, blank=True, null=True)
     canal_proprietario = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name="canal_proprietario", default=None, null=True)
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="proprietario", null=True)
-    anuncios = models.ManyToManyField(Anuncio, blank=True, null=True)
+    anuncios = models.ManyToManyField(Anuncio, blank=True)
     tag = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.titulo
+
+
+class Comentario(models.Model):
+    conteudo = models.TextField()
+    likes = models.IntegerField(null=True, default=0)
+    deslikes = models.IntegerField(null=True, default=0)
+    data = models.DateTimeField(auto_now=True)
+    audio_comentado = models.ForeignKey(Audio, on_delete=models.CASCADE, default=None, null=True)
+    comentarista = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        comentario = str(self.comentarista) + " em " + str(self.audio_comentado)
+        return comentario
+
+
+class Resposta(models.Model):
+    conteudo = models.TextField()
+    likes = models.IntegerField(null=True, default=0)
+    deslikes = models.IntegerField(null=True, default=0)
+    data = models.DateTimeField(auto_now=True)
+    audio_comentado = models.ForeignKey(Audio, on_delete=models.CASCADE, default=None, null=True)
+    comentarista = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    comentario_em_questao = models.ForeignKey(Comentario, on_delete=models.CASCADE)
+
+    def __str__(self):
+        comentario = str(self.comentarista) + " em " + str(self.audio_comentado)
+        return comentario
 
 
 class Playlist(models.Model):

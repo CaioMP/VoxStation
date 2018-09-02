@@ -159,22 +159,6 @@ class Anuncio(models.Model):
     anunciante = models.ForeignKey(MyUser, on_delete=models.CASCADE)
 
 
-class Comentario(models.Model):
-    conteudo = models.TextField()
-    likes = models.IntegerField()
-    deslikes = models.IntegerField()
-    comentarista = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-
-
-class Resposta(models.Model):
-
-    conteudo = models.TextField()
-    likes = models.IntegerField()
-    deslikes = models.IntegerField()
-    comentarista = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    comentario_em_questao = models.ForeignKey(Comentario, on_delete=models.CASCADE)
-
-
 class Seg(models.Model):
     estado_choices = ((0, "normal"), (1, "bloqueado"))
     seguidores = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="sendo_seguido_por", default=None)

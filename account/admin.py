@@ -4,7 +4,8 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .forms import UserCreationForm
-from .models import MyUser, Anuncio, Comentario, Resposta, Seg, Canal
+from .models import MyUser, Anuncio, Seg, Canal
+from channel.models import Comentario, Resposta
 
 
 class UserAdmin(BaseUserAdmin):

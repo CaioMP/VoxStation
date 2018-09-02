@@ -42,6 +42,16 @@ def audioposition(audio, playlist):
     return anterior, proximo
 
 
+def get_n_comentarios(comentarios, respostas):
+    n_comentarios = 0
+
+    if comentarios.exists():
+        n_comentarios = comentarios.all().count()
+        if respostas.exists():
+            n_comentarios += respostas.all().count()
+    return n_comentarios
+
+
 def getaudios(canal):
 
     canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao')[:4]

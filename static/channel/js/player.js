@@ -6,6 +6,10 @@ $(document).ready(function() {
     });
 });
 
+function descartarAudio() {
+    document.getElementById('id_conteudo').value = "";
+}
+
 function hideHeader() {
     document.getElementById('header').style.transform = "translateY(-100%)";
     document.getElementById('hideHeader').style.visibility = "hidden";

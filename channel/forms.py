@@ -1,5 +1,5 @@
 from django import forms
-from .models import Audio, Playlist
+from .models import Audio, Playlist, Comentario, Resposta
 from account.models import Canal
 
 
@@ -109,3 +109,8 @@ class EditCapaAudioForm(forms.ModelForm):
             "capa"
         ]
 
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ["conteudo"]
