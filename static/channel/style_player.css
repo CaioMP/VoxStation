@@ -103,8 +103,22 @@ i.fas {
     cursor: pointer;
 }
 
+.autoplay {
+    width: 2.8rem !important;
+    margin-left: -.65rem;
+}
+
+.active-icon {
+    text-shadow: 1px 1px 30px white;
+}
+
 .fa-angle-down {
     visibility: hidden;
+}
+
+.bot {
+    position: absolute;
+    bottom: -2.6rem;
 }
 
 i#showHeader {
@@ -488,8 +502,19 @@ button#descartar {
         font-size: 1.2rem;
     }
 
+    .bot {
+        bottom: -1.2rem;
+        left: 1rem;
+    }
+
     img.icon {
         width: 28px;
+    }
+
+    .autoplay {
+        width: 2.2rem !important;
+        margin-left: -.45rem;
+        margin-top: -.5rem !important;
     }
 
     h5 {

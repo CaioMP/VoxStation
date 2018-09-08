@@ -19,10 +19,9 @@
         <div class="row justify-content-center playerBox">
             <!--Botões da esquerda-->
             <div class="col-4 buttons">
-                <a href="#"><i class="fas fa-sync-alt"></i></a><br>
-                <a href="#"><i class="fas fa-step-backward"></i></a><br>
+                <a href="#"><i class="fas fa-flag"></i></a><br>
                 <a data-toggle="modal" data-target="#addPlaylist">
-                    <img src="/static/resources/icones/playlist_add_white.png" alt="adicionar a playlist" class="icon">
+                    <img src="/static/resources/icones/playlist_add_white.png" alt="adicionar a playlist" class="icon" style="position: absolute;bottom: 1.5rem;">
                 </a>
             </div>
 
@@ -49,9 +48,9 @@
 
             <!--Botões da direita-->
             <div class="col-4 buttons" style="border-radius: 0 4px 4px 0;">
-                <a href="#"><i class="fas fa-random"></i></a><br>
-                <a href="#"><i class="fas fa-step-forward"></i></a><br>
-                <a href="#"><i class="fas fa-share"></i></a>
+                <img id="autoplayOff" style="display:none;" src="/static/resources/icones/autoplay.png" alt="reprodução automática desligada" class="icon autoplay">
+                <img id="autoplay" style="filter: drop-shadow(0px 0px 6px white);" src="/static/resources/icones/autoplay.png" alt="reprodução automática desligada" class="icon autoplay">
+                <a href="#"><i class="fas fa-step-forward bot"></i></a><br>
             </div>
         </div>
 

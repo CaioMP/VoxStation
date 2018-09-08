@@ -177,6 +177,29 @@ def comentar(request, audio_id):
     return HttpResponse("comentário salvo")
 
 
+def randomize(request, audio_id, playlist_id, proximo_id):
+    audio = Audio.objects.get(pk=audio_id)
+    playlist = Playlist.objects.get(pk=playlist_id)
+    playlist_shuffle = []
+
+    for aud in playlist.audios.all():
+        playlist_shuffle.append(aud)
+
+    random.shuffle(playlist_shuffle)
+
+    for x in playlist_shuffle:
+        if x != audio and x.pk != proximo_id:
+            proximo_id = x.pk
+
+    data = {
+        'message': 'Reprodução aleatória',
+        'playlist': playlist_id,
+        'proximo': proximo_id
+    }
+    
+    return JsonResponse(data)
+
+
 def responder(request, audio_id, comentario_id):
     audio = Audio.objects.get(pk=audio_id)
     comentario = Comentario.objects.get(pk=comentario_id)

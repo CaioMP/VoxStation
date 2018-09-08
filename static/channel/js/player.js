@@ -4,6 +4,32 @@ $(document).ready(function() {
         features: ['playpause','volume','progress'],
         audioVolume: 'vertical',
     });
+
+    var autplay = true;
+
+    $("#autoplayOff").click(function() {
+        document.getElementById('autoplay').style.display = "inline-block";
+        document.getElementById('autoplayOff').style.display = "none";
+        autplay = true;
+        return autplay;
+    });
+
+    $("#autoplay").click(function() {
+        document.getElementById('autoplay').style.display = "none";
+        document.getElementById('autoplayOff').style.display = "inline-block";
+        autplay = false;
+        return autplay;
+    });
+
+    $('#audio-player').on('ended', function() {
+       if (autplay) {
+           console.log("audio acabou");
+           document.getElementById('proximo').click();
+       }
+       else {
+        console.log("autoplay desativado");
+       }
+    });
 });
 
 function descartarAudio() {
@@ -61,6 +87,19 @@ function hideDescription() {
     document.getElementById('descBox').style.display = "none";
     document.getElementById('hideDescription').style.visibility = "hidden";
     document.getElementById('showDescription').style.visibility = "visible";
+}
+
+function randomAudios() {
+    document.getElementById('random').style.display = "inline-block";
+    document.getElementById('offRandom').style.display = "none";
+
+    document.getElementById('randomize').value = "true";
+    $("#randomizeForm").submit();
+}
+
+function offRandomAudios() {
+    document.getElementById('random').style.display = "none";
+    document.getElementById('offRandom').style.display = "inline-block";
 }
 
 window.addEventListener('click', function(e){

@@ -127,15 +127,20 @@
             <h5 class="numero-audio">{{forloop.counter}}</h5>
             <div class="card mb-3">
                 <figure>
-                    <a href="#"><img src="{{audio.capa.url}}" class="img-audio" alt="imagem do áudio"></a>
-                    <figcaption>
-                        <center>
-                            <a href="#"><img src="/static/resources/icones/play.png" class="icon-play-audio"/></a>
-                        </center>
-                    </figcaption>
+                    <img src="{{audio.capa.url}}" class="img-audio" alt="imagem do áudio">
+                    <a href="{% url 'channel:playlist_play_view' playlist.id audio.id %}">
+                        <figcaption>
+                            <center>
+                                <img src="/static/resources/icones/play.png" class="icon-play-audio"/>
+                            </center>
+                        </figcaption>
+                    </a>
                 </figure>
                 <div class="card-body">
-                    <h4 class="card-title"><a href="#" class="audio-link">{{audio.titulo}}</a></h4>
+                    <h4 class="card-title">
+                        <a href="{% url 'channel:playlist_play_view' playlist.id audio.id %}" class="audio-link">
+                            {{audio.titulo}}
+                        </a></h4>
                     <div class="card-text">
                         <!--O áudio pode ser tanto do canal proprietário da playlist quanto de qualquer outro-->
                         <p class="d-inline mr-3">{{audio.canal_proprietario}}</p>
