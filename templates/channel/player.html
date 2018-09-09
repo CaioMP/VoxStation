@@ -50,7 +50,9 @@
             <div class="col-4 buttons" style="border-radius: 0 4px 4px 0;">
                 <img id="autoplayOff" style="display:none;" src="/static/resources/icones/autoplay.png" alt="reprodução automática desligada" class="icon autoplay">
                 <img id="autoplay" style="filter: drop-shadow(0px 0px 6px white);" src="/static/resources/icones/autoplay.png" alt="reprodução automática desligada" class="icon autoplay">
-                <a href="#"><i class="fas fa-step-forward bot"></i></a><br>
+                <a href="{% url 'channel:player_view' proximo %}" id="proximo">
+                    <i class="fas fa-step-forward bot"></i>
+                </a><br>
             </div>
         </div>
 
@@ -249,9 +251,9 @@
             <!--Imagem da pessoa que comentou-->
             <a href="#">
                 {% if comentario.comentarista.img_perfil %}
-                <img src="{{ comentario.comentarista.img_perfil.url }}" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                <img src="{{ comentario.comentarista.img_perfil.url }}" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mt-3">
                 {% else %}
-                <img src="/static/images/default-user.png" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                <img src="/static/images/default-user.png" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mt-3">
                 {% endif %}
                 <h6 class="nome-comment">{{ comentario.comentarista }}</h6>
             </a>
@@ -313,9 +315,9 @@
                     <!--Imagem da pessoa que respondeu-->
                     <a href="#">
                         {% if resposta.comentarista.img_perfil %}
-                        <img src="{{ resposta.comentarista.img_perfil.url }}" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                        <img src="{{ resposta.comentarista.img_perfil.url }}" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mt-3">
                         {% else %}
-                        <img src="/static/images/default-user.png" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                        <img src="/static/images/default-user.png" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mt-3">
                         {% endif %}
                         <h6 class="nome-comment">{{ resposta.comentarista }}</h6>
                     </a>

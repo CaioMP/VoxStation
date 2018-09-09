@@ -528,8 +528,11 @@ def player(request, id):
         elif len(playlist2) < 6:
             playlist2.append(audio_x)
 
+    proximo = audios[0]
+
     context = {
         'audio': audio,
+        'proximo': proximo.pk,
         'canal_proprietario': canal_proprietario,
         'playlist1': playlist1,
         'playlist2': playlist2,

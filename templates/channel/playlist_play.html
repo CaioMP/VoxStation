@@ -295,9 +295,9 @@
             <!--Imagem da pessoa que comentou-->
             <a href="#">
                 {% if comentario.comentarista.img_perfil %}
-                <img src="{{ comentario.comentarista.img_perfil.url }}" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                <img src="{{ comentario.comentarista.img_perfil.url }}" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mt-3">
                 {% else %}
-                <img src="/static/images/default-user.png" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                <img src="/static/images/default-user.png" alt="{{ comentario.comentarista }}" class="img_other-user ml-2 mt-3">
                 {% endif %}
                 <h6 class="nome-comment">{{ comentario.comentarista }}</h6>
             </a>
@@ -359,9 +359,9 @@
                     <!--Imagem da pessoa que respondeu-->
                     <a href="#">
                         {% if resposta.comentarista.img_perfil %}
-                        <img src="{{ resposta.comentarista.img_perfil.url }}" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                        <img src="{{ resposta.comentarista.img_perfil.url }}" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mt-3">
                         {% else %}
-                        <img src="/static/images/default-user.png" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mr-3 mt-3">
+                        <img src="/static/images/default-user.png" alt="{{ resposta.comentarista }}" class="img_other-user ml-2 mt-3">
                         {% endif %}
                         <h6 class="nome-comment">{{ resposta.comentarista }}</h6>
                     </a>
