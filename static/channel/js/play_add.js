@@ -30,7 +30,7 @@ $('document').ready( function(){
 		console.log(playlist);
 		var aud = this_play.attr('aud');
 		$.ajax({
-			url: 'channel/playlist_add_audio',
+			url: '/channel/playlist_add_audio',
 			type:'GET',
 			beforeSend:function(){
 						

@@ -160,6 +160,12 @@ def playlist_play(request, id, id_audio):
         'respostas': respostas,
         'n_comentarios': n_comentarios
     }
+    if context['canal_proprietario'].seguidor.filter(pk=request.user.id).exists():
+        context['btn_message'] = 'Sintonizado'
+        context['btn_color'] = 'background:#2ecc71;'
+    else:
+        context['btn_message'] = 'Sintonizar'
+        context['btn_color'] = ''
     audio.reproducoes += 1
     audio.save()
 
@@ -481,7 +487,7 @@ def edit_channel(request, id):
 def canalSeg(request):
     canal_id = request.GET['canal']
     json_context = {}
-    canal = Canal.objects.get(canal_nome=canal_id)
+    canal = Canal.objects.get(pk=canal_id)
     if Seg.objects.filter(canal_seguido=canal, seguidores=request.user).exists():
         Seg.objects.get(canal_seguido=canal, seguidores=request.user).delete()
         json_context['message'] = 'Sintonizar'
@@ -565,6 +571,12 @@ def player(request, id):
         'respostas': respostas,
         'n_comentarios': n_comentarios
     }
+    if context['canal_proprietario'].seguidor.filter(pk=request.user.id).exists():
+        context['btn_message'] = 'Sintonizado'
+        context['btn_color'] = 'background:#2ecc71;'
+    else:
+        context['btn_message'] = 'Sintonizar'
+        context['btn_color'] = ''
 
     audio.reproducoes += 1
     audio.save()

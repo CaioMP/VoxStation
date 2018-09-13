@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'account/style_new_channel.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
+    <script src="{% static 'channel/js/play_add.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -55,7 +56,7 @@
                                             <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <img src="/static/resources/icones/more.png" class="icon-more"/>
                                             <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="#" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
+                                                <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
                                                 <a class="dropdown-item" href="#">Reproduzir depois</a>
                                                 <a class="dropdown-item" href="#">Compartilhar</a>
                                             </div>
