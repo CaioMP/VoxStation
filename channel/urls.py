@@ -31,6 +31,7 @@ urlpatterns = [
     path('comentar/<int:audio_id>', comentar, name='comentar_view'),
     path('responder/<int:audio_id>/<int:comentario_id>', responder, name='responder_view'),
     path('randomize/<int:audio_id>/<int:playlist_id>/<int:proximo_id>', randomize, name='randomize_view'),
+    path('normalize/<int:audio_id>/<int:playlist_id>/<int:proximo_id>', normalize, name='normalize_view'),
 
     # De áudio
     path('audio/<int:id>', player, name='player_view'),

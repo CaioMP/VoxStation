@@ -2,6 +2,7 @@ from .models import Tag
 from .models import Audio, Playlist, Canal
 from urllib import request
 from datetime import datetime
+import random
 
 
 def tagprocess(tagtext):
@@ -12,6 +13,21 @@ def tagprocess(tagtext):
     for tagitem in taglist:
         TagR.append(tagitem)
     return TagR
+
+
+def random_playlist(audio, playlist, proximo_id):
+    playlist_shuffle = []
+
+    for aud in playlist.audios.all():
+        playlist_shuffle.append(aud)
+
+    random.shuffle(playlist_shuffle)
+
+    for x in playlist_shuffle:
+        if x != audio and x.pk != proximo_id:
+            proximo_id = x.pk
+
+    return proximo_id
 
 
 # Função para pegar o próximo e anterior áudio de uma playlist dependendo do áudio atual

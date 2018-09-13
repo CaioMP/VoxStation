@@ -22,5 +22,14 @@ function hideAudiosPl() {
     document.getElementById('playlistAudios').style.marginTop = "-3rem";
     document.getElementById('playlistAudios').style.transform = "translateX(-110%)";
     document.getElementById('infoAudio').style.display = "block";
+}
 
+function randomAudios() {
+    document.getElementById('random').style.display = "inline-block";
+    document.getElementById('offRandom').style.display = "none";
+}
+
+function offRandomAudios() {
+    document.getElementById('random').style.display = "none";
+    document.getElementById('offRandom').style.display = "inline-block";
 }

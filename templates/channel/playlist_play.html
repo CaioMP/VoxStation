@@ -15,6 +15,7 @@
     <script src="{% static 'channel/js/responder.js' %}" type="text/javascript"></script>
     <script src="{% static 'channel/js/playlist-play.js' %}" type="text/javascript"></script>
     <script src="{% static 'channel/js/randomize.js' %}" type="text/javascript"></script>
+    <script src="{% static 'channel/js/normalize.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -86,18 +87,31 @@
 
             <!--Botões da direita-->
             <div class="col-4 buttons" style="border-radius: 0 4px 4px 0;">
-                <a onclick="randomAudios()"><i id="offRandom" class="fas fa-random"></i></a>
-                <a onclick="offRandomAudios()"><i id="random" class="fas fa-random active-icon" style="display: none;"></i></a><br>
+                <label onclick="offRandomAudios()" id="random" for="normalizeSubmit" {% if ordem %} style="display:none;" {% endif %}>
+                    <i class="fas fa-random active-icon"></i>
+                </label>
+                <label onclick="randomAudios()" id="offRandom" for="randomizeSubmit" {% if not ordem %} style="display:none;" {% endif %}>
+                    <i class="fas fa-random"></i>
+                </label>
+
+                <!--Ordem aleatória-->
+                <form method="POST" action="{% url 'channel:randomize_view' audio.id playlist.id proximo %}"
+                      class="d-none" id="randomizeForm">{% csrf_token %}
+                    <button type="submit" id="randomizeSubmit"></button>
+                </form>
+
+                <!--Ordem normal-->
+                <form method="POST" action="{% url 'channel:normalize_view' audio.id playlist.id proximo %}"
+                      class="d-none" id="normalizeForm">{% csrf_token %}
+                    <button type="submit" id="normalizeSubmit"></button>
+                </form>
+
                 <a href="{% url 'channel:playlist_play_view' playlist.id proximo %}" id="proximo">
                     <i class="fas fa-step-forward"></i>
                 </a><br>
 
                 <img id="autoplayOff" style="display:none;" src="/static/resources/icones/autoplay.png" alt="reprodução automática desligada" class="icon autoplay">
                 <img id="autoplay" style="filter: drop-shadow(0px 0px 6px white);" src="/static/resources/icones/autoplay.png" alt="reprodução automática desligada" class="icon autoplay">
-
-                <form method="POST" action="{% url 'channel:randomize_view' audio.id playlist.id proximo %}" class="d-none" id="randomizeForm">{% csrf_token %}
-                    <input type="hidden" id="randomize">
-                </form>
             </div>
         </div>
 

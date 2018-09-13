@@ -89,19 +89,6 @@ function hideDescription() {
     document.getElementById('showDescription').style.visibility = "visible";
 }
 
-function randomAudios() {
-    document.getElementById('random').style.display = "inline-block";
-    document.getElementById('offRandom').style.display = "none";
-
-    document.getElementById('randomize').value = "true";
-    $("#randomizeForm").submit();
-}
-
-function offRandomAudios() {
-    document.getElementById('random').style.display = "none";
-    document.getElementById('offRandom').style.display = "inline-block";
-}
-
 window.addEventListener('click', function(e){
   if (document.getElementById('lb_comentar').contains(e.target)){
     document.getElementById('comment').style.display = "block";

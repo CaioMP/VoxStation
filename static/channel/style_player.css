@@ -79,6 +79,10 @@ img.icon-view {
     opacity: 0;
 }
 
+.buttons label {
+    margin-bottom: 0;
+}
+
 /*Parte que fica o tempo e volume do áudio*/
 .footer {
     background-color: #00000070;

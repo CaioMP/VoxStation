@@ -116,6 +116,7 @@ def playlist_play(request, id, id_audio):
     anterior = audioposition(audio, playlist)[0]
     proximo = audioposition(audio, playlist)[1]
     n_comentarios = get_n_comentarios(comentarios, respostas)
+    ordem = True  # True para aleatório
 
     comentario_form = ComentarioForm()
     resposta_form = RespostaForm(prefix="resposta")
@@ -137,9 +138,16 @@ def playlist_play(request, id, id_audio):
         elif len(playlist2) < 6:
             playlist2.append(audio_x)
 
+    if 'randomize' in request.COOKIES:
+        ordem = False
+        proximo.pk = random_playlist(audio, playlist, proximo.pk)
+    else:
+        ordem = True
+
     context = {
         'playlist': playlist,
         'audio': audio,
+        'ordem': ordem,
         'proximo': proximo.pk,
         'anterior': anterior.pk,
         'canal_proprietario': canal_proprietario,
@@ -177,27 +185,41 @@ def comentar(request, audio_id):
     return HttpResponse("comentário salvo")
 
 
+# Ordem aleatória para a playlist
 def randomize(request, audio_id, playlist_id, proximo_id):
     audio = Audio.objects.get(pk=audio_id)
     playlist = Playlist.objects.get(pk=playlist_id)
-    playlist_shuffle = []
-
-    for aud in playlist.audios.all():
-        playlist_shuffle.append(aud)
-
-    random.shuffle(playlist_shuffle)
-
-    for x in playlist_shuffle:
-        if x != audio and x.pk != proximo_id:
-            proximo_id = x.pk
+    proximo_id = random_playlist(audio, playlist, proximo_id)
+    ordem = "randomize"
 
     data = {
         'message': 'Reprodução aleatória',
         'playlist': playlist_id,
         'proximo': proximo_id
     }
-    
-    return JsonResponse(data)
+
+    response = JsonResponse(data)
+    response.set_cookie("randomize", ordem)
+
+    return response
+
+
+# Ordem normal da playlist
+def normalize(request, audio_id, playlist_id, proximo_id):
+    audio = Audio.objects.get(pk=audio_id)
+    playlist = Playlist.objects.get(pk=playlist_id)
+    proximo = audioposition(audio, playlist)[1]
+
+    data = {
+        'message': 'Reprodução aleatória',
+        'playlist': playlist_id,
+        'proximo': proximo.pk
+    }
+
+    response = JsonResponse(data)
+    response.delete_cookie('randomize')
+
+    return response
 
 
 def responder(request, audio_id, comentario_id):
