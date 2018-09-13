@@ -1,11 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from account.models import Canal
 from channel.models import Playlist
-from channel.models import Audio, Anuncio
+from channel.models import Audio, Anuncio, AudioReport
 from .process import *
 from channel.process import ordena_pra_exibicao
 from django.http import JsonResponse
 from datetime import datetime
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 def IndexView(request):
@@ -47,6 +50,41 @@ def search(request):
 
     contexto['logado'] = request.user.is_active
     return render(request, './home/search.html', contexto)
+
+
+def report_audio(request, audio_id):
+    audio = Audio.objects.get(pk=audio_id)
+
+    fromaddr = "clientvxs@gmail.com"
+    toaddr = "stationvox@gmail.com"
+    msg = MIMEMultipart()
+    msg['From'] = fromaddr
+    msg['To'] = toaddr
+    msg['Subject'] = "Denúncia " + audio.titulo
+
+    body = "Áudio denunciado: http://127.0.0.1:8000/channel/audio/" + str(audio.pk) + \
+           "\nCanal proprietário: " + audio.canal_proprietario.nome_canal + \
+           "\nUsuário proprietário: " + audio.canal_proprietario.proprietario.email + \
+           "\nDenunciante: " + request.user.email + \
+           "\n\nMotivo: " + request.POST['motivo'] + \
+           "\nDescrição: " + request.POST['denuncia']
+    msg.attach(MIMEText(body, 'plain'))
+
+    denuncia = AudioReport()
+    denuncia.motivo = request.POST['motivo']
+    denuncia.descricao = request.POST['denuncia']
+    denuncia.usuario = request.user
+    denuncia.audio = audio
+    denuncia.canal = audio.canal_proprietario
+    denuncia.save()
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(fromaddr, "80251997Client@")
+    text = msg.as_string()
+    server.sendmail(fromaddr, toaddr, text)
+    server.quit()
+    return HttpResponse("Email enviado")
 
 
 def playordena(request, pesquisa):

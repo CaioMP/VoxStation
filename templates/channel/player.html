@@ -19,8 +19,8 @@
         <div class="row justify-content-center playerBox">
             <!--Botões da esquerda-->
             <div class="col-4 buttons">
-                <a href="#"><i class="fas fa-flag"></i></a><br>
-                <a data-toggle="modal" data-target="#addPlaylist">
+                <a onclick="verificaLogado('{{logado}}')" id="reportLink"><i class="fas fa-flag"></i></a><br>
+                <a onclick="verificaLogado('{{logado}}')" id="addToPlaylistLink" data-toggle="modal" data-target="#addPlaylist">
                     <img src="/static/resources/icones/playlist_add_white.png" alt="adicionar a playlist" class="icon" style="position: absolute;bottom: 1.5rem;">
                 </a>
             </div>
@@ -71,21 +71,11 @@
 
             <!--Feedback-->
             <div class="feedbackBox">
-                {% if audio.numero_likes %}
                 <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" class="icon feedback"></a>{{audio.numero_likes}}
-                {% else %}
-                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" class="icon feedback"></a>
-                {% endif %}
                 <br>
-                {% if audio.numero_deslikes %}
                 <div class="mt-2">
                     <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" class="icon feedback"></a>{{audio.numero_deslikes}}
                 </div>
-                {% else %}
-                <div class="mt-2">
-                    <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" class="icon feedback"></a>
-                </div>
-                {% endif %}
             </div>
             <div class="descricao" id="descBox">
                 <p id="descricao">
@@ -132,7 +122,6 @@
                                                     <a class="dropdown-item" href="#">Adicionar a playlist</a>
                                                     <a class="dropdown-item" href="#">Reproduzir depois</a>
                                                     <a class="dropdown-item" href="#">Compartilhar</a>
-                                                    <a class="dropdown-item" href="#">Denunciar</a>
                                                 </div>
                                                 </a>
                                             </div>
@@ -172,7 +161,6 @@
                                                     <a class="dropdown-item" href="#">Adicionar a playlist</a>
                                                     <a class="dropdown-item" href="#">Reproduzir depois</a>
                                                     <a class="dropdown-item" href="#">Compartilhar</a>
-                                                    <a class="dropdown-item" href="#">Denunciar</a>
                                                 </div>
                                                 </a>
                                             </div>

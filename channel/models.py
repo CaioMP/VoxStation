@@ -110,4 +110,13 @@ class FeedDesLike(models.Model):
     Audio_feed = models.ForeignKey(Audio, on_delete=models.CASCADE, related_name="audio_do_deslike")
 
 
+class AudioReport(models.Model):
+    motivo = models.TextField()
+    descricao = models.TextField()
+    audio = models.ForeignKey(Audio, on_delete=models.CASCADE, related_name="audio_reported")
+    canal = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name="canal_reported")
+    usuario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="user_reported")
+
+    def __str__(self):
+        return str(self.audio)
 

@@ -8,6 +8,17 @@ body {
     font-family: Raleway !important;
 }
 
+div#reportAudio {
+    padding-right: 0 !important;
+}
+
+#reportAudio h6 {
+    text-shadow: none;
+    color: black;
+    font-size: .8rem !important;
+    margin-top: 1rem;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -182,4 +193,21 @@ label#nome_playlist {
     transition: visibility 0.15s, opacity 0.15s linear;
     transform: translate(-50%,0);
     z-index: 2000;
+}
+
+@media only screen and (max-width: 475px) {
+    #reportAudio .has-float-label input:placeholder-shown:not(:focus)+*,
+    .has-float-label select:placeholder-shown:not(:focus)+*,
+    .has-float-label textarea:placeholder-shown:not(:focus)+* {
+        font-size: 90% !important;
+        top: 0.7em !important;
+    }
+
+    input#motivo {
+        font-size: .8rem !important;
+    }
+
+    .modal .btn {
+        font-size: .8rem;
+    }
 }

@@ -38,12 +38,55 @@
     <!--JS da base-->
     <script src="{% static 'base.js' %}"></script>
 
+    <!--Script de denúncia-->
+    <script src="{% static 'channel/js/denunciar.js' %}"></script>
+
     {% block head %}
     {% endblock %}
 </head>
 <body>
     <!--Alert de quando o comentário é enviado-->
     <div id="alert-comentar" class="addAudioPl" role="alert">Comentário enviado</div>
+
+    <!--Alert de quando uma denúncia é enviada-->
+    <div id="alert-report" class="addAudioPl" role="alert">Denúncia enviada</div>
+
+    {% if audio %}
+    <!--Modal de denunciar áudio-->
+    <div class="modal fade" id="reportAudio">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Denunciar áudio</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form method="POST" id="reportForm" action="{% url 'home:report_view' audio.id %}">{% csrf_token %}
+                    <div class="modal-body">
+                        <label class="has-float-label" style="height: 42px;margin-bottom: 1rem;">
+                            <input type="text" name="motivo" id="motivo" maxlength="50"
+                                   placeholder="Motivo da denúncia" required=""/>
+                            <span class="spanPlaylist">Motivo da denúncia</span>
+                        </label>
+                        <label class="has-float-label">
+                            <textarea name="denuncia" id="denuncia" rows="5" maxlength="1000"
+                                      placeholder="Descreva sua denúncia" required=""></textarea>
+                            <span>Descreva sua denúncia</span>
+                        </label>
+
+                        <h6>A equipe do VoxStation irá analisar se o canal e áudio denunciados violam as diretrizes da
+                        comunidade. Em caso de violação o canal será penalizado. Violações graves ou frequentes podem
+                        resultar no encerramento do canal.</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default btn-cancel"><strong>Cancelar</strong></button>
+                        <button type="submit" class="btn btn-add"><strong>Denunciar</strong></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!--Modal de adicionar áudio a playlists-->
     <div class="modal fade" id="addPlaylist" >
         <div class="modal-dialog modal-sm modal-dialog-centered">

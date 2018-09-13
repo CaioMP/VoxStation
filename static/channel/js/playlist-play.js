@@ -1,4 +1,5 @@
 function showAudiosPl() {
+    document.getElementById('playlistAudios').style.visibility = "visible";
     document.getElementById('infoAudio').style.transform = "translateX(110%)";
     document.getElementById('footer').style.transform = "translateX(110%)";
     document.getElementById('hideHeader').style.display = "none";
@@ -13,6 +14,7 @@ function showAudiosPl() {
 }
 
 function hideAudiosPl() {
+    document.getElementById('playlistAudios').style.visibility = "hidden";
     document.getElementById('infoAudio').style.transform = "translateX(0)";
     document.getElementById('footer').style.transform = "translateX(0)";
     document.getElementById('hideHeader').style.display = "block";
