@@ -51,7 +51,7 @@ div#nenhuma-rede-social {
 }
 
 .fa-redes-sociais {
-    font-size: 5rem;
+    font-size: 5rem !important;
     cursor: pointer;
 }
 
@@ -363,7 +363,7 @@ img.icon.seguidores {
     }
 
     .fa-redes-sociais {
-        font-size: 4rem;
+        font-size: 4rem !important;
     }
 
     .fa-google-plus-g {

@@ -4,6 +4,21 @@
 
 {% block head %}
     <title>{{ playlist.nome }} - VoxStation</title>
+
+    <!--Meta tags para Twitter-->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="http://127.0.0.1:8000/channel/audio/{{audio.id}}">
+    <meta name="twitter:title" content="Escute {{audio.titulo}} no VoxStation!!">
+    <meta name="twitter:description" content="{{audio.descricao}}">
+    <meta name="twitter:image" content="{{audio.capa.url}}">
+
+    <!--Meta tags para Facebook-->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://127.0.0.1:8000/channel/audio/{{audio.id}}"/>
+    <meta property="og:title" content="Escute {{audio.titulo}} no VoxStation!!" />
+    <meta property="og:description" content="{{audio.descricao}}" />
+    <meta property="og:image" content="{{audio.capa.url}}" />
+
     <link rel="stylesheet" href="{% static 'channel/style_player.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'channel/style_playlist_play.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'channel/edit_channel.css' %}">
@@ -23,7 +38,7 @@
         <div class="row justify-content-center playerBox">
             <!--Botões da esquerda-->
             <div class="col-4 buttons">
-                <a href="#"><i class="fas fa-share"></i></a><br>
+                <a data-toggle="modal" data-target="#shareAudio"><i class="fas fa-share"></i></a><br>
                 <a href="{% url 'channel:playlist_play_view' playlist.id anterior %}">
                     <i class="fas fa-step-backward"></i>
                 </a><br>

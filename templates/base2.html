@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="copyright" content="© 2018 VoxStation" />
+    <meta property="og:site_name" content="VoxStation">
 
     <!--Font Raleway-->
     <link rel="stylesheet" href="{% static 'base.css' %}" type="text/css"/>
@@ -52,9 +53,12 @@
     <!--Alert de quando uma denúncia é enviada-->
     <div id="alert-report" class="addAudioPl" role="alert">Denúncia enviada</div>
 
+    <!--Alert de quando um link é copiado-->
+    <div id="alert-copy" class="addAudioPl" role="alert">Link copiado</div>
+
     {% if audio %}
     <!--Modal de denunciar áudio-->
-    <div class="modal fade" id="reportAudio">
+    <div class="modal fade modal-player" id="reportAudio">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -83,6 +87,58 @@
                         <button type="submit" class="btn btn-add"><strong>Denunciar</strong></button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal de compartilhar áudio-->
+    <div class="modal fade modal-player" id="shareAudio">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Compartilhar</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <center>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/channel/audio/{{audio.id}}"
+                           class="mr-3" target="_blank">
+                            <i class="fab fa-facebook-square fa-redes-sociais" style="color: #5061a6;"></i>
+                        </a>
+                        <a href="https://twitter.com/home?status=Escute%20no%20VoxStation-%20http://127.0.0.1:8000/channel/audio/{{audio.id}}"
+                           class="mr-3" target="_blank">
+                            <i class="fab fa-twitter-square fa-redes-sociais" style="color: #2aa9e0;"></i>
+                        </a>
+                        <a href="https://plus.google.com/share?url=http://127.0.0.1:8000/channel/audio/{{audio.id}}"
+                           class="mr-3" target="_blank">
+                            <i class="fab fa-google-plus-square fa-redes-sociais" style="color: #dc4e41;"></i>
+                        </a>
+                        <br>
+                        <a href="http://www.reddit.com/submit?url=http://127.0.0.1:8000/channel/audio/{{audio.id}}&title=Escute%20no%20VoxStation"
+                        class="mr-3" style="margin-left: -1.25rem;" target="_blank">
+                            <i class="fab fa-reddit-square fa-redes-sociais" style="color: #fe4502;"></i>
+                        </a>
+                        <a href="https://api.whatsapp.com/send?text=Escute http://127.0.0.1:8000/channel/audio/{{audio.id}} no VoxStation!!"
+                        class="mr-3" target="_blank">
+                            <i class="fab fa-whatsapp-square fa-redes-sociais" style="color: #4fcc5d;"></i>
+                        </a>
+                        <a href="mailto:?subject=Escute {{audio.titulo}} no VoxStation!!&amp;body=http://127.0.0.1:8000/channel/audio/{{audio.id}} {{audio.descricao}}"
+                        target="_blank">
+                            <i class="fas fa-envelope-square fa-redes-sociais" style="margin-bottom: 0;color: #000000a6;"></i>
+                        </a>
+                    </center>
+                </div>
+
+                <div class="modal-footer">
+                    <label class="has-float-label" style="width: 100%;height: 43px;">
+                        <input id="linkAudio" type="text" placeholder="Link" style="margin-bottom: 1rem;" readonly
+                               value="http://127.0.0.1:8000/channel/audio/{{audio.id}}"/>
+                        <span class="spanPlaylist">Link</span>
+                    </label>
+                    <a onclick="copyLink()" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Copiar link">
+                        <i class="far fa-copy" style="cursor: pointer;"></i></a>
+                </div>
             </div>
         </div>
     </div>
