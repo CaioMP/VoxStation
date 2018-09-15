@@ -115,18 +115,20 @@
                             <i class="fab fa-google-plus-square fa-redes-sociais" style="color: #dc4e41;"></i>
                         </a>
                         <br>
-                        <a href="http://www.reddit.com/submit?url=http://127.0.0.1:8000/channel/audio/{{audio.id}}&title=Escute%20no%20VoxStation"
-                        class="mr-3" style="margin-left: -1.25rem;" target="_blank">
-                            <i class="fab fa-reddit-square fa-redes-sociais" style="color: #fe4502;"></i>
-                        </a>
-                        <a href="https://api.whatsapp.com/send?text=Escute http://127.0.0.1:8000/channel/audio/{{audio.id}} no VoxStation!!"
-                        class="mr-3" target="_blank">
-                            <i class="fab fa-whatsapp-square fa-redes-sociais" style="color: #4fcc5d;"></i>
-                        </a>
-                        <a href="mailto:?subject=Escute {{audio.titulo}} no VoxStation!!&amp;body=http://127.0.0.1:8000/channel/audio/{{audio.id}} {{audio.descricao}}"
-                        target="_blank">
-                            <i class="fas fa-envelope-square fa-redes-sociais" style="margin-bottom: 0;color: #000000a6;"></i>
-                        </a>
+                        <div style="margin-top: .5rem">
+                            <a href="http://www.reddit.com/submit?url=http://127.0.0.1:8000/channel/audio/{{audio.id}}&title=Escute%20no%20VoxStation"
+                            class="mr-3" style="margin-left: -1.25rem;" target="_blank">
+                                <i class="fab fa-reddit-square fa-redes-sociais" style="color: #fe4502;"></i>
+                            </a>
+                            <a href="https://api.whatsapp.com/send?text=Escute http://127.0.0.1:8000/channel/audio/{{audio.id}} no VoxStation!!"
+                            class="mr-3" target="_blank">
+                                <i class="fab fa-whatsapp-square fa-redes-sociais" style="color: #4fcc5d;"></i>
+                            </a>
+                            <a href="mailto:?subject=Escute {{audio.titulo}} no VoxStation!!&amp;body=http://127.0.0.1:8000/channel/audio/{{audio.id}} {{audio.descricao}}"
+                            target="_blank">
+                                <i class="fas fa-envelope-square fa-redes-sociais" style="margin-bottom: 0;color: #000000a6;"></i>
+                            </a>
+                        </div>
                     </center>
                 </div>
 
@@ -448,7 +450,7 @@
                 <a href="#"><img class="icon-left" src="/static/resources/icones/favorites.png">Favoritos</a>
             </li>
             <li>
-                <a href="#"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
+                <a href="{% url 'account:historic' %}"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
                 <a href="#pageSubmenu" aria-expanded="true">
                     <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
                 <ul class="list-unstyled" id="pageSubmenu">

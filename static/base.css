@@ -199,6 +199,22 @@ label#nome_playlist {
     z-index: 2000;
 }
 
+@media only screen and (min-width: 1175px) {
+    figure {
+        height: 160px !important;
+    }
+
+    figcaption.fc-capa-audio {
+        height: 160px !important;
+    }
+
+    .icon-play {
+        margin-top: 3rem !important;
+        margin-bottom: 1.5rem !important;
+        width: 65px !important;
+    }
+}
+
 @media only screen and (max-width: 475px) {
     #reportAudio .has-float-label input:placeholder-shown:not(:focus)+*,
     .has-float-label select:placeholder-shown:not(:focus)+*,
