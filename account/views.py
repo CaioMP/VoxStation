@@ -254,3 +254,13 @@ def historic(request):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
     contexto['logado'] = request.user.is_active
     return render(request, './account/historic.html', contexto)
+
+
+def favorites(request):
+    contexto = {}
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+    contexto['logado'] = request.user.is_active
+    return render(request, './account/favorites.html', contexto)

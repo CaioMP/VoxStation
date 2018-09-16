@@ -11,6 +11,7 @@ urlpatterns = [
     path('signup/', views.RegisterView, name='sign_up'),
     path('profile/edit/', login_required(views.edit_profile), name='edit_profile'),
     path("historic/", views.historic, name='historic'),
+    path("favorites/", views.favorites, name='favorites'),
     path("new_channel/", login_required(views.NewChannelView), name='new_channel'),
     path("change_password/", login_required(views.change_password), name='change_password')
 
