@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # --- Nossas Apps ---
+    'channels',
     'social_django',
     'phonenumber_field',
     'django_countries',
@@ -70,6 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'vox_station.wsgi.application'
+ASGI_APPLICATION = 'vox_station.routing.application'
 
 
 # Database
@@ -138,6 +140,16 @@ LANGUAGES = [
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Channels config
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

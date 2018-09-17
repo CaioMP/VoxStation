@@ -96,7 +96,16 @@ img.icon-left.channel {
 }
 
 .notific.show {
-    margin-left: 60px;
+    width: 15rem;
+    margin-left: -1rem;
+}
+
+.notific.show .dropdown-item {
+    overflow: hidden;
+    white-space: normal;
+    word-break: break-word;
+    height: 4rem;
+    padding-top: .7rem;
 }
 
 .navbar-btn {

@@ -4,6 +4,21 @@
 
 {% block head %}
     <title>{{ playlist.nome }} - VoxStation</title>
+
+    <!--Meta tags para Twitter-->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="http://127.0.0.1:8000/channel/audio/{{audio.id}}">
+    <meta name="twitter:title" content="Escute {{audio.titulo}} no VoxStation!!">
+    <meta name="twitter:description" content="{{audio.descricao}}">
+    <meta name="twitter:image" content="{{audio.capa.url}}">
+
+    <!--Meta tags para Facebook-->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://127.0.0.1:8000/channel/audio/{{audio.id}}"/>
+    <meta property="og:title" content="Escute {{audio.titulo}} no VoxStation!!" />
+    <meta property="og:description" content="{{audio.descricao}}" />
+    <meta property="og:image" content="{{audio.capa.url}}" />
+
     <link rel="stylesheet" href="{% static 'channel/style_player.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'channel/style_playlist_play.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'channel/edit_channel.css' %}">
@@ -23,7 +38,7 @@
         <div class="row justify-content-center playerBox">
             <!--Botões da esquerda-->
             <div class="col-4 buttons">
-                <a onclick="verificaLogado('{{logado}}')" id="reportLink"><i class="fas fa-flag"></i></a><br>
+                <a data-toggle="modal" data-target="#shareAudio"><i class="fas fa-share"></i></a><br>
                 <a href="{% url 'channel:playlist_play_view' playlist.id anterior %}">
                     <i class="fas fa-step-backward"></i>
                 </a><br>
@@ -36,14 +51,14 @@
             <div class="col-4 player" onmouseover="showFooter()" onmouseleave="hideFooter()">
                 <div class="header" id="header">
                     <div class="info-audio" id="infoAudio" style="transition: transform .5s;">
-                        <h5>{{ audio.titulo }}</h5>
+                        <h5 class="limitHead">{{ audio.titulo }}</h5>
                         <h6><img src="/static/resources/icones/view_white.png" alt="{{audio.reproducoes}} de reproduções" class="icon-view">{{audio.reproducoes}}</h6>
                     </div>
                     <div class="playlist-audios" id="playlistAudios" style="visibility: hidden;">
                         <div class="nome-playlist">
                             <a href="{% url 'channel:playlist_all_view' playlist.id %}">
                                 <img src="{{ playlist.capa.url }}" class="capa-pl-play d-inline" alt="capa da playlist {{ playlist.nome }}">
-                                <h5 class="d-inline">{{ playlist.nome }}</h5>
+                                <h5 class="limitHead d-inline">{{ playlist.nome }}</h5>
                             </a>
                             <a onclick="hideAudiosPl()" id="hideAudiosPl"><i class="fas fa-arrow-circle-right"></i></a>
                         </div>
@@ -127,14 +142,13 @@
                 <a href="#"  style="{{btn_color}}" url_="{%url 'channel:follow_general_view'%}" id={{canal_proprietario.id}} class="btn-sintonizar">{{btn_message}}</a>
             </div>
 
-            <!--Feedback-->
+            <!--Feedback e Denunciar-->
             <div class="feedbackBox">
+                <a onclick="verificaLogado('{{logado}}')" id="reportLink" style="height: 1rem;margin-right: 2.15rem;"><i class="fas fa-flag"></i></a>
                 <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" class="icon feedback"></a>{{audio.numero_likes}}
-                <br>
-                <div class="mt-2">
-                    <a href="#"><img src="/static/resources/icones/dislike.png" alt="não gostei" class="icon feedback"></a>{{audio.numero_deslikes}}
-                </div>
+                <a href="#" class="ml-3"><img src="/static/resources/icones/dislike.png" alt="não gostei" class="icon feedback"></a>{{audio.numero_deslikes}}
             </div>
+
             <div class="descricao" id="descBox">
                 <p id="descricao">
                     <h5 style="font-size: .9rem;">
@@ -165,7 +179,7 @@
                 <div class="carousel-item active">
                     <div class="row">
                         {% for audio in playlist1 %}
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-2 mb-3" id="PL1-{{forloop.counter}}">
                             <div class="card">
                                 <figure class="fig-capa-audio">
                                     <img src="{{audio.capa.url}}" class="card-img-top" alt="{{audio.titulo}}">
@@ -204,7 +218,7 @@
                 <div class="carousel-item">
                     <div class="row">
                         {% for audio in playlist2 %}
-                        <div class="col-md-2 mb-3">
+                        <div class="col-md-2 mb-3" id="PL2-{{forloop.counter}}">
                             <div class="card">
                                 <figure class="fig-capa-audio">
                                     <img src="{{audio.capa.url}}" class="card-img-top" alt="{{audio.titulo}}">
@@ -272,9 +286,9 @@
         <br><br>
         <!--Foto do usuário que vai comentar-->
         {% if not user.img_perfil %}
-            <img class="img_channel ml-2" style="width: 2.5rem;height: 2.5rem;" alt="sua foto" src="/static/images/default-user.png"/>
+            <img class="img_channel ml-2 img-comment" alt="sua foto" src="/static/images/default-user.png"/>
         {% else %}
-            <img class="img_channel ml-2" style="width: 2.5rem;height: 2.5rem;" alt="sua foto" src="{{ user.img_perfil.url }}"/>
+            <img class="img_channel ml-2 img-comment" alt="sua foto" src="{{ user.img_perfil.url }}"/>
         {% endif %}
 
         <form method="POST" id="comentarForm" action="{% url 'channel:comentar_view' audio.id %}">{% csrf_token %}
@@ -325,9 +339,9 @@
             <div class="resposta" style="margin-left: 3.2rem;">
                 <!--Foto do usuário que vai responder-->
                 {% if not user.img_perfil %}
-                    <img class="img_channel ml-2" style="width: 2.3rem;height: 2.3rem;" alt="sua foto" src="/static/images/default-user.png"/>
+                    <img class="img_channel ml-2 img-comment" style="width: 2.3rem;height: 2.3rem;" alt="sua foto" src="/static/images/default-user.png"/>
                 {% else %}
-                    <img class="img_channel ml-2" style="width: 2.3rem;height: 2.3rem;" alt="sua foto" src="{{ user.img_perfil.url }}"/>
+                    <img class="img_channel ml-2 img-comment" style="width: 2.3rem;height: 2.3rem;" alt="sua foto" src="{{ user.img_perfil.url }}"/>
                 {% endif %}
                 <!--Formulário de responder-->
                 <form method="POST" class="responderForm" id="responderForm" action="{% url 'channel:responder_view' audio.id comentario.id %}">{% csrf_token %}

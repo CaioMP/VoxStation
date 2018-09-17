@@ -6,6 +6,7 @@
 {% block head %}
     <title>VoxStation</title>
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
+    <script src="{% static '/channels/js/websocketbridge.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -37,7 +38,6 @@
                                                     <div class="dropdown-menu more" aria-labelledby="dropdownMore">
                                                         <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{f_page_audio.id}}">Adicionar a playlist</a>
                                                         <a class="dropdown-item" href="#">Reproduzir depois</a>
-                                                        <a class="dropdown-item" href="#">Compartilhar</a>
                                                     </div>
                                                     </a>
                                                 </div>
@@ -76,7 +76,6 @@
                                                     <div class="dropdown-menu more" aria-labelledby="dropdownMore">
                                                         <a class="dropdown-item addplay" url_="{% url 'channel:playlist_add_view' %}"  data-toggle="modal" data-target="#addPlaylist" aud_atre="{{s_page_audio.id}}">Adicionar a playlist</a>
                                                         <a class="dropdown-item" href="#">Reproduzir depois</a>
-                                                        <a class="dropdown-item" href="#">Compartilhar</a>
                                                     </div>
                                                     </a>
                                                 </div>

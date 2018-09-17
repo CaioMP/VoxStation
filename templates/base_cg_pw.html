@@ -4,6 +4,8 @@
     {% load i18n %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="copyright" content="© 2018 VoxStation" />
 
     <!--Font Raleway-->
     <link rel="stylesheet" href="{% static 'base.css' %}" type="text/css"/>
@@ -102,10 +104,10 @@
                 <a href="{% url 'home:index' %}"><img class="icon-left" src="/static/resources/icones/home.png">Início</a>
             </li>
             <li>
-                <a href="#"><img class="icon-left" src="/static/resources/icones/favorites.png">Favoritos</a>
+                <a href="{% url 'account:favorites' %}"><img class="icon-left" src="/static/resources/icones/favorites.png">Favoritos</a>
             </li>
             <li>
-                <a href="#"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
+                <a href="{% url 'home:index' %}"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
                 <a href="#pageSubmenu" aria-expanded="true">
                     <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
                 <ul class="list-unstyled" id="pageSubmenu">

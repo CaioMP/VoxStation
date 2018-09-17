@@ -32,6 +32,13 @@
     background-color: white !important;
 }
 
+.limitHead {
+    max-width: 85%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /*Parte do player (col-4) */
 .player {
     padding: 0;
@@ -111,6 +118,12 @@ i.fas {
     cursor: pointer;
 }
 
+.fa-flag {
+    color: black !important;
+    font-size: 1.3rem !important;
+    margin-top: -3px;
+}
+
 .autoplay {
     width: 2.8rem !important;
     margin-left: -.65rem;
@@ -177,9 +190,15 @@ img.icon {
 .img_channel {
     float: left;
     border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
+    width: 2.4rem;
+    height: 2.4rem;
     margin-right: 1rem;
+    margin-top: -.5rem;
+}
+
+.img-comment {
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 /*Nome do canal*/
@@ -191,6 +210,7 @@ img.icon {
 }
 
 .feedbackBox {
+    display: inline-flex;
     position: absolute;
     right: 0;
     top: 0;
@@ -206,7 +226,6 @@ img.icon {
 
 .sintonizar {
     margin-top: 1rem;
-    margin-left: 4rem;
 }
 
 .btn-sintonizar {
@@ -511,6 +530,13 @@ button#descartar {
         font-size: 1.2rem;
     }
 
+    .fa-flag {
+        font-size: 1rem !important;
+        margin-top: 2.5rem;
+        position: absolute;
+        right: 1.2rem;
+    }
+
     .bot {
         bottom: -1.2rem;
         left: 1rem;
@@ -549,20 +575,22 @@ button#descartar {
     .icon.feedback {
         height: 16px;
         width: 16px;
+        margin-right: .5rem;
+        margin-top: 5px;
     }
 
     .img_channel {
         width: 2.5rem;
         height: 2.5rem;
-        margin-top: -.8rem;
+        margin-top: -.5rem;
+    }
+
+    .img-comment {
+        margin-top: -.8rem !important;
     }
 
     .nome_channel_play {
         font-size: 1rem;
-    }
-
-    .sintonizar {
-        margin-left: 3.5rem;
     }
 
     .btn-sintonizar {

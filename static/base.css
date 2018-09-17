@@ -8,8 +8,18 @@ body {
     font-family: Raleway !important;
 }
 
-div#reportAudio {
-    padding-right: 0 !important;
+.modal-player {
+    padding: 3rem 0 !important;
+}
+
+div#sideFade {
+    opacity: 0;
+    z-index: 0;
+    visibility: hidden;
+}
+
+input[type="text" i]:disabled {
+    background-color: transparent;
 }
 
 #reportAudio h6 {
@@ -17,6 +27,15 @@ div#reportAudio {
     color: black;
     font-size: .8rem !important;
     margin-top: 1rem;
+}
+
+img.channel-notific {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    margin-left: -1rem;
+    margin-right: .5rem;
+    float: left;
 }
 
 ::-webkit-scrollbar {
@@ -193,6 +212,28 @@ label#nome_playlist {
     transition: visibility 0.15s, opacity 0.15s linear;
     transform: translate(-50%,0);
     z-index: 2000;
+}
+
+@media only screen and (min-width: 1175px) {
+    figure {
+        height: 160px !important;
+    }
+
+    figcaption.fc-capa-audio {
+        height: 160px !important;
+    }
+
+    .icon-play {
+        margin-top: 3rem !important;
+        margin-bottom: 1.5rem !important;
+        width: 65px !important;
+    }
+}
+
+@media only screen and (min-width: 1058px) {
+    .carousel-inner {
+        height: 20rem !important;
+    }
 }
 
 @media only screen and (max-width: 475px) {

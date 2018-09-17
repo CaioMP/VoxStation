@@ -4,7 +4,7 @@ from django.contrib.auth import (
     get_user_model,
     authenticate
 )
-from channel.models import Audio
+from channel.models import Audio, Playlist, Canal
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
 from .forms import (UserCreationForm, UserLoginForm, EditBasicForm, NewChannelForm,
@@ -246,13 +246,21 @@ def NewChannelView(request):
     return render(request, './account/new_channel.html', context)
 
 
-def following(request, cod):
-    return render(request, './account/following.html')
+def historic(request):
+    contexto = {}
+
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+    contexto['logado'] = request.user.is_active
+    return render(request, './account/historic.html', contexto)
 
 
-def historic(request, cod):
-    return render(request, './account/historic.html')
+def favorites(request):
+    contexto = {}
 
-
-def myPlaylists(request, cod):
-    return render(request, './account/myplaylists.html')
+    if request.user.is_active:
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+    contexto['logado'] = request.user.is_active
+    return render(request, './account/favorites.html', contexto)
