@@ -3,7 +3,7 @@ from .forms import *
 from account.models import Canal, Seg
 from .process import *
 from django.http import JsonResponse
-from .models import Playlist, Audio, Comentario, Resposta, MyUser
+from .models import Playlist, Audio, Comentario, Resposta, Historico
 from datetime import datetime
 from django.forms import formset_factory
 from django.db.models import Sum
@@ -117,7 +117,11 @@ def playlist_play(request, id, id_audio):
     proximo = audioposition(audio, playlist)[1]
     n_comentarios = get_n_comentarios(comentarios, respostas)
     ordem = True  # True para aleatório
-
+    history = Historico.objects.filter(prop = request.user, audio=audio)
+    if history.exists():
+        history.delete()
+    history = Historico.objects.create(prop = request.user, audio=audio)
+    history.save()
     comentario_form = ComentarioForm()
     resposta_form = RespostaForm(prefix="resposta")
 
@@ -540,6 +544,12 @@ def player(request, id):
 
     audio = Audio.objects.get(pk=id)
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
+
+    history = Historico.objects.filter(prop=request.user, audio=audio)
+    if history.exists():
+        history.delete()
+    history = Historico.objects.create(prop=request.user, audio=audio)
+    history.save()
 
     playlist1 = []
     playlist2 = []

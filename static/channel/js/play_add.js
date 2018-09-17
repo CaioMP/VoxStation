@@ -60,7 +60,7 @@ $('document').ready( function(){
 		var aud = this_form.attr('aud');
 		var dados = this_form.serialize();
 		$.ajax({
-			url: 'channel/playlist_add_play',
+			url: '/channel/playlist_add_play',
 			type:'GET',
 			beforeSend:function(){
 			},

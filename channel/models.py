@@ -120,3 +120,15 @@ class AudioReport(models.Model):
     def __str__(self):
         return str(self.audio)
 
+
+class Historico(models.Model):
+    prop = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+    audio = models.ForeignKey(Audio,on_delete=models.CASCADE, default=None)
+
+
+class Favorito(models.Model):
+    prop = models.ForeignKey(MyUser,on_delete=models.CASCADE,)
+    audio = models.ForeignKey(Audio,on_delete=models.CASCADE, default=None)
+
+
+

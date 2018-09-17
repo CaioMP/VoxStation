@@ -43,7 +43,7 @@
                     <i class="fas fa-step-backward"></i>
                 </a><br>
                 <a onclick="verificaLogado('{{logado}}')" id="addToPlaylistLink" data-toggle="modal" data-target="#addPlaylist">
-                    <img src="/static/resources/icones/playlist_add_white.png" alt="adicionar a playlist" class="icon">
+                    <img src="/static/resources/icones/playlist_add_white.png" alt="adicionar a playlist" class="icon addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}" style="position: absolute;bottom: 1.5rem;">
                 </a>
             </div>
 
