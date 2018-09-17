@@ -32,6 +32,13 @@
     background-color: white !important;
 }
 
+.limitHead {
+    max-width: 85%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /*Parte do player (col-4) */
 .player {
     padding: 0;

@@ -42,6 +42,30 @@
 
     <!--Script de denúncia-->
     <script src="{% static 'channel/js/denunciar.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const webSocketBridge = new channels.WebSocketBridge();
+          const nl = document.querySelector("#notifylist");
+
+          webSocketBridge.connect('/notifications/');
+          webSocketBridge.listen(function(action, stream) {
+            console.log("RESPONSE:", action);
+            if(action.event == "New Audio") {
+              var el = document.createElement("li");
+              el.classList.add("dropdown-item");
+              el.innerHTML = action.titulo;
+
+              var canal = document.createElement("img");
+              canal.setAttribute('src', action.capa);
+              canal.setAttribute('class', 'channel-notific');
+
+              el.appendChild(canal);
+              nl.appendChild(el);
+            }
+          })
+          document.ws = webSocketBridge;
+        })
+    </script>
 
     {% block head %}
     {% endblock %}
@@ -408,9 +432,10 @@
                     <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="icon-right" src="/static/resources/icones/notific.ico"></a>
                     <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
-                        <a class="dropdown-item" href="#">Notific 1</a>
-                        <a class="dropdown-item" href="#">Notific 2</a>
-                        <a class="dropdown-item" href="#">Notific 3</a>
+                        <ul id="notifylist" style="padding: .5rem 1px;">
+                            <li class="dropdown-item">
+                                <img class="channel-notific" src="/static/images/tumb_audio.png">Notificação Teste</li>
+                        </ul>
                     </div>
                 </li>
                 <li class="dropdown" id="dpAvatar">
@@ -516,5 +541,6 @@
             {% endif %}
         </div>
     {% endif %}
+    <div class="modal-backdrop fade show" id="sideFade"></div>
 </body>
 </html>

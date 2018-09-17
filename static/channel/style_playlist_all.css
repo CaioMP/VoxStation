@@ -54,7 +54,7 @@ body {
 }
 
 .icon-play {
-    width: 17rem;
+    width: 17rem !important;
     height: 100%;
     padding: 3rem 6rem;
     transition: opacity 1s;
@@ -63,7 +63,7 @@ body {
     max-width: 17rem;
     height: 10.7rem;
     position: absolute;
-    top: 6.1rem;
+    top: 3.1rem;
     left: 1.5rem;
 }
 
