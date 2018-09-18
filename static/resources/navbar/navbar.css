@@ -96,16 +96,68 @@ img.icon-left.channel {
 }
 
 .notific.show {
-    width: 15rem;
-    margin-left: -1rem;
+    width: 21rem;
+    margin-left: -2.8rem;
+}
+
+li#headerNotific {
+    font-size: 1.15rem;
+    background-color: white;
+    color: #032854;
+    padding: .75rem 1rem;
+    margin-top: -1rem;
+    min-height: auto;
+}
+
+#dpAccount a.dropdown-item {
+    margin-left: 1px;
+    width: 99%;
+}
+
+#notifylist a {
+    padding-left: 0 !important;
+}
+
+.noNotific {
+    text-align: center;
+    margin-top: 1rem;
+    list-style: none;
+}
+
+.noNotific h5 {
+    font-size: 1.15rem;
+    font-weight: bold;
+}
+
+span#notificNumber {
+    position: absolute;
+    right: 3px;
+    margin-top: 8px;
+    z-index: 1;
+    cursor: pointer;
+    font-size: .75rem;
+    background-color: #032854;
+    color: white;
+    border: 2px solid;
+    border-radius: 50%;
+    padding: 0px 6px;
 }
 
 .notific.show .dropdown-item {
     overflow: hidden;
     white-space: normal;
     word-break: break-word;
-    height: 4rem;
-    padding-top: .7rem;
+    min-height: 4rem;
+    padding: 1rem 6rem 1rem 4.6rem;
+}
+
+.notific.show .dropdown-item h5 {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.notific.show .dropdown-item h3 {
+    font-size: .85rem;
 }
 
 .navbar-btn {

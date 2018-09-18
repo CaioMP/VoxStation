@@ -42,30 +42,9 @@
 
     <!--Script de denúncia-->
     <script src="{% static 'channel/js/denunciar.js' %}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const webSocketBridge = new channels.WebSocketBridge();
-          const nl = document.querySelector("#notifylist");
 
-          webSocketBridge.connect('/notifications/');
-          webSocketBridge.listen(function(action, stream) {
-            console.log("RESPONSE:", action);
-            if(action.event == "New Audio") {
-              var el = document.createElement("li");
-              el.classList.add("dropdown-item");
-              el.innerHTML = action.titulo;
-
-              var canal = document.createElement("img");
-              canal.setAttribute('src', action.capa);
-              canal.setAttribute('class', 'channel-notific');
-
-              el.appendChild(canal);
-              nl.appendChild(el);
-            }
-          })
-          document.ws = webSocketBridge;
-        })
-    </script>
+    <!--Script WebSocket-->
+    <script src="{% static 'ws.js' %}"></script>
 
     {% block head %}
     {% endblock %}
@@ -430,11 +409,29 @@
                 </li>
                 <li class="dropdown">
                     <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="icon-right" src="/static/resources/icones/notific.ico"></a>
+                        {% if notifications > 0 %}
+                            <span id="notificNumber">{{ notifications }}</span>
+                        {% endif %}
+                        <i class="fas fa-bell icon-right"></i></a>
                     <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
                         <ul id="notifylist" style="padding: .5rem 1px;">
-                            <li class="dropdown-item">
-                                <img class="channel-notific" src="/static/images/tumb_audio.png">Notificação Teste</li>
+                            <li class="dropdown-item" id="headerNotific">Notificações</li>
+                            {% if ntfs_audios.exists %}
+                                {% for naudio in ntfs_audios.all %}
+                                    <li class="dropdown-item">
+                                        <a href="{% url 'channel:player_view' naudio.audio_id %}">
+                                            <img class="channel-notific" src="{{ naudio.audio_canal }}">
+                                            <img class="audio-notific" src="{{ naudio.audio_capa }}">
+                                            <h5>{{ naudio.audio_name }}</h5>
+                                            <h3>{{naudio.audio_data|date:"d/m/y"}} às {{naudio.audio_data|date:"H:i"}}</h3>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                            <li class="noNotific">
+                                <h5>Não há notificações</h5>
+                            </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </li>

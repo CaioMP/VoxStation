@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from account.models import Canal
+from account.models import Canal, NotificAudio
 from channel.models import Playlist
 from channel.models import Audio, Anuncio, AudioReport
 from .process import *
@@ -17,6 +17,15 @@ def IndexView(request):
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+        notifications = 0
+
+        if ntfs_audios.exists():
+            for ntf in ntfs_audios.all():
+                notifications += 1
+
+        contexto['notifications'] = notifications
+        contexto['ntfs_audios'] = ntfs_audios
 
     contexto['channels'] = orderAudios(Canal.objects.all())
     contexto['logado'] = request.user.is_active
