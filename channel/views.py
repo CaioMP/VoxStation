@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect, HttpResponse
 from .forms import *
-from account.models import Canal, Seg
+from account.models import Seg, NotificAudio
 from .process import *
 from django.http import JsonResponse
 from .models import Playlist, Audio, Comentario, Resposta, Historico
 from datetime import datetime
-from django.forms import formset_factory
-from django.db.models import Sum
 import random
 
 
@@ -31,6 +29,20 @@ def myuploads(request):
             audio.reproducoes = 0
             audio.proprietario = request.user
             audio.save()
+
+            # Criando a notificação para quando o áudio é enviado
+            canal = Canal.objects.get(pk=audio.canal_proprietario.pk)
+            if canal.users_notific:
+                for user in canal.users_notific.all():
+                    notification = NotificAudio()
+                    notification.user_notific = user
+                    notification.audio_id = audio.pk
+                    notification.audio_canal = audio.canal_proprietario.foto_canal.url
+                    notification.audio_data = audio.data_publicacao
+                    notification.audio_capa = audio.capa.url
+                    notification.audio_name = audio.titulo
+                    notification.save()
+
             tagtext = tagform.cleaned_data['text']
             taglist = tagprocess(tagtext)
             print(taglist)

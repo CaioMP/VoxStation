@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from channel.models import Audio
+from django.utils.dateformat import DateFormat
 User = get_user_model()
 
 
@@ -11,10 +12,18 @@ User = get_user_model()
 def announce_new_audio(sender, instance, created, **kwargs):
     if created:
         channel_layer = get_channel_layer()
+
+        df = DateFormat(instance.data_publicacao)
+        data = df.format('d/m/y ') + "às " + df.format('H:i')
+        link = str("/channel/audio/" + str(instance.pk))
+
         async_to_sync(channel_layer.group_send)(
             "gossip", {"type": "user.gossip",
                        "event": "New Audio",
+                       "link": link,
                        "titulo": instance.titulo,
-                       "capa": instance.capa.url}
+                       "data": data,
+                       "canal": instance.canal_proprietario.foto_canal.url,
+                       "capa": instance.capa.url
+                       }
         )
-        print("AQUIII! " + instance.capa.url),

@@ -4,6 +4,9 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from datetime import datetime
 
 
 USERNAME_REGEX = '^[a-zA-Z0-9.+-]*$'
@@ -51,7 +54,7 @@ class MyUser(AbstractBaseUser):
     genero = models.CharField('gender', choices=GENDER_CHOICES, max_length=1, default='M')
     pais = CountryField(blank=True)
     sobre = models.TextField(null=True, blank=True)
-    data_criacao = models.DateTimeField(auto_now_add=True)
+    data_criacao = models.DateTimeField(default=datetime.now)
 
     first_name = models.CharField('first name', max_length=32,
                                   validators=[
@@ -131,7 +134,7 @@ class Canal(models.Model):
                                                      code='invalid_username'
                                                      )], unique=True, null=False)
     foto_canal = models.ImageField(upload_to=foto_canal_path, blank=True, null=True, default="static/images/default-user.png")
-    data_criacao = models.DateTimeField(auto_now_add=True)
+    data_criacao = models.DateTimeField(default=datetime.now)
     capa = models.ImageField(upload_to=capa_path, blank=True, null=True)
     audio_fundo = models.FileField(upload_to=audio_fundo_path, blank=True, null=True)
     seguidor = models.ManyToManyField(MyUser, blank=True, related_name="segue", symmetrical=False, through="Seg")
@@ -143,6 +146,7 @@ class Canal(models.Model):
     twitter = models.CharField(blank=True, default='', max_length=100)
     googleplus = models.CharField(blank=True, default='', max_length=200)
     numero_seguidores = models.IntegerField(default=0)
+    users_notific = models.ManyToManyField(MyUser, blank=True, related_name="notifica")
 
     def __str__(self):
         return self.nome_canal
@@ -169,5 +173,15 @@ class Seg(models.Model):
         return self.canal_seguido.nome_canal+"_"+self.seguidores.username
 
 
+class NotificAudio(models.Model):
+    user_notific = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="user_notific")
+    audio_id = models.PositiveIntegerField()
+    audio_name = models.CharField(max_length=50, null=True)
+    audio_data = models.DateTimeField(default=datetime.now)
+    audio_canal = models.CharField(max_length=1000, null=True)
+    audio_capa = models.CharField(max_length=1000, null=True)  # Pega a url
 
+    def __str__(self):
+        info = str(self.audio_id) + " - " + str(self.user_notific)
+        return info
 

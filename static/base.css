@@ -30,12 +30,25 @@ input[type="text" i]:disabled {
 }
 
 img.channel-notific {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    margin-top: 1px;
     border-radius: 50%;
-    margin-left: -1rem;
-    margin-right: .5rem;
-    float: left;
+    position: absolute;
+    left: 1rem;
+}
+
+img.audio-notific {
+    width: 4rem;
+    height: 3rem;
+    border-radius: 4px;
+    position: absolute;
+    right: 1.3rem;
+}
+
+.fa-bell {
+    font-size: 1.5rem;
+    top: 2px;
 }
 
 ::-webkit-scrollbar {
