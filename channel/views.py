@@ -557,10 +557,13 @@ def player(request, id):
     audio = Audio.objects.get(pk=id)
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
 
-    history = Historico.objects.filter(prop=request.user, audio=audio)
-    if history.exists():
-        history.delete()
-    history = Historico.objects.create(prop=request.user, audio=audio)
+    history = Historico.objects.get(prop=request.user)
+    htest = Historico.objects.filter(prop=request.user, audio=audio)
+    if htest.exists():
+        history.audio.remove(audio)
+    history.audio.add(audio)
+
+
     history.save()
 
     playlist1 = []

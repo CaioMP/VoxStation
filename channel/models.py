@@ -1,6 +1,7 @@
 from django.db import models
 from account.models import MyUser, Anuncio, Canal
-from datetime import datetime
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 class Tag(models.Model):
@@ -21,7 +22,7 @@ class Audio(models.Model):
     def capa_playlist_path(instance, filename):
         return "contas/user_{}/capas_playlist/{}".format(instance.proprietario.pk, filename)
 
-    data_publicacao = models.DateTimeField(default=datetime.now)
+    data_publicacao = models.DateTimeField(auto_now=True)
     estado = models.CharField(max_length=10, blank=True, null=True)
     visibilidade = models.CharField(max_length=11, blank=True, null=True)
     likes = models.ManyToManyField(MyUser, default=None, through="FeedLike", related_name="likes")
@@ -50,7 +51,7 @@ class Comentario(models.Model):
     likes = models.IntegerField(null=True, default=0)
     deslikes = models.IntegerField(null=True, default=0)
     possui_resposta = models.IntegerField(default=0)
-    data = models.DateTimeField(default=datetime.now)
+    data = models.DateTimeField(auto_now_add=True)
     audio_comentado = models.ForeignKey(Audio, on_delete=models.CASCADE, default=None, null=True)
 
     class Meta:
@@ -68,7 +69,7 @@ class Resposta(models.Model):
     conteudo = models.TextField()
     likes = models.IntegerField(null=True, default=0)
     deslikes = models.IntegerField(null=True, default=0)
-    data = models.DateTimeField(default=datetime.now)
+    data = models.DateTimeField(auto_now=True)
     audio_comentado = models.ForeignKey(Audio, on_delete=models.CASCADE, default=None, null=True)
     comentarista = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     comentario_em_questao = models.ForeignKey(Comentario, on_delete=models.CASCADE)
@@ -87,7 +88,7 @@ class Playlist(models.Model):
     visibilidade = models.CharField(max_length=20, choices=visibilidade_choices, default="publico")
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='playlist_proprietario', default=None)
     canal = models.ForeignKey(Canal, related_name="canal_playlist", default=None, null=True, blank=True,  on_delete=models.CASCADE)
-    ultima_atualizacao = models.DateTimeField(default=datetime.now)
+    ultima_atualizacao = models.DateTimeField(auto_now=True)
     capa = models.ImageField(upload_to=playlist_capa_path, default=None, null=True)
     descricao = models.TextField(default=None, blank=True, null=True)
     numero_de_audios = models.IntegerField(default=1)
@@ -98,13 +99,13 @@ class Playlist(models.Model):
 
 
 class FeedLike(models.Model):
-    data_do_feed = models.DateTimeField(default=datetime.now)
+    data_do_feed = models.DateTimeField(auto_now=True)
     conta_feed = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="conta_do_like")
     Audio_feed = models.ForeignKey(Audio, on_delete=models.CASCADE, related_name="audio_do_like")
 
 
 class FeedDesLike(models.Model):
-    data_do_feed = models.DateTimeField(default=datetime.now)
+    data_do_feed = models.DateTimeField(auto_now=True)
     conta_feed = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="conta_do_deslike")
     Audio_feed = models.ForeignKey(Audio, on_delete=models.CASCADE, related_name="audio_do_deslike")
 
@@ -122,12 +123,13 @@ class AudioReport(models.Model):
 
 class Historico(models.Model):
     prop = models.ForeignKey(MyUser,on_delete=models.CASCADE)
-    audio = models.ForeignKey(Audio,on_delete=models.CASCADE, default=None)
-
+    audio = models.ManyToManyField(Audio)
+    def __str__(self):
+        return "historico de "+self.prop.username
 
 class Favorito(models.Model):
-    prop = models.ForeignKey(MyUser,on_delete=models.CASCADE,)
-    audio = models.ForeignKey(Audio,on_delete=models.CASCADE, default=None)
+    prop = models.ForeignKey(MyUser, on_delete=models.CASCADE,)
+    audio = models.ManyToManyField(Audio)
 
 
 

@@ -4,7 +4,7 @@ from django.contrib.auth import (
     get_user_model,
     authenticate
 )
-from channel.models import  Playlist, Canal,Historico
+from channel.models import  Playlist, Canal, Historico
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
 from .forms import (UserCreationForm, UserLoginForm, EditBasicForm, NewChannelForm,
@@ -32,6 +32,9 @@ def RegisterView(request):
             profile.email = account.cleaned_data['email']
             profile.set_password(password)
             profile.save()
+
+            Hist = Historico.objects.create(prop=profile)
+            Hist.save()
 
             new_user = authenticate(
                 username=account.cleaned_data['email'],
@@ -249,10 +252,14 @@ def NewChannelView(request):
 def historic(request):
     contexto = {}
     contexto['audios_historico'] = []
-    registros = Historico.objects.filter(prop=request.user)
-    for registro in registros:
-        contexto['audios_historico'].append(registro.audio)
+
     if request.user.is_active:
+        registro = Historico.objects.get(prop=request.user)
+        if request.method == "POST":
+            x = request.POST['pesquisa']
+            contexto['audios_historico'] = registro.audio.filter(titulo__contains=x).order_by("id").reverse()
+        else:
+            contexto['audios_historico'] = registro.audio.all().order_by("id").reverse()
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
     contexto['logado'] = request.user.is_active

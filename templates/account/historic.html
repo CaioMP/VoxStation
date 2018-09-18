@@ -18,7 +18,7 @@
     <div class="audioBox">
         <form class="form-search" enctype="multipart/form-data" method="POST">
             {% csrf_token %}
-            <input class="form-control" type="search" name="{{form_aud.text.name}}" id="{{form_aud.text.id_for_label}}"
+            <input class="form-control" type="search" name="pesquisa" id=""
                    placeholder="Pesquisar">
             <button class="btn btn-search" type="submit">
                 <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar" id="search">
