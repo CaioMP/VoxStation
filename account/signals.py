@@ -18,12 +18,14 @@ def announce_new_audio(sender, instance, created, **kwargs):
         link = str("/channel/audio/" + str(instance.pk))
 
         async_to_sync(channel_layer.group_send)(
-            "gossip", {"type": "user.gossip",
-                       "event": "New Audio",
-                       "link": link,
-                       "titulo": instance.titulo,
-                       "data": data,
-                       "canal": instance.canal_proprietario.foto_canal.url,
-                       "capa": instance.capa.url
-                       }
+            "notific", {
+                "type": "user.notific",
+                "event": "New Audio",
+                "link": link,
+                "titulo": instance.titulo,
+                "data": data,
+                "canal": instance.canal_proprietario.foto_canal.url,
+                "capa": instance.capa.url,
+                "id_canal": instance.canal_proprietario.pk
+            }
         )

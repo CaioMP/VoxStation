@@ -1,38 +1,51 @@
 document.addEventListener('DOMContentLoaded', function() {
-const webSocketBridge = new channels.WebSocketBridge();
-const nl = document.querySelector("#notifylist");
+    const webSocketBridge = new channels.WebSocketBridge();
+    const nl = document.querySelector("#notifylist");
 
-webSocketBridge.connect('/notifications/');
-webSocketBridge.listen(function(action, stream) {
-    console.log("RESPONSE:", action);
-    if(action.event == "New Audio") {
-        var link = document.createElement("a");
-        link.setAttribute('href', action.link);
+    webSocketBridge.connect('/notifications/');
+    webSocketBridge.listen(function(action, stream) {
+        console.log("RESPONSE:", action, "STREAM:", stream);
+        if(action.event == "New Audio") {
+            if(document.getElementById('notificNumber').style.display == "none"){
+                $('#notificNumber').html('1');
+                document.getElementById('notificNumber').style.display = "block";
+            }
+            else{
+                var n = parseInt($('#notificNumber').html());
+                $('#notificNumber').html(n+1);
+            }
 
-        var el = document.createElement("li");
-        el.classList.add("dropdown-item");
+            if($("#noNotific").length) {
+                document.getElementById('noNotific').style.display = "none";
+            }
 
-        var canal = document.createElement("img");
-        canal.setAttribute('src', action.canal);
-        canal.setAttribute('class', 'channel-notific');
+            var link = document.createElement("a");
+            link.setAttribute('href', action.link);
 
-        var capa = document.createElement("img");
-        capa.setAttribute('src', action.capa);
-        capa.setAttribute('class', 'audio-notific');
+            var el = document.createElement("li");
+            el.classList.add("dropdown-item");
 
-        var titulo = document.createElement("h5");
-        titulo.innerHTML = action.titulo;
+            var canal = document.createElement("img");
+            canal.setAttribute('src', action.canal);
+            canal.setAttribute('class', 'channel-notific');
 
-        var data = document.createElement("h3");
-        data.innerHTML = action.data;
+            var capa = document.createElement("img");
+            capa.setAttribute('src', action.capa);
+            capa.setAttribute('class', 'audio-notific');
 
-        link.appendChild(canal);
-        link.appendChild(capa);
-        link.appendChild(titulo);
-        link.appendChild(data);
-        el.appendChild(link);
-        nl.appendChild(el);
-    }
-})
-document.ws = webSocketBridge;
+            var titulo = document.createElement("h5");
+            titulo.innerHTML = action.titulo;
+
+            var data = document.createElement("h3");
+            data.innerHTML = action.data;
+
+            link.appendChild(canal);
+            link.appendChild(capa);
+            link.appendChild(titulo);
+            link.appendChild(data);
+            el.appendChild(link);
+            nl.appendChild(el);
+        }
+    })
+    document.ws = webSocketBridge;
 })
