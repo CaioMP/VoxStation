@@ -49,7 +49,7 @@ $('document').ready( function(){
 				}, 1800);
 			},
 			error:function(){
-				alert("fudeu bahia");
+				alert("erro ao conectar com servidor");
 			}
 		});
 
@@ -80,7 +80,7 @@ $('document').ready( function(){
 				$('#createPlaylist').modal('hide');
 			},
 			error:function(){
-				alert("fudeu bahia");
+				alert("erro ao conectar com servidor");
 			}
 		});
 

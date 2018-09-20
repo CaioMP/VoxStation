@@ -17,7 +17,7 @@ $('document').ready( function(){
 				$('#num_seg').text(json.num_seg);
 			},
 			error:function(){
-				alert("fudeu bahia");
+				alert("erro ao conectar com servidor");
 			}
 		});
 	});

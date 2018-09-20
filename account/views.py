@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect,HttpResponse
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib.auth import (
     login as auth_login,
     get_user_model,
     authenticate
 )
-from channel.models import  Playlist, Canal, Historico
+from channel.models import  Playlist, Canal, Historico, Audio
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
 from .forms import (UserCreationForm, UserLoginForm, EditBasicForm, NewChannelForm,
@@ -274,3 +275,14 @@ def favorites(request):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
     contexto['logado'] = request.user.is_active
     return render(request, './account/favorites.html', contexto)
+
+
+def RemoveHistoric(request, idAudio):
+
+    audio = Audio.objects.get(pk=idAudio)
+    hist = Historico.objects.get(prop=request.user)
+    hist.audio.remove(audio)
+    hist.save()
+    json = {}
+    json['message'] = "{} removido com sucesso do historico".format(audio.titulo)
+    return JsonResponse(json)

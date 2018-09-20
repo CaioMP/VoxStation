@@ -13,6 +13,7 @@ urlpatterns = [
     path("historic/", views.historic, name='historic'),
     path("favorites/", views.favorites, name='favorites'),
     path("new_channel/", login_required(views.NewChannelView), name='new_channel'),
-    path("change_password/", login_required(views.change_password), name='change_password')
+    path("change_password/", login_required(views.change_password), name='change_password'),
+    path("removeHistoric/<idAudio>", login_required(views.RemoveHistoric), name="remove_historic_view")
 
 ]

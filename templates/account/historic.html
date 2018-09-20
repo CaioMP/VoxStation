@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'channel/style_channel_uploads.css' %}">
     <link rel="stylesheet" href="{% static 'account/style_new_channel.css' %}">
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
+    <script src="{% static 'account/js/remove_historico.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -27,7 +28,7 @@
 
         <div class="row mt-4 audios">
             {%for audio in audios_historico%}
-            <div class="col-md-3">
+            <div class="col-md-3" id="card{{forloop.counter}}">
                 <div class="card">
                     <figure class="fig-capa-audio">
                         <img src="{{audio.capa.url}}" class="card-img-top" alt="capa do áudio">
@@ -40,8 +41,7 @@
                                             <img src="/static/resources/icones/more.png" class="icon-more"/>
                                         <div class="dropdown-menu more" aria-labelledby="dropdownMore">
                                             <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
-                                            <a class="dropdown-item" href="#">Reproduzir depois</a>
-                                            <a class="dropdown-item" href="#">Remover do histórico</a>
+                                            <a class="dropdown-item removeH" id="{{forloop.counter}}" url_="{%url 'account:remove_historic_view' audio.id %}" href="#">Remover do histórico</a>
                                         </div>
                                         </a>
                                     </div>
