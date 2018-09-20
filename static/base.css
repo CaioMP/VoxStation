@@ -30,6 +30,7 @@ input[type="text" i]:disabled {
 }
 
 img.channel-notific {
+    display: block;
     width: 2.8rem;
     height: 2.8rem;
     margin-top: 1px;
@@ -38,7 +39,13 @@ img.channel-notific {
     left: 1rem;
 }
 
+ul#notifylist {
+    display: block;
+    right: 0;
+}
+
 img.audio-notific {
+    display: block;
     width: 4rem;
     height: 3rem;
     border-radius: 4px;

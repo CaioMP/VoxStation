@@ -12,6 +12,7 @@ from .forms import (UserCreationForm, UserLoginForm, EditBasicForm, NewChannelFo
 from django.contrib import messages
 from django.contrib.auth.views import logout
 from django.utils.translation import ugettext_lazy as _
+from .models import NotificAudio
 
 User = get_user_model()
 
@@ -143,6 +144,9 @@ def edit_profile(request):
     has_error = False  # Váriavel para verificar e mostrar se ocorreu algum erro ao salvar
     footer = True  # Váriavel para colocar o footer no final da base2.tml
 
+    canais_side = Canal.objects.filter(seguidor=request.user)
+    playlist_side = Playlist.objects.filter(proprietario=request.user)
+
     if request.method == 'POST':
         basicform = EditBasicForm(request.POST, instance=request.user)
         profileform = EditProfileForm(request.POST, request.FILES, instance=request.user)
@@ -165,8 +169,16 @@ def edit_profile(request):
         profileform = EditProfileForm(instance=request.user)
         auxform = AuxForm(instance=request.user)
 
+    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+    notifications = 0
+
+    if ntfs_audios.exists():
+        for ntf in ntfs_audios.all():
+            notifications += 1
+
     context = {"basicform": basicform, "profileform": profileform, "auxform": auxform, "footer": footer, "logado": request.user.is_active,
-               "has_error": has_error, "edited": edited, "edited_password": edited_password, "user": request.user}
+               "has_error": has_error, "edited": edited, "edited_password": edited_password, "user": request.user,
+               "notifications": notifications, "ntfs_audios": ntfs_audios, "canal_side": canais_side, "play_side": playlist_side}
 
     if edited_password:
         edited_password = False
@@ -212,21 +224,40 @@ def change_password(request):
             if new_password2 == 'new_password2':
                 new_password2 = ''
 
-            context = {'form': form, 'old_password': old_password, 'logado': request.user.is_active,
-                       'new_password1': new_password1, 'new_password2': new_password2}
+            ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+            notifications = 0
+
+            if ntfs_audios.exists():
+                for ntf in ntfs_audios.all():
+                    notifications += 1
+
+            context = {'form': form, 'old_password': old_password, 'logado': request.user.is_active, 'ntfs_audios': ntfs_audios,
+                       'notifications': notifications, 'new_password1': new_password1, 'new_password2': new_password2}
 
             return render(request, './account/change_password.html', context)
 
     else:
         edited_password = False
         form = ChangePasswordForm(request.user)
-    return render(request, './account/change_password.html', {'form': form, 'logado': request.user.is_active})
+
+    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+    notifications = 0
+
+    if ntfs_audios.exists():
+        for ntf in ntfs_audios.all():
+            notifications += 1
+
+    return render(request, './account/change_password.html', {'form': form, 'logado': request.user.is_active,
+                                                              'notifications': notifications, 'ntfs_audios': ntfs_audios})
 
 
 def NewChannelView(request):
     form = NewChannelForm(request.POST, request.FILES or None)
     error_nome_canal = ""
     nome_canal = ""
+
+    canais_side = Canal.objects.filter(seguidor=request.user)
+    playlist_side = Playlist.objects.filter(proprietario=request.user)
 
     if request.method == 'POST':
         if form.is_valid():
@@ -243,8 +274,16 @@ def NewChannelView(request):
                         error_nome_canal = error
             form = NewChannelForm()
 
-    context = {'form': form, 'error_nome_canal': error_nome_canal, 'nome_canal': nome_canal,
-               'user': request.user, 'logado': request.user.is_active}
+    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+    notifications = 0
+
+    if ntfs_audios.exists():
+        for ntf in ntfs_audios.all():
+            notifications += 1
+
+    context = {'form': form, 'error_nome_canal': error_nome_canal, 'nome_canal': nome_canal, 'ntfs_audios': ntfs_audios,
+               'user': request.user, 'logado': request.user.is_active, 'notifications': notifications, "canal_side": canais_side,
+               "play_side": playlist_side}
 
     return render(request, './account/new_channel.html', context)
 
@@ -262,6 +301,14 @@ def historic(request):
             contexto['audios_historico'] = registro.audio.all().order_by("id").reverse()
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+        notifications = 0
+
+        if ntfs_audios.exists():
+            for ntf in ntfs_audios.all():
+                notifications += 1
+        contexto['notifications'] = notifications
+        contexto['ntfs_audios'] = ntfs_audios
     contexto['logado'] = request.user.is_active
     return render(request, './account/historic.html', contexto)
 
@@ -272,5 +319,13 @@ def favorites(request):
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+        notifications = 0
+
+        if ntfs_audios.exists():
+            for ntf in ntfs_audios.all():
+                notifications += 1
+        contexto['notifications'] = notifications
+        contexto['ntfs_audios'] = ntfs_audios
     contexto['logado'] = request.user.is_active
     return render(request, './account/favorites.html', contexto)

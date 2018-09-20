@@ -58,7 +58,7 @@
                                 <img src="/static/resources/icones/view.png" class="icon-view"/>
                                 {{audio.reproducoes}}</p>
                             <p class="descript-thumb">
-                                {{audio.data_publicacao}}
+                                {{audio.data_publicacao|date:"d/m/y"}} às {{audio.data_publicacao|date:"H:i"}}
                             </p>
                         </div>
                     </div>

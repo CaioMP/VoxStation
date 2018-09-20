@@ -42,6 +42,16 @@ def search(request):
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+        notifications = 0
+
+        if ntfs_audios.exists():
+            for ntf in ntfs_audios.all():
+                notifications += 1
+
+        contexto['notifications'] = notifications
+        contexto['ntfs_audios'] = ntfs_audios
+
     if request.method == "POST":
         pesquisa = request.POST['pesquisa']
         contexto['pesquisa'] = pesquisa

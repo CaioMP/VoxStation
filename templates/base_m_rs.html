@@ -37,6 +37,10 @@
     <!--JS da base-->
     <script src="{% static 'base.js' %}"></script>
 
+    <!--Script WebSocket-->
+    <script src="{% static 'ws.js' %}"></script>
+    <script src="{% static '/channels/js/websocketbridge.js' %}" type="text/javascript"></script>
+
     {% block head %}
     {% endblock %}
 </head>
@@ -671,11 +675,33 @@
                 </li>
                 <li class="dropdown">
                     <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="icon-right" src="/static/resources/icones/notific.ico"></a>
+                        {% if notifications > 0 %}
+                            <span id="notificNumber">{{ notifications }}</span>
+                        {% else %}
+                            <span id="notificNumber" style="display: none;"></span>
+                        {% endif %}
+                        <i class="fas fa-bell icon-right" style="color: black; margin-bottom: 0 !important"></i></a>
                     <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
-                        <a class="dropdown-item" href="#">Notific 1</a>
-                        <a class="dropdown-item" href="#">Notific 2</a>
-                        <a class="dropdown-item" href="#">Notific 3</a>
+                        <ul id="notifylist" style="padding: .5rem 1px;">
+                            <li class="dropdown-item" id="headerNotific">Notificações</li>
+                            {% if ntfs_audios.exists %}
+                                {% for naudio in ntfs_audios.all %}
+                                    <li class="dropdown-item">
+                                        <a href="{% url 'channel:player_view' naudio.audio_id %}">
+                                            <img class="channel-notific" src="{{ naudio.audio_canal }}">
+                                            <img class="audio-notific" src="{{ naudio.audio_capa }}">
+                                            <h5>{{ naudio.audio_name }}</h5>
+                                            <h3>{{naudio.audio_data|date:"d/m/y"}} às {{naudio.audio_data|date:"H:i"}}</h3>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+                            {% if notifications == 0 %}
+                            <li class="noNotific" id="noNotific">
+                                <h5>Não há notificações</h5>
+                            </li>
+                            {% endif %}
+                        </ul>
                     </div>
                 </li>
                 <li class="dropdown" id="dpAvatar">
