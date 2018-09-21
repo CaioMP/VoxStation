@@ -172,16 +172,3 @@ class Seg(models.Model):
     def __str__(self):
         return self.canal_seguido.nome_canal+"_"+self.seguidores.username
 
-
-class NotificAudio(models.Model):
-    user_notific = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="user_notific")
-    audio_id = models.PositiveIntegerField()
-    audio_name = models.CharField(max_length=50, null=True)
-    audio_data = models.DateTimeField(default=datetime.now)
-    audio_canal = models.CharField(max_length=1000, null=True)
-    audio_capa = models.CharField(max_length=1000, null=True)  # Pega a url
-
-    def __str__(self):
-        info = str(self.audio_id) + " - " + str(self.user_notific)
-        return info
-

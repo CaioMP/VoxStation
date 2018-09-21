@@ -1,7 +1,6 @@
 from django.shortcuts import render, HttpResponse
-from account.models import Canal, NotificAudio
-from channel.models import Playlist
-from channel.models import Audio, Anuncio, AudioReport
+from channel.models import Playlist, NotificAudio
+from channel.models import AudioReport
 from .process import *
 from channel.process import ordena_pra_exibicao
 from django.http import JsonResponse
@@ -19,12 +18,16 @@ def IndexView(request):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         contexto['notifications'] = notifications
+        contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
 
     contexto['channels'] = orderAudios(Canal.objects.all())
@@ -44,12 +47,16 @@ def search(request):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         contexto['notifications'] = notifications
+        contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
 
     if request.method == "POST":
@@ -69,6 +76,15 @@ def search(request):
 
     contexto['logado'] = request.user.is_active
     return render(request, './home/search.html', contexto)
+
+
+def visualized(request):
+    notifications = NotificAudio.objects.filter(user_notific=request.user)
+    for notific in notifications:
+        if not notific.visualized:
+            notific.visualized = True
+            notific.save()
+    return HttpResponse("visualizado")
 
 
 def report_audio(request, audio_id):

@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponse
 from .forms import *
-from account.models import Seg, NotificAudio, MyUser
+from account.models import Seg, MyUser
 from .process import *
 from django.http import JsonResponse
-from .models import Playlist, Audio, Comentario, Resposta, Historico
+from .models import Playlist, Audio, Comentario, Resposta, Historico, NotificAudio
 from datetime import datetime
 import random
 
@@ -17,9 +17,12 @@ def myuploads(request):
 
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
     channels = Canal.objects.filter(proprietario=request.user)
@@ -43,11 +46,7 @@ def myuploads(request):
                 for user in canal.users_notific.all():
                     notification = NotificAudio()
                     notification.user_notific = user
-                    notification.audio_id = audio.pk
-                    notification.audio_canal = audio.canal_proprietario.foto_canal.url
-                    notification.audio_data = audio.data_publicacao
-                    notification.audio_capa = audio.capa.url
-                    notification.audio_name = audio.titulo
+                    notification.audio = audio
                     notification.save()
 
             tagtext = tagform.cleaned_data['text']
@@ -81,7 +80,8 @@ def myuploads(request):
     tagform = TagForm()
     form = AudioForm(instance=request.user)
     contexto = {'form': form, 'channels': channels, 'logado': request.user.is_active, 'notifications': notifications,
-                "tagform": tagform, "play_side": playlist_side, "canal_side": canais_side, 'ntfs_audios': ntfs_audios}
+                "tagform": tagform, "play_side": playlist_side, "canal_side": canais_side, 'ntfs_audios': ntfs_audios,
+                'new_notific': new_notific}
 
     return render(request, "./channel/myuploads.html", contexto)
 
@@ -94,12 +94,16 @@ def channel(request,id):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         contexto['notifications'] = notifications
+        contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
 
     contexto['chan'] = getaudios(Canal.objects.get(pk=id))
@@ -123,12 +127,16 @@ def playlist(request, id):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         contexto['notifications'] = notifications
+        contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
 
     contexto['logado'] = request.user.is_active
@@ -217,12 +225,16 @@ def playlist_play(request, id, id_audio):
         context['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         context['notifications'] = notifications
+        context['new_notific'] = new_notific
         context['ntfs_audios'] = ntfs_audios
 
     return render(request, './channel/playlist_play.html', context)
@@ -307,12 +319,16 @@ def about(request, id):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         contexto['notifications'] = notifications
+        contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
 
     contexto['logado'] = request.user.is_active
@@ -340,12 +356,16 @@ def uploads(request, id):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         contexto['notifications'] = notifications
+        contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
 
     contexto['logado'] = request.user.is_active
@@ -386,12 +406,16 @@ def partner(request, id):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         contexto['notifications'] = notifications
+        contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
 
     contexto['chan'] = getaudios(Canal.objects.get(pk=id))
@@ -433,12 +457,16 @@ def playlist_all(request, id):
         contexto['channels'] = Canal.objects.filter(proprietario=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         contexto['notifications'] = notifications
+        contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
 
     contexto['form'] = PlaylistForm()
@@ -545,12 +573,16 @@ def edit_channel(request, id):
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         contexto['notifications'] = notifications
+        contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
 
     contexto['audios_edit'] = EditAudioForm()
@@ -694,12 +726,16 @@ def player(request, id):
         context['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
+        new_notific = 0
 
         if ntfs_audios.exists():
             for ntf in ntfs_audios.all():
+                if not ntf.visualized:
+                    new_notific += 1
                 notifications += 1
 
         context['notifications'] = notifications
+        context['new_notific'] = new_notific
         context['ntfs_audios'] = ntfs_audios
 
     return render(request, './channel/player.html', context)
