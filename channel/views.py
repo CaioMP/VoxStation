@@ -11,19 +11,18 @@ import random
 def myuploads(request):
     audio = Audio()
 
-    if request.user.is_active:
-        canais_side = Canal.objects.filter(seguidor=request.user)
-        playlist_side = Playlist.objects.filter(proprietario=request.user)
+    canais_side = Canal.objects.filter(seguidor=request.user)
+    playlist_side = Playlist.objects.filter(proprietario=request.user)
 
-        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
-        notifications = 0
-        new_notific = 0
+    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+    notifications = 0
+    new_notific = 0
 
-        if ntfs_audios.exists():
-            for ntf in ntfs_audios.all():
-                if not ntf.visualized:
-                    new_notific += 1
-                notifications += 1
+    if ntfs_audios.exists():
+        for ntf in ntfs_audios.all():
+            if not ntf.visualized:
+                new_notific += 1
+            notifications += 1
 
     channels = Canal.objects.filter(proprietario=request.user)
     if request.method == "POST":
@@ -72,16 +71,17 @@ def myuploads(request):
 
             return redirect('/')
         else:
-            erro = True
-            contexto={'form': form, 'channels': channels, 'logado': request.user.is_active,
-                                                                "tagform": tagform, "erro": erro}
+            has_error = True
+            contexto={'form': form, 'channels': channels, 'logado': request.user.is_active, "tagform": tagform,
+                      "has_error": has_error, "play_side": playlist_side, "canal_side": canais_side, 'ntfs_audios': ntfs_audios,
+                      'new_notific': new_notific, 'notifications': notifications, "footer": True}
 
             return render(request, "./channel/myuploads.html", contexto)
     tagform = TagForm()
     form = AudioForm(instance=request.user)
     contexto = {'form': form, 'channels': channels, 'logado': request.user.is_active, 'notifications': notifications,
                 "tagform": tagform, "play_side": playlist_side, "canal_side": canais_side, 'ntfs_audios': ntfs_audios,
-                'new_notific': new_notific}
+                'new_notific': new_notific, "footer": True}
 
     return render(request, "./channel/myuploads.html", contexto)
 

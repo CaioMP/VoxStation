@@ -15,24 +15,15 @@
 
 {% block body %}
     <div class="myUploadsBox">
+        <h2 class="header">Envie seu áudio</h2>
         <form method="post" id="form-up" enctype="multipart/form-data" >
             {% csrf_token %}
-            {% if erro == True %}
-                <div id="alert-error" class="alert alert-danger alert-dismissible mb-2 mt-2 mr-5 ml-0" role="alert">
-                    Erro de Validação, para que o formulário seja valido preencha todos os campos presentes incluindo foto de capa e o audio em questão !!!!!
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endif %}
             <div class="content">
-                <h2>Envie seu áudio</h2>
-
                 <!--Tumbnail do áudio-->
-                <figure class="fig-thumb mr-5">
-                    <label for="id_capa">
+                <figure class="fig-thumb">
+                    <label for="id_capa" style="width: 100%;height: 100%;">
                         <figure class="fig-fade">
-                            <img src="{% static 'images/default-user.png' %}" id="foto-default" alt="">
+                            <img src="{% static 'images/background-banner.jpg' %}" id="foto-default" alt="">
                             <figcaption class="icon" id="icon">
                                 <img src="{% static 'images/camera.png' %}" class="camera" alt="">
                             </figcaption>
@@ -41,27 +32,31 @@
                     <input type="file" name="{{ form.capa.name }}" id="{{ form.capa.id_for_label }}" accept="image/*">
                 </figure>
 
-                <!--Áudio a ser enviado-->
-                <label for="id_audio" class="btn btn-save audio">
-                    Selecione seu áudio
-                    <input type="file" class="btn btn-primary" name="{{ form.audio.name }}" id="{{ form.audio.id_for_label }}" accept="audio/*">
-                </label>
-                <br>
-
+                <div class="content-right">
+                    <!--Canal proprietário-->
                     <span class="myspan">
                         Canal proprietário
-                        <label for="id_canal_proprietario">
+                        <label for="id_canal_proprietario" class="d-block">
                             <select class="select-channel" name="{{form.canal_proprietario.name}}" id="{{form.canal_proprietario.id_for_label}}">
                                 {%for channel in channels%}
                                 <option value="{{channel.id}}">{{channel.nome_canal}}</option>
                                 {% endfor %}
                             </select>
                         </label>
-                    </span>
+                    </span><br>
+
+                    <!--Áudio a ser enviado-->
+                    <label for="id_audio" class="btn btn-save b-linear audio">
+                        Selecione seu áudio
+                        <input type="file" class="btn btn-primary" name="{{ form.audio.name }}" id="{{ form.audio.id_for_label }}" accept="audio/*">
+                    </label><br>
+                    <h6>Nenhum áudio selecionado</h6>
+                </div>
 
                 <!--Titúlo do áudio-->
-                <label class="has-float-label">
-                    <input type="text" name="{{ form.titulo.name }}" id="{{ form.titulo.id_for_label }}" placeholder="titulo" class="form_audio">
+                <label class="has-float-label" style="margin-top: -.5rem;">
+                    <input type="text" name="{{ form.titulo.name }}" id="{{ form.titulo.id_for_label }}" required=""
+                           placeholder="Título" class="form_audio">
                     <span>Título</span>
                 </label>
 
@@ -72,7 +67,8 @@
                 </label>
 
                 <label for="id_text" class="has-float-label">
-                    <textarea name="{{ tagform.text.name }}" id="{{ tagform.text.id_for_label }}" placeholder="Tags" rows="4"></textarea>
+                    <textarea name="{{ tagform.text.name }}" id="{{ tagform.text.id_for_label }}" placeholder="Tags"
+                              required="" rows="3"></textarea>
                     <span>Tags</span>
                 </label>
                 <div class="progress mt-3 mb-3" style="height:30px">
@@ -82,7 +78,7 @@
                     <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}">
                         <strong class="mystrong">{% trans 'Cancelar' %}</strong>
                     </a>
-                    <button type="submit" class="btn btn-save">Enviar áudio</button>
+                    <button type="submit" class="btn btn-save b-linear">Enviar</button>
                 </div>
             </div>
         </form>

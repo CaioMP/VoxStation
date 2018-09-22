@@ -517,15 +517,18 @@
     </div>
 
     {% if footer %}
-        <div class="footer">
+        <div class="footer" id="footer" {% if not edit_acc %} style="background-color: transparent;z-index: -1;" {% endif %}>
             <!--Botão de Salvar e Cancelar-->
-            <button class="btn btn-save" type="submit" id="submitForm" name="submitForm" onclick="Submit()">
+            <button class="btn btn-save" type="submit" id="submitForm" name="submitForm" onclick="Submit()"
+            {% if not edit_acc %} style="display: none;" {% endif %}>
                 <strong class="save-strong">{% trans 'Salvar' %}</strong>
             </button>
 
-            <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}">
+            <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}"
+            {% if not edit_acc %} style="display: none;" {% endif %}>
                 <strong class="mystrong">{% trans 'Cancelar' %}</strong>
             </a>
+
 
             <!--Alert de salvar-->
             {% if edited %}
@@ -543,7 +546,16 @@
 
             <!--Alert de erro-->
             {% if has_error %}
-                <div id="alert-error" class="alert alert-danger fade alert-dismissible" role="alert">
+                {% if not edit_acc %}
+                <script>
+                    document.getElementById("footer").style.zIndex = "1";
+                    window.setTimeout(function() {
+                        document.getElementById("footer").style.zIndex = "-1";
+                    }, 1800);
+                </script>
+                {% endif %}
+                <div id="alert-error" class="alert alert-danger fade alert-dismissible" role="alert"
+                {% if not edit_acc %} style="margin-top: -30px;" {% endif %}>
                     {% trans 'Oops, algo está errado!' %}
                 </div>
             {% endif %}

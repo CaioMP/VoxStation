@@ -17,9 +17,9 @@ $(document).ready(function() {
 					}, 3000);
 					$('.progress').hide();
 				},
-				resetForm:true;
+				resetForm:true
 			})
-			return true;
+			return true
 		}
 	})
 });

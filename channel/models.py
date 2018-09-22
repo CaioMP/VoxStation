@@ -33,7 +33,7 @@ class Audio(models.Model):
     capa = models.ImageField(upload_to=capa_path, blank=True, null=True)
     duracao = models.CharField(max_length=15, blank=True, null=True)
     reproducoes = models.IntegerField()
-    descricao = models.TextField(max_length=500)
+    descricao = models.TextField(max_length=500, blank=True, null=True)
     categoria = models.CharField(max_length=15, blank=True, null=True)
     canal_proprietario = models.ForeignKey(Canal, on_delete=models.CASCADE, related_name="canal_proprietario", default=None, null=True)
     proprietario = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="proprietario", null=True)

@@ -182,7 +182,7 @@ def edit_profile(request):
     context = {"basicform": basicform, "profileform": profileform, "auxform": auxform, "footer": footer, "logado": request.user.is_active,
                "has_error": has_error, "edited": edited, "edited_password": edited_password, "user": request.user,
                "notifications": notifications, "ntfs_audios": ntfs_audios, "canal_side": canais_side, "play_side": playlist_side,
-               "new_notific": new_notific}
+               "new_notific": new_notific, "edit_acc": True}
 
     if edited_password:
         edited_password = False
