@@ -27,6 +27,7 @@
     <script src="{% static 'channel/js/player.js' %}" type="text/javascript"></script>
     <script src="{% static 'channel/js/comentar.js' %}" type="text/javascript"></script>
     <script src="{% static 'channel/js/responder.js' %}" type="text/javascript"></script>
+    <script src="{% static 'account/js/feedback.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -87,8 +88,8 @@
             <!--Feedback e Denunciar-->
             <div class="feedbackBox">
                 <a onclick="verificaLogado('{{logado}}')" id="reportLink" style="height: 1rem;margin-right: 2.15rem;"><i class="fas fa-flag"></i></a>
-                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" class="icon feedback"></a>{{audio.numero_likes}}
-                <a href="#" class="ml-3"><img src="/static/resources/icones/dislike.png" alt="não gostei" class="icon feedback"></a>{{audio.numero_deslikes}}
+                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" url_="{%url 'channel:feedBack_view' audio.id%}" op="like" class="icon feedback" id="like"></a>{{audio.numero_likes}}
+                <a href="#" class="ml-3"><img src="/static/resources/icones/dislike.png" url_="{%url 'channel:feedBack_view' audio.id%}" op="deslike"  alt="não gostei" id="delike" class="icon feedback"></a>{{audio.numero_deslikes}}
             </div>
 
             <div class="descricao" id="descBox">

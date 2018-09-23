@@ -5,7 +5,8 @@ from django.contrib.auth import (
     get_user_model,
     authenticate
 )
-from channel.models import Playlist, Canal, Historico, Audio, NotificAudio
+from .models import MyUser
+from channel.models import Playlist, Canal, Historico, Audio, NotificAudio, Favorito
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
 from .forms import (UserCreationForm, UserLoginForm, EditBasicForm, NewChannelForm,
@@ -36,6 +37,8 @@ def RegisterView(request):
 
             Hist = Historico.objects.create(prop=profile)
             Hist.save()
+            Fav = Favorito.objects.create(prop=profile)
+            fav.save()
 
             new_user = authenticate(
                 username=account.cleaned_data['email'],
@@ -330,8 +333,13 @@ def historic(request):
 
 def favorites(request):
     contexto = {}
-
+    contas = MyUser.objects.all()
+    for conta in contas:
+        fav = Favorito.objects.create(prop=conta)
+        fav.save()
     if request.user.is_active:
+        fav = Favorito.objects.get(prop=request.user)
+        contexto['audios_favoritos'] = fav.audio.all()
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
