@@ -32,3 +32,9 @@ window.setTimeout(function() {
 function showAlert(){
     $(".fade").addClass("in")
 }
+
+//Identificar quando as notificações foram visualizadas
+function Visualized(){
+    document.getElementById("notificNumber").style.display="none";
+    $("#formNotific").submit();
+}

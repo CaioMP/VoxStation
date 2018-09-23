@@ -29,6 +29,11 @@ input[type="text" i]:disabled {
     margin-top: 1rem;
 }
 
+.b-linear {
+    background: linear-gradient(-160deg, #032854, black) !important;
+    color: white;
+}
+
 img.channel-notific {
     display: block;
     width: 2.8rem;
@@ -90,7 +95,7 @@ label#nome_playlist {
 }
 
 .has-float-label input:placeholder-shown:not(:focus)+*, .has-float-label select:placeholder-shown:not(:focus)+*, .has-float-label textarea:placeholder-shown:not(:focus)+* {
-    font-size: 100% !important;
+    font-size: 90% !important;
     margin-left: 5px;
     top: 0.9em !important;
 }
@@ -236,15 +241,15 @@ label#nome_playlist {
 
 @media only screen and (min-width: 1175px) {
     figure {
-        height: 160px !important;
+        height: 170px !important;
     }
 
     figcaption.fc-capa-audio {
-        height: 160px !important;
+        height: 170px !important;
     }
 
     .icon-play {
-        margin-top: 3rem !important;
+        margin-top: 3.5rem !important;
         margin-bottom: 1.5rem !important;
         width: 65px !important;
     }

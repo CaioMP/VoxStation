@@ -47,6 +47,9 @@
     <script src="{% static 'ws.js' %}"></script>
     <script src="{% static '/channels/js/websocketbridge.js' %}" type="text/javascript"></script>
 
+    <!--Script para verificar se as notificações foram visualizadas-->
+    <script src="{% static 'notific.js' %}"></script>
+
     {% block head %}
     {% endblock %}
 </head>
@@ -409,9 +412,10 @@
                     <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/disc.ico"></a>
                 </li>
                 <li class="dropdown">
-                    <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {% if notifications > 0 %}
-                            <span id="notificNumber">{{ notifications }}</span>
+                    <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    onclick="Visualized()">
+                        {% if new_notific > 0 %}
+                            <span id="notificNumber">{{ new_notific }}</span>
                         {% else %}
                             <span id="notificNumber" style="display: none;"></span>
                         {% endif %}
@@ -422,11 +426,11 @@
                             {% if ntfs_audios.exists %}
                                 {% for naudio in ntfs_audios.all %}
                                     <li class="dropdown-item">
-                                        <a href="{% url 'channel:player_view' naudio.audio_id %}">
-                                            <img class="channel-notific" src="{{ naudio.audio_canal }}">
-                                            <img class="audio-notific" src="{{ naudio.audio_capa }}">
-                                            <h5>{{ naudio.audio_name }}</h5>
-                                            <h3>{{naudio.audio_data|date:"d/m/y"}} às {{naudio.audio_data|date:"H:i"}}</h3>
+                                        <a href="{% url 'channel:player_view' naudio.audio.id %}">
+                                            <img class="channel-notific" src="{{ naudio.audio.canal_proprietario.foto_canal.url }}">
+                                            <img class="audio-notific" src="{{ naudio.audio.capa.url }}">
+                                            <h5>{{ naudio.audio.titulo }}</h5>
+                                            <h3>{{naudio.audio.data_publicacao|date:"d/m/y"}} às {{naudio.audio.data_publicacao|date:"H:i"}}</h3>
                                         </a>
                                     </li>
                                 {% endfor %}
@@ -437,6 +441,9 @@
                             </li>
                             {% endif %}
                         </ul>
+                        <form method="POST" action="{% url 'home:visualized_view' %}" id="formNotific" class="d-none">
+                            {% csrf_token %}
+                        </form>
                     </div>
                 </li>
                 <li class="dropdown" id="dpAvatar">
@@ -510,15 +517,18 @@
     </div>
 
     {% if footer %}
-        <div class="footer">
+        <div class="footer" id="footer" {% if not edit_acc %} style="background-color: transparent;z-index: -1;" {% endif %}>
             <!--Botão de Salvar e Cancelar-->
-            <button class="btn btn-save" type="submit" id="submitForm" name="submitForm" onclick="Submit()">
+            <button class="btn btn-save" type="submit" id="submitForm" name="submitForm" onclick="Submit()"
+            {% if not edit_acc %} style="display: none;" {% endif %}>
                 <strong class="save-strong">{% trans 'Salvar' %}</strong>
             </button>
 
-            <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}">
+            <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}"
+            {% if not edit_acc %} style="display: none;" {% endif %}>
                 <strong class="mystrong">{% trans 'Cancelar' %}</strong>
             </a>
+
 
             <!--Alert de salvar-->
             {% if edited %}
@@ -536,7 +546,16 @@
 
             <!--Alert de erro-->
             {% if has_error %}
-                <div id="alert-error" class="alert alert-danger fade alert-dismissible" role="alert">
+                {% if not edit_acc %}
+                <script>
+                    document.getElementById("footer").style.zIndex = "1";
+                    window.setTimeout(function() {
+                        document.getElementById("footer").style.zIndex = "-1";
+                    }, 1800);
+                </script>
+                {% endif %}
+                <div id="alert-error" class="alert alert-danger fade alert-dismissible" role="alert"
+                {% if not edit_acc %} style="margin-top: -30px;" {% endif %}>
                     {% trans 'Oops, algo está errado!' %}
                 </div>
             {% endif %}
