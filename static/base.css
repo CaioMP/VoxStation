@@ -239,6 +239,12 @@ label#nome_playlist {
     z-index: 2000;
 }
 
+@media only screen and (max-height: 623px) {
+    .addAudioPl {
+        top: 30rem;
+    }
+}
+
 @media only screen and (min-width: 1175px) {
     figure {
         height: 170px !important;
@@ -275,5 +281,9 @@ label#nome_playlist {
 
     .modal .btn {
         font-size: .8rem;
+    }
+
+    .addAudioPl {
+        font-size: 12px;
     }
 }

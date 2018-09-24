@@ -31,6 +31,7 @@
     <script src="{% static 'channel/js/playlist-play.js' %}" type="text/javascript"></script>
     <script src="{% static 'channel/js/randomize.js' %}" type="text/javascript"></script>
     <script src="{% static 'channel/js/normalize.js' %}" type="text/javascript"></script>
+    <script src="{% static 'account/js/feedback.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -145,8 +146,16 @@
             <!--Feedback e Denunciar-->
             <div class="feedbackBox">
                 <a onclick="verificaLogado('{{logado}}')" id="reportLink" style="height: 1rem;margin-right: 2.15rem;"><i class="fas fa-flag"></i></a>
-                <a href="#"><img src="/static/resources/icones/like.png" alt="gostei" class="icon feedback"></a>{{audio.numero_likes}}
-                <a href="#" class="ml-3"><img src="/static/resources/icones/dislike.png" alt="não gostei" class="icon feedback"></a>{{audio.numero_deslikes}}
+
+                <!--Like-->
+                <div url_="{%url 'channel:feedBack_view' audio.id%}" op="like" class="icon feedback" id="like"
+                {% if user_like.exists %} style="background-color: #032854;" {% endif %}>
+                </div><div class="mr-3" id="num-like">{{audio.numero_likes}}</div>
+
+                <!--Deslike-->
+                <div url_="{%url 'channel:feedBack_view' audio.id%}" op="deslike" class="icon feedback" id="deslike"
+                {% if user_deslike.exists %} style="background-color: #730c0c;" {% endif %}>
+                </div><div id="num-deslike">{{audio.numero_deslikes}}</div>
             </div>
 
             <div class="descricao" id="descBox">

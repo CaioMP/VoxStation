@@ -333,10 +333,7 @@ def historic(request):
 
 def favorites(request):
     contexto = {}
-    contas = MyUser.objects.all()
-    for conta in contas:
-        fav = Favorito.objects.create(prop=conta)
-        fav.save()
+
     if request.user.is_active:
         fav = Favorito.objects.get(prop=request.user)
         contexto['audios_favoritos'] = fav.audio.all()

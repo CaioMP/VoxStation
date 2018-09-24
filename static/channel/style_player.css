@@ -69,7 +69,7 @@ img.thumb-audio {
     transition: transform, max-height, .5s;
 }
 
-img.icon-view {
+.icon-view {
     width: 1rem;
     margin-top: -3px;
     margin-right: .5rem;
@@ -171,7 +171,7 @@ i#showHeader {
     top: -1px;
 }
 
-img.icon {
+.icon {
     width: 33px;
     margin-top: -0.3rem;
     cursor: pointer;
@@ -222,6 +222,24 @@ img.icon {
     height: 22px;
     width: 22px;
     margin-right: .5rem;
+    background-color: black;
+    transition: .15s ease-in;
+}
+
+div#like {
+    -webkit-mask-box-image: url(/static/resources/icones/like.png);
+}
+
+div#like:hover {
+    background-color: #032854 !important;
+}
+
+div#deslike {
+    -webkit-mask-box-image: url(/static/resources/icones/dislike.png);
+}
+
+div#deslike:hover {
+    background-color: #730c0c !important;
 }
 
 .sintonizar {
@@ -542,7 +560,7 @@ button#descartar {
         left: 1rem;
     }
 
-    img.icon {
+    .icon {
         width: 28px;
     }
 
@@ -560,7 +578,7 @@ button#descartar {
         font-size: .8rem;
     }
 
-    img.icon-view {
+    .icon-view {
         width: .8rem;
     }
 

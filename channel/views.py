@@ -233,6 +233,11 @@ def playlist_play(request, id, id_audio):
                     new_notific += 1
                 notifications += 1
 
+        user_like = FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio)
+        user_deslike = FeedDesLike.objects.filter(conta_feed=request.user, Audio_feed=audio)
+
+        context['user_like'] = user_like
+        context['user_deslike'] = user_deslike
         context['notifications'] = notifications
         context['new_notific'] = new_notific
         context['ntfs_audios'] = ntfs_audios
@@ -734,6 +739,11 @@ def player(request, id):
                     new_notific += 1
                 notifications += 1
 
+        user_like = FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio)
+        user_deslike = FeedDesLike.objects.filter(conta_feed=request.user, Audio_feed=audio)
+
+        context['user_like'] = user_like
+        context['user_deslike'] = user_deslike
         context['notifications'] = notifications
         context['new_notific'] = new_notific
         context['ntfs_audios'] = ntfs_audios
@@ -902,53 +912,89 @@ def editAudio(request, id, id_channel):
                     audio.save()
     return redirect("/channel/edit/{}".format(id_channel))
 
+
 def feedBack(request, idAudio):
     json_context = {}
     audio = Audio.objects.get(pk=idAudio)
     opcao = request.GET['opcao']
-    conta = MyUser.objects.get(pk=request.user.pk)
     Fav = Favorito.objects.get(prop=request.user)
 
     if opcao == "like":
-        if FeedLike.objects.filter(conta_feed=request.user.pk, Audio_feed=audio).exists():
-            feed = FeedLike.objects.get(conta_feed=request.user.pk, Audio_feed=audio).delete()
-            audio.numero_likes -= 1
-            json_context['message'] = "audio removido dos favoritos"
-        else:
-            feed = FeedLike.objects.create(conta_feed=request.user.pk, Audio_feed=audio)
-            audio.numero_likes += 1
-            audio.save()
-            Fav.audio.add(audio)
-            Fav.save()
-            json_context['message'] = "audio adicionado aos favoritos"
-            if FeedDesLike.objects.filter(conta_feed=request.user.pk, Audio_feed=audio).exists():
-                feed = FeedLike.objects.get(conta_feed=request.user.pk, Audio_feed=audio).delete()
+        # Remover dos likes
+        if FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio).exists():
+            likes = FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio).all()
+            for like in likes:
+                like.delete()
 
-                audio.numero_deslikes -= 1
-
-    else:
-        if FeedDesLike.objects.filter(conta_feed=request.user.pk, Audio_feed=audio).exists():
-            feed = FeedLike.objects.get(conta_feed=request.user.pk, Audio_feed=audio).delete()
-
-            audio.numero_deslikes -= 1
-
-        else:
-            feed = FeedLike.objects.create(conta_feed=request.user.pk, Audio_feed=audio)
-
-            audio.numero_deslikes += 1
-            json_context['message'] = "audio removido dos favoritos"
             Fav.audio.remove(audio)
             Fav.save()
 
-            if FeedLike.objects.filter(conta_feed=request.user.pk, Audio_feed=audio).exists():
-                feed = FeedLike.objects.get(conta_feed=request.user.pk, Audio_feed=audio).delete()
-
+            if audio.numero_likes != 0:
                 audio.numero_likes -= 1
-    feed.save()
+
+            json_context['message'] = "Áudio removido dos favoritos"
+            json_context['remove_like'] = True
+
+        # Adicionar like
+        else:
+            feed = FeedLike.objects.create(conta_feed=request.user, Audio_feed=audio)
+            audio.numero_likes += 1
+            Fav.audio.add(audio)
+            Fav.save()
+            json_context['message'] = "Áudio adicionado aos favoritos"
+            json_context['like'] = True
+
+            # Se tiver deslike remover
+            if FeedDesLike.objects.filter(conta_feed=request.user, Audio_feed=audio).exists():
+                deslikes = FeedDesLike.objects.filter(conta_feed=request.user, Audio_feed=audio).all()
+                for deslike in deslikes:
+                    deslike.delete()
+
+                json_context['remove_deslike'] = True
+                if audio.numero_deslikes != 0:
+                    audio.numero_deslikes -= 1
+            feed.save()
+
+    else:
+        # Remover deslike
+        if FeedDesLike.objects.filter(conta_feed=request.user, Audio_feed=audio).exists():
+            deslikes = FeedDesLike.objects.filter(conta_feed=request.user, Audio_feed=audio).all()
+            for deslike in deslikes:
+                deslike.delete()
+                json_context['remove_deslike'] = True
+
+            if audio.numero_deslikes != 0:
+                audio.numero_deslikes -= 1
+
+        # Adicionar deslike
+        else:
+            feed = FeedDesLike.objects.create(conta_feed=request.user, Audio_feed=audio)
+
+            audio.numero_deslikes += 1
+            json_context['deslike'] = True
+            if audio in Fav.audio.all():
+                json_context['message'] = "Áudio removido dos favoritos"
+                Fav.audio.remove(audio)
+                Fav.save()
+
+            # Se tiver like remover
+            if FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio).exists():
+                likes = FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio).all()
+                for like in likes:
+                    like.delete()
+
+                Fav.audio.remove(audio)
+                Fav.save()
+                json_context['remove_like'] = True
+
+                if audio.numero_likes != 0:
+                    audio.numero_likes -= 1
+            feed.save()
+
     audio.save()
 
-    json_context['numero_likes'] = audio.numero_likes
-    json_context['numero_deslikes'] = audio.numero_deslikes
+    json_context['numero_de_likes'] = audio.numero_likes
+    json_context['numero_de_deslikes'] = audio.numero_deslikes
 
     return JsonResponse(json_context)
 

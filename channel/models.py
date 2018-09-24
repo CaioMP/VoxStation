@@ -102,11 +102,19 @@ class FeedLike(models.Model):
     conta_feed = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="conta_do_like")
     Audio_feed = models.ForeignKey(Audio, on_delete=models.CASCADE, related_name="audio_do_like")
 
+    def __str__(self):
+        info = str(self.conta_feed) + " - " + str(self.Audio_feed)
+        return info
+
 
 class FeedDesLike(models.Model):
     data_do_feed = models.DateTimeField(default=datetime.now)
     conta_feed = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="conta_do_deslike")
     Audio_feed = models.ForeignKey(Audio, on_delete=models.CASCADE, related_name="audio_do_deslike")
+
+    def __str__(self):
+        info = str(self.conta_feed) + " - " + str(self.Audio_feed)
+        return info
 
 
 class AudioReport(models.Model):
@@ -130,7 +138,8 @@ class Historico(models.Model):
 
 class Favorito(models.Model):
     prop = models.ForeignKey(MyUser, on_delete=models.CASCADE,)
-    audio = models.ManyToManyField(Audio)
+    audio = models.ManyToManyField(Audio, blank=True)
+
     def __str__(self):
         return "favoritos de "+self.prop.username
 

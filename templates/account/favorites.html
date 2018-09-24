@@ -16,6 +16,7 @@
         <img class="icon-left" style="cursor: default;margin: 0 1rem 0 0;" src="/static/resources/icones/favorites_white.png">Favoritos
     </h2>
     <div class="audioBox">
+        {% if audios_favoritos.exists %}
         <form class="form-search" enctype="multipart/form-data" method="POST">
             {% csrf_token %}
             <input class="form-control" type="search" name="{{form_aud.text.name}}" id="{{form_aud.text.id_for_label}}"
@@ -24,47 +25,51 @@
                 <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar" id="search">
             </button>
         </form>
+        {% endif %}
 
         <div class="row mt-4 audios">
-            {%for audio in audios_favoritos%}
-            <div class="col-md-3">
-                <div class="card">
-                    <figure class="fig-capa-audio">
-                        <img src="{{audio.capa.url}}" class="card-img-top" alt="capa do áudio">
-                        <a href="#">
-                            <figcaption class="fc-capa-audio">
-                                <center>
-                                    <img src="/static/resources/icones/play.png" class="icon-play"/>
-                                    <div class="dropdown more">
-                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                        <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                            <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
-                                            <a class="dropdown-item" href="#">Remover dos favoritos</a>
+            {% if audios_favoritos.exists %}
+                {%for audio in audios_favoritos%}
+                <div class="col-md-3">
+                    <div class="card">
+                        <figure class="fig-capa-audio">
+                            <img src="{{audio.capa.url}}" class="card-img-top" alt="capa do áudio">
+                            <a href="#">
+                                <figcaption class="fc-capa-audio">
+                                    <center>
+                                        <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                        <div class="dropdown more">
+                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
+                                                <a class="dropdown-item" href="#">Remover dos favoritos</a>
+                                            </div>
+                                            </a>
                                         </div>
-                                        </a>
-                                    </div>
-                                </center>
-                            </figcaption>
-                        </a>
-                    </figure>
+                                    </center>
+                                </figcaption>
+                            </a>
+                        </figure>
 
-                    <div class="card-body">
-                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{audio.titulo}}</h4></a>
-                        <div class="card-text">
-                            <p class="descript-thumb">{{audio.canal_proprietario.nome_canal}}</p>
-                            <p class="descript-thumb">
-                                <img src="/static/resources/icones/view.png" class="icon-view"/>
-                                {{audio.reproducoes}}</p>
-                            <p class="descript-thumb">
-                                {{audio.descricao}}
-                            </p>
+                        <div class="card-body">
+                            <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{audio.titulo}}</h4></a>
+                            <div class="card-text">
+                                <p class="descript-thumb">{{audio.canal_proprietario.nome_canal}}</p>
+                                <p class="descript-thumb">
+                                    <img src="/static/resources/icones/view.png" class="icon-view"/>
+                                    {{audio.reproducoes}}</p>
+                                <p class="descript-thumb">
+                                    {{audio.descricao}}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {%endfor%}
-            <!--<p><h5 class="ml-4 mt-3"><strong>Nenhum áudio com esse titúlo foi encontrado.</strong></h5></p>-->
+                {%endfor%}
+            {% else %}
+                <h5 class="ml-4"><strong>Você ainda não adicionou áudios aos seus favoritos.</strong></h5>
+            {% endif %}
             </div>
         </div>
 {% endblock %}

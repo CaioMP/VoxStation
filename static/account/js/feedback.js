@@ -11,7 +11,6 @@ $('document').ready( function(){
 			async:true,
 			data:{'opcao':op},
 			success:function(json){
-				console.log(json.message);
 				if(json.message != null){
 					$("#alert-addPlaylist").html(json.message);
 				document.getElementById("alert-addPlaylist").style.visibility = "visible";
@@ -21,10 +20,24 @@ $('document').ready( function(){
 				    document.getElementById("alert-addPlaylist").style.visibility = "hidden";
 				}, 1800);
 				}
-				("#like").text(json.numero_de_likes);
-				("#deslike").text(json.numero_de_deslikes);
+				$("#num-like").html(json.numero_de_likes);
+				$("#num-deslike").html(json.numero_de_deslikes);
 
-				
+                if(json.remove_like) {
+                    document.getElementById("like").style.backgroundColor = "black";
+                }
+
+                if(json.remove_deslike) {
+                    document.getElementById("deslike").style.backgroundColor = "black";
+                }
+
+                if(json.like) {
+                    document.getElementById("like").style.backgroundColor = "#032854";
+                }
+
+                if(json.deslike) {
+                    document.getElementById("deslike").style.backgroundColor = "#730c0c";
+                }
 			},
 			error:function(){
 				alert("erro ao conectar com servidor");
