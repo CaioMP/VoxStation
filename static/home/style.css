@@ -69,17 +69,6 @@ figure {
     box-shadow: 0px 0px 10px #2a2e2f;
 }
 
-.btn-add {
-    border: initial;
-    border-radius: 4px;
-    color: white;
-    background: linear-gradient(-160deg, #032854, black);
-}
-
-.btn-add:hover {
-    background: linear-gradient(-160deg, #032854bf, black);
-}
-
 p {
     margin-top: 0;
     margin-bottom: 5px;

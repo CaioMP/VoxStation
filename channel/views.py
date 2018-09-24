@@ -11,12 +11,14 @@ import random
 def myuploads(request):
     audio = Audio()
 
+    canal_user = Canal.objects.filter(proprietario=request.user)
     canais_side = Canal.objects.filter(seguidor=request.user)
     playlist_side = Playlist.objects.filter(proprietario=request.user)
 
     ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
     notifications = 0
     new_notific = 0
+    has_error = False
 
     if ntfs_audios.exists():
         for ntf in ntfs_audios.all():
@@ -72,16 +74,33 @@ def myuploads(request):
             return redirect('/')
         else:
             has_error = True
-            contexto={'form': form, 'channels': channels, 'logado': request.user.is_active, "tagform": tagform,
-                      "has_error": has_error, "play_side": playlist_side, "canal_side": canais_side, 'ntfs_audios': ntfs_audios,
-                      'new_notific': new_notific, 'notifications': notifications, "footer": True}
+            error_audio = False
+            error_capa = False
+            error_tag = False
+            tags = request.POST['text']
+            for field in form:
+                if field.errors:
+                    if field.name == 'audio':
+                        error_audio = True
+                    if field.name == 'capa':
+                        error_capa = True
+            if tagform.errors:
+                error_tag = True
+                tags = ""
+
+            contexto = {'form': form, 'channels': channels, 'logado': request.user.is_active, 'error_tag': error_tag,
+                        'notifications': notifications, "tagform": tagform, "play_side": playlist_side,
+                        "canal_side": canais_side, 'ntfs_audios': ntfs_audios, 'new_notific': new_notific,
+                        "footer": True, "has_error": has_error, "error_capa": error_capa, "error_audio": error_audio,
+                        "titulo": request.POST['titulo'], "descricao": request.POST['descricao'], "tags": tags,
+                        "canal_user": canal_user}
 
             return render(request, "./channel/myuploads.html", contexto)
     tagform = TagForm()
     form = AudioForm(instance=request.user)
     contexto = {'form': form, 'channels': channels, 'logado': request.user.is_active, 'notifications': notifications,
                 "tagform": tagform, "play_side": playlist_side, "canal_side": canais_side, 'ntfs_audios': ntfs_audios,
-                'new_notific': new_notific, "footer": True}
+                'new_notific': new_notific, "footer": True, "canal_user": canal_user}
 
     return render(request, "./channel/myuploads.html", contexto)
 

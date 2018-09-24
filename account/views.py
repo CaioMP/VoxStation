@@ -361,5 +361,5 @@ def RemoveHistoric(request, idAudio):
     hist.audio.remove(audio)
     hist.save()
     json = {}
-    json['message'] = "{} removido com sucesso do historico".format(audio.titulo)
+    json['message'] = "{} removido".format(audio.titulo)
     return JsonResponse(json)

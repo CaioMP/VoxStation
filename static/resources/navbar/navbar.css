@@ -398,6 +398,10 @@ button.btn.btn-link.mb-1 {
     .icon-right {
         width: 22px;
     }
+
+    i.fas.fa-bell {
+        font-size: 1.38rem;
+    }
 }
 
 @media only screen and (max-width: 700px)
@@ -465,6 +469,10 @@ button.btn.btn-link.mb-1 {
     .icon-right {
         width: auto;
         left: 2px;
+    }
+
+    i.fas.fa-bell {
+        font-size: 1.5rem;
     }
 
     div#dpAccount {
@@ -774,6 +782,10 @@ button.btn.btn-link.mb-1 {
     .icon-right {
         width: 22px;
         left: -2px;
+    }
+
+    i.fas.fa-bell {
+        font-size: 1.38rem;
     }
 
     .dropdown, .dropup {

@@ -19,11 +19,18 @@
         <form method="post" id="form-up" enctype="multipart/form-data" >
             {% csrf_token %}
             <div class="content">
+                {% if error_capa %}
+                <h6 class="error" style="margin-bottom: 2px;margin-left: .5rem;" id="error_capa">Selecione uma imagem</h6>
+                {% endif %}
                 <!--Tumbnail do áudio-->
                 <figure class="fig-thumb">
                     <label for="id_capa" style="width: 100%;height: 100%;">
                         <figure class="fig-fade">
-                            <img src="{% static 'images/background-banner.jpg' %}" id="foto-default" alt="">
+                            {% if not capa %}
+                                <img src="{% static 'images/background-banner.jpg' %}" id="foto-default" alt="">
+                            {% else %}
+                                <img src="{{ capa }}" id="foto-default" alt="">
+                            {% endif %}
                             <figcaption class="icon" id="icon">
                                 <img src="{% static 'images/camera.png' %}" class="camera" alt="">
                             </figcaption>
@@ -50,27 +57,55 @@
                         Selecione seu áudio
                         <input type="file" class="btn btn-primary" name="{{ form.audio.name }}" id="{{ form.audio.id_for_label }}" accept="audio/*">
                     </label><br>
-                    <h6>Nenhum áudio selecionado</h6>
+                    <h6 id="nameAudio" class="error">{% if error_audio %}Selecione um áudio{% endif %}</h6>
                 </div>
 
                 <!--Titúlo do áudio-->
+                {% if not titulo %}
                 <label class="has-float-label" style="margin-top: -.5rem;">
                     <input type="text" name="{{ form.titulo.name }}" id="{{ form.titulo.id_for_label }}" required=""
-                           placeholder="Título" class="form_audio">
+                           placeholder="Título" class="form_audio" maxlength="50">
                     <span>Título</span>
                 </label>
+                {% else %}
+                <label class="has-float-label" style="margin-top: -.5rem;">
+                    <input type="text" name="{{ form.titulo.name }}" id="{{ form.titulo.id_for_label }}" required=""
+                           placeholder="Título" class="form_audio" value="{{ titulo }}">
+                    <span>Título</span>
+                </label>
+                {% endif %}
 
                 <!--Descrição do áudio-->
+                {% if not descricao %}
                 <label for="id_descricao" class="has-float-label">
-                    <textarea name="{{ form.descricao.name }}" id="{{ form.descricao.id_for_label }}" placeholder="Descrição" rows="5"></textarea>
+                    <textarea maxlength="500" name="{{ form.descricao.name }}" id="{{ form.descricao.id_for_label }}" placeholder="Descrição" rows="5"></textarea>
                     <span>Descrição</span>
                 </label>
+                {% else %}
+                <label for="id_descricao" class="has-float-label">
+                    <textarea maxlength="500" name="{{ form.descricao.name }}" id="{{ form.descricao.id_for_label }}"
+                              placeholder="Descrição" rows="5">{{ descricao }}</textarea>
+                    <span>Descrição</span>
+                </label>
+                {% endif %}
 
-                <label for="id_text" class="has-float-label">
+                <!--Tags do áudio-->
+                {% if not tags %}
+                <label for="id_text" class="has-float-label" style="margin-bottom: 5px;">
                     <textarea name="{{ tagform.text.name }}" id="{{ tagform.text.id_for_label }}" placeholder="Tags"
                               required="" rows="3"></textarea>
                     <span>Tags</span>
                 </label>
+                {% else %}
+                <label for="id_text" class="has-float-label" style="margin-bottom: 5px;">
+                    <textarea name="{{ tagform.text.name }}" id="{{ tagform.text.id_for_label }}" placeholder="Tags"
+                              required="" rows="3">{{ tags }}</textarea>
+                    <span>Tags</span>
+                </label>
+                {% endif %}
+                <h6 class="error" id="error-tag" {% if not error_tag %} style="display:none;" {% endif %}>As tags devem começar com #</h6>
+                <h6 style="margin-bottom: 25px;">As tags irão facilitar que seu áudio seja encontrado. Ex: #Pop #Rock, etc.</h6>
+
                 <div class="progress mt-3 mb-3" style="height:30px">
                     <div class="progress-bar progress-bar-striped" role="progressbar" id="progressBar" style="width: % ;height:30px" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>

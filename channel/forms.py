@@ -1,6 +1,7 @@
 from django import forms
 from .models import Audio, Playlist, Comentario, Resposta
 from account.models import Canal
+from .validators import validate_tag
 
 
 class AudioForm(forms.ModelForm):
@@ -21,7 +22,7 @@ class AudioForm(forms.ModelForm):
 
 
 class TagForm(forms.Form):
-    text = forms.CharField(widget=forms.Textarea)
+    text = forms.CharField(widget=forms.Textarea, validators=[validate_tag])
 
 
 class RemoveAudio(forms.Form):

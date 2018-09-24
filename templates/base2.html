@@ -153,6 +153,28 @@
     </div>
     {% endif %}
 
+    {% if not canal_user.exists %}
+    <!--Modal para informar o usuário que ele não possui canal caso tente fazer um upload-->
+    <div class="modal fade" id="infoCreateCanal" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Você ainda não tem um canal!</h4>
+                    <a href="{% url 'home:index' %}" class="close">&times;</a>
+                </div>
+
+                <div class="modal-body">
+                    <h5 style="font-size: 1rem;">Para conseguir postar áudios você deve criar um canal antes.</h5>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="{% url 'account:new_channel' %}" class="btn btn-add">Criar um canal</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!--Modal de adicionar áudio a playlists-->
     <div class="modal fade" id="addPlaylist" >
         <div class="modal-dialog modal-sm modal-dialog-centered">

@@ -176,6 +176,10 @@ label#nome_playlist {
     cursor: pointer;
 }
 
+i.fas.fa-bell {
+    margin-top: 12px !important;
+}
+
 .checkmark {
     position: absolute;
     top: 0;
@@ -200,6 +204,21 @@ label#nome_playlist {
     content: "";
     position: absolute;
     display: none;
+}
+
+.btn-add {
+    border: initial;
+    border-radius: 4px;
+    color: white !important;
+    background: linear-gradient(-160deg, #032854, black);
+}
+
+.btn-add:hover {
+    background: linear-gradient(-160deg, #032854bf, black);
+}
+
+.btn-add:active {
+    background: linear-gradient(-160deg, #032854bf, black) !important;
 }
 
 .pl-label input:checked ~ .checkmark:after {
@@ -237,6 +256,10 @@ label#nome_playlist {
     transition: visibility 0.15s, opacity 0.15s linear;
     transform: translate(-50%,0);
     z-index: 2000;
+}
+
+.modal-content {
+    border: none !important;
 }
 
 @media only screen and (max-height: 623px) {
@@ -280,10 +303,22 @@ label#nome_playlist {
     }
 
     .modal .btn {
-        font-size: .8rem;
+        font-size: .8rem !important;
+    }
+
+    .modal-title {
+        font-size: 1.25rem;
+    }
+
+    .modal-body h5 {
+        font-size: .9rem !important;
     }
 
     .addAudioPl {
         font-size: 12px;
+    }
+
+    .modal {
+        padding-right: 0 !important;
     }
 }

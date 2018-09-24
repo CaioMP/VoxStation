@@ -49,10 +49,14 @@ select {
     padding-left: 1rem;
 }
 
+
+form#form-up h6 {
+    font-size: .85rem;
+}
+
 .content-right h6 {
     margin-top: 1.5rem;
     white-space: nowrap;
-    font-size: .85rem;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -76,6 +80,20 @@ h2.header {
 
 div.progress{
 	display: none;
+}
+
+.error{
+    font-weight: bold;
+    color: darkred;
+}
+
+div#progress-status, .progress-bar {
+    height: 100%;
+    padding: 2px 0 0;
+    font-size: .85rem;
+    font-weight: bold;
+    letter-spacing: .7;
+    background: linear-gradient(-176deg, #032854 10%, #000000cc 65%) !important;
 }
 
 input[type='file']{
@@ -242,7 +260,7 @@ select.select-channel {
         font-size: 20px;
     }
 
-    .content-right h6 {
+    form#form-up h6 {
         font-size: .8rem;
     }
 
