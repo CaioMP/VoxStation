@@ -4,7 +4,8 @@ from account.models import Seg, MyUser
 from .process import *
 from django.http import JsonResponse
 from .models import Playlist, Audio, Comentario, Resposta, Historico, NotificAudio, Favorito,FeedDesLike,FeedLike
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils import formats
 import random
 
 
@@ -39,6 +40,8 @@ def myuploads(request):
             audio.capa = form.cleaned_data['capa']
             audio.reproducoes = 0
             audio.proprietario = request.user
+            audio.save()
+            audio.duracao = audio.get_duration()
             audio.save()
 
             # Criando a notificação para quando o áudio é enviado
@@ -504,8 +507,9 @@ def playlist_all(request, id):
             play.capa.delete(save=True)
             play.capa = contexto['capa_retornada'].cleaned_data['capa']
             play.save()
-    contexto['playlist'] = Playlist.objects.get(pk=id)
+    contexto['playlist'] = play
     contexto['id_audio'] = contexto['playlist'].audios.first()
+
     if contexto['playlist'].proprietario == request.user:
         contexto['direito_edicao'] = True
     else:
@@ -533,6 +537,25 @@ def playlist_all(request, id):
     return render(request, './channel/playlist_all.html', contexto)
 
 
+def del_audio_pl(request, playlist_id, audio_id):
+    playlist = Playlist.objects.get(pk=playlist_id, proprietario=request.user)
+    data = {}
+
+    for audio in playlist.audios.all():
+        if audio.pk == audio_id:
+            playlist.audios.remove(audio)
+            playlist.ultima_atualizacao = datetime.now()
+            playlist.save()
+            data['message'] = audio.titulo + " removido da playlist"
+            data['dia'] = formats.date_format(datetime.now(), "d")
+            data['mes'] = formats.date_format(datetime.now(), "F")
+            data['ano'] = formats.date_format(datetime.now(), "Y")
+            data['horario'] = formats.date_format(datetime.now(), "H:i")
+            data['num_audios'] = playlist.audios.count()
+
+    return JsonResponse(data)
+
+
 def playlist_load_modal(request):
     json_context = {}
     audio_cod = request.GET['aud']
@@ -550,16 +573,17 @@ def playlist_add(request):
     playlist = request.GET['playlist_cod']
     audio_set = Audio.objects.get(pk=audio_cod)
     play = Playlist.objects.get(pk=playlist)
-    Playlist.objects.filter(pk=playlist).update(ultima_atualizacao=datetime.now())
 
     if play.audios.filter(pk=audio_cod).exists():
         play.audios.remove(audio_set)
         play.numero_de_audios -= 1
+        play.ultima_atualizacao = datetime.now()
         play.save()
         json_context = {'message': 'Removido de '+play.nome+''}
     else:
         play.numero_de_audios += 1
         play.audios.add(audio_set)
+        play.ultima_atualizacao = datetime.now()
         play.save()
         json_context = {'message': 'Adicionado a ' + play.nome + ''}
     return JsonResponse(json_context)

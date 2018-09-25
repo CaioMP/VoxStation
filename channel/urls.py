@@ -26,6 +26,7 @@ urlpatterns = [
     path("playlist_load_modal", playlist_load_modal, name='playlist_add_view'),
     path("playlist_add_audio", playlist_add),
     path("playlist_add_play", playlist_add_play),
+    path("playlist_del_audio/<int:playlist_id>/<int:audio_id>", del_audio_pl, name="del_audio_pl_view"),
     path('playlist_edit', play_edit, name='play_edit_view'),
     path('vincular', vincula_play, name='vincula_view'),
     path('comentar/<int:audio_id>', comentar, name='comentar_view'),

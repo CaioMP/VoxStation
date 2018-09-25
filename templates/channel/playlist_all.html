@@ -5,7 +5,9 @@
 {% block head %}
     <title>Playlist - VoxStation</title> <!--Colocar o nome da playlist-->
     <link rel="stylesheet" href="{% static 'channel/style_playlist_all.css' %}">
+    <script src="{% static 'channel/js/playlist_all.js' %}"></script>
     <script src="{% static 'channel/js/play_edit.js' %}"></script>
+    <script src="{% static 'channel/js/del_audio_pl.js' %}"></script>
     <script src="{% static 'channel/js/vincula_play.js' %}"></script>
 {% endblock %}
 
@@ -19,13 +21,13 @@
                         <i class="fas fa-camera" style="color: black;"></i>
                     </a> <!--Editar a capa da playlist-->
                 </span>
-                {%if tem_desc%}
-                <span data-toggle="modal" id="play_pencil_edit" data-target="#editPlaylist" style="">
-                    <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua playlist">
-                        <i class="fas fa-pen" style="color: black;"></i>
-                    </a> <!--Editar o nome ou descrição da playlist(só alterar o display caso já exista uma descrição)-->
-                </span>
-                {%endif%}
+                    {%if tem_desc%}
+                    <span data-toggle="modal" id="play_pencil_edit" data-target="#editPlaylist" style="">
+                        <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua playlist">
+                            <i class="fas fa-pen" style="color: black;"></i>
+                        </a> <!--Editar o nome ou descrição da playlist(só alterar o display caso já exista uma descrição)-->
+                    </span>
+                    {%endif%}
                 {%endif%}
                 <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Salvar playlist">
                     <img src="/static/resources/icones/playlist_add.png" alt="salvar playlist" class="icon-playlist">
@@ -71,27 +73,35 @@
                         </ul>
                         {%endif%}
                     </div>
+                    <div class="dropdown visibility mr-3" rel="tooltip" data-toggle="tooltip" data-placement="right"
+                         title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
+                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
+                            <div class="dropdown-menu dm-visibility" aria-labelledby="dropdownVisibility">
+                                <a class="dropdown-item di-visibility" href="#">
+                                    <img src="/static/resources/icones/private.png" class="icon-visibility"/> <!--Playlist privada-->
+                                </a>
+                            </div>
+                        </a>
+                    </div>
                     {%endif%}
                 {% endif %}
-                <div class="dropdown visibility mr-3" rel="tooltip" data-toggle="tooltip" data-placement="right"
-                     title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
-                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
-                        <div class="dropdown-menu dm-visibility" aria-labelledby="dropdownVisibility">
-                            <a class="dropdown-item di-visibility" href="#">
-                                <img src="/static/resources/icones/private.png" class="icon-visibility"/> <!--Playlist privada-->
-                            </a>
-                        </div>
-                    </a>
-                </div>
-
             </div>
             <br>
             <h3 style="word-break: break-all;" id="play_titul">{{playlist.nome}}</h3>
 
-            <img src="/static/resources/icones/view.png" alt="reproduções" class="icon-info">{{playlist.reproducoes}}
-            <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon-info ml-4">{{playlist.audios.count}}
-            <div class="tumblr_mf171khjgJ1rapbo1o1_500_large.png">Última atualização {{playlist.ultima_atualizacao}}</div>
+            <img src="/static/resources/icones/view.png" alt="reproduções" class="icon-info" rel="tooltip"
+                 data-toggle="tooltip" data-placement="bottom" title="Reproduções">{{playlist.reproducoes}}
+
+            <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon-info ml-4" rel="tooltip"
+                 data-toggle="tooltip" data-placement="bottom" title="Áudios">
+            <div class="d-inline" id="num-audios">{{playlist.audios.count}}</div>
+
+            <div class="mt-1">
+                <i class="fas fa-clock" style="color: black;font-size: .85rem;" rel="tooltip" data-toggle="tooltip" data-placement="bottom"
+                   title="Última atualização"></i>
+                <div class="d-inline" id="last-update">{{playlist.ultima_atualizacao}}</div>
+            </div>
 
             <!--Essa parte só deve aparecer caso o usuário não tenha dado uma descrição para a playlist-->
             {%if direito_edicao%}
@@ -100,7 +110,7 @@
             {%endif%}
             {%endif%}
             {%if tem_desc%}
-            <div class="mt-4" id="desc">
+            <div class="mt-4" id="desc" style="word-break: break-word;">
                 {{playlist.descricao}}
             </div>
             {%endif%}
@@ -121,10 +131,20 @@
         </div>
     </div>
 
-    <div class="audioBox mt-3">
+    <div class="audioBox mt-3" {% if audios.count == 1 %} style="padding-bottom: 5rem;" {% endif %}>
         {%for audio in audios%}
-        <div class="audio">
+        <div class="audio" id="audio-{{forloop.counter}}"
+             {%if direito_edicao%} onmouseover="showDelete(this.id)" onmouseleave="hideDelete(this.id)" {% endif %}>
             <h5 class="numero-audio">{{forloop.counter}}</h5>
+            {%if direito_edicao%}
+                <!--Parte de deletar um áudio da playlist-->
+                <a class="delete" id="del-{{forloop.counter}}">
+                    <i class="fas fa-trash-alt" style="color: white;cursor: pointer;"></i>
+                </a>
+                <form style="position: absolute;" method="POST" action="{% url 'channel:del_audio_pl_view' playlist.id audio.id %}"
+                      id="delAudioForm-{{forloop.counter}}">{% csrf_token %}
+                </form>
+            {%endif%}
             <div class="card mb-3">
                 <figure>
                     <img src="{{audio.capa.url}}" class="img-audio" alt="imagem do áudio">
@@ -147,9 +167,9 @@
                         <p class="d-inline mr-3"><img src="/static/resources/icones/view_white.png" alt="reproduções" class="icon-info">{{audio.reproducoes}}</p>
                     </div>
                 </div>
-                <h5 class="tempo mr-3">3:20</h5>
+                <h5 class="tempo mr-3">{{audio.duracao}}</h5>
             </div>
-            {% endfor %}
         </div>
-    </div> <!---marcador-->
+        {% endfor %}
+    </div>
 {% endblock %}

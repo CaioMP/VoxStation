@@ -1,6 +1,8 @@
 from django.db import models
 from account.models import MyUser, Anuncio, Canal
-from datetime import datetime
+from datetime import datetime, timedelta
+from tinytag import TinyTag
+import os
 
 
 class Tag(models.Model):
@@ -20,6 +22,27 @@ class Audio(models.Model):
 
     def capa_playlist_path(instance, filename):
         return "contas/user_{}/capas_playlist/{}".format(instance.proprietario.pk, filename)
+
+    def filename(self):
+        return os.path.basename(self.audio.name)
+
+    def get_duration(self):
+        file = TinyTag.get('media/contas/user_{}/audios/{}'.format(self.proprietario.pk, self.filename()))
+        duration = str(timedelta(seconds=file.duration))
+        hours, minutes, miliseconds = duration.split(":")
+        seconds, miliseconds = miliseconds.split(".")
+
+        if hours == "0":
+            if minutes.startswith("0"):
+                duration = minutes[1:] + ":" + seconds
+            else:
+                duration = minutes + ":" + seconds
+        else:
+            if hours.startswith("0"):
+                duration = hours[1:] + ":" + minutes + ":" + seconds
+            else:
+                duration = hours + ":" + minutes + ":" + seconds
+        return duration
 
     data_publicacao = models.DateTimeField(default=datetime.now)
     estado = models.CharField(max_length=10, blank=True, null=True)
