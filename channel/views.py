@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, HttpResponse
 from .forms import *
-from account.models import Seg, MyUser
+from account.models import Seg
 from .process import *
 from django.http import JsonResponse
 from .models import Playlist, Audio, Comentario, Resposta, Historico, NotificAudio, Favorito,FeedDesLike,FeedLike
-from datetime import datetime, timedelta
+from datetime import datetime
 from django.utils import formats
 import random
 
@@ -13,8 +13,8 @@ def myuploads(request):
     audio = Audio()
 
     canal_user = Canal.objects.filter(proprietario=request.user)
-    canais_side = Canal.objects.filter(seguidor=request.user)
-    playlist_side = Playlist.objects.filter(proprietario=request.user)
+    canais_side = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
+    playlist_side = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
 
     ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
     notifications = 0
@@ -112,8 +112,8 @@ def channel(request,id):
     contexto={}
 
     if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0
@@ -145,8 +145,8 @@ def playlist(request, id):
     contexto = {}
 
     if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0
@@ -243,8 +243,8 @@ def playlist_play(request, id, id_audio):
     audio.save()
 
     if request.user.is_active:
-        context['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        context['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        context['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        context['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0
@@ -342,8 +342,8 @@ def about(request, id):
     contexto = {}
 
     if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0
@@ -379,8 +379,8 @@ def uploads(request, id):
     contexto= {}
 
     if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0
@@ -429,8 +429,8 @@ def partner(request, id):
     contexto = {}
 
     if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0
@@ -464,12 +464,12 @@ def follow(request, id):
     seguidor = canal.seguidor.filter(pk=request.user.pk)
     if seguidor.exists():
         Seg.objects.get(canal_seguido=canal, seguidores=request.user).delete()
-        json_context['estado'] = "sintonizar"
+        json_context['estado'] = "Sintonizar"
         json_context['cor'] = "#00000085"
 
     else:
         Seg.objects.create(canal_seguido=canal, seguidores=request.user, estado=0)
-        json_context['estado'] = "sintonizado"
+        json_context['estado'] = "Sintonizado"
         json_context['cor'] = "#2ecc71"
     json_context['num_seg'] = str(canal.seguidor.all().count())+" seguidores"
     return JsonResponse(json_context)
@@ -479,8 +479,8 @@ def playlist_all(request, id):
     contexto = {}
 
     if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         contexto['channels'] = Canal.objects.filter(proprietario=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
@@ -617,8 +617,8 @@ def playlist_add_play(request):
 def edit_channel(request, id):
     contexto = {}
     if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0
@@ -770,8 +770,8 @@ def player(request, id):
     audio.save()
 
     if request.user.is_active:
-        context['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        context['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        context['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        context['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0

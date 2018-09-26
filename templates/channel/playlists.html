@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block head %}
-    <title>Nome canal - VoxStation</title>
+    <title>{{chan.nome_canal}} - VoxStation</title>
     <link rel="stylesheet" href="{% static 'channel/style_channel_inicio.css' %}">
     <link rel="stylesheet" href="{% static 'channel/style_channel_playlists.css' %}">
     <link rel="stylesheet" href="{% static 'channel/style_channel_uploads.css' %}">
@@ -41,25 +41,30 @@
             </form>
                 <div class="row mt-4">
                     {% for playlist in playlists %}
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-playlist">
                         <div class="card">
-                            <figure class="fig-capa-audio">
-                                <a href="#"><img src="/static/images/tumb_audio.png" class="card-img-top" alt=""></a>
-                                <figcaption class="fc-capa-audio">
-                                    <center>
-                                        <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                    </center>
-                                </figcaption>
-                            </figure>
+                            <a href="{% url 'channel:playlist_play_view' playlist.id playlist.audios.first.id %}">
+                                <figure class="fig-capa-audio">
+                                    <img src="{{playlist.capa.url}}" class="card-img-top" alt="">
+                                    <figcaption class="fc-capa-audio">
+                                        <center>
+                                            <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                        </center>
+                                    </figcaption>
+                                </figure>
+                            </a>
 
                             <div class="card-body">
                                 <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{playlist.nome}}</h4></a>
                                 <div class="card-text">
                                     <p class="descript-thumb">{{chan.nome_canal}}</p>
                                     <p class="descript-thumb">
-                                        <img src="/static/resources/icones/disc.ico" class="icon-view"/>
-                                        20</p>
-                                    <p class="descript-thumb last-update">Última atualização
+                                        <img src="/static/resources/icones/disc.ico" class="icon-view" rel="tooltip"
+                                             data-toggle="tooltip" data-placement="bottom" title="Áudios"/>
+                                        {{playlist.audios.count}}</p>
+                                    <p class="descript-thumb last-update"><i class="fas fa-clock" rel="tooltip"
+                                                                             data-toggle="tooltip" data-placement="bottom"
+                                                                             title="Última atualização"></i>
                                         {{playlist.ultima_atualizacao|date:"d/m/y"}} às {{playlist.ultima_atualizacao|date:"H:i"}}</p>
                                 </div>
                             </div>
@@ -68,9 +73,9 @@
                             <ul class="audio-list">
                                {% for audio in playlist.audios_apresentaveis %}
                                 <li class="audio">
-                                    <strong class="time">3:40</strong>
-                                    <a href="#" class="titulo">
-                                        <img src="/static/resources/icones/disc-white.png" class="thumb-audio"/>{{audio.titulo}}</a>
+                                    <strong class="time">{{ audio.duracao }}</strong>
+                                    <a href="{% url 'channel:playlist_play_view' playlist.id audio.id %}"
+                                       class="titulo">{{audio.titulo}}</a>
                                 </li>
                                 {% endfor %}
                                 <li class="playlist-more">

@@ -5,7 +5,6 @@ from django.contrib.auth import (
     get_user_model,
     authenticate
 )
-from .models import MyUser
 from channel.models import Playlist, Canal, Historico, Audio, NotificAudio, Favorito
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
@@ -147,8 +146,8 @@ def edit_profile(request):
     has_error = False  # Váriavel para verificar e mostrar se ocorreu algum erro ao salvar
     footer = True  # Váriavel para colocar o footer no final da base2.tml
 
-    canais_side = Canal.objects.filter(seguidor=request.user)
-    playlist_side = Playlist.objects.filter(proprietario=request.user)
+    canais_side = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
+    playlist_side = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
 
     if request.method == 'POST':
         basicform = EditBasicForm(request.POST, instance=request.user)
@@ -267,8 +266,8 @@ def NewChannelView(request):
     error_nome_canal = ""
     nome_canal = ""
 
-    canais_side = Canal.objects.filter(seguidor=request.user)
-    playlist_side = Playlist.objects.filter(proprietario=request.user)
+    canais_side = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
+    playlist_side = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
 
     if request.method == 'POST':
         if form.is_valid():
@@ -313,8 +312,8 @@ def historic(request):
             contexto['audios_historico'] = registro.audio.filter(titulo__contains=x).order_by("id").reverse()
         else:
             contexto['audios_historico'] = registro.audio.all().order_by("id").reverse()
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0
@@ -337,8 +336,8 @@ def favorites(request):
     if request.user.is_active:
         fav = Favorito.objects.get(prop=request.user)
         contexto['audios_favoritos'] = fav.audio.all()
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user)
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user)
+        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
+        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
         notifications = 0
         new_notific = 0

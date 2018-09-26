@@ -15,6 +15,13 @@ a#playlists {
     width: 100%;
 }
 
+.fa-clock {
+    color: black;
+    font-size: .92rem;
+    margin-left: 1px;
+    margin-right: 3px;
+}
+
 .last-update {
     white-space: initial;
     overflow: initial;
@@ -35,6 +42,14 @@ a#playlists {
 
 .card {
     border-radius: 4px 0 0 4px;
+}
+
+.card-img-top {
+    border-radius: 2px 0 0;
+}
+
+.col-md-6.playlist {
+    margin-top: 0.5px;
 }
 
 .audio {
@@ -65,6 +80,10 @@ a#playlists {
     margin-bottom: -25px;
 }
 
+figcaption.fc-capa-audio {
+    height: 46% !important;
+}
+
 .playlist-link {
     position: absolute;
     right: 0;
@@ -81,14 +100,31 @@ a#playlists {
     background-color: #00000047;
 }
 
-@media only screen and (max-width: 834px) {
+@media only screen and (max-width: 930px) {
     .playlist-more {
         margin-top: 16px;
         margin-bottom: -15px;
     }
 
+    .icon-play {
+        width: 40px !important;
+        margin: 1.8rem !important;
+    }
+
+    p.descript-thumb {
+        height: 1.25rem !important;
+    }
+
     .last-update {
-        height: 3.5rem !important;
+        margin-bottom: 1.25rem;
+    }
+
+    .card-text {
+        margin-top: .25rem;
+    }
+
+    .fig-capa-audio figcaption {
+        height: 41.5% !important;
     }
 }
 
@@ -105,6 +141,10 @@ a#playlists {
         width: 50%;
     }
 
+    .col-md-6.playlist {
+        margin-top: -2rem;
+    }
+
     .playlist {
         margin-bottom: 1.25rem !important;
         margin-top: -30px;
@@ -112,6 +152,10 @@ a#playlists {
         border-radius: 0 0 4px 4px;
         margin-left: 0;
         height: 17rem;
+    }
+
+    .card-img-top {
+        border-radius: 2px 2px 0 0;
     }
 
     .playlist-link {
@@ -123,14 +167,13 @@ a#playlists {
         border-radius: 4px 4px 0 0;
     }
 
-    .last-update {
-        height: 2rem !important;
+    .icon-play {
+        width: 4rem !important;
+        margin: 3.3rem !important;
     }
-}
 
-@media only screen and (max-width: 694px) {
-    .last-update {
-        height: 3rem !important;
+    .fig-capa-audio figcaption {
+        height: 54% !important;
     }
 }
 
@@ -139,23 +182,50 @@ a#playlists {
         width: 100%;
     }
 
+    .row.mt-4 {
+        margin: 0;
+    }
+
+    .col-playlist {
+        padding: 0;
+    }
+
+    .col-md-6.playlist {
+        margin-top: -3rem;
+    }
+
     .playlist {
         margin-top: -44px;
+    }
+
+    .form-search {
+        padding: 0 1rem !important;
     }
 
     .last-update {
         height: 2rem !important;
     }
-}
 
-@media only screen and (max-width: 386px) {
-    .last-update {
-        height: 3rem !important;
+    .fig-capa-audio figcaption {
+        height: 58.5% !important;
+    }
+
+    .icon-play {
+        margin: 4.3rem !important;
     }
 }
 
 @media only screen and (max-width: 414px) {
     .playlist {
         margin-top: -30px;
+    }
+
+    .col-md-6.playlist {
+        margin-top: -2rem;
+    }
+
+    .icon-play {
+        margin: 4.3rem !important;
+        width: 3.5rem !important;
     }
 }

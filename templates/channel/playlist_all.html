@@ -17,19 +17,19 @@
             <div class="icones">
                 {%if direito_edicao %}
                 <span data-toggle="modal" data-target="#editCapaPlaylist">
-                    <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua capa">
+                    <a href="#" class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua capa">
                         <i class="fas fa-camera" style="color: black;"></i>
                     </a> <!--Editar a capa da playlist-->
                 </span>
                     {%if tem_desc%}
                     <span data-toggle="modal" id="play_pencil_edit" data-target="#editPlaylist" style="">
-                        <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua playlist">
+                        <a href="#" class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Edite sua playlist">
                             <i class="fas fa-pen" style="color: black;"></i>
                         </a> <!--Editar o nome ou descrição da playlist(só alterar o display caso já exista uma descrição)-->
                     </span>
                     {%endif%}
                 {%endif%}
-                <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Salvar playlist">
+                <a href="#" class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Salvar playlist">
                     <img src="/static/resources/icones/playlist_add.png" alt="salvar playlist" class="icon-playlist">
                 </a> <!--Salvar playlist-->
                 <!-- Aparecer esse icone caso o dono da playlist queira deletá-la
@@ -37,12 +37,12 @@
                 <!-- Aparecer esse icone caso o usuário visitante tenha salvo a playlist
                 <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_add_check.png" alt="remover playlist" class="icon-playlist"></a>-->
 
-                <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Reproduzir aleatoriamente">
-                    <img src="/static/resources/icones/random.png" alt="reproduzir aleatoriamente" class="icon-playlist">
+                <a href="#" class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Reproduzir aleatoriamente">
+                    <img src="/static/resources/icones/random.png" alt="reproduzir aleatoriamente" class="icon-playlist random">
                 </a><!--Reproduzir aleatoriamente-->
 
-                <a href="#" class="mr-3" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Compartilhar playlist">
-                    <i class="fas fa-share" style="color: black; font-size: 18px;"></i>
+                <a href="#" class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Compartilhar playlist">
+                    <i class="fas fa-share"></i>
                 </a><!--Compartilhar playlist-->
 
                 <!--Vincular a um canal-->
@@ -79,7 +79,7 @@
                             <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
                             <div class="dropdown-menu dm-visibility" aria-labelledby="dropdownVisibility">
                                 <a class="dropdown-item di-visibility" href="#">
-                                    <img src="/static/resources/icones/private.png" class="icon-visibility"/> <!--Playlist privada-->
+                                    <img src="/static/resources/icones/private.png" style="margin-top: 2px;" class="icon-visibility"/> <!--Playlist privada-->
                                 </a>
                             </div>
                         </a>
@@ -110,13 +110,25 @@
             {%endif%}
             {%endif%}
             {%if tem_desc%}
-            <div class="mt-4" id="desc" style="word-break: break-word;">
+            <div class="mt-4" id="desc" style="display: none; word-break: break-word;">
                 {{playlist.descricao}}
             </div>
+            <center>
+                <a onclick="showDescription()" id="showDescription" class="btn btn-add descButton">
+                    <i class="fas fa-angle-down icon-desc" ></i>Mostrar descrição
+                </a>
+                <a onclick="hideDescription()" id="hideDescription" class="btn btn-add descButton" style="display: none;">
+                    <i class="fas fa-angle-up icon-desc"></i>Esconder descrição
+                </a>
+            </center>
             {%endif%}
         </div>
         <img src="{{playlist.capa.url}}" alt="capa da playlist" class="capa-playlist">
-        <a href="{% url 'channel:playlist_play_view' playlist.id id_audio.id %}"><img src="/static/resources/icones/play.png" alt="reproduzir" class="icon-play"></a>
+        <a href="{% url 'channel:playlist_play_view' playlist.id id_audio.id %}">
+            <div class="icon-play">
+                <img src="/static/resources/icones/play.png" alt="reproduzir" >
+            </div>
+        </a>
         <div class="info-canal">
             {%if playlist.canal%}
             <a href="{% url 'channel:channel_view' canal.id %}">
@@ -131,7 +143,7 @@
         </div>
     </div>
 
-    <div class="audioBox mt-3" {% if audios.count == 1 %} style="padding-bottom: 5rem;" {% endif %}>
+    <div class="audioBox mt-5" {% if audios.count == 1 %} style="padding-bottom: 5rem;" {% endif %}>
         {%for audio in audios%}
         <div class="audio" id="audio-{{forloop.counter}}"
              {%if direito_edicao%} onmouseover="showDelete(this.id)" onmouseleave="hideDelete(this.id)" {% endif %}>

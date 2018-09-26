@@ -45,9 +45,14 @@ body {
 }
 
 .fa-camera {
-    font-size: 21px;
+    font-size: 22px;
+    margin-top: -1px;
+}
+
+.fa-pen {
+    font-size: 19px;
     position: relative;
-    top: 2px;
+    top: -1px;
 }
 
 .tooltip-inner {
@@ -61,7 +66,6 @@ body {
 .icon-play {
     width: 17rem !important;
     height: 100%;
-    padding: 3rem 6rem;
     transition: opacity 1s;
     background-color: rgba(0, 0, 0, .4);
     opacity: 0;
@@ -74,6 +78,14 @@ body {
 
 .icon-play:hover {
     opacity: .9;
+}
+
+.icon-play img {
+    width: 4rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .info-canal {
@@ -109,6 +121,18 @@ body {
 
 .btn-add:hover {
     background: linear-gradient(-160deg, #032854bf, black);
+}
+
+.descButton {
+    float: left;
+    margin-top: 1rem;
+}
+
+.icon-desc {
+    margin-right: .5rem;
+    font-size: 1.5rem;
+    color: white;
+    visibility: visible;
 }
 
 .btn-sintonizar {
@@ -164,12 +188,23 @@ body {
     display: -webkit-inline-box;
     float: left;
     margin-top: -8px;
+    height: 1.3rem;
 }
 
 .icon-playlist {
-    width: 1.8rem;
-    margin-top: -1px;
+    width: 30px;
+    margin-top: -5px;
+    margin-left: -1px;
     cursor: pointer;
+}
+
+img.random {
+    width: 29px;
+}
+
+.fa-share {
+    color: black;
+    font-size: 22px;
 }
 
 .vincular {
@@ -188,6 +223,7 @@ body {
 
 ul.dropdown-menu.dm-vincular.show {
     margin-top: .65rem;
+    margin-left: -5rem;
     padding: 0.5rem;
     background: #f8f9fa;
 }
@@ -201,8 +237,8 @@ ul.dropdown-menu.dm-vincular.show {
 
 .fa-link {
     color: black;
-    font-size: 18px;
-    margin-top: -1px;
+    font-size: 21px;
+    margin-top: -4px;
     cursor: pointer;
 }
 
@@ -235,7 +271,8 @@ a#salvarVinculo {
 }
 
 .icon-visibility {
-    width: 1.4rem;
+    width: 23px;
+    margin-top: -2px;
     cursor: pointer;
 }
 
@@ -343,7 +380,7 @@ figcaption:hover {
 .tempo {
     text-align: right;
     position: relative;
-    bottom: 7rem;
+    bottom: 10rem;
     margin-left: 11rem;
 }
 
@@ -405,6 +442,10 @@ input[type='radio']:hover:after {
     padding: 6px;
 }
 
+.icon-pl {
+    margin-right: 1rem;
+}
+
 @media only screen and (max-width: 1174px) {
     .icon-play {
         top: 6.15rem;
@@ -412,6 +453,120 @@ input[type='radio']:hover:after {
 
     .card-body {
         bottom: 7.5rem;
+    }
+
+    .tempo {
+        bottom: 6.5rem;
+    }
+}
+
+@media only screen and (max-width: 630px) {
+    .info-playlist {
+        margin-left: 0;
+        margin-top: 18rem;
+    }
+
+    .capa-playlist {
+        width: 85%;
+        height: 16.65rem;
+    }
+
+    .icon-play {
+        height: 16.65rem;
+        width: 85% !important;
+        max-width: 100%;
+    }
+
+    .icon-play img {
+        width: 5rem;
+    }
+
+    .info-canal {
+        margin-top: 10.5rem;
+    }
+
+    h3#play_titul {
+        margin-top: 4rem;
+    }
+
+    .icon-pl {
+        margin-bottom: 1rem;
+    }
+
+    .fa-link {
+        margin-top: 2px;
+    }
+
+    .icones .dropdown {
+        margin: 0 0 1rem !important;
+        width: 1.5rem;
+    }
+
+    .icones span {
+        margin-bottom: 1rem;
+        width: 1.5rem;
+    }
+
+    .icones a {
+        width: 1.5rem;
+    }
+
+    .icones {
+        display: grid;
+        float: right;
+        margin-top: -17.5rem;
+        width: 1.5rem;
+    }
+
+    figure {
+        width: 7rem;
+        height: 4rem;
+    }
+
+    .img-audio, figcaption {
+        height: 4rem;
+        width: 7rem;
+    }
+
+    .icon-play-audio {
+        width: 30px;
+        margin: 1.1rem 0;
+    }
+
+    .numero-audio {
+        font-size: 1rem;
+        bottom: 4rem;
+    }
+
+    .fa-trash-alt {
+        margin-top: -1.3rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+    }
+
+    .audio {
+        height: 6.25rem;
+    }
+
+    .tempo {
+        font-size: 1rem;
+        bottom: 4rem;
+    }
+
+    .card-text {
+        font-size: .85rem;
+    }
+
+    .card-body {
+        bottom: 4rem;
+        padding-top: 0;
+        left: 7rem;
+    }
+
+    ul.dropdown-menu.dm-vincular.show {
+        margin-left: -8.2rem;
     }
 }
 
@@ -431,5 +586,176 @@ input[type='radio']:hover:after {
 @media only screen and (max-width: 575px) {
     .modal-content {
         margin-top: 8rem;
+    }
+
+    .infoBox {
+        margin-top: 8.5rem;
+    }
+
+    .info-canal {
+        margin-top: 14rem;
+    }
+
+    .capa-playlist {
+        margin-top: 3.8rem;
+    }
+
+    .icon-play {
+        top: 9.9rem;
+    }
+}
+
+@media only screen and (max-width: 520px) {
+    .icon-play, .capa-playlist {
+        width: 82% !important;
+    }
+}
+
+@media only screen and (max-width: 475px) {
+    figure {
+        display: none;
+    }
+
+    .card-body {
+        bottom: 0;
+        left: 0;
+        width: 85%;
+    }
+
+    .card-title {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .tempo {
+        font-size: .75rem;
+        bottom: 3rem;
+    }
+
+    .audio {
+        height: 5.25rem;
+    }
+
+    .card-text {
+        font-size: .75rem;
+    }
+
+    .numero-audio {
+        position: absolute;
+        bottom: auto;
+        margin-top: 1.5rem;
+        font-size: .85rem;
+    }
+
+    .fa-trash-alt {
+        font-size: .85rem;
+        margin-right: 4px;
+        margin-top: -17px;
+    }
+
+    h3#play_titul {
+        font-size: 1.5rem;
+    }
+
+    .fa-clock {
+        font-size: .75rem !important;
+    }
+
+    .info-playlist {
+        font-size: .85rem;
+    }
+
+    .btn-sintonizar {
+        font-size: .85rem;
+        padding: 6px 14px;
+    }
+
+    .card {
+        height: auto;
+    }
+
+    .icon-info {
+        width: .85rem;
+    }
+
+    .descButton {
+        font-size: .85rem;
+        padding-top: 6px;
+    }
+
+    .icon-desc {
+        font-size: 1.25rem;
+        position: relative;
+        top: 2px;
+    }
+}
+
+@media only screen and (max-width: 437px) {
+    .icon-play, .capa-playlist {
+        width: 79% !important;
+    }
+}
+
+@media only screen and (min-width: 386px) and (max-width: 414px){
+    .capa-playlist {
+        margin-top: 2.5rem;
+    }
+
+    .icon-play {
+        top: 8.6rem;
+    }
+
+    .info-canal {
+        margin-top: 12.5rem;
+    }
+
+    h3#play_titul {
+        margin-top: 2rem;
+    }
+
+    .icones {
+        margin-top: -19rem;
+    }
+}
+
+@media only screen and (max-width: 385px) {
+    .icon-play, .capa-playlist {
+        width: 88% !important;
+        height: 13rem;
+        margin-top: 4.5rem;
+    }
+
+    .icon-play {
+        top: 6.1rem;
+    }
+
+    .info-canal {
+        margin-top: 11rem;
+    }
+
+    .info-playlist {
+        margin-top: 14.5rem;
+    }
+
+    .icon-play img {
+        width: 4rem;
+    }
+
+    .icones {
+        display: -webkit-inline-box;
+        margin-top: -16rem;
+        margin-right: -.3rem;
+        height: 1.3rem;
+        width: 100%;
+    }
+
+    .icon-visibility {
+        margin-top: 0;
+        margin-left: .7rem;
+    }
+
+    ul.dropdown-menu.dm-vincular.show {
+        margin-left: -4.85rem;
+        margin-top: .75rem;
     }
 }

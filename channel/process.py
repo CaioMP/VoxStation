@@ -137,9 +137,9 @@ def ve_se_follow(request,canal,op=0):
 
     if op==0:
         if seguidor_em_questao.exists():
-            return 'sintonizado'
+            return 'Sintonizado'
         else:
-            return 'sintonizar'
+            return 'Sintonizar'
     else:
         if seguidor_em_questao.exists():
             return '#2ecc71'
