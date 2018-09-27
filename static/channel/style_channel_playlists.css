@@ -81,7 +81,7 @@ a#playlists {
 }
 
 figcaption.fc-capa-audio {
-    height: 46% !important;
+    height: 52.5% !important;
 }
 
 .playlist-link {
@@ -98,6 +98,12 @@ figcaption.fc-capa-audio {
 
 .playlist-link:hover {
     background-color: #00000047;
+}
+
+@media only screen and (max-width: 1174px) {
+    figcaption.fc-capa-audio {
+        height: 46% !important;
+    }
 }
 
 @media only screen and (max-width: 930px) {
@@ -127,6 +133,17 @@ figcaption.fc-capa-audio {
         height: 41.5% !important;
     }
 }
+
+@media only screen and (min-width: 835px) and (max-width: 930px) {
+    .fig-capa-audio figcaption {
+        height: 44.5% !important;
+    }
+
+    .icon-play {
+        margin: 2.85rem !important;
+    }
+}
+
 
 @media (min-width: 768px) {
     .col-md-6 {

@@ -43,7 +43,7 @@
     {% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-light fixed-top" id="navbar">
         <div class="nav-left">
             {% if logado %}
             <button type="button" id="sidebarCollapse" class="navbar-btn active">
@@ -133,7 +133,7 @@
     {% if logado %}
     <nav id="sidebar" class="active">
         <div class="sidebar-header">
-            <center><h3>x</h3></center>
+            <center><h3 style="opacity:0;">x</h3></center>
         </div>
         <ul class="list-unstyled components">
             <li>
