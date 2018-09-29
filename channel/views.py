@@ -466,12 +466,15 @@ def follow(request, id):
         Seg.objects.get(canal_seguido=canal, seguidores=request.user).delete()
         json_context['estado'] = "Sintonizar"
         json_context['cor'] = "#00000085"
-
     else:
         Seg.objects.create(canal_seguido=canal, seguidores=request.user, estado=0)
         json_context['estado'] = "Sintonizado"
         json_context['cor'] = "#2ecc71"
-    json_context['num_seg'] = str(canal.seguidor.all().count())+" seguidores"
+    json_context['num_seg'] = str(canal.seguidor.all().count())
+
+    if request.user in canal.users_notific.all():
+        canal.users_notific.remove(request.user)
+    json_context['notific'] = False
     return JsonResponse(json_context)
 
 

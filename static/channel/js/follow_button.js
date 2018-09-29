@@ -12,9 +12,24 @@ $('document').ready( function(){
 			data:{},
 			success:function(json){
 				console.log(json);
+				if(json.estado == "Sintonizar") {
+				    if(document.getElementById("formNotificMe").length){
+				        document.getElementById("formNotificMe").style.opacity = "0";
+				        document.getElementById("formNotificMe").style.visibility = "hidden";
+				    }
+				}
+				else {
+				    document.getElementById("formNotificMe").style.opacity = "1";
+				    document.getElementById("formNotificMe").style.visibility = "visible";
+				}
+
 				this_.text(json.estado);
 				this_.css('background',json.cor);
 				$('#num_seg').text(json.num_seg);
+				window.setTimeout(function() {
+                    $('#no-notific').removeClass('active-notific');
+                    $('#notific').addClass('active-notific');
+                }, 500);
 			},
 			error:function(){
 				alert("erro ao conectar com servidor");

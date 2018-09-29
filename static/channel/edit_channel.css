@@ -159,13 +159,22 @@ label.editCapa:hover {
     margin-top: 0 !important;
 }
 
+a#edit-capa {
+    padding-left: 20px !important;
+}
+
 figure.fig-fade {
     height: auto !important;
+}
+
+label#audio-fundo:hover {
+    box-shadow: 0px 0px 5px rgb(30,30,30);
 }
 
 .edit_audio_fundo {
     display: inline-block;
     font-size: 17px;
+    width: 3.6rem;
     text-decoration: none !important;
     color: white !important;
     padding: 7px 17px;
@@ -184,11 +193,7 @@ img.camera {
 
 a#edit_info {
     float: right;
-    padding: 9px 24px !important;
-}
-
-img.icon.seguidores {
-    filter: drop-shadow(0px 2px 0 black) drop-shadow(0px -1px 0 black);
+    padding: 9px 25px !important;
 }
 
 .ed-thumb {
@@ -206,7 +211,7 @@ img.icon.seguidores {
 
 .edit-capa-bottom {
     position: relative;
-    top: 7px;
+    top: 22px;
 }
 
 .edit-capa-top {
@@ -300,7 +305,23 @@ img.icon.seguidores {
 
 @media only screen and (max-width: 575px) {
     .edit-capa-bottom {
-        top: -4px;
+        top: 13px;
+    }
+
+    img.social {
+        width: 24px;
+    }
+
+    a#redes-sociais {
+        padding: 4px 16px !important;
+    }
+
+    .capa a {
+        margin-top: -18px;
+    }
+
+    label#audio-fundo {
+        padding-top: 7px !important;
     }
 
     div#editCapa {
@@ -328,9 +349,41 @@ img.icon.seguidores {
     }
 }
 
-@media only screen and (max-width: 414px) {
+@media only screen and (max-width: 475px) {
+    .tablinks {
+        font-size: 1rem !important;
+    }
+
+    .headerChannel {
+        margin-top: -1rem !important;
+    }
+
     .edit-capa-bottom {
-        top: -12px;
+        top: 7px;
+    }
+
+    img.social {
+        width: 22px;
+    }
+
+    a#redes-sociais {
+        margin-top: -11px !important;
+    }
+
+    a#edit_info {
+        margin-top: -10px;
+    }
+
+    label#audio-fundo {
+        font-size: .85rem;
+        width: 56px;
+        padding: 8px 20px !important;
+    }
+
+    a#edit-capa {
+        width: 56px;
+        font-size: 12px;
+        padding: 9px 22px !important;
     }
 
     .row.mt-4 {

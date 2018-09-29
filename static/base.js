@@ -2,7 +2,14 @@ $(document).ready(function () {
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
         $(this).toggleClass('active');
+        $('#sideFade').toggleClass('fadeActive');
     });
+
+    $('#sideFade').on('click', function () {
+        $('#sidebar').addClass('active');
+        $('#sidebarCollapse').addClass('active');
+        $(this).removeClass('fadeActive');
+    })
 
     $('[rel="tooltip"]').tooltip();
     $('[rel="tooltip').on('click', function () {
@@ -13,34 +20,30 @@ $(document).ready(function () {
 
     window.onscroll = function() {
         var currentScrollPos = window.pageYOffset;
-        console.log("prevScrollpos",prevScrollpos,"currentScrollPos",currentScrollPos);
         if (prevScrollpos > currentScrollPos) {
             document.getElementById("navbar").style.transform = "translateY(0)";
         } else {
             if(window.innerWidth > 575){
                 if(currentScrollPos > 70){
                     document.getElementById("navbar").style.transform = "translateY(-104%)";
-                    if($("#sidebar").hasClass("active")==false){
-                        $("#sidebar").addClass("active");
-                        $("#sidebarCollapse").addClass("active");
+                    if(!$("#sidebar").hasClass("active")){
+                        $("#sidebarCollapse").click();
                     }
                 }
             }
             if(window.innerWidth < 576){
                 if(currentScrollPos > 140){
                     document.getElementById("navbar").style.transform = "translateY(-104%)";
-                    if($("#sidebar").hasClass("active")==false){
-                        $("#sidebar").addClass("active");
-                        $("#sidebarCollapse").addClass("active");
+                    if(!$("#sidebar").hasClass("active")){
+                        $("#sidebarCollapse").click();
                     }
                 }
             }
             if(window.innerWidth < 415){
                 if(currentScrollPos > 110){
                     document.getElementById("navbar").style.transform = "translateY(-104%)";
-                    if($("#sidebar").hasClass("active")==false){
-                        $("#sidebar").addClass("active");
-                        $("#sidebarCollapse").addClass("active");
+                    if(!$("#sidebar").hasClass("active")){
+                        $("#sidebarCollapse").click();
                     }
                 }
             }

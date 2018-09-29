@@ -8,14 +8,16 @@ body {
     font-family: Raleway !important;
 }
 
-.modal-player {
-    padding: 3rem 0 !important;
-}
-
 div#sideFade {
     opacity: 0;
-    z-index: 0;
+    z-index: 1;
     visibility: hidden;
+    transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+}
+
+.fadeActive {
+    visibility: visible !important;
+    opacity: .5 !important;
 }
 
 input[type="text" i]:disabled {
@@ -79,9 +81,20 @@ img.audio-notific {
     background: #032854;
 }
 
-i.fas.fa-volume-up {
+.capa i {
     color: white;
     text-shadow: 0px 0px 5px black;
+}
+
+img.icon.seguidores {
+    filter: drop-shadow(0px 2px 0 black) drop-shadow(0px -1px 0 black);
+}
+
+.seguidores {
+    width: 25px;
+    margin-left: -6px;
+    position: relative;
+    left: 3px;
 }
 
 label#nome_playlist {

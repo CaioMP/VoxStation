@@ -22,16 +22,16 @@
 {% block body %}
 
     <div class="capa" style="background-image: url({{chan.capa.url}});">
-        <label for="audio" class="edit_audio_fundo edit-capa-top"
+        <label for="audio" class="edit_audio_fundo edit-capa-top" id="audio-fundo"
                data-toggle="tooltip" data-placement="bottom" title="Áudio de fundo">
             <i class="fas fa-volume-up"></i>
         </label>
-        <form  enctype="multipart/form-data" method="post" id="formulario_audio" style="display:none;" action="{%url 'channel:change_back_view' chan.id%}">
+        <form enctype="multipart/form-data" method="post" id="formulario_audio" style="display:none;" action="{%url 'channel:change_back_view' chan.id%}">
             {% csrf_token %}
             <input required="" id="audio" name="{{audio_form.audio_fundo.name}}" type="file" accept="audio/*" >
         </form>
         <span data-toggle="modal" data-target="#editCapa">
-            <a href="#" class="edit_audio_fundo edit-capa-top" rel="tooltip" style="float: left;" data-toggle="tooltip" data-placement="bottom" title="Capa do seu canal">
+            <a href="#" class="edit_audio_fundo edit-capa-top" id="edit-capa" rel="tooltip" style="float: left;" data-toggle="tooltip" data-placement="bottom" title="Capa do seu canal">
                 <i class="fas fa-pen" style="color: white;"></i>
             </a>
         </span><!--Editar o fundo-->
@@ -54,7 +54,7 @@
             <h2 class="nome_canal d-inline-block" id="nome_canal">{{chan.nome_canal}}</h2>
 
             <h6 id="num_seg" class="nome_canal">
-                <img src="/static/images/default-user-white.png" alt="seguidores" class="icon seguidores"
+                <img src="/static/images/default-user-white.png" alt="seguidores" class="icon seguidores" style="width: 25px;"
                      data-toggle="tooltip" data-placement="left" title="Seguidores">
                 {{num_seguidores}}
             </h6>
@@ -68,7 +68,7 @@
         <!--Editar nome do canal, descrição e links-->
         <span data-toggle="modal" data-target="#editRedesSociais">
             <a href="#" id="redes-sociais" class="edit-capa-bottom" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Suas redes sociais">
-                <img src="/static/resources/icones/social.png" alt="edite suas redes sociais" class="social">
+                <img src="/static/resources/icones/social.png" alt="Redes sociais" class="social">
             </a>
         </span>
 
@@ -174,8 +174,8 @@
                 {%for playlist in playlists%}
                 <div class="col-md-6">
                     <div class="card">
-                        <figure class="fig-capa-audio">
-                            <a href="#"><img src="{{playlist.capa.url}}" style="border-radius: 4px 0 0;" class="card-img-top" alt=""></a>
+                        <figure class="fig-capa-audio capa-playlist">
+                            <a href="#"><img src="{{playlist.capa.url}}" style="border-radius: 4px 0 0;" class="card-img-top" alt="{{playlist.nome}}"></a>
                             <figcaption class="fc-capa-audio">
                                 <center>
                                     <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>

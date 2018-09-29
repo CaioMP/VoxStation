@@ -37,8 +37,9 @@
     <script src="{% static 'ws.js' %}"></script>
     <script src="{% static '/channels/js/websocketbridge.js' %}" type="text/javascript"></script>
 
-    <!--Script para verificar se as notificações foram visualizadas-->
+    <!--Scripts de notificações-->
     <script src="{% static 'notific.js' %}"></script>
+    <script src="{% static 'channel/js/notific_me.js' %}"></script>
 
     {% block head %}
     {% endblock %}
@@ -177,25 +178,50 @@
     {% endif %}
 
     <div class="wrapper">
-        <div id="content">
+        <div id="content" style="overflow: -webkit-paged-x;">
             <div class="capa" style="background-image: url({{chan.capa.url}});">
-                <div class="audio-fundo">
+                {%if not direito_edicao%}
+                    {%if logado%}
+                    <!--Receber notificações do canal-->
+                    <form method="POST" action="{% url 'account:notific_view' chan.id %}" id="formNotificMe"
+                    {% if not user in chan.seguidor.all %} style="visibility: hidden;" {% endif %}>
+                        {% csrf_token %}
+                        <button type="submit" id="notific"
+                                {% if user in chan.users_notific.all %} class="notific-me"
+                                {% else %} class="notific-me active-notific" {% endif %} rel="tooltip" data-toggle="tooltip"
+                                data-placement="bottom" title="Notificações">
+                            <i class="fas fa-bell" style="margin-top: 0 !important; font-size: 1rem;" rel="tooltip" data-toggle="tooltip" data-placement="bottom"
+                               title="Notificações"></i>
+                        </button>
+                        <button type="submit" id="no-notific"
+                                {% if not user in chan.users_notific.all %} class="notific-me"
+                                {% else %} class="notific-me active-notific" {% endif %} rel="tooltip" data-toggle="tooltip"
+                                data-placement="bottom" title="Notificações">
+                            <i class="fas fa-bell-slash" style="margin-left: -2px;margin-top: 0 !important; font-size: 1rem;"></i>
+                        </button>
+                    </form><!--Fim do formNotificMe-->
+                    {% endif %}
+                {% endif %}
+                <div class="audio-fundo" {% if direito_edicao %} style="margin-top: 0;" {% endif %}>
                     <i class="fas fa-volume-up" rel="tooltip" data-toggle="tooltip" data-placement="bottom"
                        title="Áudio de fundo"></i><br>
                 </div>
-                {%if direito_edicao%}
-                <a href="{% url 'channel:edit_channel_view' chan.id %}" id="personalizar">Editar canal</a>
-                {%endif%}
                 <center>
                     <img src="{{chan.foto_canal.url}}" id="foto" alt="foto do canal"/>
                     <h2 class="nome_canal">{{chan.nome_canal}}</h2>
-                    <h6 id="num_seg">{{num_seguidores}} seguidores</h6>
+                    <h6 class="nome_canal d-inline">
+                        <img src="/static/images/default-user-white.png" alt="seguidores" class="icon seguidores d-inline"
+                             data-toggle="tooltip" data-placement="left" style="width: 25px; margin-right: .5rem;" title="Seguidores">
+                        <h6 class="d-inline-block" id="num_seg" >{{num_seguidores}}</h6>
+                    </h6>
                 </center>
-                {%if logado%}
-                <a href="#" style="background-color:{{cor}};" url_="{% url 'channel:follow_view' chan.id %}" id="sintonizar">{{botao}}</a>
-                {%endif%}
-                {%if direito_edicao%}
-                <a href="#" id="redes-sociais">Redes sociais</a>
+                {%if not direito_edicao%}
+                    {%if logado%}
+                        <a href="#" style="background-color:{{cor}};" url_="{% url 'channel:follow_view' chan.id %}" id="sintonizar">{{botao}}</a>
+                    {%endif%}
+                {% else %}
+                    <a href="#" id="redes-sociais">Redes sociais</a>
+                    <a href="{% url 'channel:edit_channel_view' chan.id %}" id="personalizar">Editar canal</a>
                 {%endif%}
             </div>
             {% block body %}
@@ -314,5 +340,6 @@
             {% endif %}
         </div>
     {% endif %}
+    <div class="modal-backdrop fade show" id="sideFade"></div>
 </body>
 </html>

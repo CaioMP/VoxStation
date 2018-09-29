@@ -80,7 +80,7 @@ a#playlists {
     margin-bottom: -25px;
 }
 
-figcaption.fc-capa-audio {
+.capa-playlist figcaption {
     height: 52.5% !important;
 }
 
@@ -101,7 +101,7 @@ figcaption.fc-capa-audio {
 }
 
 @media only screen and (max-width: 1174px) {
-    figcaption.fc-capa-audio {
+    .capa-playlist figcaption {
         height: 46% !important;
     }
 }
@@ -129,13 +129,13 @@ figcaption.fc-capa-audio {
         margin-top: .25rem;
     }
 
-    .fig-capa-audio figcaption {
+    .capa-playlist figcaption {
         height: 41.5% !important;
     }
 }
 
 @media only screen and (min-width: 835px) and (max-width: 930px) {
-    .fig-capa-audio figcaption {
+    .capa-playlist figcaption {
         height: 44.5% !important;
     }
 
@@ -189,7 +189,7 @@ figcaption.fc-capa-audio {
         margin: 3.3rem !important;
     }
 
-    .fig-capa-audio figcaption {
+    .capa-playlist figcaption {
         height: 54% !important;
     }
 }
@@ -223,7 +223,7 @@ figcaption.fc-capa-audio {
         height: 2rem !important;
     }
 
-    .fig-capa-audio figcaption {
+    .capa-playlist figcaption {
         height: 58.5% !important;
     }
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import (
     login as auth_login,
     get_user_model,
@@ -362,3 +362,19 @@ def RemoveHistoric(request, idAudio):
     json = {}
     json['message'] = "{} removido".format(audio.titulo)
     return JsonResponse(json)
+
+
+# Receber notificações do canal
+def notific(request, canal_id):
+    canal = Canal.objects.get(pk=canal_id)
+
+    data = {}
+
+    if request.user in canal.users_notific.all():
+        canal.users_notific.remove(request.user)
+        data['notific'] = False
+    else:
+        canal.users_notific.add(request.user)
+        data['notific'] = True
+    canal.save()
+    return JsonResponse(data)

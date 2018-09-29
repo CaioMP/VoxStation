@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block head %}
-    <title>Playlist - VoxStation</title> <!--Colocar o nome da playlist-->
+    <title>{{playlist.nome}} - VoxStation</title> <!--Colocar o nome da playlist-->
     <link rel="stylesheet" href="{% static 'channel/style_playlist_all.css' %}">
     <script src="{% static 'channel/js/playlist_all.js' %}"></script>
     <script src="{% static 'channel/js/play_edit.js' %}"></script>

@@ -65,7 +65,7 @@
 
     {% if audio %}
     <!--Modal de denunciar áudio-->
-    <div class="modal fade modal-player" id="reportAudio">
+    <div class="modal fade" id="reportAudio">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -493,7 +493,7 @@
     </nav>
 
     {% if logado %}
-    <nav id="sidebar" class="active">
+    <nav id="sidebar" class="active" tabindex="-1" data-keyboard="true">
         <div class="sidebar-header">
             <center><h3 style="opacity:0;">x</h3></center>
         </div>

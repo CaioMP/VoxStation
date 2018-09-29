@@ -49,13 +49,6 @@ a#sobre {
     margin-right: .5rem;
 }
 
-.seguidores {
-    width: 25px;
-    margin-left: -6px;
-    position: relative;
-    left: 3px;
-}
-
 @media only screen and (max-width: 767px) {
     .tags {
        margin-top: 1.5rem !important;
