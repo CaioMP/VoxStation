@@ -1,7 +1,6 @@
-from .models import Tag
 from .models import Audio, Playlist, Canal
 from urllib import request
-from datetime import datetime
+from collections import Counter
 import random
 
 
@@ -85,10 +84,23 @@ def getpopulars(canal):
 
 
 def searchclear(search, canal):
+    audios = Audio.objects.filter(titulo__contains=search, canal_proprietario=canal)
+    if audios.exists():
+        audios_list = []
+        for audio in audios:
+            audios_list.append(str(audio.pk))
+        return audios_list
+    else:
+        return False
 
-    audio = Audio.objects.filter(titulo__contains=search, canal_proprietario=canal)
-    if audio.exists():
-        return audio
+
+def searchclear_playlists(search, canal):
+    playlists = Playlist.objects.filter(nome__contains=search, canal=canal)
+    if playlists.exists():
+        playlist_list = []
+        for playlist in playlists:
+            playlist_list.append(str(playlist.pk))
+        return playlist_list
     else:
         return False
 
@@ -111,31 +123,18 @@ def get_status_channel(audios, op='reproducoes'):
 
 def get_tags(audios):
     lista_tags = []
-    lista_aparicoes = []
     lista_final = []
 
-    # resgata todos as tags de todos os audios e salva na 'lista_tags'
     for audio in audios:
         for tag in audio.tag.all():
             lista_tags.append(tag)
 
-    # conta quantas vezes uma tag aparece na lista de tags e salva na lista de aparicoes
+    lista_tags = sorted(lista_tags, key=Counter(lista_tags).get, reverse=True)
     for tag in lista_tags:
-        lista_aparicoes.append(lista_tags.count(tag))
+        if tag not in lista_final:
+            lista_final.append(tag)
 
-    # organiza a lista de aparicoes em ordem decescente
-    lista_aparicoes = sorted(lista_aparicoes, reverse=True)
-    # splita a lista de aparicoes nos 4 primeiros membros
-    lista_aparicoes = lista_aparicoes[:4]
-
-    # verifica se a lista o numero de vezes que um determinado elemento aparece na lista de tags e compara o numero com a lista
-    # - e ve se esse numero aparece na lista de aparicoes, se sim ele salva na lista final
-    for tag in lista_tags:
-        if lista_tags.count(tag) in lista_aparicoes:
-            lista_final.append(tag.nome)
-        else:
-            continue
-    # retorna lista final
+    print(lista_final)
     return lista_final[:4]
 
 

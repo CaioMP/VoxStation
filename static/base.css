@@ -20,6 +20,39 @@ div#sideFade {
     opacity: .5 !important;
 }
 
+.tab {
+    overflow: hidden;
+    background-color: rgb(250,250,250);
+    margin-top: -10px;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 7px 16px;
+    transition: 0.3s;
+    width: 25%;
+    font-size: 22px;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background: linear-gradient(-160deg, #032854, black);
+    color: white;
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: none;
+}
+
 input[type="text" i]:disabled {
     background-color: transparent;
 }
@@ -309,6 +342,10 @@ i.fas.fa-bell {
     .has-float-label textarea:placeholder-shown:not(:focus)+* {
         font-size: 90% !important;
         top: 0.7em !important;
+    }
+
+    .tablinks {
+        font-size: 1rem !important;
     }
 
     input#motivo {

@@ -139,41 +139,55 @@ def channel(request, id):
     else:
         contexto['direito_edicao'] = False
 
+    # Parte da guia 'Áudios' (uploads)
+    audios = Audio.objects.filter(canal_proprietario=contexto['chan']).order_by('-data_publicacao')
+    contexto['audios'] = audios
+    contexto['form_aud'] = SearchChannelAudioForm()
+
+    # Parte da guia 'Playlists'
+    contexto['playlists'] = Playlist.objects.filter(canal=contexto['chan'])
+    contexto['playlists'] = ordena_pra_exibicao(contexto['playlists'])
+    contexto['form_pl'] = SearchChannelAudioForm()
+
+    # Parte da guia 'Sobre'
+    contexto['likes'] = get_status_channel(audios, 'likes')
+    contexto['deslikes'] = get_status_channel(audios, 'deslikes')
+    contexto['reproducoes_tot'] = get_status_channel(audios)
+    contexto['tags_mais_usadas'] = get_tags(audios)
+
     return render(request, './channel/channel.html', contexto)
 
 
-def playlist(request, id):
-    contexto = {}
+# Pesquisar áudios do canal
+def search_audios(request, canal_id):
+    search_form = SearchChannelAudioForm(request.POST)
+    canal = Canal.objects.get(pk=canal_id)
+    audios = Audio.objects.filter(canal_proprietario=canal)
 
-    if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
-        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
-        notifications = 0
-        new_notific = 0
+    data = {}
 
-        if ntfs_audios.exists():
-            for ntf in ntfs_audios.all():
-                if not ntf.visualized:
-                    new_notific += 1
-                notifications += 1
+    if search_form.is_valid():
+        data['search'] = search_form.cleaned_data['text']
+        data['audios'] = searchclear(data['search'], canal)
+        data['n_audios'] = audios.count()
 
-        contexto['notifications'] = notifications
-        contexto['new_notific'] = new_notific
-        contexto['ntfs_audios'] = ntfs_audios
+    return JsonResponse(data)
 
-    contexto['logado'] = request.user.is_active
-    contexto['chan'] = Canal.objects.get(pk=id)
-    contexto['playlists'] = Playlist.objects.filter(canal=contexto['chan'])
-    contexto['playlists'] = ordena_pra_exibicao(contexto['playlists'])
-    contexto['botao'] = ve_se_follow(request, contexto['chan'])
-    contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
-    if request.user == contexto['chan'].proprietario:
-        contexto['direito_edicao'] = True
-    else:
-        contexto['direito_edicao'] = False
-    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
-    return render(request, './channel/playlists.html', contexto)
+
+# Pesquisar playlists do canal
+def search_playlists(request, canal_id):
+    search_form = SearchChannelAudioForm(request.POST)
+    canal = Canal.objects.get(pk=canal_id)
+    playlists = Playlist.objects.filter(canal=canal)
+
+    data = {}
+
+    if search_form.is_valid():
+        data['search'] = search_form.cleaned_data['text']
+        data['playlists'] = searchclear_playlists(data['search'], canal)
+        data['n_playlists'] = playlists.count()
+
+    return JsonResponse(data)
 
 
 def playlist_play(request, id, id_audio):
@@ -337,93 +351,6 @@ def responder(request, audio_id, comentario_id):
             comentario.save()
 
     return HttpResponse("resposta salva")
-
-
-def about(request, id):
-    contexto = {}
-
-    if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
-        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
-        notifications = 0
-        new_notific = 0
-
-        if ntfs_audios.exists():
-            for ntf in ntfs_audios.all():
-                if not ntf.visualized:
-                    new_notific += 1
-                notifications += 1
-
-        contexto['notifications'] = notifications
-        contexto['new_notific'] = new_notific
-        contexto['ntfs_audios'] = ntfs_audios
-
-    contexto['logado'] = request.user.is_active
-    contexto['chan'] = Canal.objects.get(pk=id)
-    contexto['botao'] = ve_se_follow(request, contexto['chan'])
-    contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
-    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
-    audios = Audio.objects.filter(canal_proprietario=contexto['chan'])
-    contexto['likes'] = get_status_channel(audios, 'likes')
-    contexto['deslikes'] = get_status_channel(audios, 'deslikes')
-    contexto['reproducoes_tot'] = get_status_channel(audios)
-    contexto['tags_mais_usadas'] = get_tags(audios)
-    if request.user == contexto['chan'].proprietario:
-        contexto['direito_edicao'] = True
-    else:
-        contexto['direito_edicao'] = False
-    return render(request, './channel/about.html', contexto)
-
-
-def uploads(request, id):
-    contexto= {}
-
-    if request.user.is_active:
-        contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
-        contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
-        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
-        notifications = 0
-        new_notific = 0
-
-        if ntfs_audios.exists():
-            for ntf in ntfs_audios.all():
-                if not ntf.visualized:
-                    new_notific += 1
-                notifications += 1
-
-        contexto['notifications'] = notifications
-        contexto['new_notific'] = new_notific
-        contexto['ntfs_audios'] = ntfs_audios
-
-    contexto['logado'] = request.user.is_active
-    contexto['chan'] = Canal.objects.get(pk=id)
-    contexto['botao'] = ve_se_follow(request, contexto['chan'])
-    contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
-    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
-    if request.user == contexto['chan'].proprietario:
-        contexto['direito_edicao'] = True
-    else:
-        contexto['direito_edicao'] = False
-
-    if request.method == 'POST':
-        search_form = SearchChannelAudioForm(request.POST)
-
-        if search_form.is_valid():
-            search = search_form.cleaned_data['text']
-            audios = searchclear(search, contexto['chan'])
-            contexto['audios'] = audios
-            contexto['form_aud'] = SearchChannelAudioForm()
-            return render(request, './channel/uploads.html', contexto)
-        else:
-            contexto['erro'] = True
-            contexto['form_aud'] = SearchChannelAudioForm()
-            return render(request, './channel/uploads.html', contexto)
-    else:
-        audios = Audio.objects.filter(canal_proprietario=contexto['chan']).order_by('data_publicacao').reverse()
-        contexto['audios'] = audios
-        contexto['form_aud'] = SearchChannelAudioForm()
-        return render(request, './channel/uploads.html', contexto)
 
 
 def partner(request, id):

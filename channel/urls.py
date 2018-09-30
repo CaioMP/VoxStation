@@ -8,9 +8,7 @@ urlpatterns = [
     # De canal
     path("myUploads", login_required(myuploads), name='myuploads'),
     path("<int:id>/", channel, name='channel_view'),
-    path("about/<int:id>", about, name='about_view'),
-    path("uploads/<int:id>", uploads, name='uploads_view'),
-    path("partner/<int:id>", partner, name='partner_view'),
+    # path("partner/<int:id>", partner, name='partner_view'),
     path("follow/<int:id>", follow, name="follow_view"),
     path('follow_general', canalSeg, name='follow_general_view'),
     path("edit/<int:id>", edit_channel, name='edit_channel_view'),
@@ -18,9 +16,10 @@ urlpatterns = [
     path('chan_edit/<int:id>', channelEditInfo, name='chan_edit_info_view'),
     path('change_photo/<int:id>', changePhoto, name="change_photo_view"),
     path('change_cover/<int:id>', changeCover, name="change_cover_view"),
+    path('search_audios/<int:canal_id>', search_audios, name="search_audios_view"),
 
     # De playlist
-    path("playlist/<int:id>", playlist, name='playlist_view'),
+    path("playlist_search/<int:canal_id>", search_playlists, name='search_playlists_view'),
     path("playlist_all/<int:id>", playlist_all, name='playlist_all_view'),
     path("playlist_play/<int:id>/<int:id_audio>", playlist_play, name='playlist_play_view'),
     path("playlist_load_modal", playlist_load_modal, name='playlist_add_view'),

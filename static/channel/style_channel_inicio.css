@@ -96,7 +96,7 @@ a#personalizar {
 .container-fluid {
     margin-top: 0 !important;
     margin-bottom: 3rem !important;
-    padding-right: 15 !important;
+    padding: 0 !important;
 }
 
 .row {
@@ -116,6 +116,7 @@ a#personalizar {
     font-size: 20px !important;
     padding: 8px 16px !important;
     text-align: start;
+    margin-bottom: -3px !important;
 }
 
 .carousel {
@@ -140,11 +141,6 @@ a#personalizar {
 
 .carousel-control-next, .carousel-control-prev {
     margin: 11.5rem -.5rem 0 !important;
-}
-
-a#inicio {
-    color: #032854;
-    text-decoration: underline;
 }
 
 .semelhantes {
@@ -269,6 +265,10 @@ a.section:hover {
 @media only screen and (max-width: 414px) {
     .capa {
         margin-top: 112px !important;
+    }
+
+    .tab button {
+        width: 50%;
     }
 
     img#foto {
