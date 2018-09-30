@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             link.appendChild(titulo);
             link.appendChild(data);
             el.appendChild(link);
-            nl.appendChild(el);
+            nl.prepend(el);
         }
     })
     document.ws = webSocketBridge;

@@ -1,6 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from channel.models import Playlist, NotificAudio
-from channel.models import AudioReport
+from channel.models import *
 from .process import *
 from channel.process import ordena_pra_exibicao
 from django.http import JsonResponse
@@ -16,7 +15,7 @@ def IndexView(request):
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
-        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
         notifications = 0
         new_notific = 0
 
@@ -45,7 +44,7 @@ def search(request):
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
-        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
         notifications = 0
         new_notific = 0
 

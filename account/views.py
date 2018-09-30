@@ -171,7 +171,7 @@ def edit_profile(request):
         profileform = EditProfileForm(instance=request.user)
         auxform = AuxForm(instance=request.user)
 
-    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
     notifications = 0
     new_notific = 0
 
@@ -230,7 +230,7 @@ def change_password(request):
             if new_password2 == 'new_password2':
                 new_password2 = ''
 
-            ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+            ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
             notifications = 0
             new_notific = 0
 
@@ -250,7 +250,7 @@ def change_password(request):
         edited_password = False
         form = ChangePasswordForm(request.user)
 
-    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
     notifications = 0
 
     if ntfs_audios.exists():
@@ -284,7 +284,7 @@ def NewChannelView(request):
                         error_nome_canal = error
             form = NewChannelForm()
 
-    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+    ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
     notifications = 0
     new_notific = 0
 
@@ -314,7 +314,7 @@ def historic(request):
             contexto['audios_historico'] = registro.audio.all().order_by("id").reverse()
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
-        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
         notifications = 0
         new_notific = 0
 
@@ -338,7 +338,7 @@ def favorites(request):
         contexto['audios_favoritos'] = fav.audio.all()
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
-        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user)
+        ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
         notifications = 0
         new_notific = 0
 

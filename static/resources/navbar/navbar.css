@@ -99,14 +99,16 @@ img.icon-left.channel {
 .notific.show {
     width: 21rem;
     margin-left: -2.8rem;
+    overflow: auto;
+    max-height: 25.5rem;
 }
 
-li#headerNotific {
+div#headerNotific {
     font-size: 1.15rem;
     background-color: white;
     color: #032854;
     padding: .75rem 1rem;
-    margin-top: -1rem;
+    margin-top: -.5rem;
     min-height: auto;
 }
 

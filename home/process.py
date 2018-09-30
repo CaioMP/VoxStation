@@ -1,5 +1,4 @@
 from channel.models import Audio
-from account.models import Canal
 from channel.process import get_tags, ordena_pra_exibicao
 
 
@@ -8,8 +7,8 @@ def orderAudios(canais):
     for canal in canais:
         audio = Audio.objects.filter(canal_proprietario=canal)
         if audio.exists():
-            canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('reproducoes')[:4]
-            canal.playlist2 = Audio.objects.filter(canal_proprietario=canal).order_by('reproducoes')[4:8]
+            canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao')[:4]
+            canal.playlist2 = Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao')[4:8]
             canalF.append(canal)
     return canalF
 

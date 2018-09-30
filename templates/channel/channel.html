@@ -31,33 +31,35 @@
             </div>
         </div>
         <div id="carouselSlider-{{forloop.counter}}" class="carousel slide" data-ride="carousel">
-            <h2 class="headerChannel"><a href="#">Últimos envios</a></h2>
+            <h2 class="headerChannel">Últimos envios</h2>
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row mt-4">
                         {%for audios in chan.playlist1%}
                         <div class="col-md-3">
                             <div class="card">
-                                <figure class="fig-capa-audio">
-                                    <a href="#"><img src="{{audios.capa.url}}" class="card-img-top" alt=""></a>
-                                    <figcaption class="fc-capa-audio">
-                                        <center>
-                                            <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                            <div class="dropdown more">
-                                                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                                <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                    <a class="dropdown-item" href="#">Adicionar a playlist</a>
-                                                    <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                <a href="{% url 'channel:player_view' audios.id %}">
+                                    <figure class="fig-capa-audio">
+                                        <img src="{{audios.capa.url}}" class="card-img-top" alt="">
+                                        <figcaption class="fc-capa-audio">
+                                            <center>
+                                                <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                                <div class="dropdown more">
+                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                    <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                        <a class="dropdown-item" href="#">Adicionar a playlist</a>
+                                                        <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                                    </div>
+                                                    </a>
                                                 </div>
-                                                </a>
-                                            </div>
-                                        </center>
-                                    </figcaption>
-                                </figure>
+                                            </center>
+                                        </figcaption>
+                                    </figure>
+                                </a>
 
                                 <div class="card-body">
-                                    <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{audios.titulo}}</h4></a>
+                                    <a href="{% url 'channel:player_view' audios.id %}" class="audio-link"><h4 class="card-title audio-titul">{{audios.titulo}}</h4></a>
                                     <div class="card-text">
                                         <p class="descript-thumb">{{chan.nome_canal}}</p>
                                         <p class="descript-thumb">
@@ -79,26 +81,28 @@
                         {%for audios in chan.playlist2%}
                         <div class="col-md-3">
                             <div class="card">
-                                <figure class="fig-capa-audio">
-                                    <a href="#"><img src="{{audios.capa.url}}" class="card-img-top" alt=""></a>
-                                    <figcaption class="fc-capa-audio">
-                                        <center>
-                                            <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
-                                            <div class="dropdown more">
-                                                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                                <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                    <a class="dropdown-item" href="#">Adicionar a playlist</a>
-                                                    <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                <a href="{% url 'channel:player_view' audios.id %}">
+                                    <figure class="fig-capa-audio">
+                                        <img src="{{audios.capa.url}}" class="card-img-top" alt="">
+                                        <figcaption class="fc-capa-audio">
+                                            <center>
+                                                <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                                <div class="dropdown more">
+                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                    <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                        <a class="dropdown-item" href="#">Adicionar a playlist</a>
+                                                        <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                                    </div>
+                                                    </a>
                                                 </div>
-                                                </a>
-                                            </div>
-                                        </center>
-                                    </figcaption>
-                                </figure>
+                                            </center>
+                                        </figcaption>
+                                    </figure>
+                                </a>
 
                                 <div class="card-body">
-                                    <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{audios.titulo}}</h4></a>
+                                    <a href="{% url 'channel:player_view' audios.id %}" class="audio-link"><h4 class="card-title audio-titul">{{audios.titulo}}</h4></a>
                                     <div class="card-text">
                                         <p class="descript-thumb">{{chan.nome_canal}}</p>
                                         <p class="descript-thumb">
@@ -125,6 +129,104 @@
             </a>
             {% endif %}
         </div>
+        <div id="carouselSliderMostPopular-{{forloop.counter}}" class="carousel slide" data-ride="carousel">
+            <h2 class="headerChannel">+ Reproduzidos</h2>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row mt-4">
+                        {%for audios in audios_popular.playlist1%}
+                        <div class="col-md-3">
+                            <div class="card">
+                                <a href="{% url 'channel:player_view' audios.id %}">
+                                    <figure class="fig-capa-audio">
+                                        <img src="{{audios.capa.url}}" class="card-img-top" alt="">
+                                        <figcaption class="fc-capa-audio">
+                                            <center>
+                                                <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                                <div class="dropdown more">
+                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                    <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                        <a class="dropdown-item" href="#">Adicionar a playlist</a>
+                                                        <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            </center>
+                                        </figcaption>
+                                    </figure>
+                                </a>
 
+                                <div class="card-body">
+                                    <a href="{% url 'channel:player_view' audios.id %}" class="audio-link"><h4 class="card-title audio-titul">{{audios.titulo}}</h4></a>
+                                    <div class="card-text">
+                                        <p class="descript-thumb">{{chan.nome_canal}}</p>
+                                        <p class="descript-thumb">
+                                            <img src="/static/resources/icones/view.png" class="icon-view"/>
+                                            {{audios.reproducoes}}</p>
+                                        <p class="descript-thumb">
+                                            {{audios.data_publicacao|date:"d/m/y"}} às
+                                            {{audios.data_publicacao|date:"H:i"}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+                {% if audios_popular.playlist2 %}
+                <div class="carousel-item">
+                    <div class="row mt-4">
+                        {%for audios in audios_popular.playlist2%}
+                        <div class="col-md-3">
+                            <div class="card">
+                                <a href="{% url 'channel:player_view' audios.id %}">
+                                    <figure class="fig-capa-audio">
+                                        <img src="{{audios.capa.url}}" class="card-img-top" alt="">
+                                        <figcaption class="fc-capa-audio">
+                                            <center>
+                                                <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                                <div class="dropdown more">
+                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                    <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                        <a class="dropdown-item" href="#">Adicionar a playlist</a>
+                                                        <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            </center>
+                                        </figcaption>
+                                    </figure>
+                                </a>
+
+                                <div class="card-body">
+                                    <a href="{% url 'channel:player_view' audios.id %}" class="audio-link"><h4 class="card-title audio-titul">{{audios.titulo}}</h4></a>
+                                    <div class="card-text">
+                                        <p class="descript-thumb">{{chan.nome_canal}}</p>
+                                        <p class="descript-thumb">
+                                            <img src="/static/resources/icones/view.png" class="icon-view"/>
+                                            {{audios.reproducoes}}</p>
+                                        <p class="descript-thumb">
+                                            {{audios.data_publicacao|date:"d/m/y"}} às
+                                            {{audios.data_publicacao|date:"H:i"}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% if chan.playlist2 %}
+            <a href="#carouselSliderMostPopular-{{forloop.counter}}" class="carousel-control-prev" role="button" data-slide="prev">
+                <img src="/static/resources/icones/prev.png" class="slideIcos" alt="">
+            </a>
+            <a href="#carouselSliderMostPopular-{{forloop.counter}}" class="carousel-control-next" role="button" data-slide="next">
+                <img src="/static/resources/icones/next.png" class="slideIcos" alt="">
+            </a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

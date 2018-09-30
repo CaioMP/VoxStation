@@ -45,7 +45,7 @@
                                     </figure>
 
                                     <div class="card-body">
-                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{f_page_audio.titulo}}</h4></a>
+                                        <a href="{% url 'channel:player_view' f_page_audio.id %}" class="audio-link"><h4 class="card-title audio-titul">{{f_page_audio.titulo}}</h4></a>
                                         <div class="card-text">
                                             <p class="descript-thumb">{{channel.nome_canal}}</p>
                                             <p class="descript-thumb"><img src="/static/resources/icones/view.png" class="icon-view"/>{{f_page_audio.reproducoes}}</p>
@@ -82,7 +82,7 @@
                                         </figcaption>
                                     </figure>
                                     <div class="card-body">
-                                        <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{s_page_audio.titulo}}</h4></a>
+                                        <a href="{% url 'channel:player_view' s_page_audio.id %}" class="audio-link"><h4 class="card-title audio-titul">{{s_page_audio.titulo}}</h4></a>
                                         <div class="card-text">
                                             <p class="descript-thumb">{{channel.nome_canal}}</p>
                                             <p class="descript-thumb"><img src="/static/resources/icones/view.png" class="icon-view"/>{{s_page_audio.reproducoes}}</p>

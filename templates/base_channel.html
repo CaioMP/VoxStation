@@ -90,8 +90,8 @@
                         {% endif %}
                         <i class="fas fa-bell icon-right" style="color: black; margin-bottom: 0 !important"></i></a>
                     <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
+                        <div class="dropdown-item" id="headerNotific">Notificações</div>
                         <ul id="notifylist" style="padding: .5rem 1px;">
-                            <li class="dropdown-item" id="headerNotific">Notificações</li>
                             {% if ntfs_audios.exists %}
                                 {% for naudio in ntfs_audios.all %}
                                     <li class="dropdown-item">

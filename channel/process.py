@@ -70,8 +70,16 @@ def get_n_comentarios(comentarios, respostas):
 
 def getaudios(canal):
 
-    canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao')[:4]
-    canal.playlist2 = Audio.objects.filter(canal_proprietario=canal).order_by('data_publicacao')[4:8]
+    canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao')[:4]
+    canal.playlist2 = Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao')[4:8]
+
+    return canal
+
+
+def getpopulars(canal):
+
+    canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('-reproducoes')[:4]
+    canal.playlist2 = Audio.objects.filter(canal_proprietario=canal).order_by('-reproducoes')[4:8]
 
     return canal
 
