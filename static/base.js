@@ -81,3 +81,13 @@ function Visualized(){
     document.getElementById("notificNumber").style.display="none";
     $("#formNotific").submit();
 }
+
+//Mostrar o botão de configurações na imagem do dropdown-item de favoritos
+function showDelFav(id){
+    document.getElementById(id).getElementsByClassName("btn-delFav")[0].style.opacity = ".9";
+}
+
+//Esconde o botão de play na configurações do dropdown-item de favoritos
+function hideDelFav(id){
+    document.getElementById(id).getElementsByClassName("btn-delFav")[0].style.opacity = "0";
+}

@@ -159,14 +159,6 @@ class Historico(models.Model):
         return "Histórico de "+self.prop.username
 
 
-class Favorito(models.Model):
-    prop = models.ForeignKey(MyUser, on_delete=models.CASCADE,)
-    audio = models.ManyToManyField(Audio, blank=True)
-
-    def __str__(self):
-        return "favoritos de "+self.prop.username
-
-
 class NotificAudio(models.Model):
     user_notific = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="user_notific")
     audio = models.ForeignKey(Audio, on_delete=models.CASCADE, related_name="audio_notific")

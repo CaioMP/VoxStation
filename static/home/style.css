@@ -127,6 +127,7 @@ p {
 	height: 47%;
 	cursor: pointer;
 	color: white;
+    transition: .3s;
 }
 
 .fig-capa-audio:hover figcaption{

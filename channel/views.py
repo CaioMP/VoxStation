@@ -3,7 +3,7 @@ from .forms import *
 from account.models import Seg
 from .process import *
 from django.http import JsonResponse
-from .models import Playlist, Audio, Comentario, Resposta, Historico, NotificAudio, Favorito,FeedDesLike,FeedLike
+from .models import Playlist, Audio, Comentario, Resposta, Historico, NotificAudio,FeedDesLike,FeedLike, Tag
 from datetime import datetime
 from django.utils import formats
 import random
@@ -891,7 +891,6 @@ def feedBack(request, idAudio):
     json_context = {}
     audio = Audio.objects.get(pk=idAudio)
     opcao = request.GET['opcao']
-    Fav = Favorito.objects.get(prop=request.user)
 
     if opcao == "like":
         # Remover dos likes
@@ -899,9 +898,6 @@ def feedBack(request, idAudio):
             likes = FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio).all()
             for like in likes:
                 like.delete()
-
-            Fav.audio.remove(audio)
-            Fav.save()
 
             if audio.numero_likes != 0:
                 audio.numero_likes -= 1
@@ -913,8 +909,6 @@ def feedBack(request, idAudio):
         else:
             feed = FeedLike.objects.create(conta_feed=request.user, Audio_feed=audio)
             audio.numero_likes += 1
-            Fav.audio.add(audio)
-            Fav.save()
             json_context['message'] = "Áudio adicionado aos favoritos"
             json_context['like'] = True
 
@@ -946,10 +940,6 @@ def feedBack(request, idAudio):
 
             audio.numero_deslikes += 1
             json_context['deslike'] = True
-            if audio in Fav.audio.all():
-                json_context['message'] = "Áudio removido dos favoritos"
-                Fav.audio.remove(audio)
-                Fav.save()
 
             # Se tiver like remover
             if FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio).exists():
@@ -957,13 +947,12 @@ def feedBack(request, idAudio):
                 for like in likes:
                     like.delete()
 
-                Fav.audio.remove(audio)
-                Fav.save()
                 json_context['remove_like'] = True
 
                 if audio.numero_likes != 0:
                     audio.numero_likes -= 1
             feed.save()
+            json_context['message'] = "Áudio removido dos favoritos"
 
     audio.save()
 

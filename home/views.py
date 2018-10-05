@@ -28,6 +28,8 @@ def IndexView(request):
         contexto['notifications'] = notifications
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
+        fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        contexto['audios_favoritos'] = fav.all()
 
     contexto['channels'] = orderAudios(Canal.objects.all())
     contexto['logado'] = request.user.is_active
@@ -167,6 +169,7 @@ def ordenaCanais(request, pesquisa):
     json['html'] = setOrdemCanais(canais)
 
     return JsonResponse(json)
+
 
 
 

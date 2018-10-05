@@ -134,7 +134,6 @@ def get_tags(audios):
         if tag not in lista_final:
             lista_final.append(tag)
 
-    print(lista_final)
     return lista_final[:4]
 
 

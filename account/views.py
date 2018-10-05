@@ -5,7 +5,7 @@ from django.contrib.auth import (
     get_user_model,
     authenticate
 )
-from channel.models import Playlist, Canal, Historico, Audio, NotificAudio, Favorito
+from channel.models import Playlist, Canal, Historico, Audio, NotificAudio, FeedLike
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
 from .forms import (UserCreationForm, UserLoginForm, EditBasicForm, NewChannelForm,
@@ -36,8 +36,6 @@ def RegisterView(request):
 
             Hist = Historico.objects.create(prop=profile)
             Hist.save()
-            Fav = Favorito.objects.create(prop=profile)
-            fav.save()
 
             new_user = authenticate(
                 username=account.cleaned_data['email'],
@@ -334,8 +332,8 @@ def favorites(request):
     contexto = {}
 
     if request.user.is_active:
-        fav = Favorito.objects.get(prop=request.user)
-        contexto['audios_favoritos'] = fav.audio.all()
+        fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        contexto['audios_favoritos'] = fav.all()
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
@@ -362,6 +360,23 @@ def RemoveHistoric(request, idAudio):
     json = {}
     json['message'] = "{} removido".format(audio.titulo)
     return JsonResponse(json)
+
+
+def RemoveFavorites(request, idAudio):
+    audio = Audio.objects.get(pk=idAudio)
+    likes = FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio).all()
+    for like in likes:
+        like.delete()
+
+    if audio.numero_likes != 0:
+        audio.numero_likes -= 1
+    audio.save()
+
+    data = {
+        "message": audio.titulo+" removido dos favoritos",
+        "audio": idAudio
+    }
+    return JsonResponse(data)
 
 
 # Receber notificações do canal

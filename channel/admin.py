@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tag, Audio, Playlist, FeedLike, FeedDesLike, AudioReport,Historico,Favorito
+from .models import Tag, Audio, Playlist, FeedLike, FeedDesLike, AudioReport, Historico
 
 
 class AudioAdmin(admin.ModelAdmin):
@@ -18,4 +18,3 @@ admin.site.register(FeedLike)
 admin.site.register(FeedDesLike)
 admin.site.register(AudioReport, AudioReportAdmin)
 admin.site.register(Historico)
-admin.site.register(Favorito)

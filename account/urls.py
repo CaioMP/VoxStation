@@ -15,5 +15,6 @@ urlpatterns = [
     path("new_channel/", login_required(NewChannelView), name='new_channel'),
     path("change_password/", login_required(change_password), name='change_password'),
     path("removeHistoric/<int:idAudio>", login_required(RemoveHistoric), name='remove_historic_view'),
+    path("removeFavorites/<int:idAudio>", login_required(RemoveFavorites), name='remove_fav'),
     path("notific/<int:canal_id>", login_required(notific), name='notific_view')
 ]
