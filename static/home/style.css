@@ -15,6 +15,21 @@ body {
     height: 18rem;
 }
 
+.mais-rep {
+    height: 19.5rem;
+}
+
+.position-audio {
+    margin-bottom: -1px;
+    text-align: center;
+    font-weight: bold;
+    padding: 3px;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem .25rem 0 0;
+    transition: .3s;
+}
+
 .icon-play {
     display: block;
     width: 55px;
@@ -160,6 +175,10 @@ p {
         height: 19rem;
     }
 
+    .mais-rep {
+        margin-bottom: 2rem;
+    }
+
     .mt-5, .my-5 {
         margin-top: 0rem!important;
     }
@@ -182,6 +201,10 @@ p {
 }
 
 @media only screen and (max-width: 767px) {
+    .row {
+        height: 95px;
+    }
+
     div#page-content-wrapper {
         height: 110%;
     }
@@ -192,6 +215,11 @@ p {
 
     .carousel-inner {
         height: 46rem;
+    }
+
+    .mais-rep {
+        height: 50rem !important;
+        margin-bottom: 0;
     }
 
     .icon-play {
@@ -223,12 +251,6 @@ p {
     }
 }
 
-@media only screen and (max-width: 767px) {
-    .row {
-        height: 95px;
-    }
-}
-
 @media only screen and (max-width: 575px) {
     div#page-content-wrapper {
         height: 260%;
@@ -244,6 +266,10 @@ p {
 
     .carousel-inner {
         height: 104rem;
+    }
+
+    .mais-rep {
+        height: 112rem !important;
     }
 
     .icon-play {
@@ -301,6 +327,10 @@ p {
         width: 107%;
         height: 93rem;
         overflow: hidden;
+    }
+
+    .mais-rep {
+        height: 101rem !important;
     }
 
     .modal {

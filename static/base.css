@@ -51,6 +51,7 @@ div#sideFade {
     display: none;
     padding: 6px 12px;
     border: none;
+    overflow: -webkit-paged-x;
 }
 
 input[type="text" i]:disabled {
@@ -319,6 +320,10 @@ i.fas.fa-bell {
         height: 170px !important;
     }
 
+    .carousel-inner {
+        margin-bottom: 0 !important;
+    }
+
     figcaption.fc-capa-audio {
         height: 170px !important;
     }
@@ -333,6 +338,11 @@ i.fas.fa-bell {
 @media only screen and (min-width: 1058px) {
     .carousel-inner {
         height: 20rem !important;
+        margin-bottom: -2.5rem;
+    }
+
+    .mais-rep {
+        height: 22rem !important;
     }
 }
 

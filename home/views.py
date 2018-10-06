@@ -12,6 +12,12 @@ from email.mime.text import MIMEText
 def IndexView(request):
     contexto = {}
 
+    mais_reproduzidos = Audio.objects.order_by('-reproducoes')
+    melhor_avaliados = Audio.objects.order_by('-numero_likes', 'numero_deslikes')
+
+    contexto['mais_reproduzidos'] = mais_reproduzidos
+    contexto['melhor_avaliados'] = melhor_avaliados
+
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
@@ -33,6 +39,7 @@ def IndexView(request):
 
     contexto['channels'] = orderAudios(Canal.objects.all())
     contexto['logado'] = request.user.is_active
+
     if contexto['logado']:
         contexto['playlists'] = Playlist.objects.filter(proprietario=request.user)
         contexto['canais_para_playlist'] = Canal.objects.filter(proprietario=request.user)

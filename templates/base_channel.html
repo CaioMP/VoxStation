@@ -121,7 +121,7 @@
                         {% else %}
                             <span id="notificNumber" style="display: none;"></span>
                         {% endif %}
-                        <i class="fas fa-bell icon-right" style="color: black; margin-bottom: 0 !important"></i></a>
+                        <i class="fas fa-bell icon-right" style="color: black;"></i></a>
                     <div class="dropdown-menu notific" style="min-width: 21rem;" aria-labelledby="dropdownNotific">
                         <div class="dropdown-item header" style="margin-bottom: -8px;">Notificações</div>
                         <ul id="notifylist" style="padding: .5rem 1px;">
@@ -223,20 +223,20 @@
                                 {% if user in chan.users_notific.all %} class="notific-me"
                                 {% else %} class="notific-me active-notific" {% endif %} rel="tooltip" data-toggle="tooltip"
                                 data-placement="bottom" title="Notificações">
-                            <i class="fas fa-bell" style="margin-top: 0 !important; font-size: 1rem;" rel="tooltip" data-toggle="tooltip" data-placement="bottom"
+                            <i class="fas fa-bell" style="margin-top: 12px;font-size: 1rem;" rel="tooltip" data-toggle="tooltip" data-placement="bottom"
                                title="Notificações"></i>
                         </button>
                         <button type="submit" id="no-notific"
                                 {% if not user in chan.users_notific.all %} class="notific-me"
                                 {% else %} class="notific-me active-notific" {% endif %} rel="tooltip" data-toggle="tooltip"
                                 data-placement="bottom" title="Notificações">
-                            <i class="fas fa-bell-slash" style="margin-left: -2px;margin-top: 0 !important; font-size: 1rem;"></i>
+                            <i class="fas fa-bell-slash" style="margin-top: 12px;margin-left: -2px;font-size: 1rem;"></i>
                         </button>
                     </form><!--Fim do formNotificMe-->
                     {% endif %}
                 {% endif %}
                 <div class="audio-fundo" {% if direito_edicao %} style="margin-top: 0;" {% endif %}>
-                    <i class="fas fa-volume-up" rel="tooltip" data-toggle="tooltip" data-placement="bottom"
+                    <i class="fas fa-volume-up" style="margin-top: 12px;" rel="tooltip" data-toggle="tooltip" data-placement="bottom"
                        title="Áudio de fundo"></i><br>
                 </div>
                 <center>

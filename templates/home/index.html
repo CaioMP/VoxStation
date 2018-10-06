@@ -6,12 +6,203 @@
 {% block head %}
     <title>VoxStation</title>
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
+    <script src="{% static 'home/js/home.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
     {% csrf_token %}
     <div id="page-content-wrapper">
         <div class="container-fluid">
+            <!--Mais reproduzidos-->
+            <div id="more_rep">
+                <div id="carouselSliderMR-{{forloop.counter}}" class="carousel slide ml-4 mt-5 mais_rep" data-ride="carousel">
+                <h2 class="headerChannel mb-4">
+                    <a href="#" class="ml-4">Mais reproduzidos</a> <!--Clicar para ver a lista completa-->
+                </h2>
+                <div class="carousel-inner mais-rep">
+                    <div class="carousel-item active">
+                        <div class="row">
+                        {% for audio_mr1 in mais_reproduzidos|slice:":4" %}
+                            <div class="col-md-3" id="mr1-{{forloop.counter}}" onmouseover="activeNum(this.id)"
+                                 onmouseleave="changeBgcNum(this.id)">
+                                <div class="position-audio">#0</div>
+                                <div class="card" style="border-radius: 0 0 .25rem .25rem;">
+                                    <figure class="fig-capa-audio">
+                                        <img src="{{audio_mr1.capa.url}}" style="border-radius: 0;" class="card-img-top" alt="">
+                                        <figcaption class="fc-capa-audio">
+                                            <center>
+                                                <a href="{% url 'channel:player_view' audio_mr1.id %}">
+                                                    <img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                                <div class="dropdown more">
+                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                    <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                        <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio_mr1.id}}">Adicionar a playlist</a>
+                                                        <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            </center>
+                                        </figcaption>
+                                    </figure>
+
+                                    <div class="card-body">
+                                        <a href="{% url 'channel:player_view' audio_mr1.id %}" class="audio-link"><h4 class="card-title audio-titul">{{audio_mr1.titulo}}</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">{{audio_mr1.canal_proprietario.nome_canal}}</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/view.png" class="icon-view"/>{{audio_mr1.reproducoes}}</p>
+                                            <p class="descript-thumb">
+                                                {{audio_mr1.data_publicacao|date:"d/m/y"}} às {{audio_mr1.data_publicacao|date:"H:i"}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {%endfor%}
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                            {% for audio_mr2 in mais_reproduzidos|slice:"4:8" %}
+                            <div class="col-md-3" id="mr2-{{forloop.counter}}" onmouseover="activeNum(this.id)"
+                                 onmouseleave="changeBgcNum(this.id)">
+                                <div class="position-audio">#1</div>
+                                <div class="card" style="border-radius: 0 0 .25rem .25rem;">
+                                    <figure class="fig-capa-audio">
+                                        <img src="{{audio_mr2.capa.url}}" style="border-radius: 0;" class="card-img-top" alt="">
+                                        <figcaption class="fc-capa-audio">
+                                            <center>
+                                                <a href="{% url 'channel:player_view' audio_mr2.id %}"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                                <div class="dropdown more">
+                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                    <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                        <a class="dropdown-item addplay" url_="{% url 'channel:playlist_add_view' %}"  data-toggle="modal" data-target="#addPlaylist" aud_atre="{{audio_mr2.id}}">Adicionar a playlist</a>
+                                                        <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            </center>
+                                        </figcaption>
+                                    </figure>
+                                    <div class="card-body">
+                                        <a href="{% url 'channel:player_view' audio_mr2.id %}" class="audio-link"><h4 class="card-title audio-titul">{{audio_mr2.titulo}}</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">{{audio_mr2.canal_proprietario.nome_canal}}</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/view.png" class="icon-view"/>{{audio_mr2.reproducoes}}</p>
+                                            <p class="descript-thumb">
+                                                {{audio_mr2.data_publicacao|date:"d/m/y"}} às {{audio_mr2.data_publicacao|date:"H:i"}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+                <a href="#carouselSliderMR-{{forloop.counter}}" class="carousel-control-prev" role="button" data-slide="prev">
+                    <img src="/static/resources/icones/prev.png" class="slideIcos" alt="">
+                </a>
+                <a href="#carouselSliderMR-{{forloop.counter}}" class="carousel-control-next" role="button" data-slide="next">
+                    <img src="/static/resources/icones/next.png" class="slideIcos" alt="">
+                </a>
+            </div>
+            </div>
+
+            <!--Melhor avaliados-->
+            <div id="best_av">
+                <div id="carouselSliderMA-{{forloop.counter}}" class="carousel slide ml-4 mt-5 melhor_av" data-ride="carousel">
+                <h2 class="headerChannel mb-4">
+                    <a href="#" class="ml-4">Melhor avaliados</a> <!--Clicar para ver a lista completa-->
+                </h2>
+                <div class="carousel-inner mais-rep">
+                    <div class="carousel-item active">
+                        <div class="row">
+                        {% for audio_ma1 in melhor_avaliados|slice:":4" %}
+                            <div class="col-md-3" id="ma1-{{forloop.counter}}" onmouseover="activeNum(this.id)"
+                                 onmouseleave="changeBgcNum(this.id)">
+                                <div class="position-audio">#0</div>
+                                <div class="card" style="border-radius: 0 0 .25rem .25rem;">
+                                    <figure class="fig-capa-audio">
+                                        <img src="{{audio_ma1.capa.url}}" style="border-radius: 0;" class="card-img-top" alt="">
+                                        <figcaption class="fc-capa-audio">
+                                            <center>
+                                                <a href="{% url 'channel:player_view' audio_ma1.id %}">
+                                                    <img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                                <div class="dropdown more">
+                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                    <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                        <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio_ma1.id}}">Adicionar a playlist</a>
+                                                        <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            </center>
+                                        </figcaption>
+                                    </figure>
+
+                                    <div class="card-body">
+                                        <a href="{% url 'channel:player_view' audio_ma1.id %}" class="audio-link"><h4 class="card-title audio-titul">{{audio_ma1.titulo}}</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">{{audio_ma1.canal_proprietario.nome_canal}}</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/view.png" class="icon-view"/>{{audio_ma1.reproducoes}}</p>
+                                            <p class="descript-thumb">
+                                                {{audio_ma1.data_publicacao|date:"d/m/y"}} às {{audio_ma1.data_publicacao|date:"H:i"}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {%endfor%}
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                            {% for audio_ma2 in melhor_avaliados|slice:"4:8" %}
+                            <div class="col-md-3" id="ma2-{{forloop.counter}}" onmouseover="activeNum(this.id)"
+                                 onmouseleave="changeBgcNum(this.id)">
+                                <div class="position-audio">#1</div>
+                                <div class="card" style="border-radius: 0 0 .25rem .25rem;">
+                                    <figure class="fig-capa-audio">
+                                        <img src="{{audio_ma2.capa.url}}" style="border-radius: 0;" class="card-img-top" alt="">
+                                        <figcaption class="fc-capa-audio">
+                                            <center>
+                                                <a href="{% url 'channel:player_view' audio_ma2.id %}"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                                <div class="dropdown more">
+                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                    <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                        <a class="dropdown-item addplay" url_="{% url 'channel:playlist_add_view' %}"  data-toggle="modal" data-target="#addPlaylist" aud_atre="{{audio_ma2.id}}">Adicionar a playlist</a>
+                                                        <a class="dropdown-item" href="#">Reproduzir depois</a>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            </center>
+                                        </figcaption>
+                                    </figure>
+                                    <div class="card-body">
+                                        <a href="{% url 'channel:player_view' audio_ma2.id %}" class="audio-link"><h4 class="card-title audio-titul">{{audio_ma2.titulo}}</h4></a>
+                                        <div class="card-text">
+                                            <p class="descript-thumb">{{audio_ma2.canal_proprietario.nome_canal}}</p>
+                                            <p class="descript-thumb"><img src="/static/resources/icones/view.png" class="icon-view"/>{{audio_ma2.reproducoes}}</p>
+                                            <p class="descript-thumb">
+                                                {{audio_ma2.data_publicacao|date:"d/m/y"}} às {{audio_ma2.data_publicacao|date:"H:i"}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+                <a href="#carouselSliderMA-{{forloop.counter}}" class="carousel-control-prev" role="button" data-slide="prev">
+                    <img src="/static/resources/icones/prev.png" class="slideIcos" alt="">
+                </a>
+                <a href="#carouselSliderMA-{{forloop.counter}}" class="carousel-control-next" role="button" data-slide="next">
+                    <img src="/static/resources/icones/next.png" class="slideIcos" alt="">
+                </a>
+            </div>
+            </div>
+
             {% for channel in channels %}
             <div id="carouselSlider-{{forloop.counter}}" class="carousel slide ml-4 mt-5" data-ride="carousel">
                 <h2 class="headerChannel mb-4">
