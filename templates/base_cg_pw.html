@@ -39,6 +39,9 @@
     <!--Script para verificar se as notificações foram visualizadas-->
     <script src="{% static 'notific.js' %}"></script>
 
+    <!--Remover favoritos-->
+    <script src="{% static '/account/js/remove_favorite.js' %}" type="text/javascript"></script>
+
     {% block head %}
     {% endblock %}
 </head>
@@ -75,8 +78,38 @@
                     <a class="nav-link" href="{% url 'channel:myuploads' %}">
                         <img class="icon-right" src="/static/resources/icones/upload.ico"></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#"><img class="icon-right" src="/static/resources/icones/disc.ico"></a>
+                <li class="nav-item active dropdown" id="dpFavorites" style="top: -7px;">
+                    <a id="dropdownFavorites" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="icon-right" src="/static/resources/icones/disc.ico"></a>
+                    <div class="dropdown-menu notific" style="min-width: 21rem;" id="dp-favorites" aria-labelledby="dropdownFavorites">
+                        <ul id="favoriteslist" style="padding: 0;">
+                            <li class="dropdown-item header">Favoritos</li>
+                            {% if audios_favoritos.exists %}
+                                {% for audio in audios_favoritos %}
+                                <li class="dropdown-item" id="{{ audio.Audio_feed.id }}" onmouseover="showDelFav(this.id)"
+                                    onmouseleave="hideDelFav(this.id)">
+                                    <a href="{% url 'channel:player_view' audio.Audio_feed.id %}">
+                                        <img src="{{ audio.Audio_feed.capa.url }}" alt="{{audio.Audio_feed.titulo}}">
+                                        <h6>{{audio.Audio_feed.titulo}}</h6><br>
+                                        <h3 class="d-inline" style="font-size: .85rem;">{{audio.Audio_feed.canal_proprietario}}</h3>
+                                        <form id="formDelFav-{{forloop.counter}}"
+                                              action="{% url 'account:remove_fav' audio.Audio_feed.id %}"
+                                              method="POST">{% csrf_token %}
+                                            <button type="submit" class="btn-delFav"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="noNotific noFav">
+                                    <h5>Não há favoritos</h5>
+                                </li>
+                            {% endif %}
+                            <li class="noNotific noFav" style="display:none;">
+                                <h5>Não há favoritos</h5>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="dropdown">
                     <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -87,12 +120,12 @@
                             <span id="notificNumber" style="display: none;"></span>
                         {% endif %}
                         <i class="fas fa-bell icon-right" style="color: black; margin-bottom: 0 !important"></i></a>
-                    <div class="dropdown-menu notific" aria-labelledby="dropdownNotific">
-                        <div class="dropdown-item" id="headerNotific">Notificações</div>
+                    <div class="dropdown-menu notific" style="min-width: 21rem;" aria-labelledby="dropdownNotific">
+                        <div class="dropdown-item header" style="margin-bottom: -8px;">Notificações</div>
                         <ul id="notifylist" style="padding: .5rem 1px;">
                             {% if ntfs_audios.exists %}
                                 {% for naudio in ntfs_audios.all %}
-                                    <li class="dropdown-item">
+                                    <li class="dropdown-item-custom">
                                         <a href="{% url 'channel:player_view' naudio.audio.id %}">
                                             <img class="channel-notific" src="{{ naudio.audio.canal_proprietario.foto_canal.url }}">
                                             <img class="audio-notific" src="{{ naudio.audio.capa.url }}">

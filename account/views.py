@@ -179,10 +179,12 @@ def edit_profile(request):
                 new_notific += 1
             notifications += 1
 
+    fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+
     context = {"basicform": basicform, "profileform": profileform, "auxform": auxform, "footer": footer, "logado": request.user.is_active,
                "has_error": has_error, "edited": edited, "edited_password": edited_password, "user": request.user,
                "notifications": notifications, "ntfs_audios": ntfs_audios, "canal_side": canais_side, "play_side": playlist_side,
-               "new_notific": new_notific, "edit_acc": True}
+               "new_notific": new_notific, "edit_acc": True, 'audios_favoritos': fav.all()}
 
     if edited_password:
         edited_password = False
@@ -238,9 +240,11 @@ def change_password(request):
                         new_notific += 1
                     notifications += 1
 
+            fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+
             context = {'form': form, 'old_password': old_password, 'logado': request.user.is_active, 'ntfs_audios': ntfs_audios,
                        'notifications': notifications, 'new_password1': new_password1, 'new_password2': new_password2,
-                       'new_notific': new_notific}
+                       'new_notific': new_notific, 'audios_favoritos': fav.all()}
 
             return render(request, './account/change_password.html', context)
 
@@ -248,6 +252,7 @@ def change_password(request):
         edited_password = False
         form = ChangePasswordForm(request.user)
 
+    fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
     ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
     notifications = 0
 
@@ -256,7 +261,8 @@ def change_password(request):
             notifications += 1
 
     return render(request, './account/change_password.html', {'form': form, 'logado': request.user.is_active,
-                                                              'notifications': notifications, 'ntfs_audios': ntfs_audios})
+                                                              'notifications': notifications, 'ntfs_audios': ntfs_audios,
+                                                              'audios_favoritos': fav.all()})
 
 
 def NewChannelView(request):
@@ -292,9 +298,11 @@ def NewChannelView(request):
                 new_notific += 1
             notifications += 1
 
+    fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+
     context = {'form': form, 'error_nome_canal': error_nome_canal, 'nome_canal': nome_canal, 'ntfs_audios': ntfs_audios,
                'user': request.user, 'logado': request.user.is_active, 'notifications': notifications, "canal_side": canais_side,
-               "play_side": playlist_side, "new_notific": new_notific}
+               "play_side": playlist_side, "new_notific": new_notific, 'audios_favoritos': fav.all()}
 
     return render(request, './account/new_channel.html', context)
 
@@ -324,6 +332,8 @@ def historic(request):
         contexto['notifications'] = notifications
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
+        fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        contexto['audios_favoritos'] = fav.all()
     contexto['logado'] = request.user.is_active
     return render(request, './account/historic.html', contexto)
 
@@ -348,6 +358,8 @@ def favorites(request):
         contexto['notifications'] = notifications
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
+        fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        contexto['audios_favoritos'] = fav.all()
     contexto['logado'] = request.user.is_active
     return render(request, './account/favorites.html', contexto)
 

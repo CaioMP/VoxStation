@@ -1,3 +1,9 @@
+ul#favoriteslist {
+    display: inherit !important;
+    position: relative !important;
+    right: 0 !important;
+}
+
 .dropdown-menu {
     display: block;
     opacity: 0;
@@ -123,6 +129,16 @@ form.form-inline {
     display: contents;
 }
 
+.dropdown-item .fas.fa-trash-alt {
+    color: black;
+    font-size: .85rem;
+    margin-bottom: 0;
+}
+
+.dropdown-item .fas.fa-trash-alt:hover {
+    color: #032854;
+}
+
 .form-inline .form-control {
     width: 76%;
     border-radius: 7px;
@@ -196,6 +212,8 @@ img.icon-left.channel {
     padding: .75rem 1rem !important;
     margin-top: -.5rem;
     min-height: auto !important;
+    max-height: initial !important;
+    position: relative !important;
 }
 
 #dpAccount a.dropdown-item {
