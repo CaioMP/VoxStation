@@ -7,6 +7,7 @@
     <title>VoxStation</title>
     <link rel="stylesheet" href="{% static 'home/style.css' %}" type="text/css"/>
     <script src="{% static 'home/js/home.js' %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{% static 'channel/style_channel_playlists.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -201,6 +202,130 @@
                     <img src="/static/resources/icones/next.png" class="slideIcos" alt="">
                 </a>
             </div>
+            </div>
+
+            <div id="carouselSliderPP-{{forloop.counter}}" class="carousel slide ml-4 mt-5" data-ride="carousel">
+                <h2 class="headerChannel">
+                    <a href="#" class="ml-4">Playlists populares</a>
+                </h2>
+                <div class="carousel-inner mais-rep">
+                    <div class="carousel-item active">
+                        <div class="row mt-4 row-pl">
+                            {% for playp1 in playlists_pop|slice:":2" %}
+                            <div class="col-md-6 col-playlist" id="{{playp1.id}}">
+                                <div class="card">
+                                    <a href="{% url 'channel:playlist_play_view' playp1.id playp1.audios.first.id %}">
+                                        <figure class="fig-capa-audio">
+                                            <img src="{{playp1.capa.url}}" class="card-img-top pl-capa" alt="capa de {{playp1.nome}}">
+                                            <figcaption class="fc-capa-audio fig-cap-pl-home">
+                                                <center>
+                                                    <img src="/static/resources/icones/play.png" class="icon-play play-pl"/>
+                                                </center>
+                                            </figcaption>
+                                        </figure>
+                                    </a>
+
+                                    <div class="card-body">
+                                        <a href="{% url 'channel:playlist_play_view' playp1.id playp1.audios.first.id %}"
+                                           class="audio-link"><h4 class="card-title audio-titul">{{playp1.nome}}</h4></a>
+                                        <div class="card-text">
+                                            {% if not playp1.canal %}
+                                                <p class="descript-thumb">{{playp1.proprietario.username}}</p>
+                                            {% else %}
+                                                <p class="descript-thumb">{{playp1.canal.nome_canal}}</p>
+                                            {% endif %}
+                                            <p class="descript-thumb">
+                                                <img src="/static/resources/icones/disc.ico" class="icon-view" rel="tooltip"
+                                                     data-toggle="tooltip" data-placement="bottom" title="Áudios"/>
+                                                {{playp1.audios.count}}</p>
+                                            <p class="descript-thumb last-update"><i class="fas fa-clock" rel="tooltip"
+                                                                                     data-toggle="tooltip" data-placement="bottom"
+                                                                                     title="Última atualização"></i>
+                                                {{playp1.ultima_atualizacao|date:"d/m/y"}} às {{playp1.ultima_atualizacao|date:"H:i"}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 playlist">
+                                    <ul class="audio-list">
+                                        {% for audioplay1 in playp1.audios.all|slice:":4" %}
+                                        <li class="audio">
+                                            <strong class="time">{{ audioplay1.duracao }}</strong>
+                                            <a href="{% url 'channel:playlist_play_view' playp1.id audioplay1.id %}"
+                                               class="titulo">{{audioplay1.titulo}}</a>
+                                        </li>
+                                        {% endfor %}
+                                        <li class="playlist-more">
+                                            <center><a href="{%url 'channel:playlist_all_view' playp1.id%}"
+                                                       class="btn playlist-link ver-mais-pl">Ver mais</a></center>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row mt-4 row-pl">
+                            {% for playp2 in playlists_pop|slice:"2:4" %}
+                            <div class="col-md-6 col-playlist" id="{{playp2.id}}">
+                                <div class="card">
+                                    <a href="{% url 'channel:playlist_play_view' playp2.id playp2.audios.first.id %}">
+                                        <figure class="fig-capa-audio">
+                                            <img src="{{playp2.capa.url}}" class="card-img-top pl-capa" alt="capa de {{playp2.nome}}">
+                                            <figcaption class="fc-capa-audio fig-cap-pl-home">
+                                                <center>
+                                                    <img src="/static/resources/icones/play.png" class="icon-play play-pl"/>
+                                                </center>
+                                            </figcaption>
+                                        </figure>
+                                    </a>
+
+                                    <div class="card-body">
+                                        <a href="{% url 'channel:playlist_play_view' playp2.id playp2.audios.first.id %}"
+                                           class="audio-link"><h4 class="card-title audio-titul">{{playp2.nome}}</h4></a>
+                                        <div class="card-text">
+                                            {% if not playp2.canal %}
+                                                <p class="descript-thumb">{{playp2.proprietario.username}}</p>
+                                            {% else %}
+                                                <p class="descript-thumb">{{playp2.canal.nome_canal}}</p>
+                                            {% endif %}
+                                            <p class="descript-thumb">
+                                                <img src="/static/resources/icones/disc.ico" class="icon-view" rel="tooltip"
+                                                     data-toggle="tooltip" data-placement="bottom" title="Áudios"/>
+                                                {{playp2.audios.count}}</p>
+                                            <p class="descript-thumb last-update"><i class="fas fa-clock" rel="tooltip"
+                                                                                     data-toggle="tooltip" data-placement="bottom"
+                                                                                     title="Última atualização"></i>
+                                                {{playp2.ultima_atualizacao|date:"d/m/y"}} às {{playp2.ultima_atualizacao|date:"H:i"}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 playlist">
+                                    <ul class="audio-list">
+                                       {% for audiop2 in playp2.audios.all|slice:":4" %}
+                                        <li class="audio">
+                                            <strong class="time">{{ audiop2.duracao }}</strong>
+                                            <a href="{% url 'channel:playlist_play_view' playp2.id audiop2.id %}"
+                                               class="titulo">{{audiop2.titulo}}</a>
+                                        </li>
+                                        {% endfor %}
+                                        <li class="playlist-more">
+                                            <center><a href="{%url 'channel:playlist_all_view' playp2.id%}"
+                                                       class="btn playlist-link ver-mais-pl">Ver mais</a></center>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+                <a href="#carouselSliderPP-{{forloop.counter}}" class="carousel-control-prev" role="button" data-slide="prev">
+                    <img src="/static/resources/icones/prev.png" class="slideIcos" alt="">
+                </a>
+                <a href="#carouselSliderPP-{{forloop.counter}}" class="carousel-control-next" role="button" data-slide="next">
+                    <img src="/static/resources/icones/next.png" class="slideIcos" alt="">
+                </a>
             </div>
 
             {% for channel in channels %}

@@ -11,6 +11,12 @@ body {
     top: -2px;
 }
 
+.ver-mais-pl {
+    margin-right: 1rem !important;
+    width: 86.5% !important;
+    bottom: 1rem !important;
+}
+
 .carousel-inner {
     height: 18rem;
 }
@@ -159,9 +165,43 @@ p {
     font-weight: bold;
 }
 
+.fig-cap-pl-home {
+    height: 52.5% !important;
+}
+
+@media only screen and (max-width: 1174px) {
+    .fig-cap-pl-home {
+        height: 46% !important;
+    }
+}
+
+@media only screen and (max-width: 930px){
+    .mais-rep {
+        height: 20.5rem;
+    }
+
+    .fig-cap-pl-home {
+        height: 40.5% !important;
+    }
+
+    .ver-mais-pl {
+        width: 83.5% !important;
+    }
+}
+
+@media only screen and (min-width: 835px) and (max-width: 930px) {
+    .fig-cap-pl-home {
+        height: 44.5% !important;
+    }
+}
+
 @media only screen and (max-width: 834px) {
     .card-text {
         margin-top: -5px;
+    }
+
+    .fig-cap-pl-home {
+        height: 38.5% !important;
     }
 
     .carousel-control-next, .carousel-control-prev {
@@ -196,13 +236,17 @@ p {
     }
 
     .fig-capa-audio figcaption {
-        height: 38%;
+        height: 41.5%;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .row {
         height: 95px;
+    }
+
+    .fig-cap-pl-home {
+        height: 52% !important;
     }
 
     div#page-content-wrapper {
@@ -223,7 +267,9 @@ p {
     }
 
     .icon-play {
-        width: 95px;
+        width: 63px;
+        margin-top: 3.5rem;
+        margin-bottom: 2rem;
     }
 
     .card {
@@ -249,11 +295,29 @@ p {
     .card-text {
         margin-top: 0;
     }
+
+    .ver-mais-pl {
+        width: 89.5% !important;
+    }
+}
+
+@media only screen and (max-width: 630px){
+    .ver-mais-pl {
+        width: 86.5% !important;
+    }
 }
 
 @media only screen and (max-width: 575px) {
     div#page-content-wrapper {
         height: 260%;
+    }
+
+    .ver-mais-pl {
+        width: 93.5% !important;
+    }
+
+    .fig-cap-pl-home {
+        height: 57% !important;
     }
 
     .col-md-3 {
@@ -307,10 +371,20 @@ p {
     }
 }
 
+@media only screen and (max-width: 475px){
+    .ver-mais-pl {
+        width: 91.5% !important;
+    }
+}
+
 @media only screen and (max-width: 414px) {
     .container-fluid {
         padding-right: 6%;
         margin-top: 0;
+    }
+
+    .fig-cap-pl-home {
+        height: 56.5% !important;
     }
 
     .fig-capa-audio figcaption {
@@ -377,5 +451,11 @@ p {
 @media only screen and (max-width: 374px) {
     .headerChannel {
         margin-right: -1.8rem !important;
+    }
+}
+
+@media only screen and (max-width: 475px){
+    .ver-mais-pl {
+        width: 90.5% !important;
     }
 }

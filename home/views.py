@@ -14,9 +14,11 @@ def IndexView(request):
 
     mais_reproduzidos = Audio.objects.order_by('-reproducoes')
     melhor_avaliados = Audio.objects.order_by('-numero_likes', 'numero_deslikes')
+    playlists_pop = Playlist.objects.order_by('-reproducoes', '-numero_de_audios')
 
     contexto['mais_reproduzidos'] = mais_reproduzidos
     contexto['melhor_avaliados'] = melhor_avaliados
+    contexto['playlists_pop'] = playlists_pop
 
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')

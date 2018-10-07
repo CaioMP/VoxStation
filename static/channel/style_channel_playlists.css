@@ -67,15 +67,15 @@
     font-weight: lighter;
     float: right;
     margin-left: 23px;
-    margin-top: 5px;
 }
 
 .playlist-more {
     margin-top: 55px;
     margin-bottom: -25px;
+    list-style: none;
 }
 
-.capa-playlist figcaption {
+.fig-cap-pl {
     height: 52.5% !important;
 }
 
@@ -96,7 +96,7 @@
 }
 
 @media only screen and (max-width: 1174px) {
-    .capa-playlist figcaption {
+    .fig-cap-pl {
         height: 46% !important;
     }
 }
@@ -107,7 +107,7 @@
         margin-bottom: -15px;
     }
 
-    .icon-play {
+    .icon-play.play-pl {
         width: 40px !important;
         margin: 1.8rem !important;
     }
@@ -124,17 +124,17 @@
         margin-top: .25rem;
     }
 
-    .capa-playlist figcaption {
-        height: 41.5% !important;
+    .fig-cap-pl {
+        height: 40.5% !important;
     }
 }
 
 @media only screen and (min-width: 835px) and (max-width: 930px) {
-    .capa-playlist figcaption {
+    .fig-cap-pl {
         height: 44.5% !important;
     }
 
-    .icon-play {
+    .icon-play.play-pl {
         margin: 2.85rem !important;
     }
 }
@@ -179,12 +179,12 @@
         border-radius: 4px 4px 0 0;
     }
 
-    .icon-play {
+    .icon-play.play-pl {
         width: 4rem !important;
         margin: 3.3rem !important;
     }
 
-    .capa-playlist figcaption {
+    .fig-cap-pl {
         height: 54% !important;
     }
 }
@@ -218,11 +218,11 @@
         height: 2rem !important;
     }
 
-    .capa-playlist figcaption {
+    .fig-cap-pl {
         height: 58.5% !important;
     }
 
-    .icon-play {
+    .icon-play.play-pl {
         margin: 4.3rem !important;
     }
 }
@@ -236,7 +236,7 @@
         margin-top: -2rem;
     }
 
-    .icon-play {
+    .icon-play.play-pl {
         margin: 4.3rem !important;
         width: 3.5rem !important;
     }

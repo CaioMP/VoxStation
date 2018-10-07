@@ -149,7 +149,7 @@
                 <li class="dropdown" id="dpAvatar">
                     <a id="dropdownMenuButton" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <img class="img-perfil" src="/static/images/default-user.png"/>
+                        <img class="img-perfil" src="{{ user.img_perfil.url }}"/>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dpAccount">
                         {% if logado %}

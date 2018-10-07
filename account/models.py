@@ -85,7 +85,7 @@ class MyUser(AbstractBaseUser):
         unique=True,
     )
 
-    img_perfil = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+    img_perfil = models.ImageField(upload_to=user_directory_path, default="default-user.png", blank=True, null=True)
 
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

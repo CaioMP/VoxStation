@@ -311,16 +311,17 @@
                             <a href="{% url 'channel:playlist_play_view' playlist.id playlist.audios.first.id %}">
                                 <figure class="fig-capa-audio">
                                     <img src="{{playlist.capa.url}}" class="card-img-top pl-capa" alt="capa de {{playlist.nome}}">
-                                    <figcaption class="fc-capa-audio">
+                                    <figcaption class="fc-capa-audio fig-cap-pl">
                                         <center>
-                                            <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                            <img src="/static/resources/icones/play.png" class="icon-play play-pl"/>
                                         </center>
                                     </figcaption>
                                 </figure>
                             </a>
 
                             <div class="card-body">
-                                <a href="#" class="audio-link"><h4 class="card-title audio-titul">{{playlist.nome}}</h4></a>
+                                <a href="{% url 'channel:playlist_play_view' playlist.id playlist.audios.first.id %}"
+                                   class="audio-link"><h4 class="card-title audio-titul">{{playlist.nome}}</h4></a>
                                 <div class="card-text">
                                     <p class="descript-thumb">{{chan.nome_canal}}</p>
                                     <p class="descript-thumb">
