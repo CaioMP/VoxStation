@@ -336,6 +336,10 @@ p {
         height: 112rem !important;
     }
 
+    .play-pop {
+        height: 89rem !important;
+    }
+
     .icon-play {
         width: 90px;
         margin-top: 4rem;
@@ -405,6 +409,10 @@ p {
 
     .mais-rep {
         height: 101rem !important;
+    }
+
+    .play-pop {
+        height: 84rem !important;
     }
 
     .modal {

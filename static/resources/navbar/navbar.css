@@ -90,7 +90,12 @@ div#dp-favorites {
 }
 
 a#logo {
-    cursor: default;
+    margin: 7px 0 0 10px;
+    -webkit-mask-box-image: url(/static/images/logo2.png);
+    cursor: pointer;
+    width: 126px;
+    background-color: black;
+    height: 24px;
 }
 
 li.nav-item.active {
@@ -140,17 +145,9 @@ form.form-inline {
 }
 
 .form-inline .form-control {
-    width: 76%;
+    width: 100%;
     border-radius: 7px;
-}
-
-.logo {
-    display: inline-block;
-    vertical-align: text-bottom;
-    margin-left: 30px;
-    position: relative;
-    bottom: 6px;
-    cursor: pointer;
+    padding-right: 2rem;
 }
 
 .icon-right {
@@ -177,6 +174,7 @@ img.icon-left.channel {
 
 .search-icon {
     display: block;
+    width: 20px;
     margin: 0px 128px 0px -3px;
 }
 
@@ -395,6 +393,7 @@ button.btn.btn-link.mb-1 {
     width: 45px;
     height: 37px;
     margin-top: 3px;
+    margin-left: -2.5rem;
 }
 
 .form-control:focus {
@@ -448,6 +447,12 @@ button.btn.btn-link.mb-1 {
 }
 
 /*Mobile*/
+@media only screen and (min-width: 1075px){
+    .form-inline .form-control {
+         margin-left: -2rem;
+    }
+}
+
 @media only screen and (max-width: 747px) {
     .navbar {
         height: 70px;
@@ -460,9 +465,8 @@ button.btn.btn-link.mb-1 {
     }
 
     .logo {
-        margin-left: 16px;
-        width: 64px;
-        bottom: 5px;
+        cursor: pointer;
+        width: 116px;
     }
 
     .nav-search {
@@ -470,7 +474,7 @@ button.btn.btn-link.mb-1 {
     }
 
     .form-inline .form-control {
-        width: 52%;
+        width: 59%;
     }
 
     li.nav-item.active {
@@ -488,11 +492,6 @@ button.btn.btn-link.mb-1 {
         margin-top: 2px;
     }
 
-    .search-icon {
-        width: 21px;
-        margin: 1px 128px 0px -3px;
-    }
-
     .icon-right {
         width: 22px;
     }
@@ -502,14 +501,23 @@ button.btn.btn-link.mb-1 {
     }
 }
 
-@media only screen and (max-width: 700px)
-.form-inline .form-control {
-    width: 55%;
+@media only screen and (max-width: 700px){
+    .form-inline .form-control {
+        width: 72%;
+    }
+}
+
+@media only screen and (max-width: 620px){
+    .form-inline .form-control {
+        width: 80%;
+        margin-left: -9px;
+    }
 }
 
 @media only screen and (max-width: 600px) {
     .form-inline .form-control {
-        width: 54%;
+        width: 85%;
+        margin-left: -14px;
     }
 
     .nav-search {
@@ -588,10 +596,11 @@ button.btn.btn-link.mb-1 {
     }
 
     .form-inline .form-control {
-        width: 155%;
+        width: 161%;
         position: relative;
         right: 176px;
         top: 80px;
+        margin-left: 0;
     }
 
     .img-perfil {
@@ -604,14 +613,14 @@ button.btn.btn-link.mb-1 {
         width: 32px;
         position: relative;
         float: right;
-        left: 4px;
-        bottom: -40px;
+        left: -1.25rem;
+        bottom: -39px;
     }
 }
 
 @media only screen and (max-width: 545px) {
     .form-inline .form-control {
-        width: 158%;
+        width: 165%;
     }
 
     .nav-right {
@@ -619,47 +628,104 @@ button.btn.btn-link.mb-1 {
     }
 }
 
-@media only screen and (max-width: 519px) {
-    .form-inline .form-control {
-        width: 161%;
+@media only screen and (max-width: 537px){
+    div#navbarPesquisa {
+        position: absolute;
+    }
+
+    .nav-left {
+        margin-top: 1.25rem;
     }
 
     .nav-right {
         left: 53%;
+        margin-top: 1.25rem;
+    }
+
+    button.btn.btn-link.mb-1 {
+        left: 78%;
+        bottom: 23px;
+    }
+
+    .form-inline .form-control {
+        width: 190%;
+        top: 1.15rem;
+        right: 0;
+        margin-left: -14px;
     }
 }
 
-@media only screen and (max-width: 498px) {
-    .form-inline .form-control {
-        width: 164%;
-    }
-}
-
-@media only screen and (max-width: 479px) {
-    .form-inline .form-control {
-        width: 167%;
-    }
-
-    .nav-right {
-        left: 45%;
+@media only screen and (min-width: 460px) and (max-width: 537px){
+    a#logo {
+        margin-right: 3rem;
     }
 }
 
 @media only screen and (max-width: 459px) {
+    .navbar-light .navbar-nav .active>.nav-link {
+        width: 27px;
+        margin-right: 61px;
+    }
+
+    .search-icon {
+        width: 17px;
+    }
+
     .form-inline .form-control {
-        width: 170%;
+        width: 177%;
+    }
+
+    button.btn.btn-link.mb-1 {
+        left: 66%;
+    }
+
+    .nav-right {
+        left: 46% !important;
+        margin-top: 1.5rem !important;
+    }
+
+    img.img-perfil {
+        width: 35px !important;
+        height: 35px !important;
+        margin-top: 7px !important;
+    }
+
+    .icon-right {
+        margin-left: 7px;
+        font-size: 1.3rem !important;
+        width: 20px !important;
+        left: 7px !important !important;
+    }
+
+    a#logo {
+        width: 112px;
+        height: 20px;
+        margin-top: 9px;
+        margin-right: 15rem;
+    }
+
+    div#dpAccount {
+        top: 61px;
+    }
+
+    .navbar-expand-sm .navbar-nav .dropdown-menu {
+        top: 61px;
+    }
+
+    li.nav-item.active {
+        margin-right: -40px !important;
+        width: auto;
+    }
+
+    .icon-right {
+        width: 22px;
+        left: -2px;
     }
 }
 
 @media only screen and (max-width: 447px) {
     .form-inline .form-control {
-        width: 172%;
-    }
-}
-
-@media only screen and (max-width: 428px) {
-    .form-inline .form-control {
-        width: 175%;
+        width: 179%;
     }
 }
 
@@ -685,26 +751,14 @@ button.btn.btn-link.mb-1 {
         left: -129px;
     }
 
-    .logo {
-        width: 50px;
-        bottom: -3px;
-    }
-
     .img-perfil {
         width: 36px;
         height: 36px;
         margin-top: 9px;
     }
 
-    .form-inline .form-control {
-        width: 167%;
-        position: relative;
-        top: 58px;
-        right: 156px;
-    }
-
     .nav-right {
-        bottom: 90px;
+        bottom: 93px;
         left: 48%;
     }
 
@@ -718,27 +772,19 @@ button.btn.btn-link.mb-1 {
         bottom: 18px;
     }
 
-    button.btn.btn-link.mb-1 {
-        bottom: -17px;
-        left: 3px;
-    }
-
-    li.nav-item.active {
-        margin-right: 15px;
-    }
-}
-
-@media only screen and (max-width: 405px) {
     .form-inline .form-control {
-        width: 169%;
-     }
+        width: 182%;
+        top: -3px;
+        left: -15px;
+    }
+
+    button.btn.btn-link.mb-1 {
+        left: 63%;
+        bottom: 44px;
+    }
 }
 
 @media only screen and (max-width: 393px) {
-    .form-inline .form-control {
-        width: 171%;
-     }
-
      .nav-right {
         left: 45%;
     }
@@ -751,201 +797,46 @@ button.btn.btn-link.mb-1 {
     div#dp-favorites {
         margin-left: 13px;
     }
-}
 
-
-@media only screen and (max-width: 372px) {
-    .navbar {
-        height: 112px;
-    }
-
-    #sidebar .sidebar-header {
-        padding: 37px;
-    }
-
-    div#dpAccount {
-        top: 53px;
-    }
-
-    .nav-left {
-        bottom: 0;
-    }
-
-    .navbar-expand-sm .navbar-nav .dropdown-menu {
-        left: -188px;
-        top: 53px;
-    }
-
-    .logo {
-        width: 50px;
-        bottom: -3px;
-        margin-left: 30px;
-    }
-
-    .nav-right {
-        bottom: 134px;
-        left: 155px;
-    }
-
-    .icon-right {
-        left: 1px;
-    }
-
-    .dropdown, .dropup {
-        margin-top: 7px;
-        margin-right: 20px;
-    }
-
-    .img-perfil {
-        width: 35px;
-        height: 35px;
-        margin-top: 9px;
-    }
-
-    .form-inline .form-control {
-        width: 173%;
-        position: relative;
-        top: 10px;
-        right: 36px;
-    }
-
-    img#search {
-        width: 21px;
-    }
-
-    button.btn.btn-link.mb-1 {
-        left: 120px;
-        bottom: 30px;
-    }
-
-    li.nav-item.active {
-        margin-right: 14px;
+    a#logo {
+        margin-right: 18rem;
+        width: 46px;
+        height: 20px;
+        -webkit-mask-box-image: url(/static/images/logo2_mobile.png);
     }
 }
 
 @media only screen and (max-width: 367px) {
-    .navbar {
-        height: 112px;
-    }
-
-    #sidebar .sidebar-header {
-        padding: 40px;
-    }
-
-    .navbar-expand-sm .navbar-nav .dropdown-menu {
-        left: -194px;
-        top: 53px;
-    }
-
-    div#dpAccount {
-        left: -138px;
-        top: 53px;
-    }
-
-    .navbar-toggler:not(:disabled):not(.disabled) {
-        width: 37px;
-        position: absolute;
-        right: 8px;
-        top: 7px;
-        border: hidden;
-        transition: 0.3s;
-    }
-
-    .search-icon {
-        width: 20px;
-    }
-
-    .navbar-toggler:focus, .navbar-toggler:hover {
-       outline: 0;
-    }
-
-    .form-inline .form-control {
-        width: 162%;
-        right: 30px;
-        top: 0px;
-        margin-top: 50px;
-    }
-
-    input.form-control {
-        position: relative;
-        right: 39px;
-    }
-
-    div#navbarPesquisa {
-        position: relative;
-        top: -36px;
-    }
-
-    #sidebarCollapse {
-        bottom: -1px;
-    }
-
-    .logo {
-        bottom: -7px;
-        width: 48px;
-        left: -15px;
-    }
-
-    .icon-right {
-        width: 22px;
-        left: -2px;
-    }
-
-    i.fas.fa-bell {
-        font-size: 1.38rem;
-    }
-
-    .dropdown, .dropup {
-        position: relative;
-        margin-top: 7px;
-        width: 22px;
-        margin-right: 32px;
-    }
-
-    button.btn.btn-link.mb-1 {
-        left: 103px;
-        bottom: 0;
-        margin-top: -36px;
-    }
-
-    .img-perfil {
-        width: 30px;
-        height: 30px;
-        margin-left: -9px;
-    }
-
     .nav-right {
-        width: auto;
-        display: -webkit-box;
-        bottom: 141px;
-        left: 42%;
-    }
-
-    .navbar-light .navbar-nav .active>.nav-link {
-        width: 27px;
-        margin-right: 61px;
-    }
-
-    li.nav-item.active {
-        margin-right: -40px;
-        width: auto;
-    }
-
-    .navbar-toggler[aria-expanded="true"] {
-        background: #d3d3d36e;
+        left: 40% !important;
     }
 }
 
 @media only screen and (max-width: 340px) {
     .form-inline .form-control {
-        width: 168%;
+        width: 186%;
     }
 
     .nav-right {
-        left: 34%;
+        left: 37% !important;
     }
 
     .nav-right {
-        left: 41%;
+        left: 40% !important;
+    }
+
+    li.nav-item.active {
+        margin-right: -44px !important;
+        width: auto;
+    }
+
+    .dropdown, .dropup {
+        margin-right: 14px;
+    }
+}
+
+@media only screen and (max-width: 328px) {
+    button.btn.btn-link.mb-1 {
+        left: 6rem;
     }
 }

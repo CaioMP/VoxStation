@@ -204,11 +204,12 @@
             </div>
             </div>
 
+            <!--Playlists populares-->
             <div id="carouselSliderPP-{{forloop.counter}}" class="carousel slide ml-4 mt-5" data-ride="carousel">
                 <h2 class="headerChannel">
                     <a href="#" class="ml-4">Playlists populares</a>
                 </h2>
-                <div class="carousel-inner mais-rep">
+                <div class="carousel-inner mais-rep play-pop">
                     <div class="carousel-item active">
                         <div class="row mt-4 row-pl">
                             {% for playp1 in playlists_pop|slice:":2" %}
