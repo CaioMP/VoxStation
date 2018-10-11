@@ -44,19 +44,6 @@ function copyLink() {
     }, 1800);
 }
 
-function verificaLogado(logado) {
-    if (logado == "False"){
-        $("#reportLink").attr("href", "/login/");
-        $('#addToPlaylistLink').removeAttr('data-toggle');
-        $('#addToPlaylistLink').removeAttr('data-target');
-        $("#addToPlaylistLink").attr("href", "/login/");
-    }
-    else{
-        $("#reportLink").attr("data-toggle", "modal");
-        $("#reportLink").attr("data-target", "#reportAudio");
-    }
-}
-
 function descartarAudio() {
     document.getElementById('id_conteudo').value = "";
 }

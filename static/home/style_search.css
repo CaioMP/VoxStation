@@ -1,4 +1,4 @@
-.header {
+.info-header {
     margin-top: 4rem;
     margin-bottom: 0.2rem;
     background: linear-gradient(0deg, #032854, black);
@@ -295,7 +295,7 @@ div#content {
 }
 
 @media only screen and (max-width: 575px) {
-    .header {
+    .info-header {
         margin-top: 8.5rem;
     }
 
@@ -351,11 +351,11 @@ div#content {
         top: -2px;
     }
 
-    .header h4 {
+    .info-header h4 {
         font-size: 1.25rem;
     }
 
-    .header h5 {
+    .info-header h5 {
         font-size: 1rem;
     }
 
@@ -406,7 +406,7 @@ div#content {
 }
 
 @media only screen and (max-width: 414px) {
-    .header {
+    .info-header {
         margin-top: 7rem;
         padding: 1.5rem;
     }

@@ -17,9 +17,6 @@ $('document').ready( function(){
 				this_.attr('style',json.fundo);
 				this_.text(json.message);
 			},
-			error:function(){
-				alert("fudeu bahia");
-			}
 		});
 	});
 });

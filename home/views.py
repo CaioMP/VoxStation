@@ -7,6 +7,7 @@ from datetime import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from collections import Counter
 
 
 def IndexView(request):
@@ -19,6 +20,11 @@ def IndexView(request):
     contexto['mais_reproduzidos'] = mais_reproduzidos
     contexto['melhor_avaliados'] = melhor_avaliados
     contexto['playlists_pop'] = playlists_pop
+
+    for tag in Tag.objects.all():
+        ap = tag.get_aparicoes()
+        if ap:
+            print("Aparições da tag", tag, "=", ap)
 
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
@@ -39,12 +45,12 @@ def IndexView(request):
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
         contexto['audios_favoritos'] = fav.all()
 
-    contexto['channels'] = orderAudios(Canal.objects.all())
     contexto['logado'] = request.user.is_active
 
     if contexto['logado']:
         contexto['playlists'] = Playlist.objects.filter(proprietario=request.user)
         contexto['canais_para_playlist'] = Canal.objects.filter(proprietario=request.user)
+        contexto['channels'] = orderAudios(Canal.objects.filter(seguidor=request.user))
 
     return render(request, './home/index.html', contexto)
 

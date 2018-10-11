@@ -204,12 +204,14 @@ def playlist_play(request, id, id_audio):
     n_comentarios = get_n_comentarios(comentarios, respostas)
     ordem = True  # True para aleatório
 
-    history = Historico.objects.get(prop=request.user)
-    h = Historico.objects.filter(prop=request.user, audio=audio)
-    if h.exists():
-        history.audio.remove(audio)
-    history.audio.add(audio)
-    history.save()
+    if request.user.is_active:
+        history = Historico.objects.get(prop=request.user)
+        h = Historico.objects.filter(prop=request.user, audio=audio)
+        if h.exists():
+            history.audio.remove(audio)
+        history.audio.add(audio)
+        history.save()
+
     comentario_form = ComentarioForm()
     resposta_form = RespostaForm(prefix="resposta")
 
@@ -664,13 +666,14 @@ def player(request, id):
     audio = Audio.objects.get(pk=id)
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
 
-    history = Historico.objects.get(prop=request.user)
-    htest = Historico.objects.filter(prop=request.user, audio=audio)
-    if htest.exists():
-        history.audio.remove(audio)
-    history.audio.add(audio)
+    if request.user.is_active:
+        history = Historico.objects.get(prop=request.user)
+        htest = Historico.objects.filter(prop=request.user, audio=audio)
+        if htest.exists():
+            history.audio.remove(audio)
+        history.audio.add(audio)
 
-    history.save()
+        history.save()
 
     playlist1 = []
     playlist2 = []

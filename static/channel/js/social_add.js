@@ -1,6 +1,5 @@
 $('document').ready( function(){
 	$('#add_redes_sociais').on('click',function(){
-		console.log('disparo efetuado');
 		var this_ = $(this);
 		var redes = {
 			'twitch':$('#twitch').val(),
@@ -16,7 +15,6 @@ $('document').ready( function(){
 			dataType:'json',
 			data:redes,
 			success:function(json){
-				console.log(json);
 				$("#alert-addPlaylist").html(json.message);
 				document.getElementById("alert-addPlaylist").style.visibility = "visible";
 				document.getElementById("alert-addPlaylist").style.opacity = "1";
@@ -25,9 +23,6 @@ $('document').ready( function(){
 				    document.getElementById("alert-addPlaylist").style.visibility = "hidden";
 				}, 5000);
 			},
-			error:function(){
-				alert('erro ao mudar redes sociais');
-			}
 		});
 	});
 });

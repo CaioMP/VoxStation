@@ -25,6 +25,23 @@ body {
     height: 19.5rem;
 }
 
+.icon-section {
+    background: transparent;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 10px;
+    position: relative;
+    top: -3px;
+}
+
+.icon-section-pl-pop {
+    -webkit-mask-box-image: url(/static/resources/icones/playlists.png);
+    display: inline-block;
+    background-color: white;
+    top: 2px;
+    margin-left: 12px;
+}
+
 .position-audio {
     margin-bottom: -1px;
     text-align: center;

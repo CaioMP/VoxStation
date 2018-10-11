@@ -39,9 +39,6 @@ $('document').ready( function(){
                     document.getElementById("deslike").style.backgroundColor = "#730c0c";
                 }
 			},
-			error:function(){
-				alert("erro ao conectar com servidor");
-			}
 		});
 	});
 });

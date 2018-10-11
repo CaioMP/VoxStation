@@ -432,13 +432,18 @@
 
         <div class="nav-right">
             <ul class="nav navbar-nav ml-auto">
+                <!--Upload-->
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'channel:myuploads' %}">
                         <img class="icon-right" src="/static/resources/icones/upload.ico"></a>
                 </li>
-                <li class="nav-item active dropdown" id="dpFavorites" style="top: -7px;">
+
+                <!--Favoritos-->
+                <li class="nav-item active dropdown" id="dpFavorites" style="top: -7px;" onclick="verificaLogado('{{logado}}')">
                     <a id="dropdownFavorites" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="icon-right" src="/static/resources/icones/disc.ico"></a>
+
+                    {% if logado %}
                     <div class="dropdown-menu notific" style="min-width: 21rem;" id="dp-favorites" aria-labelledby="dropdownFavorites">
                         <ul id="favoriteslist" style="padding: 0;">
                             <li class="dropdown-item header">Favoritos</li>
@@ -468,8 +473,11 @@
                             </li>
                         </ul>
                     </div>
+                    {% endif %}
                 </li>
-                <li class="dropdown">
+
+                <!--Notificações-->
+                <li class="dropdown" onclick="verificaLogado('{{logado}}')">
                     <a id="dropdownNotific" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                     onclick="Visualized()">
                         {% if new_notific > 0 %}
@@ -478,6 +486,7 @@
                             <span id="notificNumber" style="display: none;"></span>
                         {% endif %}
                         <i class="fas fa-bell icon-right" style="color: black; margin-bottom: 0 !important"></i></a>
+                    {% if logado %}
                     <div class="dropdown-menu notific" style="min-width: 21rem;" aria-labelledby="dropdownNotific">
                         <div class="dropdown-item header" style="margin-bottom: -8px;">Notificações</div>
                         <ul id="notifylist" style="padding: .5rem 1px;">
@@ -503,7 +512,10 @@
                             {% csrf_token %}
                         </form>
                     </div>
+                    {% endif %}
                 </li>
+
+                <!--Conta-->
                 <li class="dropdown" id="dpAvatar">
                     <a id="dropdownMenuButton" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">

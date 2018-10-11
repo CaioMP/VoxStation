@@ -21,9 +21,6 @@ $('document').ready( function(){
 				    document.getElementById("alert-addPlaylist").style.visibility = "hidden";
 				}, 1800);
 			},
-			error:function(){
-				alert("erro ao conectar com servidor");
-			}
 		});
 	});
 });

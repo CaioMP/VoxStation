@@ -11,7 +11,6 @@ $('document').ready( function(){
 			async:true,
 			data:{},
 			success:function(json){
-				console.log(json);
 				if(json.estado == "Sintonizar") {
 				    if(document.getElementById("formNotificMe").length){
 				        document.getElementById("formNotificMe").style.opacity = "0";
@@ -31,9 +30,6 @@ $('document').ready( function(){
                     $('#notific').addClass('active-notific');
                 }, 500);
 			},
-			error:function(){
-				alert("erro ao conectar com servidor");
-			}
 		});
 	});
 });

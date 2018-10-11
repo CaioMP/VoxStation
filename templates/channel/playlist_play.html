@@ -148,13 +148,13 @@
                 <a onclick="verificaLogado('{{logado}}')" id="reportLink" style="height: 1rem;margin-right: 2.15rem;"><i class="fas fa-flag"></i></a>
 
                 <!--Like-->
-                <div url_="{%url 'channel:feedBack_view' audio.id%}" op="like" class="icon feedback" id="like"
-                {% if user_like.exists %} style="background-color: #032854;" {% endif %}>
+                <div onclick="verificaLogado('{{logado}}')" url_="{%url 'channel:feedBack_view' audio.id%}" op="like"
+                     class="icon feedback" id="like" {% if user_like.exists %} style="background-color: #032854;" {% endif %}>
                 </div><div class="mr-3" id="num-like">{{audio.numero_likes}}</div>
 
                 <!--Deslike-->
-                <div url_="{%url 'channel:feedBack_view' audio.id%}" op="deslike" class="icon feedback" id="deslike"
-                {% if user_deslike.exists %} style="background-color: #730c0c;" {% endif %}>
+                <div onclick="verificaLogado('{{logado}}')" url_="{%url 'channel:feedBack_view' audio.id%}" op="deslike"
+                     class="icon feedback" id="deslike" {% if user_deslike.exists %} style="background-color: #730c0c;" {% endif %}>
                 </div><div id="num-deslike">{{audio.numero_deslikes}}</div>
             </div>
 
@@ -200,9 +200,10 @@
                                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <img src="/static/resources/icones/more.png" class="icon-more"/>
                                                 <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                    {% if logado %}
                                                     <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
+                                                    {% endif %}
                                                     <a class="dropdown-item" href="#">Reproduzir depois</a>
-                                                    <a class="dropdown-item" href="#">Compartilhar</a>
                                                 </div>
                                                 </a>
                                             </div>
@@ -239,9 +240,10 @@
                                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <img src="/static/resources/icones/more.png" class="icon-more"/>
                                                 <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                    {% if logado %}
                                                     <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
+                                                    {% endif %}
                                                     <a class="dropdown-item" href="#">Reproduzir depois</a>
-                                                    <a class="dropdown-item" href="#">Compartilhar</a>
                                                 </div>
                                                 </a>
                                             </div>
@@ -333,10 +335,10 @@
                 {{ comentario.conteudo }}
             </h6>
             <div class="ml-5 d-inline feed-com">
-                <a href="#">
+                <a href="#" onclick="verificaLogado('{{logado}}')">
                     <img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment">
                 </a>{{ comentario.likes }}
-                <a href="#">
+                <a href="#" onclick="verificaLogado('{{logado}}')">
                     <img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment">
                 </a>{{ comentario.deslikes }}
             </div>
@@ -396,9 +398,9 @@
 
                     <h6 class="comentario">{{ resposta.conteudo }}</h6>
                     <div class="ml-5 d-inline feed-com">
-                        <a href="#">
+                        <a href="#" onclick="verificaLogado('{{logado}}')">
                             <img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>{{ resposta.likes }}
-                        <a href="#">
+                        <a href="#" onclick="verificaLogado('{{logado}}')">
                             <img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment">{{ resposta.deslikes }}
                         </a>
                     </div>

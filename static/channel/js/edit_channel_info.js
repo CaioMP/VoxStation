@@ -23,9 +23,6 @@ $('document').ready( function(){
 				window.location.reload();
 
 			},
-			error:function(){
-				alert("erro no servidor");
-			}
 		});
 
 		return false;

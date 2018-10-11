@@ -57,6 +57,20 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
+function verificaLogado(logado) {
+    if (logado == "False"){
+        window.location.href = "/login/";
+        $("#reportLink").attr("href", "/login/");
+        $('#addToPlaylistLink').removeAttr('data-toggle');
+        $('#addToPlaylistLink').removeAttr('data-target');
+        $("#addToPlaylistLink").attr("href", "/login/");
+    }
+    else{
+        $("#reportLink").attr("data-toggle", "modal");
+        $("#reportLink").attr("data-target", "#reportAudio");
+    }
+}
+
 //Salva as alterações
 function Submit() {
     document.getElementById('save').value = document.getElementById('submitForm').value;

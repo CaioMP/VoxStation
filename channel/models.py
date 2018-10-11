@@ -12,6 +12,16 @@ class Tag(models.Model):
     def __str__(self):
         return self.nome
 
+    def get_aparicoes(self):
+        ap = 0
+
+        for audio in Audio.objects.all():
+            for tag in audio.tag.all():
+                if self == tag:
+                    ap += 1
+        if ap > 0:
+            return ap
+
 
 class Audio(models.Model):
     def audio_path(instance,filename):

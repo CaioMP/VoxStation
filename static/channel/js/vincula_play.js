@@ -1,6 +1,5 @@
 $('document').ready( function(){
 	$('#salvarVinculo').on('click',function(){
-		console.log('disparo funciona')
 		var this_ = $(".dm-vincular");
 		var valor = $("input[name=canal]:checked").val();
 		$.ajax({
@@ -13,7 +12,6 @@ $('document').ready( function(){
 			async:true,
 			data:{'playlist':this_.attr('id_'),'canal':valor},
 			success:function(json){
-				console.log(json);
 				$("#alert-addPlaylist").html(json.message);
 				document.getElementById("alert-addPlaylist").style.visibility = "visible";
 				document.getElementById("alert-addPlaylist").style.opacity = "1";
@@ -24,9 +22,6 @@ $('document').ready( function(){
 				}, 1000);
 				$('#play_load').html(json.html);
 			},
-			error:function(){
-				alert("fudeu bahia");
-			}
 		});
 	});
 });

@@ -254,6 +254,7 @@ div#deslike:hover {
     border-radius: 4px;
     font-weight: bold;
     letter-spacing: .5px;
+    cursor: pointer;
 }
 
 .btn-sintonizar:hover {

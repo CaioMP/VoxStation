@@ -15,9 +15,6 @@ $('document').ready( function(){
 			success:function(json){
 				$("#container_audios").html(json.html);
 			},
-			error:function(){
-				
-			}
 		});
 	});
 });

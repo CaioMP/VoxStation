@@ -29,7 +29,8 @@
                     </span>
                     {%endif%}
                 {%endif%}
-                <a href="#" class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Salvar playlist">
+                <a href="#" onclick="verificaLogado('{{logado}}')" class="icon-pl" rel="tooltip" data-toggle="tooltip"
+                   data-placement="bottom" title="Salvar playlist">
                     <img src="/static/resources/icones/playlist_add.png" alt="salvar playlist" class="icon-playlist">
                 </a> <!--Salvar playlist-->
                 <!-- Aparecer esse icone caso o dono da playlist queira deletá-la
@@ -135,7 +136,7 @@
                 <img src="{{playlist.canal.foto_canal.url}}" alt="foto do canal" class="rounded-circle ft-do-canal">
                 <h5 class="nome-canal">{{canal.nome_canal}}</h5>
             </a>
-            <a href="#" style="{{btn_color}}" url_="{%url 'channel:follow_general_view'%}" id={{canal.id}} class="btn-sintonizar">{{btn_message}}</a>
+            <a onclick="verificaLogado('{{logado}}')" style="cursor:pointer;{{btn_color}}" url_="{%url 'channel:follow_general_view'%}" id={{canal.id}} class="btn-sintonizar">{{btn_message}}</a>
             {%else%}
             <img src="{{playlist.proprietario.img_perfil.url}}" alt="foto do canal" class="rounded-circle ft-do-canal">
             <h5 class="nome-canal">{{playlist.proprietario.username}}</h5>
