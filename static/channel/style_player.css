@@ -242,6 +242,38 @@ div#deslike:hover {
     background-color: #730c0c !important;
 }
 
+div#like-comment {
+    -webkit-mask-box-image: url(/static/resources/icones/like.png);
+}
+
+div#like-comment:hover {
+    background-color: #032854 !important;
+}
+
+div#deslike-comment {
+    -webkit-mask-box-image: url(/static/resources/icones/dislike.png);
+}
+
+div#deslike-comment:hover {
+    background-color: #730c0c !important;
+}
+
+div#like-answer {
+    -webkit-mask-box-image: url(/static/resources/icones/like.png);
+}
+
+div#like-answer:hover {
+    background-color: #032854 !important;
+}
+
+div#deslike-answer {
+    -webkit-mask-box-image: url(/static/resources/icones/dislike.png);
+}
+
+div#deslike-answer:hover {
+    background-color: #730c0c !important;
+}
+
 .sintonizar {
     margin-top: 1rem;
 }
@@ -270,6 +302,10 @@ div#deslike:hover {
 
 p#descricao {
     font-size: 1rem;
+}
+
+.commentBox {
+    padding: 0 1rem;
 }
 
 p {
@@ -454,7 +490,6 @@ button#descartar {
     color: white;
     height: 2.5rem;
     padding: 8px 16px;
-    border-radius: 4px;
     margin-bottom: -1rem;
 }
 
@@ -485,6 +520,10 @@ button#descartar {
 }
 
 @media only screen and (max-width: 575px) {
+    .carousel-inner {
+        padding: 0 3px !important;
+    }
+
     .playerBox {
         margin-top: 9.5rem;
     }

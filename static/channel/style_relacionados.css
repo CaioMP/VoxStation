@@ -2,6 +2,7 @@
     height: 28rem;
     overflow: initial;
     margin-top: 0 !important;
+    margin-left: -8px !important;
 }
 
 .carousel-inner {
@@ -133,7 +134,7 @@ p.descript-thumb {
     }
 
     .carousel-control-prev {
-        left: .75rem !important;
+        left: 1.25rem !important;
     }
 
     .carousel-control-next {
@@ -151,16 +152,20 @@ p.descript-thumb {
         margin-bottom: -0.8rem !important;
     }
 
+    .carousel {
+        margin-left: 8px !important;
+    }
+
     .carousel-control-prev, .carousel-control-next {
         top: -11.5rem;
     }
 
     .carousel-control-prev {
-        left: -1rem !important;
+        left: -.5rem !important;
     }
 
     .carousel-control-next {
-        right: -.8rem !important;
+        right: -1.25rem !important;
     }
 }
 
@@ -168,6 +173,10 @@ p.descript-thumb {
     .col-md-2 {
         width: 51.2% !important;
         margin-bottom: 1.2rem !important;
+    }
+
+    .carousel {
+        margin-left: 8px !important;
     }
 
     figure {
@@ -189,6 +198,14 @@ p.descript-thumb {
 
     .carousel-control-prev, .carousel-control-next {
         top: 24.5rem;
+    }
+
+    .carousel-control-prev {
+        left: -.5rem;
+    }
+
+    .carousel-control-next {
+        right: -1.2rem;
     }
 }
 
@@ -225,6 +242,15 @@ p.descript-thumb {
         margin-bottom: -0.3rem !important;
     }
 
+    .carousel-inner {
+        padding-right: 0 !important;
+    }
+
+    .carousel {
+        margin-left: 10px !important;
+        margin-right: 8px !important;
+    }
+
     .card-title {
         font-size: .9rem !important;
      }
@@ -245,6 +271,10 @@ p.descript-thumb {
     .carousel-control-prev {
         left: -.4rem;
     }
+
+    .carousel-control-next {
+        right: -.25rem !important;
+    }
 }
 
 @media only screen and (max-width: 414px) {
@@ -256,6 +286,7 @@ p.descript-thumb {
 
     .carousel {
         height: 35.5rem;
+        margin-left: -2px !important;
     }
 
     .carousel-control-prev, .carousel-control-next {
@@ -277,5 +308,13 @@ p.descript-thumb {
     .icon-play {
         margin: 25px 0 8px !important;
         width: 38px !important;
+    }
+
+    .carousel-control-prev {
+        left: -2px !important;
+    }
+
+    .carousel-control-next {
+        right: 2px !important;
     }
 }

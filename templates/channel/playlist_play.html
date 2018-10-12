@@ -70,11 +70,12 @@
                                         <img src="/static/resources/icones/play.png" alt="reproduzindo" class="icon-pl-audio">
                                         {{aud.titulo}}
                                     </h6>
+                                    <h6 class="duration-audio">{{aud.duracao}}</h6>
                                 </a>
                             {% else %}
                             <a href="{% url 'channel:playlist_play_view' playlist.id aud.id %}">
                                 <h6 class="audio-playlist">{{forloop.counter}}. {{aud.titulo}}</h6>
-                                <!--<h6 class="duracao-audio" id="duracao"></h6>-->
+                                <h6 class="duration-audio">{{aud.duracao}}</h6>
                             </a>
                             {% endif %}
                         {% endfor %}
@@ -190,8 +191,10 @@
                         {% for audio in playlist1 %}
                         <div class="col-md-2 mb-3" id="PL1-{{forloop.counter}}">
                             <div class="card">
-                                <figure class="fig-capa-audio">
+                                <figure class="fig-capa-audio" id="figPL1-{{forloop.counter}}"
+                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
                                     <img src="{{audio.capa.url}}" class="card-img-top" alt="{{audio.titulo}}">
+                                    <div class="duration-audio">{{audio.duracao}}</div>
                                     <figcaption class="fc-capa-audio">
                                         <center>
                                             <a href="{% url 'channel:player_view' audio.id %}">
@@ -230,8 +233,10 @@
                         {% for audio in playlist2 %}
                         <div class="col-md-2 mb-3" id="PL2-{{forloop.counter}}">
                             <div class="card">
-                                <figure class="fig-capa-audio">
+                                <figure class="fig-capa-audio" id="figPL2-{{forloop.counter}}"
+                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
                                     <img src="{{audio.capa.url}}" class="card-img-top" alt="{{audio.titulo}}">
+                                    <div class="duration-audio">{{audio.duracao}}</div>
                                     <figcaption class="fc-capa-audio">
                                         <center>
                                             <a href="{% url 'channel:player_view' audio.id %}">
@@ -294,6 +299,7 @@
                 </div>
             </h3>
         {% endif %}
+        <div class="commentBox">
         <br><br>
         <!--Foto do usuário que vai comentar-->
         {% if not user.img_perfil %}
@@ -334,13 +340,12 @@
             <h6 class="comentario">
                 {{ comentario.conteudo }}
             </h6>
-            <div class="ml-5 d-inline feed-com">
-                <a href="#" onclick="verificaLogado('{{logado}}')">
-                    <img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment">
-                </a>{{ comentario.likes }}
-                <a href="#" onclick="verificaLogado('{{logado}}')">
-                    <img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment">
-                </a>{{ comentario.deslikes }}
+            <div class="ml-5 d-inline-flex feed-com">
+                <div onclick="verificaLogado('{{logado}}')" class="icon feedback ml-3" id="like-comment">
+                </div><div id="num-like-comment">{{ comentario.likes }}</div>
+
+                <div onclick="verificaLogado('{{logado}}')" class="icon feedback ml-3" id="deslike-comment">
+                </div><div id="num-deslike-comment">{{ comentario.deslikes }}</div>
             </div>
 
             <!--Mostra o input de reponder-->
@@ -397,17 +402,18 @@
                     </h6>
 
                     <h6 class="comentario">{{ resposta.conteudo }}</h6>
-                    <div class="ml-5 d-inline feed-com">
-                        <a href="#" onclick="verificaLogado('{{logado}}')">
-                            <img src="/static/resources/icones/like.png" alt="gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment"></a>{{ resposta.likes }}
-                        <a href="#" onclick="verificaLogado('{{logado}}')">
-                            <img src="/static/resources/icones/dislike.png" alt="não gostei" style="width: 17px;height: 17px;" class="icon feedback ml-3 f-comment">{{ resposta.deslikes }}
-                        </a>
+                    <div class="ml-5 d-inline-flex feed-com">
+                        <div onclick="verificaLogado('{{logado}}')" class="icon feedback ml-3" id="like-comment">
+                        </div><div id="num-like-answer">{{ resposta.likes }}</div>
+
+                        <div onclick="verificaLogado('{{logado}}')" class="icon feedback ml-3" id="deslike-comment">
+                        </div><div id="num-deslike-answer">{{ resposta.deslikes }}</div>
                     </div>
                 </div>
                 {% endif %}
             {% endfor %}
         </div>
         {% endfor %}
+        </div>
     </div>
 {% endblock %}

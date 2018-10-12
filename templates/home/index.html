@@ -31,8 +31,10 @@
                                  onmouseleave="changeBgcNum(this.id)">
                                 <div class="position-audio">#0</div>
                                 <div class="card" style="border-radius: 0 0 .25rem .25rem;">
-                                    <figure class="fig-capa-audio">
+                                    <figure class="fig-capa-audio" id="figMR1-{{forloop.counter}}"
+                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
                                         <img src="{{audio_mr1.capa.url}}" style="border-radius: 0;" class="card-img-top" alt="">
+                                        <div class="duration-audio">{{audio_mr1.duracao}}</div>
                                         <figcaption class="fc-capa-audio">
                                             <center>
                                                 <a href="{% url 'channel:player_view' audio_mr1.id %}">
@@ -73,8 +75,10 @@
                                  onmouseleave="changeBgcNum(this.id)">
                                 <div class="position-audio">#1</div>
                                 <div class="card" style="border-radius: 0 0 .25rem .25rem;">
-                                    <figure class="fig-capa-audio">
+                                    <figure class="fig-capa-audio" id="figMR2-{{forloop.counter}}"
+                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
                                         <img src="{{audio_mr2.capa.url}}" style="border-radius: 0;" class="card-img-top" alt="">
+                                        <div class="duration-audio">{{audio_mr2.duracao}}</div>
                                         <figcaption class="fc-capa-audio">
                                             <center>
                                                 <a href="{% url 'channel:player_view' audio_mr2.id %}"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
@@ -131,8 +135,10 @@
                                  onmouseleave="changeBgcNum(this.id)">
                                 <div class="position-audio">#0</div>
                                 <div class="card" style="border-radius: 0 0 .25rem .25rem;">
-                                    <figure class="fig-capa-audio">
+                                    <figure class="fig-capa-audio" id="figMA1-{{forloop.counter}}"
+                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
                                         <img src="{{audio_ma1.capa.url}}" style="border-radius: 0;" class="card-img-top" alt="">
+                                        <div class="duration-audio">{{audio_ma1.duracao}}</div>
                                         <figcaption class="fc-capa-audio">
                                             <center>
                                                 <a href="{% url 'channel:player_view' audio_ma1.id %}">
@@ -171,8 +177,10 @@
                                  onmouseleave="changeBgcNum(this.id)">
                                 <div class="position-audio">#1</div>
                                 <div class="card" style="border-radius: 0 0 .25rem .25rem;">
-                                    <figure class="fig-capa-audio">
+                                    <figure class="fig-capa-audio" id="figMA2-{{forloop.counter}}"
+                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
                                         <img src="{{audio_ma2.capa.url}}" style="border-radius: 0;" class="card-img-top" alt="">
+                                        <div class="duration-audio">{{audio_ma2.duracao}}</div>
                                         <figcaption class="fc-capa-audio">
                                             <center>
                                                 <a href="{% url 'channel:player_view' audio_ma2.id %}"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
@@ -223,7 +231,7 @@
                     <div class="carousel-item active">
                         <div class="row mt-4 row-pl">
                             {% for playp1 in playlists_pop|slice:":2" %}
-                            <div class="col-md-6 col-playlist" id="{{playp1.id}}">
+                            <div class="col-md-6 col-playlist" style="padding-left: 0 !important;" id="{{playp1.id}}">
                                 <div class="card">
                                     <a href="{% url 'channel:playlist_play_view' playp1.id playp1.audios.first.id %}">
                                         <figure class="fig-capa-audio">
@@ -278,7 +286,7 @@
                     <div class="carousel-item">
                         <div class="row mt-4 row-pl">
                             {% for playp2 in playlists_pop|slice:"2:4" %}
-                            <div class="col-md-6 col-playlist" id="{{playp2.id}}">
+                            <div class="col-md-6 col-playlist" id="{{playp2.id}}" style="padding-left: 0 !important;">
                                 <div class="card">
                                     <a href="{% url 'channel:playlist_play_view' playp2.id playp2.audios.first.id %}">
                                         <figure class="fig-capa-audio">
@@ -352,8 +360,10 @@
                         {% for f_page_audio in channel.playlist1 %}
                             <div class="col-md-3">
                                 <div class="card" >
-                                    <figure class="fig-capa-audio">
+                                    <figure class="fig-capa-audio" id="fig1-{{channel.nome_canal}}-{{forloop.counter}}"
+                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
                                         <img src="{{f_page_audio.capa.url}}" class="card-img-top" alt="">
+                                        <div class="duration-audio">{{f_page_audio.duracao}}</div>
                                         <figcaption class="fc-capa-audio">
                                             <center>
                                                 <a href="{% url 'channel:player_view' f_page_audio.id %}">
@@ -391,8 +401,10 @@
                             {% for s_page_audio in channel.playlist2 %}
                             <div class="col-md-3">
                                 <div class="card">
-                                    <figure class="fig-capa-audio">
+                                    <figure class="fig-capa-audio" id="fig2-{{channel.nome_canal}}-{{forloop.counter}}"
+                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
                                         <img src="{{s_page_audio.capa.url}}" class="card-img-top" alt="">
+                                        <div class="duration-audio">{{s_page_audio.duracao}}</div>
                                         <figcaption class="fc-capa-audio">
                                             <center>
                                                 <a href="{% url 'channel:player_view' s_page_audio.id %}"><img src="/static/resources/icones/play.png" class="icon-play"/></a>

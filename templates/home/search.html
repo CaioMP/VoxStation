@@ -140,8 +140,10 @@
                         {%for audio in audios%}
                         <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                             <div class="card canal audioBox">
-                                <figure class="fig-capa-audio">
-                                    <a href="#"><img src="{{audio.capa.url}}" style="height: 100%;" class="card-img-top" alt=""></a>
+                                <figure class="fig-capa-audio" id="figSA-{{forloop.counter}}"
+                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
+                                    <img src="{{audio.capa.url}}" style="height: 100%;" class="card-img-top" alt="">
+                                    <div class="duration-audio">{{audio.duracao}}</div>
                                     <a href="{% url 'channel:player_view' audio.id %}">
                                         <figcaption class="fc-capa-audio">
                                             <center>

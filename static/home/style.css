@@ -26,6 +26,7 @@ body {
 }
 
 .icon-section {
+    display: inline-block;
     background: transparent;
     width: 1.5rem;
     height: 1.5rem;
@@ -131,7 +132,7 @@ p {
 .slideIcos {
     border-radius: 50%;
     background-color: #ffffffb8;
-    width: 45px;
+    width: 34px;
     box-shadow: 0px 0px 10px #636e72;
 }
 
@@ -143,7 +144,7 @@ p {
     margin: 216px -22px 0px;
     opacity: 1;
     height: 52px;
-    width: 52px;
+    width: 34px;
 }
 
 .carousel-control-next:hover, .carousel-control-prev:hover {
@@ -281,6 +282,10 @@ p {
     .mais-rep {
         height: 50rem !important;
         margin-bottom: 0;
+    }
+
+    .play-pop {
+        height: 43rem !important;
     }
 
     .icon-play {

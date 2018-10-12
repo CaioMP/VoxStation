@@ -71,6 +71,14 @@ function verificaLogado(logado) {
     }
 }
 
+function hideDuration(id){
+    document.getElementById(id).getElementsByClassName("duration-audio")[0].style.opacity = 0;
+}
+
+function showDuration(id){
+    document.getElementById(id).getElementsByClassName("duration-audio")[0].style.opacity = 1;
+}
+
 //Salva as alterações
 function Submit() {
     document.getElementById('save').value = document.getElementById('submitForm').value;

@@ -326,6 +326,17 @@ a.nav-link {
     font-size: 1.1em;
     color: black;
     display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+ul#pageSubmenu img {
+    margin-right: 1rem;
+}
+
+ul#pageSubchannel img {
+    margin-right: 1rem;
 }
 
 #sidebar ul li a:hover {

@@ -7,6 +7,12 @@
     opacity: 0;
 }
 
+.playlist-audios .duration-audio {
+    margin-top: -1.8rem;
+    font-weight: bold !important;
+    background-color: transparent;
+}
+
 .fa-arrow-circle-right {
     margin-top: 5px;
     margin-bottom: 0 !important;
