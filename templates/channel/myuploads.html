@@ -11,6 +11,7 @@
     <script src="{% static 'channel/js/capa_script.js' %}"></script>
     <script src="{% static 'resources/JQuery/jquery.form.js' %}"></script>
     <script src="{% static 'channel/js/upload.js' %}"></script>
+    <script src="{% static 'channel/js/search_tag_upload.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -90,6 +91,7 @@
                 {% endif %}
 
                 <!--Tags do áudio-->
+
                 {% if not tags %}
                 <label for="id_text" class="has-float-label" style="margin-bottom: 5px;">
                     <textarea name="{{ tagform.text.name }}" id="{{ tagform.text.id_for_label }}" placeholder="Tags"
@@ -103,6 +105,7 @@
                     <span>Tags</span>
                 </label>
                 {% endif %}
+                <ul class="tag-searched" id="tag-searched"></ul> <!--Lista as tags encontradas-->
                 <h6 class="error" id="error-tag" {% if not error_tag %} style="display:none;" {% endif %}>As tags devem começar com #</h6>
                 <h6 style="margin-bottom: 25px;">As tags irão facilitar que seu áudio seja encontrado. Ex: #Pop #Rock, etc.</h6>
 

@@ -110,6 +110,22 @@ def myuploads(request):
     return render(request, "./channel/myuploads.html", contexto)
 
 
+def search_tags(request):
+    if request.method == "POST":
+        search_tag = request.POST['search_tag']
+    else:
+        search_tag = ''
+
+    tags_search = Tag.objects.filter(nome__istartswith=search_tag, nome__contains=search_tag)
+
+    tags_list = []
+    if tags_search.exists():
+        for tag in tags_search:
+            tags_list.append(tag.nome)
+
+    return JsonResponse({"tags_list": tags_list})
+
+
 def channel(request, id):
     contexto = {}
 

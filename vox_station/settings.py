@@ -21,6 +21,10 @@ AUTH_USER_MODEL = 'account.MyUser'
 # Application definition
 
 INSTALLED_APPS = [
+    # --- Autocomplete ---
+    'dal',
+    'dal_select2',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

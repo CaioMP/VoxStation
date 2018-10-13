@@ -40,5 +40,7 @@ urlpatterns = [
     path('change_back_audio/<int:id>', changeBackAudio, name="change_back_view"),
     path('edit_audios_capa/<int:id>/<int:id_channel>', editAudioFoto, name='edit_audio_capa_view'),
     path('edit_audios/<int:id>/<int:id_channel>', editAudio, name='edit_audio_view'),
-    path('feedBack/<int:idAudio>', login_required(feedBack), name="feedBack_view")
+    path('feedBack/<int:idAudio>', login_required(feedBack), name="feedBack_view"),
+
+    path('search_tag', search_tags, name='search_tag_view')
 ]

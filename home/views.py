@@ -24,7 +24,8 @@ def IndexView(request):
     for tag in Tag.objects.all():
         ap = tag.get_aparicoes()
         if ap:
-            print("Aparições da tag", tag, "=", ap)
+            pass
+            # print("Aparições da tag", tag, "=", ap)
 
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
