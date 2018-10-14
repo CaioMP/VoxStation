@@ -294,6 +294,22 @@ div#deslike-answer:hover {
     background: linear-gradient(-160deg, #032854bf, black);
 }
 
+a#btn-ec {
+    background: linear-gradient(-160deg, #032854, black);
+    color: white !important;
+    padding: 6px 24px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: .5px;
+    cursor: pointer;
+}
+
+a#btn-ec:hover {
+    color: white !important;
+    background: linear-gradient(-160deg, #032854bf, black);
+}
+
 .descricao {
     display: none;
     text-align: justify;
@@ -652,6 +668,11 @@ button#descartar {
     }
 
     .btn-sintonizar {
+        padding: 6px 15px;
+        font-size: .85rem;
+    }
+
+    a#btn-ec {
         padding: 6px 15px;
         font-size: .85rem;
     }

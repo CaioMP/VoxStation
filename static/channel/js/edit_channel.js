@@ -1,3 +1,16 @@
+$(function(){
+	$('#id_capa_tal').change(
+	function(){
+		const file = $(this)[0].files[0]
+		const fileReader = new FileReader()
+		fileReader.onloadend = function(){
+		    src = 'url('+fileReader.result+')';
+		    document.getElementById("capa_preview").style.backgroundImage = src;
+		}
+		fileReader.readAsDataURL(file)
+	})
+})
+
 function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");

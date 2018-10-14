@@ -219,8 +219,12 @@ def playlist_play(request, id, id_audio):
     proximo = audioposition(audio, playlist)[1]
     n_comentarios = get_n_comentarios(comentarios, respostas)
     ordem = True  # True para aleatório
+    canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
+    direito_edicao = False
 
     if request.user.is_active:
+        if request.user == canal_proprietario.proprietario:
+            direito_edicao = True
         history = Historico.objects.get(prop=request.user)
         h = Historico.objects.filter(prop=request.user, audio=audio)
         if h.exists():
@@ -230,8 +234,6 @@ def playlist_play(request, id, id_audio):
 
     comentario_form = ComentarioForm()
     resposta_form = RespostaForm(prefix="resposta")
-
-    canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
 
     playlist1 = []
     playlist2 = []
@@ -256,6 +258,7 @@ def playlist_play(request, id, id_audio):
 
     context = {
         'playlist': playlist,
+        'direito_edicao': direito_edicao,
         'audio': audio,
         'ordem': ordem,
         'proximo': proximo.pk,
@@ -575,6 +578,9 @@ def playlist_add_play(request):
 
 def edit_channel(request, id):
     contexto = {}
+    canal = Canal.objects.get(pk=id)
+    if request.user.pk != canal.prop_key:
+        return redirect('/channel/'+str(canal.pk))
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
@@ -602,7 +608,7 @@ def edit_channel(request, id):
     contexto['remove_form'] = RemoveAudio()
     contexto['audio_form'] = AudioDeFundoForm()
     contexto['capa_form'] = CanalCapaForm()
-    contexto['chan'] = Canal.objects.get(pk=id)
+    contexto['chan'] = canal
     contexto['audios'] = Audio.objects.filter(canal_proprietario=contexto['chan']).order_by('-data_publicacao')
     contexto['playlists'] = ordena_pra_exibicao(Playlist.objects.filter(canal=contexto['chan']).order_by('-ultima_atualizacao'))
     if request.user == contexto['chan'].proprietario:
@@ -682,7 +688,12 @@ def player(request, id):
     audio = Audio.objects.get(pk=id)
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
 
+    direito_edicao = False
+
     if request.user.is_active:
+        if request.user == canal_proprietario.proprietario:
+            direito_edicao = True
+
         history = Historico.objects.get(prop=request.user)
         htest = Historico.objects.filter(prop=request.user, audio=audio)
         if htest.exists():
@@ -710,6 +721,7 @@ def player(request, id):
 
     context = {
         'audio': audio,
+        'direito_edicao': direito_edicao,
         'proximo': proximo.pk,
         'canal_proprietario': canal_proprietario,
         'playlist1': playlist1,

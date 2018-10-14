@@ -3,6 +3,14 @@ a.edit-fundo {
     top: 15px;
 }
 
+div#container_plays {
+    margin: 0;
+}
+
+.col-pl {
+    padding-left: 0;
+}
+
 .dp-redes-sociais {
     margin-top: 0;
     width: auto;
@@ -95,7 +103,7 @@ figure.fig-foto {
 }
 
 .dropdown-menu.filter.show {
-    margin-left: -9.5rem;
+    margin-left: -2.5rem;
     background: #f8f9fa;
     margin-top: 7px;
     font-size: 15px;
@@ -271,15 +279,74 @@ a#edit_info {
     height: 100%;
 }
 
+@media only screen and (max-width: 1174px) {
+    figcaption.fc-capa-audio {
+        height: 47.5% !important;
+    }
+
+    .capa-playlist figcaption {
+        height: 46% !important;
+    }
+}
+
+@media only screen and (max-width: 930px) {
+    figcaption.fc-capa-audio {
+        height: 47% !important;
+    }
+
+    .capa-playlist figcaption {
+        height: 44.5% !important;
+    }
+}
+
+@media only screen and (max-width: 834px) {
+    figcaption.fc-capa-audio {
+        height: 41.5% !important;
+    }
+
+    .capa-playlist figcaption {
+        height: 39% !important;
+    }
+
+    .icon-more {
+        margin-top: 1px;
+        width: 16px !important;
+    }
+}
+
 @media only screen and (max-width: 767px) {
+    figcaption.fc-capa-audio {
+        height: 54.5% !important;
+    }
+
+    .capa-playlist .card-img-top {
+        border-radius: 4px 4px 0 0 !important;
+    }
+
     .ed-thumb {
         top: .5rem;
+    }
+
+    .capa-playlist figcaption {
+        height: 52% !important;
+    }
+
+    .icon-more {
+        width: 20px !important;
     }
 }
 
 @media only screen and (max-width: 575px) {
+    figcaption.fc-capa-audio {
+        height: 59.5% !important;
+    }
+
     .edit-capa-bottom {
         top: 13px;
+    }
+
+    .capa-playlist figcaption {
+        height: 57% !important;
     }
 
     img.social {
@@ -324,8 +391,10 @@ a#edit_info {
 }
 
 @media only screen and (max-width: 475px) {
-    .headerChannel {
-        margin-top: -1rem !important;
+    .head-ec {
+        font-size: 1.15rem !important;
+        width: 100%;
+        margin: 0 !important;
     }
 
     .edit-capa-bottom {
@@ -391,5 +460,23 @@ a#edit_info {
 
     .fa-google-plus-g {
         font-size: 3.5rem;
+    }
+
+    .col-md-3 {
+        padding: 0;
+    }
+
+    .form-search {
+        padding: 0 !important;
+    }
+}
+
+@media only screen and (max-width: 414px){
+    .capa-playlist figcaption {
+        height: 56.5% !important;
+    }
+
+    .icon-more {
+        margin-top: -1rem;
     }
 }

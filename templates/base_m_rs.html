@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="copyright" content="© 2018 VoxStation" />
+    <link rel="icon" type="imagem/png" href="{% static 'images/logo_fav.png' %}" />
+    <link rel="shortcut icon" type="imagem/x-icon" href="{% static 'images/logo_fav.ico' %}"/>
 
     <!--Font Raleway-->
     <link rel="stylesheet" href="{% static 'base.css' %}" type="text/css"/>
@@ -231,7 +233,7 @@
                     {% csrf_token %}
                     <div class="modal-body" style="padding: 1.2rem;">
                         <figure class="fig-fade">
-                            <label for="id_capa_tal" class="edit-capa" style="background-image: url({{chan.capa.url}});">
+                            <label for="id_capa_tal" class="edit-capa" id="capa_preview" style="background-image: url({{chan.capa.url}});">
                                 <figcaption style="border-radius: 0;">
                                     <img src="/static/images/camera.png" alt="alterar a capa do canal {{chan.nome_canal}}"
                                          class="d-block camera-capa">
@@ -393,148 +395,13 @@
         </div>
     </div>
 
-    <!--Editar as redes sociais exibidas em um canal-->
-    <div class="modal fade" id="editRedesSociais">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content mdc-redes-sociais">
-                <div class="modal-header" style="padding: 1.2rem;">
-                    <h4 class="modal-title">Suas redes sociais</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="fecharAdd()">&times;</button>
-                </div>
-                <div class="modal-body" style="padding: 1.2rem;">
-                    <div class="container-fluid" style="margin-bottom: 0 !important;">
-                        <!--Caso o usuário não possua redes sociais associadas ao canal-->
-                        <!--Por default o display é block, mas caso o canal possua deve ser trocado para none-->
-                        <div class="row redes-sociais" id="nenhuma-rede-social">
-                            <div class="col-12">
-                                <h5 style="font-size: 1rem;">
-                                    Você ainda não adicionou nenhuma rede social para {{chan.nome_canal}}.
-                                </h5>
-                            </div>
-                        </div>
-
-                        <!--Caso o usuário possua redes sociais associadas ao canal
-                        <div class="row redes-sociais" id="redes-sociais-salvas">
-                            <!--Dps de verificar quais redes sociais o canal possui tornar o ícone dela visível
-                            <div class="col-4 mb-4" id="facebook">
-                                <center>
-                                    <div class="dropdown dp-redes-sociais">
-                                        <a data-toggle="collapse" data-target="#dropdownFacebookCanal" aria-haspopup="true"
-                                           aria-expanded="false">
-                                            <i class="fab fa-facebook-square fa-redes-sociais" style="color: #5061a6;"></i>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownFacebookCanal">
-                                        <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" value="Facebook do canal" placeholder="Link do seu Facebook">
-                                            <span>Link do seu Facebook</span>
-                                        </label>
-                                    </div>
-                                </center>
-                            </div>
-                            <div class="col-4 mb-4" id="google-plus">
-                                <center>
-                                    <div class="dropdown dp-redes-sociais">
-                                        <a data-toggle="collapse" data-target="#dropdownGooglePlusCanal" aria-haspopup="true"
-                                           aria-expanded="false">
-                                            <i class="fab fa-google-plus-g fa-redes-sociais"></i>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownGooglePlusCanal">
-                                        <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" value="Google+ do canal" placeholder="Link do seu Google+">
-                                            <span>Link do seu Google+</span>
-                                        </label>
-                                    </div>
-                                </center>
-                            </div>
-                            <div class="col-4 mb-4" id="instagram">
-                                <center>
-                                    <div class="dropdown dp-redes-sociais">
-                                        <a data-toggle="collapse" data-target="#dropdownInstagramCanal" aria-haspopup="true"
-                                           aria-expanded="false">
-                                            <i class="fab fa-instagram fa-redes-sociais"></i>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownInstagramCanal">
-                                        <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" value="Instagram do canal" placeholder="Link do seu Instagram">
-                                            <span>Link do seu Instagram</span>
-                                        </label>
-                                    </div>
-                                </center>
-                            </div>
-                            <div class="col-4" id="twitter">
-                                <center>
-                                    <div class="dropdown dp-redes-sociais">
-                                        <a data-toggle="collapse" data-target="#dropdownTwitterCanal" aria-haspopup="true"
-                                           aria-expanded="false">
-                                            <i class="fab fa-twitter fa-redes-sociais" style="color: #2aa9e0;"></i>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownTwitterCanal">
-                                        <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" value="Twitter do canal" placeholder="Link do seu Twitter">
-                                            <span>Link do seu Twitter</span>
-                                        </label>
-                                    </div>
-                                </center>
-                            </div>
-                            <div class="col-4" id="youtube">
-                                <center>
-                                    <div class="dropdown dp-redes-sociais">
-                                        <a data-toggle="collapse" data-target="#dropdownYoutubeCanal" aria-haspopup="true"
-                                           aria-expanded="false">
-                                            <i class="fab fa-youtube fa-redes-sociais" style="color: #ff0000;"></i>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownYoutubeCanal">
-                                        <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" value="Twitter do canal" placeholder="Link do seu Youtube">
-                                            <span>Link do seu Youtube</span>
-                                        </label>
-                                    </div>
-                                </center>
-                            </div>
-                            <div class="col-4" id="twitch">
-                                <center>
-                                    <div class="dropdown dp-redes-sociais">
-                                        <a data-toggle="collapse" data-target="#dropdownTwitchCanal" aria-haspopup="true"
-                                           aria-expanded="false">
-                                            <i class="fab fa-twitch fa-redes-sociais" style="color: #6441a5;"></i>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-menu dm-redes-sociais" id="dropdownTwitchCanal">
-                                        <label class="has-float-label lb-redes-sociais">
-                                            <input type="text" value="Twitch do canal" placeholder="Link do seu Twitch">
-                                            <span>Link do seu Twitch</span>
-                                        </label>
-                                    </div>
-                                </center>
-                            </div>
-                        </div>-->
-                    </div>
-                </div>
-                <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
-                    <a href="#addRedesSociais" data-toggle="modal" data-dismiss="modal" onclick="addRedesSociais()"
-                       class="btn btn-add add-redes-sociais">
-                        <strong class="save-strong">Adicionar</strong>
-                    </a>
-                    <button class="btn btn-add" type="submit">
-                        <strong class="save-strong">Salvar</strong>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Adicionar redes sociais a canal-->
+    <!--Editar ou adicionar redes sociais a canal-->
     <div class="modal fade" id="addRedesSociais">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content mdc-redes-sociais">
                 <div class="modal-header" style="padding: 1.2rem;">
                     <h4 class="modal-title" id="title-redes-sociais">Escolha alguma rede social</h4>
-                    <button type="button" class="close" data-dismiss="modal" onclick="fecharAdd()">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body" style="padding: 1.2rem;">
                     <div class="container-fluid" style="margin-bottom: 0 !important;">

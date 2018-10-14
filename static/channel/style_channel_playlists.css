@@ -5,6 +5,10 @@
     width: 100%;
 }
 
+.audios {
+    margin: 0;
+}
+
 .fa-clock {
     color: black;
     font-size: .92rem;
@@ -194,10 +198,6 @@
         width: 100%;
     }
 
-    .row.mt-4 {
-        margin: 0;
-    }
-
     .col-playlist {
         padding: 0;
     }
@@ -208,10 +208,6 @@
 
     .playlist {
         margin-top: -44px;
-    }
-
-    .form-search {
-        padding: 0 1rem !important;
     }
 
     .last-update {
@@ -230,6 +226,27 @@
 @media only screen and (max-width: 414px) {
     .playlist {
         margin-top: -30px;
+    }
+
+    .carousel-inner {
+        margin: 0 16px;
+    }
+
+    .icon-more {
+        margin-top: -1rem;
+    }
+
+    .col-md-3 {
+        padding: 0;
+    }
+
+    .row {
+        margin: 0;
+        padding: 0;
+    }
+
+    .row-pl {
+        padding: 0;
     }
 
     .col-md-6.playlist {

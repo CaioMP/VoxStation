@@ -7,6 +7,8 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="copyright" content="© 2018 VoxStation" />
     <meta property="og:site_name" content="VoxStation">
+    <link rel="icon" type="imagem/png" href="{% static 'images/logo_fav.png' %}" />
+    <link rel="shortcut icon" type="imagem/x-icon" href="{% static 'images/logo_fav.ico' %}"/>
 
     <!--Font Raleway-->
     <link rel="stylesheet" href="{% static 'base.css' %}" type="text/css"/>
@@ -357,7 +359,7 @@
                 <form>
                     <div class="modal-body" style="padding: 1.2rem;">
                         <figure class="fig-fade">
-                            <label for="edit-capa" class="edit-capa" style="background-image: url({{chan.capa.url}});">
+                            <label for="edit-capa" class="edit-capa" id="capa_preview" style="background-image: url({{chan.capa.url}});">
                                 <figcaption style="border-radius: 0;">
                                     <img src="/static/images/camera.png" alt="alterar a capa do canal {{chan.nome_canal}}"
                                          class="d-block camera-capa">
@@ -576,6 +578,11 @@
             </li>
         </ul>
     </nav>
+    {% else %}
+        <div class="footer-signup" id="footer_signup">
+            Ainda não tem uma conta no VoxStation? Crie uma clicando <a href="{% url 'account:sign_up' %}"><b>aqui!</b></a>
+            <button type="button" class="close" id="closeSignup" onclick="document.getElementById('footer_signup').style.transform = 'translateY(100%)';">&times;</button>
+        </div>
     {% endif %}
 
     <div class="wrapper">

@@ -8,6 +8,31 @@ body {
     font-family: Raleway !important;
 }
 
+.footer-signup {
+    position: fixed;
+    bottom: 0;
+    background-color: #ffffffe8;
+    z-index: 1;
+    padding: 1rem 3rem;
+    width: 100%;
+    text-align: center;
+    color: #032854;
+    transition: .5s;
+}
+
+button#closeSignup {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: .3s;
+}
+
+button#closeSignup:focus, button#closeSignup:hover {
+    outline: 0 !important;
+    text-shadow: 0 0 13px;
+}
+
 div#sideFade {
     opacity: 0;
     z-index: 1;
@@ -360,7 +385,21 @@ i.fas.fa-bell {
     }
 }
 
+@media only screen and (max-width: 575px){
+    .footer-signup {
+        font-size: .85rem;
+    }
+
+    button#closeSignup {
+        font-size: 1.25rem;
+    }
+}
+
 @media only screen and (max-width: 475px) {
+    button#closeSignup {
+        right: 1.5rem;
+    }
+
     #reportAudio .has-float-label input:placeholder-shown:not(:focus)+*,
     .has-float-label select:placeholder-shown:not(:focus)+*,
     .has-float-label textarea:placeholder-shown:not(:focus)+* {
