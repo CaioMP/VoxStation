@@ -431,6 +431,7 @@ p {
 
     .mais-rep {
         height: 101rem !important;
+        margin: 0 !important;
     }
 
     .play-pop {

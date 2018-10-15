@@ -173,6 +173,7 @@
                     {{ audio.descricao }}
                 </p>
 
+                {% if audio.tag.exists %}
                 <p id="tags" style="margin-top: 1rem;">
                     <strong>Tags</strong>
                     <div class="mt-2">
@@ -183,6 +184,7 @@
                         {% endif %}
                     </div>
                 </p>
+                {% endif %}
             </div>
             <a onclick="showDescription()"><i class="fas fa-angle-down icon-desc" id="showDescription"></i></a>
             <a onclick="hideDescription()">

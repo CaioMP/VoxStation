@@ -21,12 +21,6 @@ def IndexView(request):
     contexto['melhor_avaliados'] = melhor_avaliados
     contexto['playlists_pop'] = playlists_pop
 
-    for tag in Tag.objects.all():
-        ap = tag.get_aparicoes()
-        if ap:
-            pass
-            # print("Aparições da tag", tag, "=", ap)
-
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
@@ -80,6 +74,24 @@ def search(request):
 
     if request.method == "POST":
         pesquisa = request.POST['pesquisa']
+        if pesquisa.startswith("#"):
+            for tag in Tag.objects.all(): # deletar a tag caso não existam mais áudios com ela
+                ap = tag.get_aparicoes()
+                if not ap:
+                    tag.delete()
+
+            tag_s = Tag.objects.filter(nome__istartswith=pesquisa[1:], nome__contains=pesquisa[1:])
+            audios_tag_s = []
+            if tag_s.exists():
+                for audio in Audio.objects.all():
+                    for tag in tag_s.all():
+                        for tags_audio in audio.tag.all():
+                            if tags_audio == tag:
+                                audios_tag_s.append(audio)
+
+            contexto['tags_searched'] = tag_s
+            contexto['audios_tag_s'] = audios_tag_s
+
         contexto['pesquisa'] = pesquisa
         contexto['canais'] = Canal.objects.filter(nome_canal__contains=pesquisa)
         contexto['audios'] = Audio.objects.filter(titulo__contains=pesquisa)

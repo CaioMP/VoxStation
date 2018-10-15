@@ -53,3 +53,25 @@ function showPlaylists() {
     document.getElementById("filter-playlists").style.display = "inline";
     document.getElementById("subPlaylist").style.color = "#032854";
 }
+
+/*Esconde os audios da tag pesquisada*/
+function hideAudiosTag(parentElement) {
+    document.getElementById(parentElement).getElementsByClassName("slide")[0].style.display = "none";
+    document.getElementById(parentElement).getElementsByClassName("fa-angle-down")[0].style.display = "block";
+    document.getElementById(parentElement).getElementsByClassName("fa-angle-up")[0].style.display = "none";
+    tagBox = document.getElementById(parentElement).parentElement.id;
+    document.getElementById(tagBox).getElementsByClassName("fa-filter")[0].style.display = "none";
+    document.getElementById(tagBox).getElementsByClassName("fa-clock")[0].style.display = "none";
+    document.getElementById(tagBox).getElementsByClassName("sub-header")[0].style.color = "initial";
+}
+
+/*Mostra os audios da tag pesquisada*/
+function showAudiosTag(parentElement) {
+    document.getElementById(parentElement).getElementsByClassName("slide")[0].style.display = "block";
+    document.getElementById(parentElement).getElementsByClassName("fa-angle-up")[0].style.display = "block";
+    document.getElementById(parentElement).getElementsByClassName("fa-angle-down")[0].style.display = "none";
+    tagBox = document.getElementById(parentElement).parentElement.id;
+    document.getElementById(tagBox).getElementsByClassName("fa-filter")[0].style.display = "inline";
+    document.getElementById(tagBox).getElementsByClassName("fa-clock")[0].style.display = "inline";
+    document.getElementById(tagBox).getElementsByClassName("sub-header")[0].style.color = "#032854";
+}

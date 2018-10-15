@@ -13,267 +13,348 @@
 
 {% block body %}
     <div class="info-header">
+        {% if not tags_searched %}
         <center>
             <h4><strong>{{pesquisa}}</strong></h4>
             <h5>{{tot_result}} resultados</h5>
         </center>
-    </div>
-    {% if not canais %}
-        {% if not audios %}
-            {% if not playlists_show %}
-                <center>
-                    <h5 class="mt-4" id="nadaMsg"><strong>Nada encontrado para {{pesquisa}}</strong></h5>
-                </center>
-            {% endif %}
+        {% else %}
+        <center>
+            <h4><strong>{{pesquisa}}</strong></h4>
+            <h5>{{tags_searched.count}} resultados</h5>
+        </center>
         {% endif %}
-    {% endif %}
+    </div>
+    {% if not canais and not audios and not playlists_show and not tags_searched %}
+        <center>
+            <h5 class="mt-4" id="nadaMsg"><strong>Nada encontrado para {{pesquisa}}</strong></h5>
+        </center>
+    {% else %}
 
-    <!--Caso existam canais da pesquisa-->
-    <h4 class="sub-header" id="subChannel">
-        <img src="/static/resources/icones/channel.png" alt="Canais" class="icon-header">Canais ({{tot_canais}})
-        <div class="dropdown filter" id="filter-canais">
-            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-filter"></i>
-            <div class="dropdown-menu filter " id="caminhoChan" indentifier="{% url 'home:ordena_channel_view' pesquisa %}" aria-labelledby="dropdownFilter">
-                <a class="dropdown-item filter opChan" val="mais seguidores" href="#">Mais seguidores</a>
-                <a class="dropdown-item filter opChan" val="mais recentes" href="#">Mais recentes</a>
-                <a class="dropdown-item filter opChan" val="mais antigos"  href="#">Mais antigos</a>
-            </div>
-            </a>
-        </div>
-        <!--Esconder os canais-->
-        <a onclick="hideChannels()"><i class="fas fa-angle-up show-hide" id="hideChannels"></i></a>
+        {% if not tags_searched %}
+            {% if canais %}
+            <!--Caso existam canais da pesquisa-->
+            <h4 class="sub-header" id="subChannel">
+                <img src="/static/resources/icones/channel.png" alt="Canais" class="icon-header">Canais ({{tot_canais}})
+                <div class="dropdown filter" id="filter-canais">
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-filter"></i>
+                    <div class="dropdown-menu filter " id="caminhoChan" indentifier="{% url 'home:ordena_channel_view' pesquisa %}" aria-labelledby="dropdownFilter">
+                        <a class="dropdown-item filter opChan" val="mais seguidores" href="#">Mais seguidores</a>
+                        <a class="dropdown-item filter opChan" val="mais recentes" href="#">Mais recentes</a>
+                        <a class="dropdown-item filter opChan" val="mais antigos"  href="#">Mais antigos</a>
+                    </div>
+                    </a>
+                </div>
+                <!--Esconder os canais-->
+                <a onclick="hideChannels()"><i class="fas fa-angle-up show-hide" id="hideChannels"></i></a>
 
-        <!--Exibir os canais-->
-        <a onclick="showChannels()"><i class="fas fa-angle-down show-hide" id="showChannels"></i></a>
-    </h4>
-    <div class="container-fluid" id="channels">
-        <div id="carouselSlider-1" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner" style="height: auto !important;margin-bottom: auto !important;">
-                <div class="carousel-item active">
-                    <div class="row canais" id="chanBox">
-                        {%if canais%}
-                        {%for canal in canais%}
-                        <div class="col-6 col-sm-4 col-md-3">
-                            <div class="card canal">
-                                <a href="{% url 'channel:channel_view' canal.id %}">
-                                    <img src="{{canal.foto_canal.url}}"
-                                         class="card-img-top img-canal" alt="imagem do canal">
-                                </a>
+                <!--Exibir os canais-->
+                <a onclick="showChannels()"><i class="fas fa-angle-down show-hide" id="showChannels"></i></a>
+            </h4>
+            <div class="container-fluid" id="channels">
+                <div id="carouselSlider-1" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" style="margin: 0 !important;height: auto !important;margin-bottom: auto !important;">
+                        <div class="carousel-item active">
+                            <div class="row canais" id="chanBox">
+                                {%for canal in canais%}
+                                <div class="col-6 col-sm-4 col-md-3">
+                                    <div class="card canal">
+                                        <a href="{% url 'channel:channel_view' canal.id %}">
+                                            <img src="{{canal.foto_canal.url}}"
+                                                 class="card-img-top img-canal" alt="imagem do canal">
+                                        </a>
 
-                                <div class="card-body desc-canal">
-                                    <a href="{% url 'channel:channel_view' canal.id %}" class="audio-link"><h4 class="card-title">{{canal.nome_canal}}</h4></a>
-                                    <div class="card-text">
-                                        <!--Número de seguidores-->
-                                        <p class="d-inline">
-                                            <img src="/static/images/default-user.png" class="icon-view"
-                                            rel="tooltip" data-toggle="tooltip" data-placement="top" title="Seguidores"/>
-                                            {{canal.num_seg}}
-                                        </p>
-                                        <!--Número de áudios-->
-                                        <p class="d-inline">
-                                            <img src="/static/resources/icones/disc.ico" style="margin-right: .3rem;width: auto;"
-                                                 rel="tooltip" data-toggle="tooltip" data-placement="top" title="Áudios"
-                                                 class="icon-view n-audios ml-3"/>{{canal.num_audios}}
-                                        </p>
-                                        <div class="tags mt-3">
-                                            {%for tag in canal.tags_main%}
-                                            <div class="tag" style="margin-right: .5rem;"><a href="#">#{{tag}}</a></div>
-                                            {%endfor%}
+                                        <div class="card-body desc-canal">
+                                            <a href="{% url 'channel:channel_view' canal.id %}" class="audio-link"><h4 class="card-title">{{canal.nome_canal}}</h4></a>
+                                            <div class="card-text">
+                                                <!--Número de seguidores-->
+                                                <p class="d-inline">
+                                                    <img src="/static/images/default-user.png" class="icon-view"
+                                                    rel="tooltip" data-toggle="tooltip" data-placement="top" title="Seguidores"/>
+                                                    {{canal.num_seg}}
+                                                </p>
+                                                <!--Número de áudios-->
+                                                <p class="d-inline">
+                                                    <img src="/static/resources/icones/disc.ico" style="margin-right: .3rem;width: auto;"
+                                                         rel="tooltip" data-toggle="tooltip" data-placement="top" title="Áudios"
+                                                         class="icon-view n-audios ml-3"/>{{canal.num_audios}}
+                                                </p>
+                                                <div class="tags mt-3">
+                                                    {%for tag in canal.tags_main%}
+                                                    <div class="tag" style="margin-right: .5rem;"><a href="#">#{{tag}}</a></div>
+                                                    {%endfor%}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                {%endfor%}
                             </div>
                         </div>
-                        {%endfor%}
-                        {%else%}
-                        <!--Esconde o sub-header e o container de canais-->
-                        <script>
-                            document.getElementById("subChannel").style.display = "none";
-                            document.getElementById("chanBox").style.display = "none";
-                            document.getElementById("channels").style.display = "none";
-                        </script>
-                        {%endif%}
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            {% endif %}
 
-    <!--Áudios da pesquisa-->
-    <h4 class="sub-header" id="subAudio">
-        <img src="/static/resources/icones/disc.ico" alt="Áudios" class="icon-header">Áudios ({{tot_audios}})
-        <div class="dropdown filter" id="filter-audios">
-            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-filter"></i>
-            <div class="dropdown-menu filter" id="caminhoAudio" indentifier="{% url 'home:ordena_audio_view' pesquisa %}" aria-labelledby="dropdownFilter">
-                <a class="dropdown-item filter opAudio" val="populares" href="#">Mais reproduzidos</a>
-                <a class="dropdown-item filter opAudio" val="melhor avaliados" href="#">Melhor avaliados</a>
-                <a class="dropdown-item filter opAudio" val="recentes" href="#">Recentes</a>
-                <a class="dropdown-item filter opAudio" val="antigos" href="#">Antigos</a>
+            {% if audios %}
+            <!--Áudios da pesquisa-->
+            <h4 class="sub-header" id="subAudio">
+                <img src="/static/resources/icones/disc.ico" alt="Áudios" class="icon-header">Áudios ({{tot_audios}})
+                <div class="dropdown filter" id="filter-audios">
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-filter"></i>
+                    <div class="dropdown-menu filter" id="caminhoAudio" indentifier="{% url 'home:ordena_audio_view' pesquisa %}" aria-labelledby="dropdownFilter">
+                        <a class="dropdown-item filter opAudio" val="populares" href="#">Mais reproduzidos</a>
+                        <a class="dropdown-item filter opAudio" val="melhor avaliados" href="#">Melhor avaliados</a>
+                        <a class="dropdown-item filter opAudio" val="recentes" href="#">Recentes</a>
+                        <a class="dropdown-item filter opAudio" val="antigos" href="#">Antigos</a>
+                    </div>
+                    </a>
+                </div>
+                <div class="dropdown filter" id="filter-duracao" style="right: 2.5rem;">
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-clock"></i>
+                    <div class="dropdown-menu filter" aria-labelledby="dropdownFilter" style="margin-left: -10rem;">
+                        <a class="dropdown-item filter" href="#">Curtos (- 5 min)</a>
+                        <a class="dropdown-item filter" href="#">Médios (- 10 min)</a>
+                        <a class="dropdown-item filter" href="#">Longos (+ 10 min)</a>
+                    </div>
+                    </a>
+                </div>
+
+                <!--Esconder os canais-->
+                <a onclick="hideAudios()"><i class="fas fa-angle-up show-hide" id="hideAudios"></i></a>
+
+                <!--Exibir os canais-->
+                <a onclick="showAudios()"><i class="fas fa-angle-down show-hide" id="showAudios"></i></a>
+            </h4>
+            <div class="container-fluid" id="audios">
+                <div id="carouselSlider-2" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" style="margin: 0 !important;height: auto !important;margin-bottom: auto !important;">
+                        <div class="carousel-item active">
+                            <div class="row canais" id="audBox">
+                                {%for audio in audios%}
+                                <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                                    <div class="card canal audioBox">
+                                        <figure class="fig-capa-audio" id="figSA-{{forloop.counter}}"
+                                                    onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
+                                            <img src="{{audio.capa.url}}" style="height: 100%;" class="card-img-top" alt="">
+                                            <div class="duration-audio" style="margin-top: -1.7rem;">{{audio.duracao}}</div>
+                                            <a href="{% url 'channel:player_view' audio.id %}">
+                                                <figcaption class="fc-capa-audio">
+                                                    <center>
+                                                        <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                                        <div class="dropdown more">
+                                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                                {% if logado %}
+                                                                <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
+                                                                {% endif %}
+                                                            </div>
+                                                            </a>
+                                                        </div>
+                                                    </center>
+                                                </figcaption>
+                                            </a>
+                                        </figure>
+
+                                        <div class="card-body">
+                                            <a href="{% url 'channel:player_view' audio.id %}" class="audio-link">
+                                                <h4 class="card-title">{{audio.titulo}}</h4></a>
+                                            <div class="card-text">
+                                                <!--Número de seguidores-->
+                                                <p class="desc-audio">{{audio.canal_proprietario.nome_canal}}</p>
+                                                <!--Número de áudios-->
+                                                <p class="desc-audio">
+                                                    <img src="/static/resources/icones/view.png" class="icon-view views"/>{{audio.reproducoes}}
+                                                </p>
+                                                <p class="desc-audio">
+                                                    {{audio.data_publicacao|date:"d/m/y"}} às {{audio.data_publicacao|date:"H:i"}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endfor%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </a>
-        </div>
-        <div class="dropdown filter" id="filter-duracao" style="right: 2.5rem;">
-            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-clock"></i>
-            <div class="dropdown-menu filter" aria-labelledby="dropdownFilter" style="margin-left: -10rem;">
-                <a class="dropdown-item filter" href="#">Curtos (- 5 min)</a>
-                <a class="dropdown-item filter" href="#">Médios (- 10 min)</a>
-                <a class="dropdown-item filter" href="#">Longos (+ 10 min)</a>
+            {% endif %}
+
+            {% if playlists_show %}
+            <!--Playlists da pesquisa-->
+            <h4 class="sub-header" id="subPlaylist">
+                <img src="/static/resources/icones/playlists.png" alt="Áudios" class="icon-header i-playlist">Playlists ({{tot_playlists}})
+                <div class="dropdown filter" id="filter-playlists">
+                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-filter"></i>
+                    <div class="dropdown-menu filter" id="caminhoPlay" indentifier="{% url 'home:ordena_play_view' pesquisa %}" aria-labelledby="dropdownFilter">
+                        <a class="dropdown-item filter opPlay" val="recentes" href="#">Mais recentes</a>
+                        <a class="dropdown-item filter opPlay" val="antigos" href="#">Mais antigos</a>
+                        <a class="dropdown-item filter opPlay" val="mais audios" href="#">Mais áudios</a>
+                    </div>
+                    </a>
+                </div>
+                <!--Esconder as playlists-->
+                <a onclick="hidePlaylists()"><i class="fas fa-angle-up show-hide" id="hidePlaylists"></i></a>
+
+                <!--Exibir as playlists-->
+                <a onclick="showPlaylists()"><i class="fas fa-angle-down show-hide" id="showPlaylists"></i></a>
+            </h4>
+
+            <div class="container-fluid" id="playlists">
+                <div class="row mt-4" id="plBox">
+                    {%for playlist in playlists_show%}
+                    <div class="col-md-6" style="margin-bottom: 1.8rem;">
+                        <div class="card">
+                            <figure class="fig-capa-audio">
+                                <img src="{{playlist.capa.url}}" style="height: 100%; border-radius: 4px 0 0;" class="card-img-top" alt="">
+                                <a href="{% url 'channel:playlist_play_view' playlist.id playlist.audios.first.id %}">
+                                    <figcaption class="fc-capa-audio">
+                                        <center>
+                                            <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                        </center>
+                                    </figcaption>
+                                </a>
+                            </figure>
+
+                            <div class="card-body info-playlist">
+                                <a href="{%url 'channel:playlist_all_view' playlist.id%}" class="audio-link"><h4 class="card-title audio-titul">{{playlist.nome}}</h4></a>
+                                <div class="card-text">
+                                    {% if not playlist.canal %}
+                                        <p class="descript-thumb">{{playlist.proprietario.username}}</p>
+                                    {% else %}
+                                        <p class="descript-thumb">{{playlist.canal.nome_canal}}</p>
+                                    {% endif %}
+                                    <p class="descript-thumb">
+                                        <img src="/static/resources/icones/disc.ico" style="width: 1rem;" rel="tooltip" class="icon-view"
+                                             data-toggle="tooltip" data-placement="bottom"
+                                             title="Áudios"/>
+                                        {{playlist.audios.count}}</p>
+                                    <p class="descript-thumb last-update"><i class="fas fa-clock" rel="tooltip"
+                                                                             data-toggle="tooltip" data-placement="bottom"
+                                                                             title="Última atualização"></i>
+                                        {{playlist.ultima_atualizacao|date:"d/m/y"}} às {{playlist.ultima_atualizacao|date:"H:i"}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 playlist">
+                            <ul class="audio-list">
+                                {%for audio in playlist.audios_apresentaveis%}
+                                <li class="audio">
+                                    <strong class="time">{{audio.duracao}}</strong>
+                                    <a href="{% url 'channel:playlist_play_view' playlist.id audio.id %}" class="titulo">
+                                        {{audio.titulo}}</a>
+                                </li>
+                                {%endfor%}
+                                <li class="playlist-more">
+                                    <center><a href="{%url 'channel:playlist_all_view' playlist.id%}" class="btn playlist-link">Ver mais</a></center>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
             </div>
-            </a>
-        </div>
+            {% endif %}
+        {% else %} <!--Foi pesquisada uma tag-->
+                {% for tag in tags_searched %}
+                <div id="{{tag.nome}}Box-{{forloop.counter}}">
+                    <!--Nome da tag-->
+                    <h4 class="sub-header" id="sub{{tag.nome}}-{{forloop.counter}}">
+                        <img src="/static/resources/icones/disc.ico" alt="Áudios" class="icon-header">#{{ tag.nome }} ({{tag.get_aparicoes}})
+                        <div class="dropdown filter" id="filter-audios-tag">
+                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-filter"></i>
+                            <div class="dropdown-menu filter" id="caminhoAudioTag" aria-labelledby="dropdownFilter">
+                                <a class="dropdown-item filter opAudio" href="#">Mais reproduzidos</a>
+                                <a class="dropdown-item filter opAudio" href="#">Melhor avaliados</a>
+                                <a class="dropdown-item filter opAudio" href="#">Recentes</a>
+                                <a class="dropdown-item filter opAudio" href="#">Antigos</a>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="dropdown filter" id="filter-duracao-audio-tag" style="right: 2.5rem;">
+                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-clock"></i>
+                            <div class="dropdown-menu filter" aria-labelledby="dropdownFilter" style="margin-left: -10rem;">
+                                <a class="dropdown-item filter" href="#">Curtos (- 5 min)</a>
+                                <a class="dropdown-item filter" href="#">Médios (- 10 min)</a>
+                                <a class="dropdown-item filter" href="#">Longos (+ 10 min)</a>
+                            </div>
+                            </a>
+                        </div>
+                    </h4>
+                    <div class="container-fluid" id="audios{{tag.nome}}-{{forloop.counter}}">
+                        <!--Esconder os áudios da tag-->
+                        <a onclick="hideAudiosTag(this.parentElement.id)"><i class="fas fa-angle-up show-hide-tags" id="hideAudiosTag"></i></a>
 
-        <!--Esconder os canais-->
-        <a onclick="hideAudios()"><i class="fas fa-angle-up show-hide" id="hideAudios"></i></a>
+                        <!--Exibir os áudios da tag-->
+                        <a onclick="showAudiosTag(this.parentElement.id)"><i class="fas fa-angle-down show-hide-tags" style="display: none;" id="showAudiosTag"></i></a>
 
-        <!--Exibir os canais-->
-        <a onclick="showAudios()"><i class="fas fa-angle-down show-hide" id="showAudios"></i></a>
-    </h4>
-    <div class="container-fluid" id="audios">
-        <div id="carouselSlider-2" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner" style="height: auto !important;margin-bottom: auto !important;">
-                <div class="carousel-item active">
-                    <div class="row canais" id="audBox">
-                        {%if audios%}
-                        {%for audio in audios%}
-                        <div class="col-12 col-sm-6 col-md-4 col-xl-3">
-                            <div class="card canal audioBox">
-                                <figure class="fig-capa-audio" id="figSA-{{forloop.counter}}"
-                                            onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
-                                    <img src="{{audio.capa.url}}" style="height: 100%;" class="card-img-top" alt="">
-                                    <div class="duration-audio">{{audio.duracao}}</div>
-                                    <a href="{% url 'channel:player_view' audio.id %}">
-                                        <figcaption class="fc-capa-audio">
-                                            <center>
-                                                <img src="/static/resources/icones/play.png" class="icon-play"/>
-                                                <div class="dropdown more">
-                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                                    <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                        {% if logado %}
-                                                        <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
-                                                        {% endif %}
+                        <div id="carouselSliderAT-2" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner" style="margin: 0 !important;height: auto !important;margin-bottom: auto !important;">
+                                <div class="carousel-item active">
+                                    <div class="row canais" id="audTagBox">
+                                        {% for audio in audios_tag_s %}
+                                            {% for tag_s in audio.tag.all %}
+                                                {% if tag_s == tag %}
+                                                <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                                                    <div class="card canal audioBox">
+                                                        <figure class="fig-capa-audio" id="fig{{audio.pk}}-{{forloop.counter}}"
+                                                                    onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
+                                                            <img src="{{audio.capa.url}}" style="height: 100%;" class="card-img-top" alt="">
+                                                            <div class="duration-audio" style="margin-top: -1.7rem;">{{audio.duracao}}</div>
+                                                            <a href="{% url 'channel:player_view' audio.id %}">
+                                                                <figcaption class="fc-capa-audio">
+                                                                    <center>
+                                                                        <img src="/static/resources/icones/play.png" class="icon-play"/>
+                                                                        <div class="dropdown more">
+                                                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
+                                                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
+                                                                                {% if logado %}
+                                                                                <a class="dropdown-item addplay" data-toggle="modal" data-target="#addPlaylist"  url_="{% url 'channel:playlist_add_view' %}"  aud_atre="{{audio.id}}">Adicionar a playlist</a>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            </a>
+                                                                        </div>
+                                                                    </center>
+                                                                </figcaption>
+                                                            </a>
+                                                        </figure>
+
+                                                        <div class="card-body">
+                                                            <a href="{% url 'channel:player_view' audio.id %}" class="audio-link">
+                                                                <h4 class="card-title">{{audio.titulo}}</h4></a>
+                                                            <div class="card-text">
+                                                                <!--Número de seguidores-->
+                                                                <p class="desc-audio">{{audio.canal_proprietario.nome_canal}}</p>
+                                                                <!--Número de áudios-->
+                                                                <p class="desc-audio">
+                                                                    <img src="/static/resources/icones/view.png" class="icon-view views"/>{{audio.reproducoes}}
+                                                                </p>
+                                                                <p class="desc-audio">
+                                                                    {{audio.data_publicacao|date:"d/m/y"}} às {{audio.data_publicacao|date:"H:i"}}
+                                                                </p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    </a>
                                                 </div>
-                                            </center>
-                                        </figcaption>
-                                    </a>
-                                </figure>
-
-                                <div class="card-body">
-                                    <a href="{% url 'channel:player_view' audio.id %}" class="audio-link">
-                                        <h4 class="card-title">{{audio.titulo}}</h4></a>
-                                    <div class="card-text">
-                                        <!--Número de seguidores-->
-                                        <p class="desc-audio">{{audio.canal_proprietario.nome_canal}}</p>
-                                        <!--Número de áudios-->
-                                        <p class="desc-audio">
-                                            <img src="/static/resources/icones/view.png" class="icon-view views"/>{{audio.reproducoes}}
-                                        </p>
-                                        <p class="desc-audio">
-                                            {{audio.data_publicacao|date:"d/m/y"}} às {{audio.data_publicacao|date:"H:i"}}
-                                        </p>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {%endfor%}
-                        {%else%}
-                        <script>
-                            document.getElementById("subAudio").style.display = "none";
-                            document.getElementById("audBox").style.display = "none";
-                            document.getElementById("audios").style.display = "none";
-                        </script>
-                        {%endif%}
                     </div>
+                {% endfor %}
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Playlists da pesquisa-->
-    <h4 class="sub-header" id="subPlaylist">
-        <img src="/static/resources/icones/playlists.png" alt="Áudios" class="icon-header i-playlist">Playlists ({{tot_playlists}})
-        <div class="dropdown filter" id="filter-playlists">
-            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-filter"></i>
-            <div class="dropdown-menu filter" id="caminhoPlay" indentifier="{% url 'home:ordena_play_view' pesquisa %}" aria-labelledby="dropdownFilter">
-                <a class="dropdown-item filter opPlay" val="recentes" href="#">Mais recentes</a>
-                <a class="dropdown-item filter opPlay" val="antigos" href="#">Mais antigos</a>
-                <a class="dropdown-item filter opPlay" val="mais audios" href="#">Mais áudios</a>
-            </div>
-            </a>
-        </div>
-        <!--Esconder as playlists-->
-        <a onclick="hidePlaylists()"><i class="fas fa-angle-up show-hide" id="hidePlaylists"></i></a>
-
-        <!--Exibir as playlists-->
-        <a onclick="showPlaylists()"><i class="fas fa-angle-down show-hide" id="showPlaylists"></i></a>
-    </h4>
-
-    <div class="container-fluid" id="playlists">
-        <div class="row mt-4" id="plBox">
-            {%if playlists_show%}
-            {%for playlist in playlists_show%}
-            <div class="col-md-6" style="margin-bottom: 1.8rem;">
-                <div class="card">
-                    <figure class="fig-capa-audio">
-                        <img src="{{playlist.capa.url}}" style="height: 100%; border-radius: 4px 0 0;" class="card-img-top" alt="">
-                        <a href="{% url 'channel:playlist_play_view' playlist.id playlist.audios.first.id %}">
-                            <figcaption class="fc-capa-audio">
-                                <center>
-                                    <img src="/static/resources/icones/play.png" class="icon-play"/>
-                                </center>
-                            </figcaption>
-                        </a>
-                    </figure>
-
-                    <div class="card-body info-playlist">
-                        <a href="{%url 'channel:playlist_all_view' playlist.id%}" class="audio-link"><h4 class="card-title audio-titul">{{playlist.nome}}</h4></a>
-                        <div class="card-text">
-                            {% if not playlist.canal %}
-                                <p class="descript-thumb">{{playlist.proprietario.username}}</p>
-                            {% else %}
-                                <p class="descript-thumb">{{playlist.canal.nome_canal}}</p>
-                            {% endif %}
-                            <p class="descript-thumb">
-                                <img src="/static/resources/icones/disc.ico" style="width: 1rem;" rel="tooltip" class="icon-view"
-                                     data-toggle="tooltip" data-placement="bottom"
-                                     title="Áudios"/>
-                                {{playlist.audios.count}}</p>
-                            <p class="descript-thumb last-update"><i class="fas fa-clock" rel="tooltip"
-                                                                     data-toggle="tooltip" data-placement="bottom"
-                                                                     title="Última atualização"></i>
-                                {{playlist.ultima_atualizacao|date:"d/m/y"}} às {{playlist.ultima_atualizacao|date:"H:i"}}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 playlist">
-                    <ul class="audio-list">
-                        {%for audio in playlist.audios_apresentaveis%}
-                        <li class="audio">
-                            <strong class="time">{{audio.duracao}}</strong>
-                            <a href="{% url 'channel:playlist_play_view' playlist.id audio.id %}" class="titulo">
-                                {{audio.titulo}}</a>
-                        </li>
-                        {%endfor%}
-                        <li class="playlist-more">
-                            <center><a href="{%url 'channel:playlist_all_view' playlist.id%}" class="btn playlist-link">Ver mais</a></center>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-         {%endfor%}
-            {%else%}
-            <script>
-                document.getElementById("subPlaylist").style.display = "none";
-                document.getElementById("plBox").style.display = "none";
-                document.getElementById("playlists").style.display = "none";
-            </script>
-            {%endif%}
-        </div>
-    </div>
+        {% endif %}
+    {% endif %}
 {% endblock %}
