@@ -438,6 +438,8 @@ def follow(request, id):
 def playlist_all(request, id):
     contexto = {}
 
+    play = Playlist.objects.get(pk=id)
+
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
@@ -457,10 +459,15 @@ def playlist_all(request, id):
         contexto['ntfs_audios'] = ntfs_audios
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
         contexto['audios_favoritos'] = fav.all()
+        for playlist in contexto['play_side']:
+            if playlist.copia == play.pk:
+                contexto['playlist_copia'] = playlist.pk
+            else:
+                contexto['playlist_copia'] = False
 
     contexto['form'] = PlaylistForm()
     contexto['capa_form'] = capaForm()
-    play = Playlist.objects.get(pk=id)
+
     if request.method == 'POST':
         contexto['dados_retornados'] = PlaylistForm(request.POST, instance=request.user)
         contexto['capa_retornada'] = capaForm(request.POST, request.FILES, instance=request.user)
@@ -497,6 +504,31 @@ def playlist_all(request, id):
     contexto['playlist'].save()
     contexto['logado'] = request.user.is_active
     return render(request, './channel/playlist_all.html', contexto)
+
+
+# View para salvar uma cópia da playlist de alguém
+def save_playlist(request, playlist_id):
+    playlist_origin = Playlist.objects.get(pk=playlist_id)
+    playlist = Playlist.objects.create(
+        nome=playlist_origin.nome, proprietario=request.user, copia=playlist_id,
+        ultima_atualizacao=playlist_origin.ultima_atualizacao, capa=playlist_origin.capa,
+        descricao=playlist_origin.descricao, numero_de_audios=playlist_origin.numero_de_audios, reproducoes=0
+    )
+
+    for audio in playlist_origin.audios.all():
+        playlist.audios.add(audio)
+
+    playlist.save()
+    message = "Playlist salva"
+    return JsonResponse({'message': message, 'playlist_id': playlist.pk})
+
+
+# View para excluir uma playlist
+def delete_playlist(request, playlist_id):
+    playlist = Playlist.objects.get(pk=playlist_id)
+    playlist.delete()
+
+    return JsonResponse({'message': "A playlist foi excluída"})
 
 
 def del_audio_pl(request, playlist_id, audio_id):

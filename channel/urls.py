@@ -21,6 +21,8 @@ urlpatterns = [
     # De playlist
     path("playlist_search/<int:canal_id>", search_playlists, name='search_playlists_view'),
     path("playlist_all/<int:id>", playlist_all, name='playlist_all_view'),
+    path("playlist_save/<int:playlist_id>", save_playlist, name='save_pl_view'),
+    path("playlist_delete/<int:playlist_id>", delete_playlist, name='delete_pl_view'),
     path("playlist_play/<int:id>/<int:id_audio>", playlist_play, name='playlist_play_view'),
     path("playlist_load_modal", playlist_load_modal, name='playlist_add_view'),
     path("playlist_add_audio", playlist_add),

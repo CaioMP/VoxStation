@@ -124,6 +124,7 @@ class Playlist(models.Model):
     descricao = models.TextField(default=None, blank=True, null=True)
     numero_de_audios = models.IntegerField(default=1)
     reproducoes = models.IntegerField(default=0)
+    copia = models.IntegerField(default=0, blank=True)  # Caso a playlist tenha sido salva de outro usuário
 
     def __str__(self):
         return self.nome

@@ -23,3 +23,8 @@ function hideDescription() {
     document.getElementById('hideDescription').style.display = "none";
     document.getElementById('showDescription').style.display = "block";
 }
+
+
+function savePlaylist() {
+    $("#formSavePl").submit();
+}

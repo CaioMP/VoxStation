@@ -407,6 +407,37 @@
         </div>
     </div>
 
+    {% if playlist %}
+    <!--Modal para deletar playlists-->
+    <div class="modal fade" id="deletePlaylist">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 1.2rem;">
+                    <h4 class="modal-title">Confirme sua ação</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form method="POST" id="formDeletePl" action="{% url 'channel:delete_pl_view' playlist.id %}">{% csrf_token %}
+                    <div class="modal-body" style="padding: 1.2rem;">
+                        <h5>Tem certeza que deseja remover {{playlist.nome}}?</h5>
+                        <input type="hidden" id="{{remove_form.remove.id_for_label}}" name="{{remove_form.remove.name}}">
+                        <input type="hidden" id="{{remove_form.audio_removido.id_for_label}}"
+                               name="{{remove_form.audio_removido.name}}">
+                    </div>
+                    <div class="modal-footer" style="padding-bottom: 1.5rem; margin-bottom: -1rem;">
+                        <button class="btn btn-cancel cn-remove" data-dismiss="modal">
+                            <strong class="save-strong">Cancelar</strong>
+                        </button>
+
+                        <button class="btn btn-add" type="submit">
+                            <strong class="save-strong">Remover</strong>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <nav class="navbar navbar-expand-sm navbar-light fixed-top" id="navbar">
         <div class="nav-left">
             {% if logado %}
@@ -556,6 +587,7 @@
             </li>
             <li>
                 <a href="{% url 'account:historic' %}"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
+                {% if play_side %}
                 <a href="#pageSubmenu" aria-expanded="true">
                     <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
                 <ul class="list-unstyled" id="pageSubmenu">
@@ -565,7 +597,9 @@
                     </li>
                     {%endfor%}
                 </ul>
+                {% endif %}
             </li>
+            {% if canal_side.exists %}
             <li><br/>
                 <a href="#pageSubchannel" aria-expanded="true"><img class="icon-left" src="/static/resources/icones/channel.png">Canais</a>
                 <ul class="list-unstyled" id="pageSubchannel">
@@ -576,6 +610,7 @@
                     {%endfor%}
                 </ul>
             </li>
+            {% endif %}
         </ul>
     </nav>
     {% else %}

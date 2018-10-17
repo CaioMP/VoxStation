@@ -652,6 +652,8 @@
             </li>
             <li>
                 <a href="{% url 'home:index' %}"><img class="icon-left" src="/static/resources/icones/historic.png">Histórico</a>
+
+                {% if play_side.exists %}
                 <a href="#pageSubmenu" aria-expanded="true">
                     <img class="icon-left" src="/static/resources/icones/playlists.png">Playlists</a>
                 <ul class="list-unstyled" id="pageSubmenu">
@@ -661,7 +663,10 @@
                     </li>
                     {%endfor%}
                 </ul>
+                {% endif %}
             </li>
+
+            {% if canal_side %}
             <li><br/>
                 <a href="#pageSubchannel" aria-expanded="true"><img class="icon-left" src="/static/resources/icones/channel.png">Canais</a>
                 <ul class="list-unstyled" id="pageSubchannel">
@@ -672,6 +677,7 @@
                     {%endfor%}
                 </ul>
             </li>
+            {% endif %}
         </ul>
     </nav>
     {% endif %}

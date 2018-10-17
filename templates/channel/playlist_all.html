@@ -9,6 +9,8 @@
     <script src="{% static 'channel/js/play_edit.js' %}"></script>
     <script src="{% static 'channel/js/del_audio_pl.js' %}"></script>
     <script src="{% static 'channel/js/vincula_play.js' %}"></script>
+    <script src="{% static 'channel/js/save_playlist.js' %}"></script>
+    <script src="{% static 'channel/js/delete_playlist.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -29,14 +31,30 @@
                     </span>
                     {%endif%}
                 {%endif%}
-                <a href="#" onclick="verificaLogado('{{logado}}')" class="icon-pl" rel="tooltip" data-toggle="tooltip"
-                   data-placement="bottom" title="Salvar playlist">
+                <!--Salvar playlist-->
+                <a onclick="verificaLogado('{{logado}}'); savePlaylist();" class="icon-pl" rel="tooltip" data-toggle="tooltip"
+                   data-placement="bottom" title="Salvar playlist" id="save-playlist"
+                {% if user == playlist.proprietario or playlist_copia%} style="display: none;" {% endif %}>
                     <img src="/static/resources/icones/playlist_add.png" alt="salvar playlist" class="icon-playlist">
-                </a> <!--Salvar playlist-->
-                <!-- Aparecer esse icone caso o dono da playlist queira deletá-la
-                <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_delete.png" alt="excluir playlist" class="icon-playlist delete"></a>
-                <!-- Aparecer esse icone caso o usuário visitante tenha salvo a playlist
-                <a href="#" class="mr-3"><img src="/static/resources/icones/playlist_add_check.png" alt="remover playlist" class="icon-playlist"></a>-->
+                </a>
+
+                <form class="d-none" method="POST" id="formSavePl" action="{% url 'channel:save_pl_view' playlist.id %}">
+                    {% csrf_token %}</form>
+
+                <!--Deletar playlist-->
+                <span id="delete-playlist" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Excluir playlist"
+                {% if user == playlist.proprietario %} style="display: block;" {% endif %}>
+                    <a data-target="#deletePlaylist" data-toggle="modal" onclick="verificaLogado('{{logado}}')" class="mr-3">
+                        <img src="/static/resources/icones/playlist_delete.png" alt="excluir playlist" class="icon-playlist delete-pl">
+                    </a>
+                </span>
+
+                <!--Caso já tenha salvo a playlist-->
+                <a {% if playlist_copia %} href="{% url 'channel:playlist_all_view' playlist_copia %}" {% endif %}
+                   onclick="verificaLogado('{{logado}}')" class="icon-pl mr-3" id="uncheck-playlist"
+                   rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Playlist salva"
+                   {% if playlist_copia %} style="display: block;" {% endif %}>
+                    <img style="height: 31px;margin-top: -4px;" src="/static/resources/icones/playlist_add_check.png" alt="remover playlist" class="icon-playlist"></a>
 
                 <a href="#" class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Reproduzir aleatoriamente">
                     <img src="/static/resources/icones/random.png" alt="reproduzir aleatoriamente" class="icon-playlist random">
@@ -78,7 +96,7 @@
                          title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
-                            <div class="dropdown-menu dm-visibility" aria-labelledby="dropdownVisibility">
+                            <div class="dropdown-menu dm-visibility" style="padding: 0;background-color: transparent;border: hidden;min-width: 22px;" aria-labelledby="dropdownVisibility">
                                 <a class="dropdown-item di-visibility" href="#">
                                     <img src="/static/resources/icones/private.png" style="margin-top: 2px;" class="icon-visibility"/> <!--Playlist privada-->
                                 </a>

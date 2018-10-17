@@ -3,6 +3,25 @@ body {
     overflow: auto;
 }
 
+.wrapper {
+    overflow: -webkit-paged-x;
+}
+
+a#uncheck-playlist {
+    display: none;
+}
+
+span#delete-playlist {
+    display: none;
+    height: 22px;
+}
+
+.delete-pl {
+    margin-bottom: 15px;
+    margin-top: -4px !important;
+    width: 28px !important;
+}
+
 .infoBox {
     min-height: 17.5rem;
     margin-top: 4.6rem;
@@ -255,13 +274,6 @@ a#salvarVinculo {
     width: 22px;
 }
 
-.dm-visibility.show {
-    padding: 0;
-    background-color: transparent;
-    border: hidden;
-    min-width: 22px;
-}
-
 .di-visibility {
     padding: 4px 0;
 }
@@ -486,7 +498,7 @@ input[type='radio']:hover:after {
     }
 
     h3#play_titul {
-        margin-top: 4rem;
+        margin-top: 3.5rem;
     }
 
     .icon-pl {
