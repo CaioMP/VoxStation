@@ -58,11 +58,6 @@ div#nenhuma-rede-social {
     display: block;
 }
 
-.fa-redes-sociais {
-    font-size: 5rem !important;
-    cursor: pointer;
-}
-
 .fa-google-plus-g {
     font-size: 4.5rem;
     color: #dc4e41;
@@ -452,10 +447,6 @@ a#edit_info {
 
     .mdc-redes-sociais {
         position: relative;
-    }
-
-    .fa-redes-sociais {
-        font-size: 4rem !important;
     }
 
     .fa-google-plus-g {

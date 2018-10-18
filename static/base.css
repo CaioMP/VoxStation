@@ -20,6 +20,11 @@ body {
     transition: .5s;
 }
 
+.fa-redes-sociais {
+    font-size: 5rem !important;
+    cursor: pointer;
+}
+
 button#closeSignup {
     position: absolute;
     right: 2rem;
@@ -398,6 +403,10 @@ i.fas.fa-bell {
 @media only screen and (max-width: 475px) {
     button#closeSignup {
         right: 1.5rem;
+    }
+
+    .fa-redes-sociais {
+        font-size: 4rem !important;
     }
 
     #reportAudio .has-float-label input:placeholder-shown:not(:focus)+*,

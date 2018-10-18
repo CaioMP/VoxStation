@@ -56,13 +56,22 @@
                    {% if playlist_copia %} style="display: block;" {% endif %}>
                     <img style="height: 31px;margin-top: -4px;" src="/static/resources/icones/playlist_add_check.png" alt="remover playlist" class="icon-playlist"></a>
 
-                <a href="#" class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Reproduzir aleatoriamente">
-                    <img src="/static/resources/icones/random.png" alt="reproduzir aleatoriamente" class="icon-playlist random">
-                </a><!--Reproduzir aleatoriamente-->
+                <label for="submitRandomForm" id="submit_form_random">
+                    <a class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Reproduzir aleatoriamente">
+                        <img src="/static/resources/icones/random.png" alt="reproduzir aleatoriamente" class="icon-playlist random">
+                    </a><!--Reproduzir aleatoriamente-->
+                </label>
 
-                <a href="#" class="icon-pl" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Compartilhar playlist">
-                    <i class="fas fa-share"></i>
-                </a><!--Compartilhar playlist-->
+                <form class="d-none" method="POST" action="{% url 'channel:random_playlist_all_view' playlist.id %}" id="playRandomForm">
+                    {% csrf_token %}
+                    <button type="submit" id="submitRandomForm"></button>
+                </form>
+
+                <span style="cursor:pointer;" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="Compartilhar playlist">
+                    <a class="icon-pl" data-target="#sharePlaylist" data-toggle="modal">
+                        <i class="fas fa-share"></i>
+                    </a><!--Compartilhar playlist-->
+                </span>
 
                 <!--Vincular a um canal-->
                 {% if logado %}
@@ -96,7 +105,7 @@
                          title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
-                            <div class="dropdown-menu dm-visibility" style="padding: 0;background-color: transparent;border: hidden;min-width: 22px;" aria-labelledby="dropdownVisibility">
+                            <div class="dropdown-menu dm-visibility" style="padding: 0;background-color: transparent;border: hidden;min-width: 34px;" aria-labelledby="dropdownVisibility">
                                 <a class="dropdown-item di-visibility" href="#">
                                     <img src="/static/resources/icones/private.png" style="margin-top: 2px;" class="icon-visibility"/> <!--Playlist privada-->
                                 </a>

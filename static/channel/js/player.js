@@ -32,18 +32,6 @@ $(document).ready(function() {
     });
 });
 
-function copyLink() {
-    var copyText = document.getElementById("linkAudio");
-    copyText.select();
-    document.execCommand('copy');
-    document.getElementById("alert-copy").style.visibility = "visible";
-    document.getElementById("alert-copy").style.opacity = "1";
-    window.setTimeout(function() {
-        document.getElementById("alert-copy").style.opacity = "0";
-        document.getElementById("alert-copy").style.visibility = "hidden";
-    }, 1800);
-}
-
 function descartarAudio() {
     document.getElementById('id_conteudo').value = "";
 }

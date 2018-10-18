@@ -309,6 +309,21 @@ def playlist_play(request, id, id_audio):
     return render(request, './channel/playlist_play.html', context)
 
 
+def random_playlist_all(request, playlist_id):
+    playlist = Playlist.objects.get(pk=playlist_id)
+    ordem = "randomize"
+    audios = []
+
+    for audio in playlist.audios.all():
+        audios.append(audio)
+    random.shuffle(audios)
+
+    response = redirect('/channel/playlist_play/' + str(playlist_id) + '/' + str(audios[0].pk))
+    response.set_cookie("randomize", ordem)
+
+    return response
+
+
 def comentar(request, audio_id):
     audio = Audio.objects.get(pk=audio_id)
 

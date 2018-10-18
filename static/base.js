@@ -57,6 +57,18 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
+function copyLink(parentElement) {
+    var copyText = document.getElementById(parentElement).getElementsByClassName("copy")[0];
+    copyText.select();
+    document.execCommand('copy');
+    document.getElementById("alert-copy").style.visibility = "visible";
+    document.getElementById("alert-copy").style.opacity = "1";
+    window.setTimeout(function() {
+        document.getElementById("alert-copy").style.opacity = "0";
+        document.getElementById("alert-copy").style.visibility = "hidden";
+    }, 1800);
+}
+
 function verificaLogado(logado) {
     if (logado == "False"){
         window.location.href = "/login/";
