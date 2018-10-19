@@ -1,5 +1,22 @@
-from channel.models import Audio
+from channel.models import *
 from channel.process import get_tags, ordena_pra_exibicao
+
+
+def checkVisib(playlists=False, audios=False):
+    if playlists:
+        playlists_public = []
+
+        for playlist in playlists.all():
+            if playlist.visibilidade != 'privado':
+                playlists_public.append(playlist)
+        return playlists_public
+    if audios:
+        audios_public = []
+
+        for audio in audios.all():
+            if audio.visibilidade != 'privado':
+                audios_public.append(audio)
+        return audios_public
 
 
 def orderAudios(canais):
@@ -7,10 +24,32 @@ def orderAudios(canais):
     for canal in canais:
         audio = Audio.objects.filter(canal_proprietario=canal)
         if audio.exists():
-            canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao')[:4]
-            canal.playlist2 = Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao')[4:8]
+            canal.playlist1 = checkVisib(Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao'))[:4]
+            canal.playlist2 = checkVisib(Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao'))[4:8]
             canalF.append(canal)
     return canalF
+
+
+def searchclear(search, canal):
+    audios = checkVisib(audios=Audio.objects.filter(titulo__contains=search, canal_proprietario=canal))
+    if audios:
+        audios_list = []
+        for audio in audios:
+            audios_list.append(str(audio.pk))
+        return audios_list
+    else:
+        return False
+
+
+def searchclear_playlists(search, canal):
+    playlists = checkVisib(playlists=Playlist.objects.filter(nome__contains=search, canal=canal))
+    if playlists:
+        playlist_list = []
+        for playlist in playlists:
+            playlist_list.append(str(playlist.pk))
+        return playlist_list
+    else:
+        return False
 
 
 def checkExist(objeto):
@@ -30,20 +69,20 @@ def contaSeg(canais):
 
 def contaResultados(canais, audios, playlists):
 
-    if audios!= False:
-        num_audios = audios.count()
+    if audios:
+        num_audios = len(audios)
     else:
         num_audios = 0
-    if playlists != False:
-        num_playlists = playlists.count()
+    if playlists:
+        num_playlists = len(playlists)
     else:
         num_playlists = 0
-    if canais != False:
+    if canais:
         num_canais = canais.count()
     else:
         num_canais = 0
 
-    total = num_canais+num_audios+num_playlists
+    total = num_canais + num_audios + num_playlists
 
     return total, num_playlists, num_audios, num_canais
 

@@ -34,7 +34,7 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="row mt-4">
-                            {%for audio in chan.playlist1%}
+                            {% for audio in chan_audios|slice:":4" %}
                             <div class="col-md-3">
                                 <div class="card">
                                     <a href="{% url 'channel:player_view' audio.id %}">
@@ -72,13 +72,13 @@
                                     </div>
                                 </div>
                             </div>
-                            {%endfor%}
+                            {% endfor %}
                         </div>
                     </div>
-                    {% if chan.playlist2 %}
+                    {% if chan|slice:"4:8" %}
                     <div class="carousel-item">
                         <div class="row mt-4">
-                            {%for audio in chan.playlist2%}
+                            {% for audio in chan_audios|slice:"4:8" %}
                             <div class="col-md-3">
                                 <div class="card">
                                     <a href="{% url 'channel:player_view' audio.id %}">
@@ -116,12 +116,12 @@
                                     </div>
                                 </div>
                             </div>
-                            {%endfor%}
+                            {% endfor %}
                         </div>
                     </div>
                     {% endif %}
                 </div>
-                {% if chan.playlist2 %}
+                {% if chan_audios|slice:"4:8" %}
                 <a href="#carouselSlider-{{forloop.counter}}" class="carousel-control-prev" role="button" data-slide="prev">
                     <img src="/static/resources/icones/prev.png" class="slideIcos" alt="">
                 </a>
@@ -136,7 +136,7 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row mt-4">
-                        {%for audios in audios_popular.playlist1%}
+                        {% for audios in audios_popular|slice:":4" %}
                         <div class="col-md-3">
                             <div class="card">
                                 <a href="{% url 'channel:player_view' audios.id %}">
@@ -174,13 +174,13 @@
                                 </div>
                             </div>
                         </div>
-                        {%endfor%}
+                        {% endfor %}
                     </div>
                 </div>
-                {% if audios_popular.playlist2 %}
+                {% if audios_popular|slice:"4:8" %}
                 <div class="carousel-item">
                     <div class="row mt-4">
-                        {%for audios in audios_popular.playlist2%}
+                        {% for audios in audios_popular|slice:"4:8" %}
                         <div class="col-md-3">
                             <div class="card">
                                 <a href="{% url 'channel:player_view' audios.id %}">
@@ -218,12 +218,12 @@
                                 </div>
                             </div>
                         </div>
-                        {%endfor%}
+                        {% endfor %}
                     </div>
                 </div>
                 {% endif %}
             </div>
-            {% if chan.playlist2 %}
+            {% if audios_popular|slice:"4:8" %}
             <a href="#carouselSliderMostPopular-{{forloop.counter}}" class="carousel-control-prev" role="button" data-slide="prev">
                 <img src="/static/resources/icones/prev.png" class="slideIcos" alt="">
             </a>
@@ -261,6 +261,7 @@
                                     <figcaption class="fc-capa-audio">
                                         <center>
                                             <a href="#"><img src="/static/resources/icones/play.png" class="icon-play"/></a>
+                                            {% if audio.visibilidade != 'privado' %}
                                             <div class="dropdown more">
                                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <img src="/static/resources/icones/more.png" class="icon-more"/>
@@ -269,6 +270,12 @@
                                                 </div>
                                                 </a>
                                             </div>
+                                            {% else %}
+                                            <!--Áudio privado-->
+                                            <a href="{% url 'channel:player_view' audio.id %}">
+                                                <img src="/static/resources/icones/private-card.png" class="icon-more private"/>
+                                            </a>
+                                            {% endif %}
                                         </center>
                                     </figcaption>
                                 </figure>
@@ -321,6 +328,12 @@
                                 <figure class="fig-capa-audio">
                                     <img src="{{playlist.capa.url}}" class="card-img-top pl-capa" alt="capa de {{playlist.nome}}">
                                     <figcaption class="fc-capa-audio fig-cap-pl">
+                                        <!--Playlist privada-->
+                                        {% if playlist.visibilidade == 'privado' %}
+                                            <a href="{% url 'channel:playlist_play_view' playlist.id playlist.audios.first.id %}">
+                                                <img src="/static/resources/icones/private-card.png" class="icon-more private"/>
+                                            </a>
+                                        {% endif %}
                                         <center>
                                             <img src="/static/resources/icones/play.png" class="icon-play play-pl"/>
                                         </center>
@@ -403,7 +416,7 @@
                     </p>
                     <p class="descricao mb-3">
                         <!--Colocar o número de áudios do canal-->
-                        <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon">{{audios.count}}
+                        <img src="/static/resources/icones/disc.ico" alt="número de áudios" class="icon">{{num_audios}}
                     </p>
                     <p class="descricao mb-3">
                         <img src="/static/resources/icones/view.png" alt="reproduções" class="icon">{{reproducoes_tot}}

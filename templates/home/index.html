@@ -317,7 +317,7 @@
                                 </div>
                                 <div class="col-md-6 playlist">
                                     <ul class="audio-list">
-                                       {% for audiop2 in playp2.audios.all|slice:":4" %}
+                                        {% for audiop2 in playp2.audios.all|slice:":4" %}
                                         <li class="audio">
                                             <strong class="time">{{ audiop2.duracao }}</strong>
                                             <a href="{% url 'channel:playlist_play_view' playp2.id audiop2.id %}"

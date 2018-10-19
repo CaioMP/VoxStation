@@ -170,6 +170,9 @@ def edit_profile(request):
         auxform = AuxForm(instance=request.user)
 
     ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+    for audio_notific in ntfs_audios.all():
+        if audio_notific.audio.visibilidade == 'privado':
+            audio_notific.delete()
     notifications = 0
     new_notific = 0
 
@@ -180,6 +183,9 @@ def edit_profile(request):
             notifications += 1
 
     fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+    for audio_fav in fav.all():
+        if audio_fav.Audio_feed.visibilidade == 'privado':
+            audio_fav.delete()
 
     context = {"basicform": basicform, "profileform": profileform, "auxform": auxform, "footer": footer, "logado": request.user.is_active,
                "has_error": has_error, "edited": edited, "edited_password": edited_password, "user": request.user,
@@ -231,6 +237,9 @@ def change_password(request):
                 new_password2 = ''
 
             ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+            for audio_notific in ntfs_audios.all():
+                if audio_notific.audio.visibilidade == 'privado':
+                    audio_notific.delete()
             notifications = 0
             new_notific = 0
 
@@ -241,6 +250,9 @@ def change_password(request):
                     notifications += 1
 
             fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+            for audio_fav in fav.all():
+                if audio_fav.Audio_feed.visibilidade == 'privado':
+                    audio_fav.delete()
 
             context = {'form': form, 'old_password': old_password, 'logado': request.user.is_active, 'ntfs_audios': ntfs_audios,
                        'notifications': notifications, 'new_password1': new_password1, 'new_password2': new_password2,
@@ -253,7 +265,13 @@ def change_password(request):
         form = ChangePasswordForm(request.user)
 
     fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+    for audio_fav in fav.all():
+        if audio_fav.Audio_feed.visibilidade == 'privado':
+            audio_fav.delete()
     ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+    for audio_notific in ntfs_audios.all():
+        if audio_notific.audio.visibilidade == 'privado':
+            audio_notific.delete()
     notifications = 0
 
     if ntfs_audios.exists():
@@ -289,6 +307,9 @@ def NewChannelView(request):
             form = NewChannelForm()
 
     ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+    for audio_notific in ntfs_audios.all():
+        if audio_notific.audio.visibilidade == 'privado':
+            audio_notific.delete()
     notifications = 0
     new_notific = 0
 
@@ -299,6 +320,9 @@ def NewChannelView(request):
             notifications += 1
 
     fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+    for audio_fav in fav.all():
+        if audio_fav.Audio_feed.visibilidade == 'privado':
+            audio_fav.delete()
 
     context = {'form': form, 'error_nome_canal': error_nome_canal, 'nome_canal': nome_canal, 'ntfs_audios': ntfs_audios,
                'user': request.user, 'logado': request.user.is_active, 'notifications': notifications, "canal_side": canais_side,
@@ -321,6 +345,9 @@ def historic(request):
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -333,6 +360,9 @@ def historic(request):
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
     contexto['logado'] = request.user.is_active
     return render(request, './account/historic.html', contexto)
@@ -343,10 +373,16 @@ def favorites(request):
 
     if request.user.is_active:
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -359,6 +395,9 @@ def favorites(request):
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
     contexto['logado'] = request.user.is_active
     return render(request, './account/favorites.html', contexto)

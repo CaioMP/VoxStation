@@ -215,6 +215,12 @@
                                 <img src="{{playlist.capa.url}}" style="height: 100%; border-radius: 4px 0 0;" class="card-img-top" alt="">
                                 <a href="{% url 'channel:playlist_play_view' playlist.id playlist.audios.first.id %}">
                                     <figcaption class="fc-capa-audio">
+                                        <!--Playlist privada-->
+                                        {% if playlist.visibilidade == 'privado' %}
+                                            <a href="{% url 'channel:playlist_play_view' playlist.id playlist.audios.first.id %}">
+                                                <img src="/static/resources/icones/private-card.png" class="icon-more private"/>
+                                            </a>
+                                        {% endif %}
                                         <center>
                                             <img src="/static/resources/icones/play.png" class="icon-play"/>
                                         </center>

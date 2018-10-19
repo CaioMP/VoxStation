@@ -105,7 +105,7 @@
                         <span class="spanPlaylist">Visibilidade</span>
                         <select name="visibilidade" class="selectPlaylist">
                             <option selected="selected" value="publico">Público</option>
-                            <option value="privada">Privado</option>
+                            <option value="privado">Privado</option>
                         </select><br>
 
                         <!--Caso o usuário tenha canais em sua conta criar esse select-->
@@ -287,7 +287,7 @@
     {% endfor %}
 
 
-    <!--Modal para edição do nome, descrição e tags de áudios-->
+    <!--Modal para edição da visibilidade, nome, descrição e tags de áudios-->
     {% for audio in audios %}
     <div class="modal fade" id="editAudio-{{audio.pk}}">
         <div class="modal-dialog modal-dialog-centered">
@@ -299,6 +299,17 @@
                 <form method="POST" action="{% url 'channel:edit_audio_view' audio.id chan.id %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="modal-body" style="padding: 1.2rem;">
+                        <!--Visibilidade-->
+                        <span class="myspan d-block" style="font-size: 85%;height: 3.2rem;margin-bottom: .8rem;">
+                            Visibilidade
+                            <label for="id_visibilidade" class="d-block" style="width: 8rem;">
+                                <select style="max-width: 8rem;" class="select-channel" name="{{audios_edit.visibilidade.name}}" id="{{audios_edit.visibilidade.id_for_label}}">
+                                    <option {% if audio.visibilidade == 'publico' %} selected="selected" {% endif %} value="publico">Público</option>
+                                    <option {% if audio.visibilidade == 'privado' %} selected="selected" {% endif %} value="privado">Privado</option>
+                                </select>
+                            </label>
+                        </span>
+
                         <label class="has-float-label" style="height: 45px;">
                             <input name="titulo" id="titulo" name="{{audios_edit.titulo.name}}" type="text" maxlength="150" placeholder="Nome do áudio" value="{{audio.titulo}}"
                                    style="margin-bottom: 1rem;" required=""/>

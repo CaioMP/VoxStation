@@ -45,6 +45,13 @@ div#sideFade {
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
 }
 
+.icon-more.private {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    opacity: .9;
+}
+
 .duration-audio {
     position: absolute;
     right: 0;
@@ -442,5 +449,12 @@ i.fas.fa-bell {
 
     .modal {
         padding-right: 0 !important;
+    }
+}
+
+@media only screen and (max-width: 414px){
+    .icon-more.private {
+        top: 1.5rem;
+        right: 1.5rem;
     }
 }

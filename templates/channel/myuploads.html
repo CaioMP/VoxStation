@@ -61,6 +61,17 @@
                     <h6 id="nameAudio" class="error">{% if error_audio %}Selecione um áudio{% endif %}</h6>
                 </div>
 
+                <!--Visibilidade-->
+                <span class="myspan d-block">
+                    Visibilidade
+                    <label for="id_visibilidade" class="d-block">
+                        <select style="max-width: 8rem;" class="select-channel" name="{{form.visibilidade.name}}" id="{{form.visibilidade.id_for_label}}">
+                            <option value="publico">Público</option>
+                            <option value="privado">Privado</option>
+                        </select>
+                    </label>
+                </span><br>
+
                 <!--Titúlo do áudio-->
                 {% if not titulo %}
                 <label class="has-float-label" style="margin-top: -.5rem;">
@@ -91,7 +102,6 @@
                 {% endif %}
 
                 <!--Tags do áudio-->
-
                 {% if not tags %}
                 <label for="id_text" class="has-float-label" style="margin-bottom: 5px;">
                     <textarea name="{{ tagform.text.name }}" id="{{ tagform.text.id_for_label }}" placeholder="Tags"

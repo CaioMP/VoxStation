@@ -67,44 +67,6 @@ def get_n_comentarios(comentarios, respostas):
     return n_comentarios
 
 
-def getaudios(canal):
-
-    canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao')[:4]
-    canal.playlist2 = Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao')[4:8]
-
-    return canal
-
-
-def getpopulars(canal):
-
-    canal.playlist1 = Audio.objects.filter(canal_proprietario=canal).order_by('-reproducoes')[:4]
-    canal.playlist2 = Audio.objects.filter(canal_proprietario=canal).order_by('-reproducoes')[4:8]
-
-    return canal
-
-
-def searchclear(search, canal):
-    audios = Audio.objects.filter(titulo__contains=search, canal_proprietario=canal)
-    if audios.exists():
-        audios_list = []
-        for audio in audios:
-            audios_list.append(str(audio.pk))
-        return audios_list
-    else:
-        return False
-
-
-def searchclear_playlists(search, canal):
-    playlists = Playlist.objects.filter(nome__contains=search, canal=canal)
-    if playlists.exists():
-        playlist_list = []
-        for playlist in playlists:
-            playlist_list.append(str(playlist.pk))
-        return playlist_list
-    else:
-        return False
-
-
 def get_status_channel(audios, op='reproducoes'):
     tot = 0
     if op == 'likes':
@@ -286,8 +248,6 @@ def setOrdemAudios(audios):
                         </div>
                     </div>'''.format(audio.capa.url, audio.titulo, audio.canal_proprietario, audio.reproducoes, audio.data_publicacao.strftime('%d/%m/%y as %H:%M'))
     return html
-
-
 
 
 def setOrdemPlaylists(playlists):

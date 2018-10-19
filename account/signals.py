@@ -11,21 +11,22 @@ User = get_user_model()
 @receiver(post_save, sender=Audio)
 def announce_new_audio(sender, instance, created, **kwargs):
     if created:
-        channel_layer = get_channel_layer()
+        if instance.visibilidade != 'privado':
+            channel_layer = get_channel_layer()
 
-        df = DateFormat(instance.data_publicacao)
-        data = df.format('d/m/y ') + "às " + df.format('H:i')
-        link = str("/channel/audio/" + str(instance.pk))
+            df = DateFormat(instance.data_publicacao)
+            data = df.format('d/m/y ') + "às " + df.format('H:i')
+            link = str("/channel/audio/" + str(instance.pk))
 
-        async_to_sync(channel_layer.group_send)(
-            "notific", {
-                "type": "user.notific",
-                "event": "New Audio",
-                "link": link,
-                "titulo": instance.titulo,
-                "data": data,
-                "canal": instance.canal_proprietario.foto_canal.url,
-                "capa": instance.capa.url,
-                "id_canal": instance.canal_proprietario.pk
-            }
-        )
+            async_to_sync(channel_layer.group_send)(
+                "notific", {
+                    "type": "user.notific",
+                    "event": "New Audio",
+                    "link": link,
+                    "titulo": instance.titulo,
+                    "data": data,
+                    "canal": instance.canal_proprietario.foto_canal.url,
+                    "capa": instance.capa.url,
+                    "id_canal": instance.canal_proprietario.pk
+                }
+            )

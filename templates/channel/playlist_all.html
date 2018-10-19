@@ -104,11 +104,21 @@
                     <div class="dropdown visibility mr-3" rel="tooltip" data-toggle="tooltip" data-placement="right"
                          title="Visibilidade da playlist" style="margin: 0 .25rem;"> <!--Visibilidade da playlist-->
                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
+                            {% if playlist.visibilidade != 'privado' %}
+                                <img src="/static/resources/icones/public.png" class="icon-visibility"/> <!--Playlist pública-->
+                            {% else %}
+                                <img src="/static/resources/icones/private.png" class="icon-visibility"/> <!--Playlist privada-->
+                            {% endif %}
                             <div class="dropdown-menu dm-visibility" style="padding: 0;background-color: transparent;border: hidden;min-width: 34px;" aria-labelledby="dropdownVisibility">
-                                <a class="dropdown-item di-visibility" href="#">
+                                {% if playlist.visibilidade != 'privado' %}
+                                <a class="dropdown-item di-visibility" href="{% url 'channel:change_visibility_pl' playlist.id %}">
                                     <img src="/static/resources/icones/private.png" style="margin-top: 2px;" class="icon-visibility"/> <!--Playlist privada-->
                                 </a>
+                                {% else %}
+                                <a class="dropdown-item di-visibility" href="{% url 'channel:change_visibility_pl' playlist.id %}">
+                                    <img src="/static/resources/icones/public.png" style="margin-top: 2px;" class="icon-visibility"/> <!--Playlist privada-->
+                                </a>
+                                {% endif %}
                             </div>
                         </a>
                     </div>

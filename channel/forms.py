@@ -7,6 +7,7 @@ from .validators import validate_tag
 class AudioForm(forms.ModelForm):
     audio = forms.FileField(widget=forms.FileInput)
     capa = forms.ImageField(widget=forms.FileInput)
+    visibilidade = forms.CharField(widget=forms.TextInput(attrs={'id': 'id_visibilidade'}))
     titulo = forms.CharField()
     descricao = forms.Textarea()
 
@@ -15,6 +16,7 @@ class AudioForm(forms.ModelForm):
         fields = [
             'audio',
             'capa',
+            'visibilidade',
             'titulo',
             'descricao',
             'canal_proprietario'
@@ -90,12 +92,14 @@ class FotoCanalForm(forms.ModelForm):
 
 
 class EditAudioForm(forms.ModelForm):
+    visibilidade = forms.CharField(widget=forms.TextInput(attrs={'id': 'id_visibilidade'}))
     titulo = forms.CharField()
     descricao = forms.Textarea()
 
     class Meta:
         model = Audio
         fields = [
+            'visibilidade',
             'titulo',
             'descricao',
         ]

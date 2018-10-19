@@ -16,14 +16,17 @@ class Tag(models.Model):
         ap = 0
 
         for audio in Audio.objects.all():
-            for tag in audio.tag.all():
-                if self == tag:
-                    ap += 1
+            if audio.visibilidade != 'privado':
+                for tag in audio.tag.all():
+                    if self == tag:
+                        ap += 1
         if ap > 0:
             return ap
 
 
 class Audio(models.Model):
+    visibilidade_choices = (("publico", "publico"), ("privado", "privado"))
+
     def audio_path(instance,filename):
         return "contas/user_{}/audios/{}".format(instance.proprietario.pk, filename)
 
@@ -56,7 +59,7 @@ class Audio(models.Model):
 
     data_publicacao = models.DateTimeField(default=datetime.now)
     estado = models.CharField(max_length=10, blank=True, null=True)
-    visibilidade = models.CharField(max_length=11, blank=True, null=True)
+    visibilidade = models.CharField(max_length=20, choices=visibilidade_choices, default="publico")
     likes = models.ManyToManyField(MyUser, default=None, through="FeedLike", related_name="likes")
     deslikes = models.ManyToManyField(MyUser, default=None, through="FeedDesLike", related_name="deslikes")
     numero_likes = models.IntegerField(default=0)
@@ -113,7 +116,7 @@ class Resposta(models.Model):
 class Playlist(models.Model):
     def playlist_capa_path(instance, filename):
         return "contas/user_{}/capas_de_playlists/{}".format(instance.proprietario.pk, filename)
-    visibilidade_choices = (("publico", "público"), ("privada", "privada"))
+    visibilidade_choices = (("publico", "publico"), ("privado", "privado"))
     nome = models.CharField(max_length=50)
     audios = models.ManyToManyField(Audio)
     visibilidade = models.CharField(max_length=20, choices=visibilidade_choices, default="publico")

@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             var el = document.createElement("li");
             el.classList.add("dropdown-item");
+            el.classList.add("dropdown-item-custom");
 
             var canal = document.createElement("img");
             canal.setAttribute('src', action.canal);

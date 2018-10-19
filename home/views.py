@@ -13,9 +13,12 @@ from collections import Counter
 def IndexView(request):
     contexto = {}
 
-    mais_reproduzidos = Audio.objects.order_by('-reproducoes')
-    melhor_avaliados = Audio.objects.order_by('-numero_likes', 'numero_deslikes')
-    playlists_pop = Playlist.objects.order_by('-reproducoes', '-numero_de_audios')
+    mais_reproduzidos = checkVisib(audios=Audio.objects.order_by('-reproducoes'))
+    melhor_avaliados = checkVisib(audios=Audio.objects.order_by('-numero_likes', 'numero_deslikes'))
+    playlists = Playlist.objects.order_by('-reproducoes', '-numero_de_audios')
+    for playlist in playlists:
+        playlist.audios.set(checkVisib(audios=playlist.audios))
+    playlists_pop = checkVisib(playlists=playlists)
 
     contexto['mais_reproduzidos'] = mais_reproduzidos
     contexto['melhor_avaliados'] = melhor_avaliados
@@ -25,6 +28,9 @@ def IndexView(request):
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -38,6 +44,9 @@ def IndexView(request):
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
 
     contexto['logado'] = request.user.is_active
@@ -57,6 +66,9 @@ def search(request):
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -70,6 +82,9 @@ def search(request):
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
 
     if request.method == "POST":
@@ -84,25 +99,32 @@ def search(request):
             audios_tag_s = []
             if tag_s.exists():
                 for audio in Audio.objects.all():
-                    for tag in tag_s.all():
-                        for tags_audio in audio.tag.all():
-                            if tags_audio == tag:
-                                audios_tag_s.append(audio)
+                    if audio.visibilidade != 'privado':
+                        for tag in tag_s.all():
+                            for tags_audio in audio.tag.all():
+                                if tags_audio == tag:
+                                    audios_tag_s.append(audio)
 
             contexto['tags_searched'] = tag_s
             contexto['audios_tag_s'] = audios_tag_s
 
+        audios = Audio.objects.filter(titulo__contains=pesquisa)
+        playlists = Playlist.objects.filter(nome__contains=pesquisa)
+
         contexto['pesquisa'] = pesquisa
         contexto['canais'] = Canal.objects.filter(nome_canal__contains=pesquisa)
-        contexto['audios'] = Audio.objects.filter(titulo__contains=pesquisa)
-        contexto['playlists_show'] = Playlist.objects.filter(nome__contains=pesquisa)
         contexto['canais'] = checkExist(contexto['canais'])
-        contexto['audios'] = checkExist(contexto['audios'])
-        if contexto['canais'] != False:
+        contexto['audios'] = checkExist(audios)
+        contexto['audios'] = checkVisib(audios=contexto['audios'])
+        contexto['playlists_show'] = checkExist(playlists)
+        contexto['playlists_show'] = checkVisib(playlists=contexto['playlists_show'])
+
+        if contexto['canais']:
             contexto['canais'] = contaSeg(contexto['canais'])
-        contexto['playlists_show'] = checkExist(contexto['playlists_show'])
-        if contexto['playlists_show'] != False:
+
+        if contexto['playlists_show']:
             contexto['playlists_show'] = ordena_pra_exibicao(contexto['playlists_show'])
+
         contexto['tot_result'], contexto['tot_playlists'], contexto['tot_audios'], contexto['tot_canais'] = contaResultados(contexto['canais'], contexto['audios'], contexto['playlists_show'])
 
     contexto['logado'] = request.user.is_active

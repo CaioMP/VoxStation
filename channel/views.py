@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from .forms import *
 from account.models import Seg
 from .process import *
+from home.process import *
 from django.http import JsonResponse
 from .models import Playlist, Audio, Comentario, Resposta, Historico, NotificAudio,FeedDesLike,FeedLike, Tag
 from datetime import datetime
@@ -17,6 +18,9 @@ def myuploads(request):
     playlist_side = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
 
     ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+    for audio_notific in ntfs_audios.all():
+        if audio_notific.audio.visibilidade == 'privado':
+            audio_notific.delete()
     notifications = 0
     new_notific = 0
     has_error = False
@@ -28,6 +32,9 @@ def myuploads(request):
             notifications += 1
 
     fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+    for audio_fav in fav.all():
+        if audio_fav.Audio_feed.visibilidade == 'privado':
+            audio_fav.delete()
 
     channels = Canal.objects.filter(proprietario=request.user)
     if request.method == "POST":
@@ -40,6 +47,7 @@ def myuploads(request):
             audio.audio = form.cleaned_data['audio']
             audio.descricao = form.cleaned_data['descricao']
             audio.capa = form.cleaned_data['capa']
+            audio.visibilidade = form.cleaned_data['visibilidade']
             audio.reproducoes = 0
             audio.proprietario = request.user
             audio.save()
@@ -133,6 +141,9 @@ def channel(request, id):
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -146,26 +157,42 @@ def channel(request, id):
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
 
-    contexto['chan'] = getaudios(Canal.objects.get(pk=id))
-    contexto['audios_popular'] = getpopulars(Canal.objects.get(pk=id))
-    contexto['botao'] = ve_se_follow(request, contexto['chan'])
-    contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
-    contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
+    canal = Canal.objects.get(pk=id)
+    contexto['chan'] = canal
+    contexto['chan_audios'] = checkVisib(audios=Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao'))
+    contexto['audios_popular'] = checkVisib(audios=Audio.objects.filter(canal_proprietario=canal).order_by('-reproducoes'))
+    contexto['botao'] = ve_se_follow(request, canal)
+    contexto['cor'] = ve_se_follow(request, canal, 1)
+    contexto['num_seguidores'] = canal.seguidor.all().count()
     contexto['logado'] = request.user.is_active
-    if request.user == contexto['chan'].proprietario:
+    if request.user == canal.proprietario:
         contexto['direito_edicao'] = True
     else:
         contexto['direito_edicao'] = False
 
     # Parte da guia 'Áudios' (uploads)
-    audios = Audio.objects.filter(canal_proprietario=contexto['chan']).order_by('-data_publicacao')
+    if request.user == canal.proprietario:
+        audios = Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao')
+    else:
+        audios = checkVisib(audios=Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao'))
     contexto['audios'] = audios
     contexto['form_aud'] = SearchChannelAudioForm()
 
     # Parte da guia 'Playlists'
-    contexto['playlists'] = Playlist.objects.filter(canal=contexto['chan'])
+    playlists = Playlist.objects.filter(canal=canal)
+
+    for playlist in playlists:
+        playlist.audios.set(checkVisib(audios=playlist.audios))
+
+    if request.user == canal.proprietario:
+        contexto['playlists'] = playlists
+    else:
+        contexto['playlists'] = checkVisib(playlists=playlists)
     contexto['playlists'] = ordena_pra_exibicao(contexto['playlists'])
     contexto['form_pl'] = SearchChannelAudioForm()
 
@@ -174,6 +201,7 @@ def channel(request, id):
     contexto['deslikes'] = get_status_channel(audios, 'deslikes')
     contexto['reproducoes_tot'] = get_status_channel(audios)
     contexto['tags_mais_usadas'] = get_tags(audios)
+    contexto['num_audios'] = len(audios)
 
     return render(request, './channel/channel.html', contexto)
 
@@ -182,14 +210,14 @@ def channel(request, id):
 def search_audios(request, canal_id):
     search_form = SearchChannelAudioForm(request.POST)
     canal = Canal.objects.get(pk=canal_id)
-    audios = Audio.objects.filter(canal_proprietario=canal)
+    audios = checkVisib(audios=Audio.objects.filter(canal_proprietario=canal))
 
     data = {}
 
     if search_form.is_valid():
         data['search'] = search_form.cleaned_data['text']
         data['audios'] = searchclear(data['search'], canal)
-        data['n_audios'] = audios.count()
+        data['n_audios'] = len(audios)
 
     return JsonResponse(data)
 
@@ -211,9 +239,14 @@ def search_playlists(request, canal_id):
 
 
 def playlist_play(request, id, id_audio):
+    playlist = Playlist.objects.get(pk=id)
+
+    if playlist.visibilidade == 'privado':
+        if request.user != playlist.proprietario:
+            return redirect('/')
+
     comentarios = Comentario.objects.filter(audio_comentado=id_audio)
     respostas = Resposta.objects.filter(audio_comentado=id_audio)
-    playlist = Playlist.objects.get(pk=id)
     audio = Audio.objects.get(pk=id_audio)
     anterior = audioposition(audio, playlist)[0]
     proximo = audioposition(audio, playlist)[1]
@@ -286,6 +319,9 @@ def playlist_play(request, id, id_audio):
         context['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         context['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -298,6 +334,9 @@ def playlist_play(request, id, id_audio):
         user_like = FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio)
         user_deslike = FeedDesLike.objects.filter(conta_feed=request.user, Audio_feed=audio)
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
 
         context['user_like'] = user_like
         context['user_deslike'] = user_deslike
@@ -402,6 +441,9 @@ def partner(request, id):
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -415,9 +457,12 @@ def partner(request, id):
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
 
-    contexto['chan'] = getaudios(Canal.objects.get(pk=id))
+    # contexto['chan'] = getaudios(Canal.objects.get(pk=id))
     contexto['botao'] = ve_se_follow(request, contexto['chan'])
     contexto['cor'] = ve_se_follow(request, contexto['chan'], 1)
     contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
@@ -455,11 +500,18 @@ def playlist_all(request, id):
 
     play = Playlist.objects.get(pk=id)
 
+    if play.visibilidade == 'privado':
+        if play.proprietario != request.user:
+            return redirect('/')
+
     if request.user.is_active:
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         contexto['channels'] = Canal.objects.filter(proprietario=request.user)
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -473,6 +525,9 @@ def playlist_all(request, id):
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
         for playlist in contexto['play_side']:
             if playlist.copia == play.pk:
@@ -511,8 +566,11 @@ def playlist_all(request, id):
         contexto['tem_desc'] = False
     else:
         contexto['tem_desc'] = True
-    print(contexto['direito_edicao'])
-    contexto['audios'] = contexto['playlist'].audios.filter()
+
+    if play.proprietario == request.user:
+        contexto['audios'] = contexto['playlist'].audios.filter()
+    else:
+        contexto['audios'] = checkVisib(contexto['playlist'].audios.filter())
     contexto['capa_reserva'] = contexto['playlist'].audios.order_by('reproducoes').first()
     contexto['tem_capa'] = True
     contexto['playlist'].reproducoes += 1
@@ -617,7 +675,6 @@ def playlist_add_play(request):
         play['canal_set'] = Canal.objects.get(nome_canal=play['canal_atrelado'])
         play['criada'].canal = play['canal_set']
         play['criada'].save()
-        print(play['criada'].canal)
         json_context['message'] = 'Áudio adicionado a ' + play['criada'].nome
         json_context['html'] = gera_html(request, audio_cod)
         return JsonResponse(json_context)
@@ -632,6 +689,9 @@ def edit_channel(request, id):
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -645,6 +705,9 @@ def edit_channel(request, id):
         contexto['new_notific'] = new_notific
         contexto['ntfs_audios'] = ntfs_audios
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
 
     contexto['audios_edit'] = EditAudioForm()
@@ -725,6 +788,12 @@ def vincula_play(request):
 
 
 def player(request, id):
+    audio = Audio.objects.get(pk=id)
+
+    if audio.visibilidade == 'privado':
+        if request.user != audio.proprietario:
+            return redirect('/')
+
     comentarios = Comentario.objects.filter(audio_comentado=id)
     respostas = Resposta.objects.filter(audio_comentado=id)
     n_comentarios = get_n_comentarios(comentarios, respostas)
@@ -732,7 +801,6 @@ def player(request, id):
     comentario_form = ComentarioForm()
     resposta_form = RespostaForm(prefix="resposta")
 
-    audio = Audio.objects.get(pk=id)
     canal_proprietario = Canal.objects.get(nome_canal=audio.canal_proprietario)
 
     direito_edicao = False
@@ -794,6 +862,9 @@ def player(request, id):
         context['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         context['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
+        for audio_notific in ntfs_audios.all():
+            if audio_notific.audio.visibilidade == 'privado':
+                audio_notific.delete()
         notifications = 0
         new_notific = 0
 
@@ -806,6 +877,9 @@ def player(request, id):
         user_like = FeedLike.objects.filter(conta_feed=request.user, Audio_feed=audio)
         user_deslike = FeedDesLike.objects.filter(conta_feed=request.user, Audio_feed=audio)
         fav = FeedLike.objects.filter(conta_feed=request.user).order_by('-data_do_feed')
+        for audio_fav in fav.all():
+            if audio_fav.Audio_feed.visibilidade == 'privado':
+                audio_fav.delete()
 
         context['user_like'] = user_like
         context['user_deslike'] = user_deslike
@@ -953,11 +1027,10 @@ def editAudio(request, id, id_channel):
     if request.method == "POST":
         tag = TagForm(request.POST, request.FILES)
         audio_form = EditAudioForm(request.POST)
-        print(tag.is_valid())
-        print(audio_form.is_valid())
+
         if tag.is_valid() and audio_form.is_valid():
-            print('ta valido')
             audio = Audio.objects.get(pk=id)
+            audio.visibilidade = audio_form.cleaned_data['visibilidade']
             audio.titulo = audio_form.cleaned_data['titulo']
             audio.descricao = audio_form.cleaned_data['descricao']
             tags = tagprocess(tag.cleaned_data['text'])
@@ -966,8 +1039,6 @@ def editAudio(request, id, id_channel):
                 query = Tag.objects.filter(nome=tag)
                 if query.exists():
                     query = Tag.objects.get(nome=tag)
-                    print(query)
-                    print('ja existia no banco a tag {}'.format(query.nome))
                     audio.tag.add(query)
                     audio.save()
                 else:
@@ -977,6 +1048,16 @@ def editAudio(request, id, id_channel):
                     audio.tag.add(query)
                     audio.save()
     return redirect("/channel/edit/{}".format(id_channel))
+
+
+def change_visib_pl(request, playlist_id):
+    playlist = Playlist.objects.get(pk=playlist_id)
+    if playlist.visibilidade == 'privado':
+        playlist.visibilidade = 'publico'
+    else:
+        playlist.visibilidade = 'privado'
+    playlist.save()
+    return redirect('/channel/playlist_all/' + str(playlist_id))
 
 
 def feedBack(request, idAudio):
