@@ -687,16 +687,15 @@
     {% if footer %}
         <div class="footer" id="footer" {% if not edit_acc %} style="background-color: transparent;z-index: -1;" {% endif %}>
             <!--Botão de Salvar e Cancelar-->
-            <button class="btn btn-save" type="submit" id="submitForm" name="submitForm" onclick="Submit()"
-            {% if not edit_acc %} style="display: none;" {% endif %}>
-                <strong class="save-strong">{% trans 'Salvar' %}</strong>
-            </button>
-
             <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}"
             {% if not edit_acc %} style="display: none;" {% endif %}>
                 <strong class="mystrong">{% trans 'Cancelar' %}</strong>
             </a>
 
+            <button class="btn btn-add btn-save" type="submit" id="submitForm" name="submitForm" onclick="Submit()"
+            {% if not edit_acc %} style="display: none;" {% endif %}>
+                <strong class="save-strong">{% trans 'Salvar' %}</strong>
+            </button>
 
             <!--Alert de salvar-->
             {% if edited %}

@@ -1,5 +1,7 @@
 body {
-    background-color: #032854;
+    margin-bottom: 23px;
+    background-image: url(/static/images/background-banner.jpg);
+    background-size: cover;
     font-family: Raleway;
 }
 
@@ -87,9 +89,8 @@ h2 {
 }
 
 .login-callout {
-    margin: -23px auto 23px;
+    margin: 23px auto 0;
     position: relative;
-    bottom: -40px;
     padding: 7px;
     min-width: 340px;
     max-width: 475px;

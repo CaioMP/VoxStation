@@ -41,10 +41,10 @@ $(function(){
 		const file = $(this)[0].files[0]
 		const fileReader = new FileReader()
 		fileReader.onloadend = function(){
-			$('#capa').attr('src',fileReader.result)
+		    src = 'url('+fileReader.result+')';
+		    document.getElementById("capa").style.backgroundImage = src;
 		}
 		fileReader.readAsDataURL(file)
-		document.getElementById('capa').style.visibility = "visible"
 	})
 })
 

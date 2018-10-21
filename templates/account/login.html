@@ -12,7 +12,7 @@
 
 {% block body %}
     <div class="loginBox" id="loginBox">
-        <img class="avatar" src="/static/images/default-user-log.png"/>
+        <img class="avatar" src="/static/images/default-user.png"/>
         <h2>{% trans 'Inicie sua sessão' %}</h2>
         <form method="post">{% csrf_token %}
             {% for message in messages %}
@@ -33,7 +33,7 @@
             <h5 class="forgot-pw"><a href="#">{% trans 'Esqueceu?' %}</a></h5>
             </label>
 
-            <center><button class="btn-log" type="submit"><strong>{% trans 'Entrar' %}</strong></button></center><br/>
+            <center><button class="btn-add btn-log" type="submit"><strong>{% trans 'Entrar' %}</strong></button></center><br/>
             <p><strong>{% trans 'Ou' %}</strong></p>
         </form>
         <form action="{% url 'social:begin' 'google-oauth2' %}" class="form-google">

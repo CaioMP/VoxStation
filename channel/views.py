@@ -193,7 +193,9 @@ def channel(request, id):
         contexto['playlists'] = playlists
     else:
         contexto['playlists'] = checkVisib(playlists=playlists)
-    contexto['playlists'] = ordena_pra_exibicao(contexto['playlists'])
+
+    if contexto['playlists']:
+        contexto['playlists'] = ordena_pra_exibicao(contexto['playlists'])
     contexto['form_pl'] = SearchChannelAudioForm()
 
     # Parte da guia 'Sobre'

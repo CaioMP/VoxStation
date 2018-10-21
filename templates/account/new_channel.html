@@ -15,19 +15,14 @@
 {% block body %}
     <div class="newChannelBox">
         <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-            <div class="capa">
+            <div class="capa" id="capa" style="background-image: url('');">
                 <div class="buttons-capa">
-                    <label for="fundo" class="btn btn-default btn-capa" id="btn-capa">
+                    <label for="fundo" class="btn btn-default btn-capa" id="btn-capa" rel="tooltip" data-toggle="tooltip"
+                           data-placement="bottom" title="Capa do seu canal">
                         <input type="file" name="{{ form.capa.name }}" id="{{ form.capa.id_for_label }}" accept="image/*">
-                        <strong>Editar fundo</strong></label>
-
-                    <!--Adicionar uma breve explicação do áudio de fundo dps-->
-                    <label for="audio" class="btn btn-default btn-capa" id="btn-audio">
-                        <input type="file" name="{{ form.audio_fundo.name }}" id="{{ form.audio_fundo.id_for_label }}" accept="audio/*">
-                        <strong>Áudio de fundo</strong></label>
-
+                        <i class="fas fa-pen" style="text-shadow: none;"></i>
+                    </label>
                 </div>
-                <img src="#" id="capa" class="fundo">
             </div>
 
             <br/>
@@ -70,7 +65,7 @@
                         <a class="btn btn-default btn-cancel" href="{% url 'home:index' %}">
                             <strong class="mystrong">{% trans 'Cancelar' %}</strong>
                         </a>
-                        <button class="btn btn-save" type="submit" id="submitChannel" name="submitChannel">
+                        <button class="btn btn-add btn-save" type="submit" id="submitChannel" name="submitChannel">
                             <strong class="save-strong">{% trans 'Salvar' %}</strong>
                         </button>
                     </div>
