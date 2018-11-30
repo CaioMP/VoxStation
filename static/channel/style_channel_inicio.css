@@ -4,6 +4,12 @@
     height: 215px !important;
 }
 
+.sn-icon {
+    padding: 7px 10px !important;
+    position: relative;
+    top: -7px;
+}
+
 img#foto {
     display: block;
     margin-top: 15px;
@@ -14,6 +20,7 @@ img#foto {
 }
 
 .nome_canal {
+    color: white;
     max-width: 70%;
     overflow: hidden;
     white-space: nowrap;
@@ -267,6 +274,10 @@ a.section:hover {
         margin-top: 112px !important;
     }
 
+    .sn-icon {
+        padding: 7px !important;
+    }
+
     .tab button {
         width: 50%;
     }
@@ -282,7 +293,7 @@ a.section:hover {
         font-size: 19px !important;
     }
 
-    a#sintonizar, a#redes-sociais {
+    a#sintonizar {
         margin-top: -10px;
     }
 

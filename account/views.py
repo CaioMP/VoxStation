@@ -192,6 +192,10 @@ def edit_profile(request):
                "notifications": notifications, "ntfs_audios": ntfs_audios, "canal_side": canais_side, "play_side": playlist_side,
                "new_notific": new_notific, "edit_acc": True, 'audios_favoritos': fav.all()}
 
+    my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+    if my_channels.exists():
+        context['my_channels'] = my_channels
+
     if edited_password:
         edited_password = False
 
@@ -257,6 +261,10 @@ def change_password(request):
             context = {'form': form, 'old_password': old_password, 'logado': request.user.is_active, 'ntfs_audios': ntfs_audios,
                        'notifications': notifications, 'new_password1': new_password1, 'new_password2': new_password2,
                        'new_notific': new_notific, 'audios_favoritos': fav.all()}
+
+            my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+            if my_channels.exists():
+                context['my_channels'] = my_channels
 
             return render(request, './account/change_password.html', context)
 
@@ -328,6 +336,10 @@ def NewChannelView(request):
                'user': request.user, 'logado': request.user.is_active, 'notifications': notifications, "canal_side": canais_side,
                "play_side": playlist_side, "new_notific": new_notific, 'audios_favoritos': fav.all()}
 
+    my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+    if my_channels.exists():
+        context['my_channels'] = my_channels
+
     return render(request, './account/new_channel.html', context)
 
 
@@ -342,6 +354,11 @@ def historic(request):
             contexto['audios_historico'] = registro.audio.filter(titulo__contains=x).order_by("id").reverse()
         else:
             contexto['audios_historico'] = registro.audio.all().order_by("id").reverse()
+
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            contexto['my_channels'] = my_channels
+
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
@@ -377,6 +394,9 @@ def favorites(request):
             if audio_fav.Audio_feed.visibilidade == 'privado':
                 audio_fav.delete()
         contexto['audios_favoritos'] = fav.all()
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            contexto['my_channels'] = my_channels
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')

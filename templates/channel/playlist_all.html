@@ -173,7 +173,9 @@
                 <img src="{{playlist.canal.foto_canal.url}}" alt="foto do canal" class="rounded-circle ft-do-canal">
                 <h5 class="nome-canal">{{canal.nome_canal}}</h5>
             </a>
+            {% if playlist.canal.proprietario != user %}
             <a onclick="verificaLogado('{{logado}}')" style="cursor:pointer;{{btn_color}}" url_="{%url 'channel:follow_general_view'%}" id={{canal.id}} class="btn-sintonizar">{{btn_message}}</a>
+            {% endif %}
             {%else%}
             <img src="{{playlist.proprietario.img_perfil.url}}" alt="foto do canal" class="rounded-circle ft-do-canal">
             <h5 class="nome-canal">{{playlist.proprietario.username}}</h5>

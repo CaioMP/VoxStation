@@ -173,6 +173,11 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dpAccount">
                         {% if logado %}
+                            {% if my_channels %}
+                                {% for channel in my_channels %}
+                                    <a style="overflow: hidden;text-overflow: ellipsis;max-width: 10rem;" class="dropdown-item" href="{% url 'channel:channel_view' channel.id %}">{{ channel.nome_canal }}</a>
+                                {% endfor %}
+                            {% endif %}
                             <a class="dropdown-item" href="{% url 'account:edit_profile' %}">Editar Perfil</a>
                             <a class="dropdown-item" href="{% url 'account:new_channel' %}">Criar canal</a> <!--Trocar por meus canais dps-->
                             <a class="dropdown-item" href="{% url 'account:sign_out' %}">Sair</a>
@@ -253,10 +258,6 @@
                     </form><!--Fim do formNotificMe-->
                     {% endif %}
                 {% endif %}
-                <div class="audio-fundo" {% if direito_edicao %} style="margin-top: 0;" {% endif %}>
-                    <i class="fas fa-volume-up" style="margin-top: 12px;" rel="tooltip" data-toggle="tooltip" data-placement="bottom"
-                       title="Áudio de fundo"></i><br>
-                </div>
                 <center>
                     <img src="{{chan.foto_canal.url}}" id="foto" alt="foto do canal"/>
                     <h2 class="nome_canal">{{chan.nome_canal}}</h2>
@@ -266,12 +267,36 @@
                         <h6 class="d-inline-block" id="num_seg" >{{num_seguidores}}</h6>
                     </h6>
                 </center>
+
+                {% if gp_channel %}
+                    <a class="sn-icon" href="{{gp_channel}}"><i class="fab fa-google-plus-g" style="color: #dc4e41;"></i></a>
+                {% endif %}
+
+                {% if yt_channel %}
+                    <a class="sn-icon" href="{{yt_channel}}"><i class="fab fa-youtube" style="color: #ff0000;"></i></a>
+                {% endif %}
+
+                {% if tt_channel %}
+                    <a class="sn-icon" href="{{tt_channel}}"><i class="fab fa-twitter" style="color: #2aa9e0;"></i></a>
+                {% endif %}
+
+                {% if fb_channel %}
+                    <a class="sn-icon" href="{{fb_channel}}"><i class="fab fa-facebook-square" style="color: #5061a6;"></i></a>
+                {% endif %}
+
+                {% if in_channel %}
+                    <a class="sn-icon" href="{{in_channel}}"><i class="fab fa-instagram"></i></a>
+                {% endif %}
+
+                {% if tc_channel %}
+                    <a class="sn-icon" href="{{tc_channel}}"><i class="fab fa-twitch" style="color: #6441a5;"></i></a>
+                {% endif %}
+
                 {%if not direito_edicao%}
                     {%if logado%}
                         <a href="#" style="background-color:{{cor}};" url_="{% url 'channel:follow_view' chan.id %}" id="sintonizar">{{botao}}</a>
                     {%endif%}
                 {% else %}
-                    <a href="#" id="redes-sociais">Redes sociais</a>
                     <a href="{% url 'channel:edit_channel_view' chan.id %}" id="personalizar">Editar canal</a>
                 {%endif%}
             </div>

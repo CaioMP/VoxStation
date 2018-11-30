@@ -616,6 +616,11 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dpAccount">
                         {% if logado %}
+                            {% if my_channels %}
+                                {% for channel in my_channels %}
+                                    <a style="overflow: hidden;text-overflow: ellipsis;max-width: 10rem;" class="dropdown-item" href="{% url 'channel:channel_view' channel.id %}">{{ channel.nome_canal }}</a>
+                                {% endfor %}
+                            {% endif %}
                             <a class="dropdown-item" href="{% url 'account:edit_profile' %}">Editar Perfil</a>
                             <a class="dropdown-item" href="{% url 'account:new_channel' %}">Criar canal</a> <!--Trocar por meus canais dps-->
                             <a class="dropdown-item" href="{% url 'account:sign_out' %}">Sair</a>

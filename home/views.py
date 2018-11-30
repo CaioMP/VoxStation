@@ -25,6 +25,9 @@ def IndexView(request):
     contexto['playlists_pop'] = playlists_pop
 
     if request.user.is_active:
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            contexto['my_channels'] = my_channels
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
@@ -63,6 +66,9 @@ def search(request):
     contexto = {}
 
     if request.user.is_active:
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            contexto['my_channels'] = my_channels
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')

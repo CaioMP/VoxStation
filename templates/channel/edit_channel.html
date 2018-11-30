@@ -16,19 +16,11 @@
     <script src="{%static 'channel/js/ordena.js' %}"></script>
     <script src="{%static 'channel/js/ordenaPlay.js' %}"></script>
     <script src="{%static 'channel/js/submit_channel_data.js' %}"></script>
+    <script src="{% static 'channel/js/search_audios.js' %}"></script>
 {% endblock %}
 
 {% block body %}
-
     <div class="capa" style="background-image: url({{chan.capa.url}});">
-        <label for="audio" class="edit_audio_fundo edit-capa-top" id="audio-fundo"
-               data-toggle="tooltip" data-placement="bottom" title="Áudio de fundo">
-            <i class="fas fa-volume-up"></i>
-        </label>
-        <form enctype="multipart/form-data" method="post" id="formulario_audio" style="display:none;" action="{%url 'channel:change_back_view' chan.id%}">
-            {% csrf_token %}
-            <input required="" id="audio" name="{{audio_form.audio_fundo.name}}" type="file" accept="audio/*" >
-        </form>
         <span data-toggle="modal" data-target="#editCapa">
             <a href="#" class="edit_audio_fundo edit-capa-top" id="edit-capa" rel="tooltip" style="float: left;" data-toggle="tooltip" data-placement="bottom" title="Capa do seu canal">
                 <i class="fas fa-pen" style="color: white;"></i>
@@ -93,9 +85,11 @@
             </div>
         </h2>
          <div class="audioBox">
-            <form class="form-search" enctype="multipart/form-data" method="POST">
+            <form class="form-search" enctype="multipart/form-data" method="POST" id="searchAudiosForm"
+                  action="{% url 'channel:search_audios_view' chan.id %}">
                 {% csrf_token %}
-                <input class="form-control" type="search" placeholder="Pesquisar" style="margin-top: 2rem;">
+                <input class="form-control" type="search" name="{{form_aud.text.name}}" id="{{form_aud.text.id_for_label}}"
+                       style="margin-top: 2rem;" placeholder="Pesquisar" required="">
                 <button class="btn btn-search" type="submit">
                     <img class="search-icon" src="/static/resources/icones/search.ico" alt="Pesquisar" id="search">
                 </button>
@@ -103,7 +97,7 @@
 
                 <div class="row mt-4 audios" id="container_audios">
                     {%for audio in audios%}
-                    <div class="col-md-3 mb-4">
+                    <div class="col-md-3 mb-4 col-audios" id="{{audio.id}}">
                         <div class="card" style="border-radius: 4px;">
                             <figure class="fig-capa-audio" id="figAE-{{forloop.counter}}"
                                             onmouseover="hideDuration(this.id)" onmouseleave="showDuration(this.id)">
@@ -153,8 +147,9 @@
                         </div>
                     </div>
                     {%endfor%}
-                    <!--
-                    <p class="text text-center">Nenhum áudio que possui esse título foi encontrado</p>-->
+                    </div>
+                    <div class="no-search" id="no-search">
+                        <h5 class="ml-4"><strong>Nenhum áudio com esse titúlo foi encontrado.</strong></h5>
                     </div>
                 </div>
     </div>
@@ -199,16 +194,6 @@
                                                 <img src="/static/resources/icones/private-card.png" class="icon-more private"/>
                                             </a>
                                         {% endif %}
-
-                                        <div class="dropdown more">
-                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img src="/static/resources/icones/more.png" class="icon-more"/>
-                                            <div class="dropdown-menu more" aria-labelledby="dropdownMore">
-                                                <a class="dropdown-item" href="{%url 'channel:playlist_all_view' playlist.id%}">Editar</a>
-                                                <a class="dropdown-item" href="#">Excluir</a>
-                                            </div>
-                                            </a>
-                                        </div>
                                     </center>
                                 </figcaption>
                             </a>

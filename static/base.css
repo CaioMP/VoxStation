@@ -52,6 +52,12 @@ div#sideFade {
     opacity: .9;
 }
 
+.no-search {
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+}
+
 .duration-audio {
     position: absolute;
     right: 0;

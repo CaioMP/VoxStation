@@ -112,7 +112,7 @@ a.dropdown-item.filter {
 .edit-capa {
     background-size: cover;
     width: 100%;
-    height: 20rem;
+    height: 215px;
     margin-bottom: 0;
     cursor: pointer;
 }
@@ -160,10 +160,11 @@ label.editCapa:hover {
 .camera-capa {
     position: relative;
     margin: 0 !important;
-    width: 6.5rem !important;
+    width: 5.5rem !important;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    opacity: .9;
 }
 
 .foto {

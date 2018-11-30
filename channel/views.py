@@ -108,12 +108,22 @@ def myuploads(request):
                         "titulo": request.POST['titulo'], "descricao": request.POST['descricao'], "tags": tags,
                         "canal_user": canal_user, 'audios_favoritos': fav.all()}
 
+            if request.user.is_active:
+                my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+                if my_channels.exists():
+                    contexto['my_channels'] = my_channels
+
             return render(request, "./channel/myuploads.html", contexto)
     tagform = TagForm()
     form = AudioForm(instance=request.user)
     contexto = {'form': form, 'channels': channels, 'logado': request.user.is_active, 'notifications': notifications,
                 "tagform": tagform, "play_side": playlist_side, "canal_side": canais_side, 'ntfs_audios': ntfs_audios,
                 'new_notific': new_notific, "footer": True, "canal_user": canal_user, 'audios_favoritos': fav.all()}
+
+    if request.user.is_active:
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            contexto['my_channels'] = my_channels
 
     return render(request, "./channel/myuploads.html", contexto)
 
@@ -138,6 +148,9 @@ def channel(request, id):
     contexto = {}
 
     if request.user.is_active:
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            contexto['my_channels'] = my_channels
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
@@ -163,7 +176,20 @@ def channel(request, id):
         contexto['audios_favoritos'] = fav.all()
 
     canal = Canal.objects.get(pk=id)
+    if canal.youtube:
+        contexto['yt_channel'] = canal.youtube
+    if canal.googleplus:
+        contexto['gp_channel'] = canal.googleplus
+    if canal.twitter:
+        contexto['tt_channel'] = canal.twitter
+    if canal.facebook:
+        contexto['fb_channel'] = canal.facebook
+    if canal.instagram:
+        contexto['in_channel'] = canal.instagram
+    if canal.twitch:
+        contexto['tc_channel'] = canal.twitch
     contexto['chan'] = canal
+
     contexto['chan_audios'] = checkVisib(audios=Audio.objects.filter(canal_proprietario=canal).order_by('-data_publicacao'))
     contexto['audios_popular'] = checkVisib(audios=Audio.objects.filter(canal_proprietario=canal).order_by('-reproducoes'))
     contexto['botao'] = ve_se_follow(request, canal)
@@ -318,6 +344,9 @@ def playlist_play(request, id, id_audio):
     audio.save()
 
     if request.user.is_active:
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            context['my_channels'] = my_channels
         context['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         context['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
@@ -440,6 +469,9 @@ def partner(request, id):
     contexto = {}
 
     if request.user.is_active:
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            contexto['my_channels'] = my_channels
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
@@ -507,6 +539,9 @@ def playlist_all(request, id):
             return redirect('/')
 
     if request.user.is_active:
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            contexto['my_channels'] = my_channels
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         contexto['channels'] = Canal.objects.filter(proprietario=request.user)
@@ -688,6 +723,9 @@ def edit_channel(request, id):
     if request.user.pk != canal.prop_key:
         return redirect('/channel/'+str(canal.pk))
     if request.user.is_active:
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            contexto['my_channels'] = my_channels
         contexto['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         contexto['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
@@ -723,6 +761,7 @@ def edit_channel(request, id):
     contexto['chan'] = canal
     contexto['audios'] = Audio.objects.filter(canal_proprietario=contexto['chan']).order_by('-data_publicacao')
     contexto['playlists'] = ordena_pra_exibicao(Playlist.objects.filter(canal=contexto['chan']).order_by('-ultima_atualizacao'))
+    contexto['form_aud'] = SearchChannelAudioForm()
     if request.user == contexto['chan'].proprietario:
         contexto['num_seguidores'] = contexto['chan'].seguidor.all().count()
         if not request.user.is_active:
@@ -861,6 +900,9 @@ def player(request, id):
     audio.save()
 
     if request.user.is_active:
+        my_channels = Canal.objects.filter(proprietario=request.user).order_by('nome_canal')
+        if my_channels.exists():
+            context['my_channels'] = my_channels
         context['play_side'] = Playlist.objects.filter(proprietario=request.user).order_by('-ultima_atualizacao')
         context['canal_side'] = Canal.objects.filter(seguidor=request.user).order_by('nome_canal')
         ntfs_audios = NotificAudio.objects.filter(user_notific=request.user).order_by('-audio')
